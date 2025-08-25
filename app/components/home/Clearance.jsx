@@ -10,9 +10,9 @@ export default function Clearance() {
                     Clearance Sale | Up to 70% OFF
                 </h5>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
                     {
-                        Array(5).fill(0).map((_, index) => <VerticalProductCard key={index} />)
+                        Array(4).fill(0).map((_, index) => <VerticalProductCard key={index} />)
                     }
                 </div>
             </div>

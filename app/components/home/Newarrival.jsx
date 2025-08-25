@@ -33,7 +33,7 @@ export default function Newarrival() {
                 <div className="mb-8 md:mb-12">
                     {/* Mobile Dropdown */}
                     <div className="md:hidden mb-6">
-                        <select 
+                        <select
                             value={activeCategory}
                             onChange={(e) => setActiveCategory(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
@@ -52,11 +52,10 @@ export default function Newarrival() {
                             <button
                                 key={category.id}
                                 onClick={() => setActiveCategory(category.id)}
-                                className={`px-4 lg:px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
-                                    activeCategory === category.id
+                                className={`px-4 lg:px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${activeCategory === category.id
                                         ? 'bg-primary text-white'
                                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                }`}
+                                    }`}
                             >
                                 {category.name}
                             </button>
@@ -65,11 +64,9 @@ export default function Newarrival() {
                 </div>
 
                 {/* Products Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
                     {
-                        Array(10).fill(0).map((_, index) => (
-                            <VerticalProductCard key={`${activeCategory}-${index}`} />
-                        ))
+                        Array(4).fill(0).map((_, index) => <VerticalProductCard key={index} />)
                     }
                 </div>
             </div>

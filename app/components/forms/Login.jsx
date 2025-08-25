@@ -1,0 +1,180 @@
+"use client"
+import Link from 'next/link'
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+import React, { useState } from 'react'
+import { usePostData } from '../helpers/usePostData';
+import toast from 'react-hot-toast';
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useAppContext } from '@/app/context/AppContext';
+import { usePostDataWithToken } from '../helpers/usePostDataWithToken';
+import { useQueryClient } from '@tanstack/react-query';
+import SignInWithPhone from './SignInWithPhone';
+import LoadingSvg from '../shared/LoadingSvg';
+
+export default function Login() {
+    const [option, setOption] = useState(1);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const { setUser, setToken } = useAppContext();
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const { guestToken } = useAppContext();
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    //managed sign in with password
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm(prev => ({ ...prev, [name]: value }));
+    };
+
+    const postLogin = usePostData('login');
+    const postCartSync = usePostDataWithToken('add-to-cart-from-guest');
+    const queryClient = useQueryClient();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        const formData = new FormData();
+        formData.append('email', form.email);
+        formData.append('password', form.password);
+
+        toast.promise(
+            postLogin.mutateAsync(formData)
+                .then(async (data) => {
+                    const jsonData = data?.data;
+                    const authToken = jsonData.token;
+
+                    // ✅ Save to localStorage
+                    localStorage.setItem('LaminaxUser', JSON.stringify(jsonData.details));
+                    localStorage.setItem('LaminaxAuthToken', authToken);
+
+                    // ✅ Set global user state
+                    setUser(jsonData.details);
+                    setToken(authToken);
+
+                    // ✅ Reset form
+                    setForm({ email: '', password: '' });
+
+                    // ✅ Set Loading
+                    setLoading(false);
+
+                    // ✅ Sync cart using guestToken if it exists
+                    if (guestToken) {
+                        const cartFormData = new FormData();
+                        cartFormData.append('guest_token', guestToken);
+
+                        try {
+                            // Pass formData with guest_token and auth token to the mutation
+                            await postCartSync.mutateAsync({
+                                formData: cartFormData,
+                                token: authToken
+                            });
+
+                            // ✅ Invalidate and refetch cart data
+                            await queryClient.invalidateQueries({ queryKey: ['cart'] });
+                        } catch (error) {
+                            console.error('Cart sync failed:', error);
+                        }
+                    }
+
+                    // ✅ Redirect to previous or default page
+                    const redirectTo = searchParams.get('redirect') || '/';
+                    router.push(redirectTo);
+                }),
+            {
+                loading: 'Signing in...',
+                success: 'Signed in successfully!',
+                error: (err) => {
+                    setLoading(false);
+                    return err.message || 'Sign in failed'
+                },
+            }
+        );
+    };
+
+    return (
+        <div>
+            <h5 className='text-[24px] sm:text-[26px] text-primarymagenta'>Login</h5>
+            <p className='text-[16px] sm:text-[18px] text-ash mt-[30px]'>
+                Welcome back. You’ve been missed! <br /> Please Log in to your account to continue
+            </p>
+
+            {/* tabs here  */}
+            <div className='mt-[50px]'>
+                {/* tab buttons  */}
+                <div className='flex gap-[50px]'>
+                    <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-natural border-b-2 border-natural font-[650]" : "text-primarymagenta"}`}>Sign in with OTP</button>
+                    <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-natural border-b-2 border-natural font-[650]" : "text-primarymagenta"}`}>Sign in with Password</button>
+                </div>
+                {/* tab forms */}
+                <div className='mt-[25px] sm:mt-[50px]'>
+                    {
+                        (option === 1) ?
+                            <SignInWithPhone option={option} />
+                            :
+                            <form onSubmit={handleSubmit}>
+                                {/* Email */}
+                                <p className='text-[16px] sm:text-[18px] text-ash'>Email Address <span className='text-danger'>*</span></p>
+                                <input
+                                    required
+                                    type="text"
+                                    name="email"
+                                    placeholder="Enter email address"
+                                    defaultValue={form.email || ''}
+                                    onChange={handleChange}
+                                    className="text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline rounded-[5px] mt-[20px] w-full"
+                                />
+
+                                {/* Password */}
+                                <p className='text-[16px] sm:text-[18px] text-ash mt-[20px]'>Password <span className='text-danger'>*</span></p>
+                                <div className='relative mt-[20px]'>
+                                    <input
+                                        required
+                                        type={showPassword ? 'text' : 'password'}
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        defaultValue={form.password || ''}
+                                        onChange={handleChange}
+                                        className='text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline rounded-[5px] w-full pr-[40px]'
+                                    />
+                                    <div
+                                        onClick={togglePasswordVisibility}
+                                        className='absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer'>
+                                        {showPassword ? <FiEyeOff size={24} color="#ccc" /> : <FiEye size={24} color="#ccc" />}
+                                    </div>
+                                </div>
+
+                                {/* Lost password link */}
+                                <div className='flex justify-end mt-[20px]'>
+                                    <Link href="/recover-password" className='text-danger hover:underline'>
+                                        Lost your password?
+                                    </Link>
+                                </div>
+
+                                {/* Submit Button */}
+                                <button
+                                    type="submit"
+                                    className={`py-[12px] sm:py-[24px] ${option === 2 ? "bg-accent text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline text-primarymagenta' : 'cursor-pointer'}`}
+                                    disabled={postLogin.isLoading || loading}
+                                >
+                                    {loading ? <LoadingSvg label="Signing in" color="text-primarymagenta" /> : "Sign in"}
+                                </button>
+                            </form>
+                    }
+
+                    <p className='text-primarymagenta mt-[20px] sm:mt-[40px]'>Don't have an account?   <Link href={"/register"} className='text-natural hover:underline'>Register Now</Link> </p>
+                </div>
+            </div>
+        </div>
+    )
+}

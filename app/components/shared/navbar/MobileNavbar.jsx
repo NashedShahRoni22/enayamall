@@ -1,3 +1,4 @@
+// MobileNavbar.jsx
 "use client";
 import { Heart, Menu, Phone, Search, ShoppingBag, User, X } from "lucide-react";
 import Image from "next/image";
@@ -6,7 +7,7 @@ import { useState } from "react";
 import Container from "../Container";
 import CategoryDropdown from "./CategoryDropdown";
 
-export default function MobileNavbar({ logo }) {
+export default function MobileNavbar({ logo, menuItems = [], categories = [], contactInfo, cartInfo }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [showCategories, setShowCategories] = useState(false);
@@ -25,7 +26,9 @@ export default function MobileNavbar({ logo }) {
                     </button>
 
                     {/* Mobile Logo */}
-                    <Image src={logo} height={40} width={150} alt="Logo" className="mx-auto" />
+                    <Link href="/">
+                        <Image src={logo} height={40} width={150} alt="Logo" className="mx-auto" />
+                    </Link>
 
                     {/* Mobile Actions */}
                     <div className="flex gap-2">
@@ -35,10 +38,16 @@ export default function MobileNavbar({ logo }) {
                         >
                             <Search className="size-6" />
                         </button>
-                        <button className="bg-primary text-white size-8 rounded-full flex justify-center items-center relative">
-                            <ShoppingBag className="size-4" />
-                            <span className="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full size-4 flex items-center justify-center">3</span>
-                        </button>
+                        <Link href="/cart">
+                            <button className="bg-primary text-white size-8 rounded-full flex justify-center items-center relative">
+                                <ShoppingBag className="size-4" />
+                                {cartInfo?.itemCount > 0 && (
+                                    <span className="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full size-4 flex items-center justify-center">
+                                        {cartInfo.itemCount}
+                                    </span>
+                                )}
+                            </button>
+                        </Link>
                     </div>
                 </div>
 
@@ -64,15 +73,17 @@ export default function MobileNavbar({ logo }) {
                         <div className="py-4 space-y-4">
                             {/* Mobile Menu Items */}
                             <div className="space-y-3">
-                                <Link href="" className="block py-2 px-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors rounded">
-                                    Home
-                                </Link>
-                                <Link href="" className="block py-2 px-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors rounded">
-                                    About
-                                </Link>
-                                <Link href="" className="block py-2 px-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors rounded">
-                                    Contact
-                                </Link>
+                                {menuItems.map((item, index) => (
+                                    <Link 
+                                        key={index}
+                                        href={item.href} 
+                                        className="block py-2 px-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors rounded"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                ))}
+                                
                                 <div className="relative">
                                     <button 
                                         onClick={() => setShowCategories(!showCategories)}
@@ -80,30 +91,46 @@ export default function MobileNavbar({ logo }) {
                                     >
                                         Categories
                                     </button>
-                                    <CategoryDropdown 
-                                        isDesktop={false}
-                                        isOpen={showCategories}
-                                        onToggle={() => setShowCategories(!showCategories)}
-                                    />
+                                    {showCategories && (
+                                        <div className="mt-2 ml-4">
+                                            <CategoryDropdown 
+                                                categories={categories} 
+                                                onClose={() => setShowCategories(false)}
+                                                isMobile={true}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
                             {/* Mobile User Actions */}
                             <div className="border-t pt-4 space-y-3">
-                                <div className="flex items-center gap-3 py-2 px-4">
+                                <Link 
+                                    href="/login"
+                                    className="flex items-center gap-3 py-2 px-4"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
                                     <User className="size-5 text-gray-600" />
-                                    <Link href="" className="text-gray-700 hover:text-primary transition-colors">
+                                    <span className="text-gray-700 hover:text-primary transition-colors">
                                         Log In / Register
-                                    </Link>
-                                </div>
-                                <div className="flex items-center gap-3 py-2 px-4">
+                                    </span>
+                                </Link>
+                                
+                                <Link 
+                                    href="/wishlist"
+                                    className="flex items-center gap-3 py-2 px-4"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
                                     <Heart className="size-5 text-gray-600" />
                                     <span className="text-gray-700">Wishlist</span>
-                                </div>
-                                <div className="flex items-center gap-3 py-2 px-4">
-                                    <Phone className="size-5 text-gray-600" />
-                                    <span className="text-gray-700">Hotline: (088) 1321456</span>
-                                </div>
+                                </Link>
+                                
+                                {contactInfo?.phone && (
+                                    <div className="flex items-center gap-3 py-2 px-4">
+                                        <Phone className="size-5 text-gray-600" />
+                                        <span className="text-gray-700">Hotline: {contactInfo.phone}</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </Container>

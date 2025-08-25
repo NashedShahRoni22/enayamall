@@ -29,12 +29,10 @@ export default function Footer() {
     ];
 
     const companyLinks = [
-        "About Swatbabymall",
+        "About",
         "Contact",
         "Career",
         "Blog",
-        "Sitemap",
-        "Store Locations"
     ];
 
     const helpCenterLinks = [

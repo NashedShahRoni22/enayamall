@@ -2,5 +2,22 @@
 
 @theme {
   --color-primary: #51A6DD;
-  --color-secondary: #F456A0;
+  --color-primarymagenta: #603C59;
+  --color-primarycream: #FCDEE0;
+  --color-secondary: #F859A2;
+  --color-natural: #CE967E;
+  --color-accent: #95A996;
+  --color-typograhy: #41393D;
+  --color-button: #B63D5E;
+  --color-light: #F5F5F5;
+  --color-ash: #666666;
+  --color-creamline: #F1F1F1;
+  --color-danger: #B63D5E;
+  --color-cartbg: #FFF7F8;
+  --color-errorbg: #FFDFDF;
+  --color-successbg: #EBF7F2;
+  --color-successText: #0D834D;
+  --color-orange: #FFA100;
+  --color-customgreen: #33B27F;
+  --color-nav: #FFFEF9;
 }
