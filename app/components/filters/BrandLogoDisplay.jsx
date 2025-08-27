@@ -25,12 +25,12 @@ const BrandLogoDisplay = ({ brands, brandIds, setBrandIds }) => {
       {selectedBrands.map((brand) => (
         <div 
           key={brand.id} 
-          className="relative bg-white rounded-[10px] border border-creamline hover:border-natural shadow-sm"
+          className="relative bg-white rounded-[10px] border border-creamline hover:border-primary shadow-sm"
         >
           {/* Close button */}
           <button
             onClick={() => removeBrandId(brand.id)}
-            className="absolute -top-[8px] -right-[8px] bg-natural text-white rounded-full size-[20px] shadow-md transition-colors duration-200 z-50 cursor-pointer"
+            className="absolute -top-[8px] -right-[8px] bg-primary text-white rounded-full size-[20px] shadow-md transition-colors duration-200 z-50 cursor-pointer"
           >
           </button>
           

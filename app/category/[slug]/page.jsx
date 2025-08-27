@@ -12,7 +12,7 @@ import Products from "@/app/components/products/Products";
 import Container from "@/app/components/shared/Container";
 import PageHeader from "@/app/components/shared/PageHeader";
 import { useAppContext } from "@/app/context/AppContext";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import BrandLogoDisplay from "@/app/components/filters/BrandLogoDisplay";
 import PriceRangeFilter from "@/app/components/filters/PriceRangeFilter";
 import { useGetData } from "@/app/components/helpers/useGetData";
@@ -22,7 +22,9 @@ import { FilterIcon } from "lucide-react";
 export default function page() {
   const { categories, brands, skinTypes } = useAppContext();
   const params = useParams();
+  const searchParams = useSearchParams();
   const slug = params?.slug ?? null;
+  const childreen = searchParams?.get('childreen');
 
   const [brandIds, setBrandIds] = useState([]);
   const [parentCategorytIds, setParentCategorytIds] = useState([]);
@@ -34,7 +36,7 @@ export default function page() {
   const [sortOption, setSortOption] = useState(0);
   const [page, setPage] = useState(1);
 
-  // State to accumulate all products
+  // State to accumulate all products for smooth loading
   const [allProducts, setAllProducts] = useState([]);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [previousFilters, setPreviousFilters] = useState(null);
@@ -50,13 +52,24 @@ export default function page() {
 
   // Match slug to brand and set brandIds
   useEffect(() => {
-    if (brands && Array.isArray(brands) && slug) {
-      const matchedBrand = brands.find(brand => brand.slug === slug);
-      if (matchedBrand) {
-        setBrandIds([matchedBrand.id]);
+    if (categories && Array.isArray(categories) && slug) {
+      const matchedParentCategory = categories.find(category => category.slug === slug);
+
+      if (matchedParentCategory) {
+        setParentCategorytIds([matchedParentCategory.id]);
+
+        if (childreen && Array.isArray(matchedParentCategory.child)) {
+          const matchedChild = matchedParentCategory.child.find(
+            child => child.slug === childreen
+          );
+
+          if (matchedChild) {
+            setChildCategoryId(matchedChild.id);
+          }
+        }
       }
     }
-  }, [brands, slug]);
+  }, [categories, slug, childreen]);
 
   // category options
   const sortOptions = [
@@ -151,16 +164,16 @@ export default function page() {
   return (
     <section className="relative">
       <div className="relative">
-        <PageHeader title={"Authentic Brands"} from={"home"} to={"brand"} />
+        <PageHeader title={"Top Category"} from={"home"} to={"Category"} />
       </div>
       {/* filters & products here  */}
       <Container>
         <div className="lg:max-w-7xl lg:mx-auto">
           <div className='py-[60px] lg:py-[120px]'>
             {/* filetrs actions  */}
-            <div className="sticky top-18 lg:static lg:flex lg:gap-[24px] bg-white z-10">
+            <div className="sticky top-16 lg:static lg:flex lg:gap-[24px] bg-white z-10">
               {/* for large device  */}
-              <div className="hidden  text-primary lg:w-2/6 2xl:w-1/4 lg:flex gap-[12px] items-center">
+              <div className="hidden  lg:w-2/6 2xl:w-1/4 lg:flex gap-[12px] items-center text-primary">
                 {/* <Image src={filterIcon} alt="filter icon" /> */}
                 <FilterIcon />
                 <p className="text-[24px]">Filtered by</p>

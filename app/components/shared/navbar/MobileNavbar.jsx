@@ -16,7 +16,7 @@ export default function MobileNavbar({ logo, menuItems = [], categories = [], co
         <div className="lg:hidden">
             <Container>
                 {/* Mobile Header */}
-                <div className="flex justify-between items-center py-4 px-4">
+                <div className="flex justify-between items-center py-4">
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

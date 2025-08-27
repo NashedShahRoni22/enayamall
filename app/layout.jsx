@@ -5,6 +5,7 @@ import Footer from "./components/shared/footer/Footer";
 import { AppProvider } from "./context/AppContext";
 import QuereyProvider from "./providers/QueryProvider"
 import { Toaster } from "react-hot-toast";
+import BottomBar from "./components/shared/bottombar/BottomBar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,6 +26,9 @@ export default function RootLayout({ children }) {
             <Toaster position="top-center" />
             {children}
             <Footer />
+            <div className="fixed lg:hidden bottom-0 z-[9998] w-full">
+              <BottomBar />
+            </div>
           </AppProvider>
         </QuereyProvider>
       </body>

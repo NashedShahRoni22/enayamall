@@ -1,5 +1,5 @@
 "use client";
-import { Heart, Star } from "lucide-react";
+import { Heart, Star, ShoppingCart, Eye } from "lucide-react";
 import productImg from "@/public/productImg.jpeg";
 import Image from "next/image";
 import { useAppContext } from "@/app/context/AppContext";
@@ -36,10 +36,10 @@ export default function VerticalProductCard({ p }) {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
-        <Star 
-          key={i} 
-          size={14} 
-          className={`${i <= filledStars ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+        <Star
+          key={i}
+          size={12}
+          className={`${i <= filledStars ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'} transition-colors`}
         />
       );
     }
@@ -69,94 +69,136 @@ export default function VerticalProductCard({ p }) {
     }
   }
 
+  const discountPercentage = p?.discount
+    ? Math.round(((p?.price - p?.discount?.discount_price) / p?.price) * 100)
+    : 0;
+
   return (
-    <Link href={`/shop/${p?.slug}?variant=${p?.variant}`} className="group">
-      <div className="p-3 lg:p-4 shadow rounded hover:shadow-lg transition-shadow duration-300">
-        {/* Product Image Here with hover effects */}
-        <div className="relative overflow-hidden rounded mb-3 lg:mb-4 h-[200px] lg:h-[300px] flex justify-center items-center">
-          <Image 
-            src={p?.main_image || productImg} 
-            alt={p?.name || "Product Image"} 
-            height={0}
-            width={0}
-            sizes="100vw"
-            className="h-full w-full object-contain group-hover:scale-105 transition-transform duration-300"
-          />
-          
-          {/* Discount Badge */}
-          {p?.discount && (
-            <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">
-              {Math.round(((p?.price - p?.discount?.discount_price) / p?.price) * 100)}% OFF
-            </div>
-          )}
+    <div className="group relative">
+      <Link href={`/shop/${p?.slug}?variant=${p?.variant}`} className="block">
+        <div className="bg-white rounded shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-gray-200">
 
-          {/* Add to Cart Button (Fade Up) */}
-          <button
-            disabled={p?.stock === 0}
-            onClick={(e) => handleAddToCart(e, p)}
-            className="opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all ease-linear duration-300 text-[10px] lg:text-[12px] rounded-[5px] hidden md:flex justify-center items-center bg-creamline hover:bg-secondary hover:text-white py-[16px] absolute bottom-[10px] left-[10px] right-[10px] cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
-          >
-            {p?.stock > 0 ? "Add To Cart" : "Out of stock"}
-          </button>
-        </div>
-
-        {/* Category and Wishlist */}
-        <div className="flex justify-between items-center mt-[20px] lg:mt-[30px]">
-          <p className="text-[12px] lg:text-[14px] text-secondary uppercase">
-            {p?.main_category?.name}
-          </p>
-          <button
-            onClick={(e) => handleAddToWishlist(e, p?.product_variant_id)}
-            className="cursor-pointer"
-          >
-            <Heart 
-              size={16} 
-              className="text-secondary hover:text-red-500 transition-colors duration-200" 
+          {/* Product Image Container with Enhanced Hover Effects */}
+          <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 aspect-square">
+            <Image
+              src={p?.main_image || productImg}
+              alt={p?.name || "Product Image"}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-contain p-4 group-hover:scale-110 transition-transform duration-700 ease-out"
             />
-          </button>
-        </div>
 
-        {/* Product name after image */}
-        <p className="text-primarymagenta text-[14px] lg:text-[18px] mt-[10px] lg:mt-[30px] line-clamp-2">
-          {p?.name} {p?.variant && <span>- {p?.variant}</span>}
-        </p>
-        
-        {/* Rating section */}
-        {p?.ratings?.total_rating > 0 && (
-          <div className="mt-[10px] lg:mt-[20px] text-[12px] lg:text-[14px] flex gap-[8px] lg:gap-[16px] text-primarymagenta">
-            <div className="flex gap-1 items-center">
-              <div className="flex">
-                {renderStars()}
-              </div>
-              <span className="text-yellow-400 ml-1">( {p?.ratings?.total_rating} )</span>
+            {/* Gradient Overlay on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Badges Container */}
+            <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
+              {/* Discount Badge */}
+              {p?.discount && (
+                <div className="bg-red-500 text-white px-3 py-1 rounded text-xs font-semibold shadow-lg animate-pulse">
+                  {discountPercentage}% OFF
+                </div>
+              )}
+
+              {/* Stock Badge */}
+              {p?.stock === 0 && (
+                <div className="bg-gray-800 text-white px-3 py-1 rounded text-xs font-medium">
+                  Out of Stock
+                </div>
+              )}
             </div>
-            {p?.total_sold > 0 && (
-              <p className="text-gray-600">{p?.total_sold} Sold</p>
-            )}
+
+            {/* Wishlist Button */}
+            <button
+              onClick={(e) => handleAddToWishlist(e, p?.product_variant_id)}
+              className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-white hover:shadow-lg transform hover:scale-110 transition-all duration-200 z-10"
+            >
+              <Heart
+                size={18}
+                className="text-gray-600 hover:text-red-500 hover:fill-red-500 transition-all duration-200"
+              />
+            </button>
+
+            {/* Action Buttons (Desktop) */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out hidden md:block">
+              <button
+                disabled={p?.stock === 0}
+                onClick={(e) => handleAddToCart(e, p)}
+                className="w-full bg-creamline text-primarymagenta py-3 px-4 rounded font-medium hover:bg-secondary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                <ShoppingCart size={16} />
+                {p?.stock > 0 ? "Add to Cart" : "Out of Stock"}
+              </button>
+            </div>
           </div>
-        )}
-        
-        {/* price & discount here */}
-        <div className="text-[14px] lg:text-[18px] mt-[10px] lg:mt-[20px] text-primarymagenta">
-          {p?.discount ? (
-            <div className="flex flex-col lg:flex-row gap-[10px]">
-              <p className="text-gray-800">৳ {p?.discount?.discount_price} Taka</p>
-              <p className="text-gray-500 line-through opacity-50">৳ {p?.price} Taka</p>
-            </div>
-          ) : (
-            <p className="text-gray-800">৳ {p?.price} Taka</p>
-          )}
-        </div>
 
-        {/* Mobile Add to Cart Button */}
-        <button
-          disabled={p?.stock === 0}
-          onClick={(e) => handleAddToCart(e, p)}
-          className="md:hidden w-full mt-3 py-2 px-4 bg-gray-800 text-white rounded text-sm font-medium hover:bg-gray-700 transition-colors disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed"
-        >
-          {p?.stock > 0 ? "Add To Cart" : "Out of stock"}
-        </button>
-      </div>
-    </Link>
+          {/* Product Information */}
+          <div className="p-4 space-y-3">
+
+            {/* Category */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {p?.main_category?.name}
+              </span>
+              {p?.total_sold > 0 && (
+                <span className="text-xs text-gray-500 bg-creamline px-2 py-1 rounded">
+                  {p?.total_sold} sold
+                </span>
+              )}
+            </div>
+
+            {/* Product Name */}
+            <h3 className="font-semibold text-primarymagenta leading-tight line-clamp-2 group-hover:text-secondary transition-colors duration-200">
+              {p?.name} {p?.variant && <span className="text-gray-600">- {p?.variant}</span>}
+            </h3>
+
+            {/* Rating */}
+            {p?.ratings?.total_rating > 0 && (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  {renderStars()}
+                </div>
+                <span className="text-xs text-gray-600">
+                  ({p?.ratings?.total_rating})
+                </span>
+                {ratingCount && (
+                  <span className="text-xs font-medium text-yellow-600">
+                    {parseFloat(ratingCount).toFixed(1)}
+                  </span>
+                )}
+              </div>
+            )}
+
+            {/* Price */}
+            <div className="flex items-baseline gap-2">
+              {p?.discount ? (
+                <>
+                  <span className="text-xl font-bold text-primarymagenta">
+                    ৳{p?.discount?.discount_price}
+                  </span>
+                  <span className="text-sm text-gray-500 line-through">
+                    ৳{p?.price}
+                  </span>
+                </>
+              ) : (
+                <span className="text-xl font-bold text-primarymagenta">
+                  ৳{p?.price}
+                </span>
+              )}
+            </div>
+
+            {/* Mobile Add to Cart Button */}
+            <button
+              disabled={p?.stock === 0}
+              onClick={(e) => handleAddToCart(e, p)}
+              className="md:hidden w-full bg-creamline text-primarymagenta py-3 px-4 rounded font-medium hover:bg-secondary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              <ShoppingCart size={16} />
+              {p?.stock > 0 ? "Add to Cart" : "Out of Stock"}
+            </button>
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 }
