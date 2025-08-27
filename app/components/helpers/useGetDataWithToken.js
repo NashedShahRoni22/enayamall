@@ -19,8 +19,8 @@ export const useGetDataWithToken = (endpoint, token, enabled = true) => {
 
       // Handle 401 Unauthorized - redirect to login
       if (res.status === 401) {
-        localStorage.removeItem('LaminaxUser');
-        localStorage.removeItem('LaminaxAuthToken');
+        localStorage.removeItem('EnayamallUser');
+        localStorage.removeItem('EnayamallAuthToken');
         
         // Redirect to login page
         window.location.href = '/login';
@@ -37,5 +37,5 @@ export const useGetDataWithToken = (endpoint, token, enabled = true) => {
     enabled: enabled && !!token,
   });
 
-  return { data, error, isLoading, isError };
+  return { data, error,  isLoading: enabled && !!token ? isLoading : false, isError };
 };

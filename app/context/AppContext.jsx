@@ -38,11 +38,11 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     try {
       // Load auth token
-      const authToken = localStorage.getItem('LaminaxAuthToken');
+      const authToken = localStorage.getItem('EnayamallAuthToken');
       if (authToken) setToken(authToken);
 
       // Load user
-      const storedUser = localStorage.getItem('LaminaxUser');
+      const storedUser = localStorage.getItem('EnayamallUser');
       if (storedUser) setUser(JSON.parse(storedUser));
 
       // Generate and set guest token globally
@@ -59,11 +59,11 @@ export const AppProvider = ({ children }) => {
   // ✅ Add login function to update token and persist it
   const login = (newToken, userData) => {
     setToken(newToken);
-    localStorage.setItem('LaminaxAuthToken', newToken);
+    localStorage.setItem('EnayamallAuthToken', newToken);
 
     if (userData) {
       setUser(userData);
-      localStorage.setItem('LaminaxUser', JSON.stringify(userData));
+      localStorage.setItem('EnayamallUser', JSON.stringify(userData));
     }
   };
 
@@ -71,8 +71,8 @@ export const AppProvider = ({ children }) => {
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('LaminaxAuthToken');
-    localStorage.removeItem('LaminaxUser');
+    localStorage.removeItem('EnayamallAuthToken');
+    localStorage.removeItem('EnayamallUser');
   };
 
   // ✅ Add product to cart DB 

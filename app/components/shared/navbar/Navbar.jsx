@@ -6,7 +6,7 @@ import MobileNavbar from "./MobileNavbar";
 import { useAppContext } from '@/app/context/AppContext';
 
 export default function Navbar() {
-    const { categories, cartDBCount, cartDBCountGuest, totalDB, totalDBGuest } = useAppContext();
+    const { categories, cartDBCount, cartDBCountGuest, totalDB, totalDBGuest, user, wishlistCount } = useAppContext();
     
     // Dynamic menu items
     const menuItems = [
@@ -19,8 +19,7 @@ export default function Navbar() {
 
     // Contact info
     const contactInfo = {
-        phone: "(088) 1321456",
-        email: "info@example.com"
+       ...user
     };
 
     // Cart info (this could come from a cart context)
@@ -37,6 +36,7 @@ export default function Navbar() {
                 categories={categories}
                 contactInfo={contactInfo}
                 cartInfo={cartInfo}
+                wishlistCount={wishlistCount}
             />
             <MobileNavbar 
                 logo={logo} 

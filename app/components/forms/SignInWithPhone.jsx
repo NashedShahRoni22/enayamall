@@ -23,6 +23,9 @@ export default function SignInWithPhone({ option }) {
     const { setUser, setToken, guestToken } = useAppContext();
     const queryClient = useQueryClient();
 
+    // Error state for form validation
+    const [errors, setErrors] = useState({});
+
     // Timer effect - countdown every second
     useEffect(() => {
         let interval = null;
@@ -87,6 +90,27 @@ export default function SignInWithPhone({ option }) {
         } else {
             setOtpForm(prev => ({ ...prev, [name]: value }));
         }
+
+        // Clear error when user starts typing
+        setErrors(prev => ({ ...prev, [name]: "" }));
+    };
+
+    // Validation function
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!otpForm.phone.trim()) {
+            newErrors.phone = "Phone number is required";
+        } else if (otpForm.phone.length !== 11) {
+            newErrors.phone = "Please enter a valid 11-digit phone number";
+        }
+
+        if (otpSent && (!otpForm.otp || otpForm.otp.length < 4)) {
+            newErrors.otp = "Please enter a valid OTP";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const postRequestOtp = usePostData(`login/request-otp?${otpForm.phone}`);
@@ -97,10 +121,7 @@ export default function SignInWithPhone({ option }) {
     const handleRequestOtp = (e) => {
         e.preventDefault();
 
-        if (otpForm.phone.length !== 11) {
-            toast.error('Please enter a valid 11-digit phone number');
-            return;
-        }
+        if (!validateForm()) return;
 
         setLoading(true);
 
@@ -129,10 +150,7 @@ export default function SignInWithPhone({ option }) {
     const handleVerifyOtp = (e) => {
         e.preventDefault();
 
-        if (!otpForm.otp || otpForm.otp.length < 4) {
-            toast.error('Please enter a valid OTP');
-            return;
-        }
+        if (!validateForm()) return;
 
         setLoading(true);
 
@@ -147,8 +165,8 @@ export default function SignInWithPhone({ option }) {
                     const authToken = jsonData.token;
 
                     // ✅ Save to localStorage
-                    localStorage.setItem('LaminaxUser', JSON.stringify(jsonData.details));
-                    localStorage.setItem('LaminaxAuthToken', authToken);
+                    localStorage.setItem('EnayamallUser', JSON.stringify(jsonData.details));
+                    localStorage.setItem('EnayamallAuthToken', authToken);
 
                     // ✅ Set global user state
                     setUser(jsonData.details);
@@ -199,6 +217,7 @@ export default function SignInWithPhone({ option }) {
         setOtpSent(false);
         setOtpForm(prev => ({ ...prev, otp: '' }));
         setTimer(0);
+        setErrors(prev => ({ ...prev, otp: "" }));
     };
 
     const operatorInfo = getOperatorLogo(otpForm.phone);
@@ -206,7 +225,15 @@ export default function SignInWithPhone({ option }) {
     return (
         <form onSubmit={otpSent ? handleVerifyOtp : handleRequestOtp}>
             {/* Phone Number Input */}
-            <p className='text-[16px] sm:text-[18px] text-ash'>Phone Number</p>
+            <label className="flex justify-between font-medium text-gray-700">
+                <p className='text-[16px] sm:text-[18px] text-ash'>
+                    Phone Number <span className="text-button">*</span>
+                </p>
+                {errors.phone && (
+                    <span className="text-button ml-2">{errors.phone}</span>
+                )}
+            </label>
+            
             <div className='relative mt-[20px]'>
                 <div className='absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2 z-10'>
                     <span className='text-[14px] sm:text-[16px] text-ash font-medium'>+88</span>
@@ -227,9 +254,8 @@ export default function SignInWithPhone({ option }) {
                     value={otpForm.phone}
                     onChange={handleOtpChange}
                     placeholder='Enter 11-digit phone number'
-                    className='text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] pl-[70px] sm:pl-[85px] pr-[15px] sm:pr-[20px] focus:outline-none border border-creamline rounded-[5px] w-full'
+                    className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] pl-[70px] sm:pl-[85px] pr-[15px] sm:pr-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] w-full`}
                     maxLength="11"
-                    required
                     disabled={otpSent}
                 />
             </div>
@@ -237,14 +263,21 @@ export default function SignInWithPhone({ option }) {
             {/* OTP Input - Shows only after OTP is sent */}
             {otpSent && (
                 <div className='mt-[20px]'>
-                    <p className='text-[16px] sm:text-[18px] text-ash'>Enter OTP</p>
+                    <label className="flex justify-between font-medium text-gray-700">
+                        <p className='text-[16px] sm:text-[18px] text-ash'>
+                            Enter OTP <span className="text-button">*</span>
+                        </p>
+                        {errors.otp && (
+                            <span className="text-button ml-2">{errors.otp}</span>
+                        )}
+                    </label>
                     <input
                         type="text"
                         name="otp"
                         value={otpForm.otp}
                         onChange={handleOtpChange}
                         placeholder='Enter your OTP code number'
-                        className='text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline rounded-[5px] mt-[20px] w-full'
+                        className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.otp ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                         maxLength="6"
                         required
                     />
@@ -254,13 +287,13 @@ export default function SignInWithPhone({ option }) {
             {/* Submit Button */}
             <button
                 type="submit"
-                className={`py-[12px] sm:py-[24px] text-[14px] sm:text-[16px] ${option === 1 ? "bg-accent text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline' : 'cursor-pointer'}`}
+                className={`py-[12px] sm:py-[24px] text-[14px] sm:text-[16px] ${option === 1 ? "bg-primary text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline' : 'cursor-pointer'}`}
                 disabled={postRequestOtp.isLoading || postVerifyOtp.isLoading || loading}
             >
                 {!loading ? otpSent ? 'Verify OTP' : 'Send OTP' : null}
 
                 {
-                    loading && <LoadingSvg label={otpSent ? 'Verifying OTP' : 'Sending OTP'} color='text-primarymagenta' />
+                    loading && <LoadingSvg label={otpSent ? 'Verifying OTP' : 'Sending OTP'} color='text-white' />
                 }
             </button>
 

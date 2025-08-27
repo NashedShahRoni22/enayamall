@@ -7,7 +7,7 @@ import { useState } from "react";
 import Container from "../Container";
 import CategoryDropdown from "./CategoryDropdown";
 
-export default function DesktopNavbar({ logo, menuItems = [], categories = [], contactInfo, cartInfo }) {
+export default function DesktopNavbar({ logo, menuItems = [], categories = [], contactInfo, cartInfo, wishlistCount }) {
     const [showCategories, setShowCategories] = useState(false);
     const [showAllCategories, setShowAllCategories] = useState(false);
 
@@ -34,17 +34,17 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
 
                         <div className="h-6 w-0.5 bg-gray-400"></div>
 
-                        <div 
+                        <div
                             className="relative flex items-center text-gray-600 gap-2 cursor-pointer"
                             onClick={() => setShowAllCategories(!showAllCategories)}
                         >
                             <p className="text-sm whitespace-nowrap">All Categories</p>
                             <ChevronDown className="size-4" />
-                            
+
                             {/* All Categories Dropdown */}
                             {showAllCategories && (
-                                <CategoryDropdown 
-                                    categories={categories} 
+                                <CategoryDropdown
+                                    categories={categories}
                                     onClose={() => setShowAllCategories(false)}
                                     className="absolute top-full right-0 mt-2"
                                 />
@@ -55,9 +55,20 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                     {/* Actions */}
                     <div className="flex gap-4 items-center">
                         {/* Wishlist */}
-                        <Link href="/wishlist">
+                        {/* <Link href="/wishlist">
                             <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors">
                                 <Heart className="size-5" />
+                            </button>
+                        </Link> */}
+
+                        <Link href="/wishlist">
+                            <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative">
+                                <Heart className="size-5" />
+                                {wishlistCount > 0 && (
+                                    <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full size-5 flex items-center justify-center">
+                                        {wishlistCount}
+                                    </span>
+                                )}
                             </button>
                         </Link>
 
@@ -70,9 +81,12 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                             </Link>
                             <div className="text-gray-600 hidden xl:block">
                                 <p className="text-sm">Welcome</p>
-                                <Link href="/login" className="font-semibold hover:text-primary transition-colors">
-                                    Log In / Register
-                                </Link>
+                                {contactInfo?.name ?
+                                    <Link href="/account" className="font-semibold hover:text-primary transition-colors">{contactInfo?.name}</Link>
+                                    :
+                                    <Link href="/login" className="font-semibold hover:text-primary transition-colors">
+                                        Log In / Register
+                                    </Link>}
                             </div>
                         </div>
 
@@ -104,17 +118,17 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                         {/* Left side */}
                         <div className="flex gap-8 items-center">
                             {/* Category */}
-                            <div 
+                            <div
                                 className="relative flex gap-2 items-center cursor-pointer"
                                 onClick={() => setShowCategories(!showCategories)}
                             >
                                 <Menu className="size-5" />
                                 <p>List Category</p>
-                                
+
                                 {/* Categories Dropdown */}
                                 {showCategories && (
-                                    <CategoryDropdown 
-                                        categories={categories} 
+                                    <CategoryDropdown
+                                        categories={categories}
                                         onClose={() => setShowCategories(false)}
                                         className="absolute top-full left-0 mt-2"
                                     />
@@ -123,9 +137,9 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
 
                             {/* Dynamic menu items */}
                             {menuItems.map((item, index) => (
-                                <Link 
-                                    key={index} 
-                                    href={item.href} 
+                                <Link
+                                    key={index}
+                                    href={item.href}
                                 >
                                     {item.name}
                                 </Link>
@@ -140,7 +154,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                     <p className="text-sm">Hotline 24/7 {contactInfo.phone}</p>
                                 </div>
                             )}
-                            
+
                             {/* Language */}
                             <div className="flex gap-2 items-center cursor-pointer hover:opacity-80 transition-opacity">
                                 <p className="text-sm">Eng</p>

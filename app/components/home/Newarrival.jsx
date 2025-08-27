@@ -2,18 +2,10 @@
 import React, { useState } from 'react'
 import Container from '../shared/Container'
 import VerticalProductCard from '../shared/cards/VerticalProductCard'
+import { useAppContext } from '@/app/context/AppContext';
 
 export default function Newarrival() {
-    const categories = [
-        { id: 'featured', name: 'Featured' },
-        { id: 'pregnancy', name: 'Pregnancy & Postpartum' },
-        { id: 'milks', name: 'Milks & Foods' },
-        { id: 'diapers', name: 'Diapers & Wipes' },
-        { id: 'infant', name: 'Infant' },
-        { id: 'strollers', name: 'Strollers' },
-        { id: 'baby-out', name: 'Baby Out' }
-    ];
-
+    const { categories } = useAppContext();
     const [activeCategory, setActiveCategory] = useState('featured');
 
     return (
@@ -38,7 +30,7 @@ export default function Newarrival() {
                             onChange={(e) => setActiveCategory(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
                         >
-                            {categories.map((category) => (
+                            {categories?.map((category) => (
                                 <option key={category.id} value={category.id}>
                                     {category.name}
                                 </option>
@@ -48,7 +40,7 @@ export default function Newarrival() {
 
                     {/* Desktop Tabs */}
                     <div className="hidden md:flex gap-2 overflow-x-auto">
-                        {categories.map((category) => (
+                        {categories?.map((category) => (
                             <button
                                 key={category.id}
                                 onClick={() => setActiveCategory(category.id)}

@@ -20,6 +20,9 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const { guestToken } = useAppContext();
 
+    // Error state for form validation
+    const [errors, setErrors] = useState({});
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -33,6 +36,29 @@ export default function Login() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm(prev => ({ ...prev, [name]: value }));
+        
+        // Clear error when user starts typing
+        setErrors(prev => ({ ...prev, [name]: "" }));
+    };
+
+    // Validation function
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!form.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+            newErrors.email = "Please enter a valid email address";
+        }
+
+        if (!form.password.trim()) {
+            newErrors.password = "Password is required";
+        } else if (form.password.length < 6) {
+            newErrors.password = "Password must be at least 6 characters long";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const postLogin = usePostData('login');
@@ -41,6 +67,8 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!validateForm()) return;
 
         setLoading(true);
 
@@ -55,8 +83,8 @@ export default function Login() {
                     const authToken = jsonData.token;
 
                     // ✅ Save to localStorage
-                    localStorage.setItem('LaminaxUser', JSON.stringify(jsonData.details));
-                    localStorage.setItem('LaminaxAuthToken', authToken);
+                    localStorage.setItem('EnayamallUser', JSON.stringify(jsonData.details));
+                    localStorage.setItem('EnayamallAuthToken', authToken);
 
                     // ✅ Set global user state
                     setUser(jsonData.details);
@@ -106,15 +134,15 @@ export default function Login() {
         <div>
             <h5 className='text-[24px] sm:text-[26px] text-primarymagenta'>Login</h5>
             <p className='text-[16px] sm:text-[18px] text-ash mt-[30px]'>
-                Welcome back. You’ve been missed! <br /> Please Log in to your account to continue
+                Welcome back. You've been missed! <br /> Please Log in to your account to continue
             </p>
 
             {/* tabs here  */}
             <div className='mt-[50px]'>
                 {/* tab buttons  */}
                 <div className='flex gap-[50px]'>
-                    <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-natural border-b-2 border-natural font-[650]" : "text-primarymagenta"}`}>Sign in with OTP</button>
-                    <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-natural border-b-2 border-natural font-[650]" : "text-primarymagenta"}`}>Sign in with Password</button>
+                    <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>Sign in with OTP</button>
+                    <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>Sign in with Password</button>
                 </div>
                 {/* tab forms */}
                 <div className='mt-[25px] sm:mt-[50px]'>
@@ -124,28 +152,40 @@ export default function Login() {
                             :
                             <form onSubmit={handleSubmit}>
                                 {/* Email */}
-                                <p className='text-[16px] sm:text-[18px] text-ash'>Email Address <span className='text-danger'>*</span></p>
+                                <label className="flex justify-between font-medium text-gray-700">
+                                    <p className='text-[16px] sm:text-[18px] text-ash'>
+                                        Email Address <span className="text-button">*</span>
+                                    </p>
+                                    {errors.email && (
+                                        <span className="text-button ml-2">{errors.email}</span>
+                                    )}
+                                </label>
                                 <input
-                                    required
                                     type="text"
                                     name="email"
                                     placeholder="Enter email address"
-                                    defaultValue={form.email || ''}
+                                    value={form.email}
                                     onChange={handleChange}
-                                    className="text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline rounded-[5px] mt-[20px] w-full"
+                                    className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                                 />
 
                                 {/* Password */}
-                                <p className='text-[16px] sm:text-[18px] text-ash mt-[20px]'>Password <span className='text-danger'>*</span></p>
+                                <label className="flex justify-between font-medium text-gray-700 mt-[20px]">
+                                    <p className='text-[16px] sm:text-[18px] text-ash'>
+                                        Password <span className="text-button">*</span>
+                                    </p>
+                                    {errors.password && (
+                                        <span className="text-button ml-2">{errors.password}</span>
+                                    )}
+                                </label>
                                 <div className='relative mt-[20px]'>
                                     <input
-                                        required
                                         type={showPassword ? 'text' : 'password'}
                                         name="password"
                                         placeholder="Enter your password"
-                                        defaultValue={form.password || ''}
+                                        value={form.password}
                                         onChange={handleChange}
-                                        className='text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline rounded-[5px] w-full pr-[40px]'
+                                        className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                                     />
                                     <div
                                         onClick={togglePasswordVisibility}
@@ -164,15 +204,17 @@ export default function Login() {
                                 {/* Submit Button */}
                                 <button
                                     type="submit"
-                                    className={`py-[12px] sm:py-[24px] ${option === 2 ? "bg-accent text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline text-primarymagenta' : 'cursor-pointer'}`}
+                                    className={`py-[12px] sm:py-[24px] text-[14px] sm:text-[16px] ${option === 2 ? "bg-primary text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline' : 'cursor-pointer'}`}
                                     disabled={postLogin.isLoading || loading}
                                 >
-                                    {loading ? <LoadingSvg label="Signing in" color="text-primarymagenta" /> : "Sign in"}
+                                    {!loading ? "Sign in" : null}
+                                    
+                                    {loading && <LoadingSvg label="Signing in" color="text-white" />}
                                 </button>
                             </form>
                     }
 
-                    <p className='text-primarymagenta mt-[20px] sm:mt-[40px]'>Don't have an account?   <Link href={"/register"} className='text-natural hover:underline'>Register Now</Link> </p>
+                    <p className='text-primarymagenta mt-[20px] sm:mt-[40px]'>Don't have an account?   <Link href={"/register"} className='text-primary hover:underline'>Register Now</Link> </p>
                 </div>
             </div>
         </div>
