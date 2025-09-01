@@ -47,7 +47,7 @@ export default function Orders({ orders }) {
                               }
 
                             </div>
-                            <p>৳ {od?.price * od?.quantity} Taka</p>
+                            <p>D {od?.price * od?.quantity} Taka</p>
                           </div>)
                       }
                     </div>
@@ -69,7 +69,7 @@ export default function Orders({ orders }) {
 
                     <div className="text-[16px] lg:text-[20px] flex justify-between mt-[10px]">
                       <p className="font-[650]">Amount payable</p>
-                      <p className="font-[650]">৳ {order?.amount_payable?.toFixed(2)} Taka</p>
+                      <p className="font-[650]">D {order?.amount_payable?.toFixed(2)} Taka</p>
                     </div>
                   </div>
 

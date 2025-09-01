@@ -15,6 +15,8 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   // to refetch data 
   const queryClient = useQueryClient();
+  // ✅ Language initialization
+  const [lang, setLang] = useState("en");
   // ✅ Add loading state to track initialization
   const [loading, setLoading] = useState(true);
   // Global authentication token
@@ -37,6 +39,10 @@ export const AppProvider = ({ children }) => {
   // ✅ Load user, cart, and guest token from localStorage once on app mount
   useEffect(() => {
     try {
+      // Load language
+      const langState = localStorage.getItem('EnayamallLang');
+      if (langState) setLang(langState);
+
       // Load auth token
       const authToken = localStorage.getItem('EnayamallAuthToken');
       if (authToken) setToken(authToken);
@@ -276,6 +282,8 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        lang,
+        setLang,
         loading,
         token,
         setToken,

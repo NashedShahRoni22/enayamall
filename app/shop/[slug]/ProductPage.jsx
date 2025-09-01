@@ -23,7 +23,7 @@ export default function ProductPage() {
     const [reviewable, setReviewable] = useState(false);
     const [isWishlisted, setIsWishlisted] = useState(false);
     const [variantId, setVariantId] = useState(null);
-    
+
     // Modal state for image gallery
     const [imageModal, setImageModal] = useState({
         isOpen: false,
@@ -41,8 +41,10 @@ export default function ProductPage() {
 
     // Set default image when data loads
     useEffect(() => {
-        if (product?.main_image?.[0]) {
+        if (product?.main_image?.[0] && product.main_image[0] !== null) {
             setDefaultImage(product.main_image[0]);
+        } else if (product?.thumbnail_image && product.thumbnail_image !== null) {
+            setDefaultImage(product.thumbnail_image);
         }
     }, [product]);
 
@@ -66,7 +68,7 @@ export default function ProductPage() {
 
     if (isLoading) return <ScreenLoader />;
     if (error) return <div>Error: {error.message}</div>;
-    
+
     return (
         <>
             <Container>
@@ -75,9 +77,10 @@ export default function ProductPage() {
                     <div className="flex flex-col gap-[20px] md:flex-row md:gap-[40px] 2xl:gap-[80px]">
                         {/* product image */}
                         <div className="w-full md:w-1/2 md:sticky md:top-26">
-                            <ProductImageGallery 
-                                product={product} 
-                                setDefaultImage={setDefaultImage} 
+                            <ProductImageGallery
+                                product={product}
+                                defaultImage={defaultImage}
+                                setDefaultImage={setDefaultImage}
                                 imageModal={imageModal}
                                 setImageModal={setImageModal}
                             />
@@ -85,28 +88,27 @@ export default function ProductPage() {
 
                         {/* product description */}
                         <div className="md:w-1/2">
-                            <ProductDetails 
-                                token={token} 
-                                slug={slug} 
-                                variant={variant} 
-                                defaultImage={defaultImage} 
-                                product={product} 
-                                setReviewable={setReviewable} 
-                                setVariantId={setVariantId} 
-                                isWishlisted={isWishlisted} 
-                                setIsWishlisted={setIsWishlisted} 
+                            <ProductDetails
+                                token={token}
+                                slug={slug}
+                                variant={variant}
+                                product={product}
+                                setReviewable={setReviewable}
+                                setVariantId={setVariantId}
+                                isWishlisted={isWishlisted}
+                                setIsWishlisted={setIsWishlisted}
                             />
                         </div>
                     </div>
 
                     {/* details, how to use, reviews here  */}
                     <div className="mt-[60px] 2xl:mt-[120px]">
-                        <ProductUseReviews 
-                            product={product} 
-                            reviewable={reviewable} 
-                            variantId={variantId} 
-                            token={token} 
-                            productType={"regular"} 
+                        <ProductUseReviews
+                            product={product}
+                            reviewable={reviewable}
+                            variantId={variantId}
+                            token={token}
+                            productType={"regular"}
                         />
                     </div>
 

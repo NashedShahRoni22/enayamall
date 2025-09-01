@@ -149,11 +149,11 @@ export default function ComboCard({ p }) {
                 <div className="text-[14px] lg:text-[18px] mt-[10px] lg:mt-[20px]">
                     {
                         p?.discount === null ?
-                            <p className="">৳ {p?.combo_price} Taka</p>
+                            <p className="">D {p?.combo_price} Taka</p>
                             :
                             <div className="flex flex-col lg:flex-row gap-[10px]">
-                                <p className="">৳ {p?.discount?.discount_price} Taka</p>
-                                <p className="text-button line-through opacity-50">৳ {p?.combo_price} Taka</p>
+                                <p className="">D {p?.discount?.discount_price} Taka</p>
+                                <p className="text-button line-through opacity-50">D {p?.combo_price} Taka</p>
                             </div>
                     }
                 </div>

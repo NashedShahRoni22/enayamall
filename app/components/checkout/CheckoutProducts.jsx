@@ -163,7 +163,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                                 <p className="truncate pr-2">{c.name}</p>
                                 <p className="whitespace-nowrap">x {c.quantity}</p>
                             </div>
-                            <p className='w-[30%] text-right'>৳ {(c.price * c.quantity).toFixed(2)}</p>
+                            <p className='w-[30%] text-right'><span className="dirham-symbol">ê</span> {(c.price * c.quantity).toFixed(2)}</p>
                         </div>
                     ))}
                 </div>
@@ -174,7 +174,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                 {/* Subtotal Row */}
                 <div className='flex justify-between items-center'>
                     <p className='text-[16px] sm:text-[18px] w-[70%]'>Subtotal</p>
-                    <p className='text-[16px] sm:text-[18px] w-[30%] text-right'>৳ {(token ? totalDB : total)} Tk</p>
+                    <p className='text-[16px] sm:text-[18px] w-[30%] text-right'><span className="dirham-symbol">ê</span> {(token ? totalDB : total)}</p>
                 </div>
             </div>
 
@@ -182,22 +182,24 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
             <div className='bg-successbg rounded-[10px] py-[20px] px-[20px] sm:px-[40px] border border-customgreen'>
                 <div>
                     <p className='text-[16px] text-customgreen flex gap-[5px] mt-[14px]'>
-                        <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>৳</span>
-                        Your are saving ৳ {totalDiscountDB} TK.
+                        <span className='dirham-symbol size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>
+                            ê
+                        </span>
+                        Your are saving <span className="dirham-symbol">ê</span> {totalDiscountDB}.
                     </p>
 
                     {appliedCoupon && couponData && (
                         <p className='text-[16px] text-customgreen flex gap-[5px]'>
-                            <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>৳</span>
-                            You are saving ৳{discountAmount} in this order.
+                            <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>D</span>
+                            You are saving <span className="dirham-symbol">ê</span> {discountAmount} in this order.
                         </p>
                     )}
 
                     {
                         shippingCost &&
                         <p className='text-[16px] text-customgreen flex gap-[5px] mt-[14px]'>
-                            <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>৳</span>
-                            Your Delivery charge ৳ {shippingCost} TK.
+                            <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>D</span>
+                            Your Delivery charge <span className="dirham-symbol">ê</span> {shippingCost}
                         </p>
                     }
 
@@ -208,7 +210,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                 <div className='flex justify-between'>
                     <p className='text-[20px] sm:text-[24px] font-[650]'>Amount Payable</p>
                     <p className='text-[20px] sm:text-[24px] font-[650]'>
-                        ৳ {(token ? totalDB : total) - discountAmount + shippingCost} Tk
+                        <span className="dirham-symbol">ê</span> {(token ? totalDB : total) - discountAmount + shippingCost}
                     </p>
                 </div>
 

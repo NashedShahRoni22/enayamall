@@ -1,9 +1,8 @@
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
-import { useGetData } from "../helpers/useGetData";
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-export default function Brands({ brands, brandIds, setBrandIds }) {
+export default function Brands({ brands, brandIds, setBrandIds, lang }) {
     const [show, setShow ] = useState(true);
 
     const handleBrandCheckboxChange = (selectedBrandId) => {
@@ -17,9 +16,11 @@ export default function Brands({ brands, brandIds, setBrandIds }) {
     };
 
     return (
-        <div className="p-[20px] flex flex-col gap-[20px] text-primarymagenta rounded-[5px] border border-creamline">
+        <div className="p-[20px] flex flex-col gap-[20px] text-primarymagenta rounded-[5px] border border-creamline max-h-[60vh] overflow-y-scroll">
             <div className="flex justify-between items-center">
-                <p className="text-[20px]">Brands</p>
+                <p className="text-[20px]">
+                    {lang === "en" ? "Brands" : "العلامات التجارية" }
+                </p>
                 <button onClick={() => {
                     setShow(!show)
                 }} className="cursor-pointer">
@@ -48,12 +49,12 @@ export default function Brands({ brands, brandIds, setBrandIds }) {
                                         {
                                             brandIds.includes(brand?.id)
                                                 ?
-                                                <MdCheckBox className="size-[20px] text-natural" />
+                                                <MdCheckBox className="size-[20px] text-primary" />
                                                 :
                                                 <MdCheckBoxOutlineBlank className="size-[20px] text-primarymagenta" />
                                         }
                                     </span>
-                                    <p className={brandIds.includes(brand?.id)  ? "text-natural" : ""}>
+                                    <p className={brandIds.includes(brand?.id)  ? "text-primary" : ""}>
                                         {brand?.name}
                                     </p>
                                 </div>

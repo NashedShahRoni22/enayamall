@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 
-export default function Categories({ categories, parentCategorytIds, setParentCategorytIds, childCategoryId, setChildCategoryId }) {
+export default function Categories({ categories, parentCategorytIds, setParentCategorytIds, childCategoryId, setChildCategoryId, lang }) {
     const [show, setShow] = useState(true);
 
     const handleParentCheckboxChange = (categoryId) => {
@@ -29,7 +29,7 @@ export default function Categories({ categories, parentCategorytIds, setParentCa
     return (
         <div className="p-[20px] flex flex-col gap-[20px] text-primarymagenta rounded-[5px] border border-creamline">
             <div className="flex justify-between items-center">
-                <p className="text-[20px]">Categories</p>
+                <p className="text-[20px]">{lang === "en" ? "Categories" : "فئات"}</p>
                 <button onClick={() => {
                     setShow(!show)
                 }} className="cursor-pointer">
@@ -57,18 +57,19 @@ export default function Categories({ categories, parentCategorytIds, setParentCa
                                         <div className="flex gap-[10px] items-center">
                                             <span>
                                                 {parentCategorytIds.includes(category?.id)
-                                                    ? <MdCheckBox className="size-[20px] text-secondary" />
+                                                    ? <MdCheckBox className="size-[20px] text-primary" />
                                                     : <MdCheckBoxOutlineBlank className="size-[20px] text-primarymagenta" />}
 
                                             </span>
-                                            <p className={parentCategorytIds.includes(category?.id) ? "text-secondary" : ""}>
-                                                {category?.name}
+                                            <p className={parentCategorytIds.includes(category?.id) ? "text-primary" : ""}>
+                                                {/* {category?.name} */}
+                                                {lang === "en" ? category?.name : category?.ar_name }
                                             </p>
                                         </div>
                                         {
                                             category?.child?.length > 0 &&
                                             <>{parentCategorytIds.includes(category?.id) ?
-                                                <FaChevronUp className="text-secondary" /> :
+                                                <FaChevronUp className="text-primary" /> :
                                                 <FaChevronDown />
                                             }</>
                                         }
@@ -89,12 +90,13 @@ export default function Categories({ categories, parentCategorytIds, setParentCa
                                                         checked={childCategoryId === categoryChild?.id}
                                                         onChange={(e) => e.stopPropagation()}
                                                         className={`appearance-none w-4 h-4 border border-primarymagenta rounded-full ${childCategoryId === categoryChild?.id
-                                                            ? "bg-secondary !border-secondary"
+                                                            ? "bg-primary !border-primary"
                                                             : "bg-white"
                                                             }`}
                                                     />
-                                                    <span className={childCategoryId === categoryChild?.id ? "text-secondary" : ""}>
-                                                        {categoryChild?.name}
+                                                    <span className={childCategoryId === categoryChild?.id ? "text-primary" : ""}>
+                                                        {/* {categoryChild?.name} */}
+                                                        {lang === "en" ? categoryChild?.name : categoryChild?.ar_name }
                                                     </span>
                                                 </div>
                                             ))}

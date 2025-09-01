@@ -1,8 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TiStarFullOutline } from "react-icons/ti";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function HorizontalProductCard({ p }) {
+  const { lang } = useAppContext();
+
+  // Translation object
+  const translations = {
+    en: {
+      sold: "Sold",
+      taka: "Taka"
+    },
+    ar: {
+      sold: "تم البيع",
+      taka: "تاكا"
+    }
+  };
+
+  const t = translations[lang] || translations.en;
+
+  // Helper function to get localized field
+  const getLocalizedField = (obj, fieldName) => {
+    if (!obj) return '';
+
+    if (lang === 'ar' && obj[`ar_${fieldName}`]) {
+      return obj[`ar_${fieldName}`];
+    }
+    return obj[fieldName] || '';
+  };
+
   // Function to calculate filled stars based on rating
   const getFilledStars = (rating) => {
     if (!rating) return 0;
@@ -42,61 +69,87 @@ export default function HorizontalProductCard({ p }) {
     return stars;
   };
 
+  // Get localized product data
+  const productName = getLocalizedField(p, 'name');
+  const categoryName = getLocalizedField(p?.main_category, 'name');
+  const variantName = getLocalizedField(p, 'variant');
+
   return (
-    <Link href={`/shop/${p?.slug}?variant=${p?.variant}`} className="group flex items-center gap-[20px] bg-white rounded-[10px] py-[16px] pl-[8px] pr-[32px] text-primarymagenta border border-creamline">
+    <div className={lang === 'ar' ? 'rtl' : 'ltr'}>
+      <Link
+        href={`/shop/${p?.slug}?variant=${p?.variant}`}
+        className={`group flex items-center gap-[20px] bg-white rounded-[10px] py-[16px] text-primarymagenta border border-creamline ${lang === 'ar' ? 'pr-[8px] pl-[32px]' : 'pl-[8px] pr-[32px]'
+          }`}
+      >
+        <div className="flex justify-center items-center rounded-[10px] relative w-1/3 h-[120px] lg:h-[160px] overflow-hidden">
+          <Image
+            src={p?.main_image}
+            alt={productName || "Product Image"}
+            height={0}
+            width={0}
+            sizes="100vw"
+            className="h-full w-full object-contain p-1 group-hover:scale-105 ease-linear duration-300 rounded-[10px]"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+            }}
+          />
+        </div>
 
-      <div className="flex justify-center items-center rounded-[10px] relative w-1/3 h-[120px] lg:h-[160px] overflow-hidden">
-        <Image
-          src={p?.main_image}
-          // src={ProductImage}
-          alt={p?.name}
-          height={0}
-          width={0}
-          sizes="100vw"
-          className="h-full w-full object-contain p-1 group-hover:scale-105 ease-linear duration-300 rounded-[10px]"
-          style={{
-            maxWidth: '100%',
-            maxHeight: '100%',
-          }}
-        />
-      </div>
+        <div className="w-2/3">
+          <p className="text-[12px] lg:text-[14px] text-secondary">{categoryName}</p>
+          <p className="text-[14px] lg:text-[18px] mt-[10px] line-clamp-2">
+            {productName}
+            {variantName && (
+              <span>
+                {lang === 'ar' ? ` - ${variantName}` : ` - ${variantName}`}
+              </span>
+            )}
+          </p>
 
-      <div className="w-2/3">
-        <p className="text-[12px] lg:text-[14px] text-secondary ">{p?.main_category?.name}</p>
-        <p className="text-[14px] lg:text-[18px] mt-[10px] line-clamp-2">
-          {p?.name} {p?.variant && <span>- {p?.variant}</span>}
-        </p>
-        {/* Product Rating */}
-        {
-          (p?.ratings?.total_rating > 0 || p?.total_sold > 0) &&
+          {/* Product Rating */}
+          {(p?.ratings?.total_rating > 0 || p?.total_sold > 0) && (
+            <div className={`mt-[8px] text-[10px] lg:text-[14px] flex flex-col 2xl:flex-row gap-[8px] 2xl:gap-[16px] ${lang === 'ar' ? '2xl:flex-row-reverse' : ''
+              }`}>
+              {p?.ratings?.total_rating > 0 && (
+                <div className={`flex gap-1 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                  <div className="flex gap-1">
+                    {renderStars()}
+                  </div>
+                  <span className={`text-orange ${lang === 'ar' ? 'mr-1' : 'ml-1'}`}>
+                    ( {p?.ratings?.total_rating} )
+                  </span>
+                </div>
+              )}
+              {p?.total_sold > 0 && (
+                <p>
+                  {lang === 'ar' ? `${p?.total_sold} ${t.sold}` : `${p?.total_sold} ${t.sold}`}
+                </p>
+              )}
+            </div>
+          )}
 
-          <div className="mt-[8px] text-[10px] lg:text-[14px] flex flex-col 2xl:flex-row gap-[8px] 2xl:gap-[16px]">
-            {
-              p?.ratings?.total_rating > 0 &&
-              <div className="flex gap-1 items-center">
-                {renderStars()}
-                <span className="text-orange ml-1">( {p?.ratings?.total_rating} )</span>
+          {/* Price */}
+          <div className={`mt-[8px] flex gap-[10px] text-[14px] lg:text-[18px] ${lang === 'ar' ? 'flex-row-reverse' : ''
+            }`}>
+            {p?.discount === null ? (
+              <p>
+                <span className="dirham-symbol">ê</span> {p?.price ?? "0.00"}
+              </p>
+            ) : (
+              <div className={`flex gap-[10px] ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <p>
+                  <span className="dirham-symbol">ê</span> {p?.discount?.discount_price ?? "0.00"}
+                </p>
+                <p className="text-secondary line-through opacity-50">
+                  <span className="dirham-symbol">ê</span> {p?.price ?? "0.00"}
+                </p>
               </div>
-            }
-            {
-              p?.total_sold > 0 &&
-              <p>{p?.total_sold} Sold</p>
-            }
+            )}
           </div>
 
-        }
-        <div className="mt-[8px] flex gap-[10px] text-[14px] lg:text-[18px]">
-          {
-            p?.discount === null ?
-              <p>৳ {p?.price} Taka</p>
-              :
-              <div className="flex gap-[10px]">
-                <p>৳ {p?.discount?.discount_price} Taka</p>
-                <p className="text-secondary line-through opacity-50">৳ {p?.price} Taka</p>
-              </div>
-          }
         </div>
-      </div>
-    </Link>
+      </Link >
+    </div >
   );
 }

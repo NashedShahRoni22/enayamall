@@ -50,7 +50,7 @@ export default function CartCard({
                 :
                 <Link href={`/shop/${item?.slug}?variant=${item?.variant}`} className="text-sm font-medium line-clamp-2">{item.name} {item.variant && <span className='px-2 bg-primarycream text-button rounded-[10px]'>{item.variant}</span>}</Link>
             }
-            <p className="text-sm mt-1">৳ {item.price}</p>
+            <p className="text-sm mt-1"> <span className="dirham-symbol">ê</span> {item.price}</p>
           </div>
 
           {/* Quantity Controls */}

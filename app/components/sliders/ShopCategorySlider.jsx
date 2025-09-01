@@ -6,7 +6,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { Autoplay } from "swiper/modules";
 import Link from 'next/link'
 
-export default function ShopCategorySlider({ categories }) {
+export default function ShopCategorySlider({ categories, lang }) {
     const swiperRef = useRef(null);
     return (
         <div className="mt-[50px] lg:mt-0 lg:absolute lg:bottom-0 lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:translate-y-2/3 w-full z-10">
@@ -47,10 +47,10 @@ export default function ShopCategorySlider({ categories }) {
                                             />
                                         </div>
                                         <p className="text-[18px] lg:text-[24px] text-primarymagenta text-center mt-[20px] lg:mt-[32px] group-hover:text-secondary transition-colors duration-300 ease-linear">
-                                            {p?.name}
+                                             {lang === "en" ? p?.name : p?.ar_name }
                                         </p>
                                         <p className="text-[12px] lg:text-[14px] mt-[14px] lg:mt-[16px] text-primarymagenta text-center group-hover:text-secondary transition-colors duration-300 ease-linear">
-                                            {p?.total_products} Products
+                                            {p?.total_products} {lang === "en" ? "Products" : "مُنتَج" }
                                         </p>
                                     </Link>
                                 </SwiperSlide>

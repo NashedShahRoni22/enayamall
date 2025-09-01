@@ -8,8 +8,41 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function VerticalProductCard({ p }) {
+  console.log('====================================');
+  console.log(p);
+  console.log('====================================');
   const router = useRouter();
-  const { token, addToWishlist, addToCartDB, addToCartDBGuest } = useAppContext();
+  const { token, addToWishlist, addToCartDB, addToCartDBGuest, lang } = useAppContext();
+
+  // Translation object
+  const translations = {
+    en: {
+      addToCart: "Add to Cart",
+      outOfStock: "Out of Stock",
+      off: "OFF",
+      sold: "sold",
+      pleaseLogin: "Please login to use wishlist!"
+    },
+    ar: {
+      addToCart: "أضف إلى السلة",
+      outOfStock: "نفد من المخزون",
+      off: "خصم",
+      sold: "تم البيع",
+      pleaseLogin: "يرجى تسجيل الدخول لاستخدام قائمة الأماني!"
+    }
+  };
+
+  const t = translations[lang] || translations.en;
+
+  // Helper function to get localized field
+  const getLocalizedField = (obj, fieldName) => {
+    if (!obj) return '';
+
+    if (lang === 'ar' && obj[`ar_${fieldName}`]) {
+      return obj[`ar_${fieldName}`];
+    }
+    return obj[fieldName] || '';
+  };
 
   // Function to calculate filled stars based on rating
   const getFilledStars = (rating) => {
@@ -62,7 +95,7 @@ export default function VerticalProductCard({ p }) {
     e.preventDefault();
     e.stopPropagation();
     if (token === null) {
-      toast.error("Please login to use wishlist!");
+      toast.error(t.pleaseLogin);
       router.push("login")
     } else {
       addToWishlist(id)
@@ -73,8 +106,12 @@ export default function VerticalProductCard({ p }) {
     ? Math.round(((p?.price - p?.discount?.discount_price) / p?.price) * 100)
     : 0;
 
+  // Get localized product data
+  const productName = getLocalizedField(p, 'name');
+  const categoryName = getLocalizedField(p?.main_category, 'name');
+  const variantName = getLocalizedField(p, 'variant');
   return (
-    <div className="group relative">
+    <div className={`group relative ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
       <Link href={`/shop/${p?.slug}?variant=${p?.variant}`} className="block">
         <div className="bg-white rounded shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-gray-200">
 
@@ -82,7 +119,7 @@ export default function VerticalProductCard({ p }) {
           <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 aspect-square">
             <Image
               src={p?.main_image || productImg}
-              alt={p?.name || "Product Image"}
+              alt={productName || "Product Image"}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-contain p-4 group-hover:scale-110 transition-transform duration-700 ease-out"
@@ -92,18 +129,18 @@ export default function VerticalProductCard({ p }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
             {/* Badges Container */}
-            <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
+            <div className={`absolute top-3 ${lang === 'ar' ? 'right-3' : 'left-3'} flex flex-col gap-2 z-10`}>
               {/* Discount Badge */}
               {p?.discount && (
                 <div className="bg-red-500 text-white px-3 py-1 rounded text-xs font-semibold shadow-lg animate-pulse">
-                  {discountPercentage}% OFF
+                  {lang === 'ar' ? `${discountPercentage}% ${t.off}` : `${discountPercentage}% ${t.off}`}
                 </div>
               )}
 
               {/* Stock Badge */}
               {p?.stock === 0 && (
                 <div className="bg-gray-800 text-white px-3 py-1 rounded text-xs font-medium">
-                  Out of Stock
+                  {t.outOfStock}
                 </div>
               )}
             </div>
@@ -111,7 +148,7 @@ export default function VerticalProductCard({ p }) {
             {/* Wishlist Button */}
             <button
               onClick={(e) => handleAddToWishlist(e, p?.product_variant_id)}
-              className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-white hover:shadow-lg transform hover:scale-110 transition-all duration-200 z-10"
+              className={`absolute top-3 ${lang === 'ar' ? 'left-3' : 'right-3'} w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-white hover:shadow-lg transform hover:scale-110 transition-all duration-200 z-10`}
             >
               <Heart
                 size={18}
@@ -124,10 +161,10 @@ export default function VerticalProductCard({ p }) {
               <button
                 disabled={p?.stock === 0}
                 onClick={(e) => handleAddToCart(e, p)}
-                className="w-full bg-creamline text-primarymagenta py-3 px-4 rounded font-medium hover:bg-secondary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-creamline text-primarymagenta py-3 px-4 rounded font-medium hover:bg-primary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <ShoppingCart size={16} />
-                {p?.stock > 0 ? "Add to Cart" : "Out of Stock"}
+                {p?.stock > 0 ? t.addToCart : t.outOfStock}
               </button>
             </div>
           </div>
@@ -137,24 +174,29 @@ export default function VerticalProductCard({ p }) {
 
             {/* Category */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                {p?.main_category?.name}
+              <span className="text-xs font-medium text-gray-500 uppercase tracking-wider line-through">
+                {categoryName}
               </span>
               {p?.total_sold > 0 && (
                 <span className="text-xs text-gray-500 bg-creamline px-2 py-1 rounded">
-                  {p?.total_sold} sold
+                  {lang === 'ar' ? `${p?.total_sold} ${t.sold}` : `${p?.total_sold} ${t.sold}`}
                 </span>
               )}
             </div>
 
             {/* Product Name */}
-            <h3 className="font-semibold text-primarymagenta leading-tight line-clamp-2 group-hover:text-secondary transition-colors duration-200">
-              {p?.name} {p?.variant && <span className="text-gray-600">- {p?.variant}</span>}
+            <h3 className="font-semibold text-primarymagenta leading-tight line-clamp-1 group-hover:text-secondary transition-colors duration-200">
+              {productName}
+              {variantName && (
+                <span className="text-gray-600">
+                  {lang === 'ar' ? ` - ${variantName}` : ` - ${variantName}`}
+                </span>
+              )}
             </h3>
 
             {/* Rating */}
             {p?.ratings?.total_rating > 0 && (
-              <div className="flex items-center gap-2">
+              <div className={`flex items-center gap-2 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                 <div className="flex items-center gap-1">
                   {renderStars()}
                 </div>
@@ -170,19 +212,19 @@ export default function VerticalProductCard({ p }) {
             )}
 
             {/* Price */}
-            <div className="flex items-baseline gap-2">
+            <div className={`flex items-baseline gap-2 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
               {p?.discount ? (
                 <>
                   <span className="text-xl font-bold text-primarymagenta">
-                    ৳{p?.discount?.discount_price}
+                    <span className="dirham-symbol">ê</span> {p?.discount?.discount_price ?? "0.00"}
                   </span>
                   <span className="text-sm text-gray-500 line-through">
-                    ৳{p?.price}
+                    <span className="dirham-symbol">ê</span> {p?.price ?? "0.00"}
                   </span>
                 </>
               ) : (
                 <span className="text-xl font-bold text-primarymagenta">
-                  ৳{p?.price}
+                  <span className="dirham-symbol">ê</span> {p?.price ?? "0.00"}
                 </span>
               )}
             </div>
@@ -194,11 +236,11 @@ export default function VerticalProductCard({ p }) {
               className="md:hidden w-full bg-creamline text-primarymagenta py-3 px-4 rounded font-medium hover:bg-secondary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <ShoppingCart size={16} />
-              {p?.stock > 0 ? "Add to Cart" : "Out of Stock"}
+              {p?.stock > 0 ? t.addToCart : t.outOfStock}
             </button>
           </div>
         </div>
-      </Link>
-    </div>
+      </Link >
+    </div >
   );
 }

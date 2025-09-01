@@ -156,13 +156,13 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
             <div className="text-[20px] 2xl:text-[34px] text-button flex items-center gap-[30px] mb-[20px] 2xl:mb-[40px]">
                 {
                     product?.discount === null ?
-                        <p className="">৳ {product?.combo_price} Taka</p>
+                        <p className="">D {product?.combo_price} Taka</p>
                         :
                         <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-[20px]">
                             <div className="flex gap-[20px]">
-                                <p>৳ {product?.discount?.discount_price} Taka</p>
+                                <p>D {product?.discount?.discount_price} Taka</p>
                                 <p className="text-ash line-through">
-                                    ৳ {product?.combo_price} Taka
+                                    D {product?.combo_price} Taka
                                 </p>
                             </div>
                             <p className="text-[12px] 2xl:text-[18px] text-customgreen">

@@ -44,19 +44,19 @@ export default function CartTableRow({
             {
               item?.items?.length > 0 ?
                 <div>
-                  <Link href={`/combo/${item?.slug}`} className="text-[14px] lg:text-[16px] font-medium flex-1 hover:text-natural line-clamp-3">{item.name} {item.variant && <span className='px-2 bg-primarycream text-button rounded-[10px]'>{item.variant}</span>} {item?.items?.length > 0 && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>Combo</span>}</Link>
+                  <Link href={`/combo/${item?.slug}`} className="text-[14px] lg:text-[16px] font-medium flex-1 hover:text-secondary line-clamp-3">{item.name} {item.variant && <span className='px-2 bg-primarycream text-button rounded-[10px]'>{item.variant}</span>} {item?.items?.length > 0 && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>Combo</span>}</Link>
                   <ul className='mt-2'>
                     {
                       item?.items?.map((product, index) =>
                         <li key={index}>
-                          <Link href={`/shop/${product?.slug}?variant=${product?.variant}`} className='text-[14px] hover:text-natural line-clamp-1'> - {product?.name} {product.variant && <span>-{product.variant}</span>}</Link>
+                          <Link href={`/shop/${product?.slug}?variant=${product?.variant}`} className='text-[14px] hover:text-secondary line-clamp-1'> - {product?.name} {product.variant && <span>-{product.variant}</span>}</Link>
                         </li>)
                     }
                   </ul>
                 </div>
                 :
                 <div>
-                  <Link href={`/shop/${item?.slug}?variant=${item?.variant}`} className="text-[14px] lg:text-[16px] font-medium flex-1 hover:text-natural line-clamp-3">{item.name} {item.variant && <span className='px-2 bg-primarycream text-button rounded-[10px]'>{item.variant}</span>}</Link>
+                  <Link href={`/shop/${item?.slug}?variant=${item?.variant}`} className="text-[14px] lg:text-[16px] font-medium flex-1 hover:text-secondary line-clamp-3">{item.name} {item.variant && <span className='px-2 bg-primarycream text-button rounded-[10px]'>{item.variant}</span>}</Link>
                 </div>
             }
 
@@ -66,12 +66,12 @@ export default function CartTableRow({
 
         {/* Price */}
         <td className="py-[10px] lg:py-[20px] px-[15px] lg:w-1/6 text-[14px] lg:text-[16px] align-middle">
-          ৳ {item.price}
+          <span className="dirham-symbol">ê</span> {item.price}
         </td>
 
         {/* Quantity */}
         <td className="py-[10px] lg:py-[20px] px-[15px] lg:px-[30px] lg:w-1/6">
-          <div className="flex items-center lg:gap-[10px] text-natural h-[40px] lg:h-[50px] w-[100px] lg:w-[140px] rounded-[10px] justify-center bg-[#F8F8F8]">
+          <div className="flex items-center lg:gap-[10px] text-secondary h-[40px] lg:h-[50px] w-[100px] lg:w-[140px] rounded-[10px] justify-center bg-[#F8F8F8]">
             <button
               onClick={() =>
                 token
@@ -79,7 +79,7 @@ export default function CartTableRow({
                   : addToCartDBGuest(item?.combo_id ? item?.combo_id : item?.product_variant_id, 1, item?.combo_id && "combo", "decrement")
               }
               disabled={item?.quantity === 1}
-              className="cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-primarymagenta hover:bg-creamline hover:text-natural rounded-full p-2"
+              className="cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-primarymagenta hover:bg-creamline hover:text-secondary rounded-full p-2"
             >
               <AiOutlineMinus className='text-[16px] lg:text-[18px]' />
             </button>
@@ -94,7 +94,7 @@ export default function CartTableRow({
                   ? addToCartDB(item?.combo_id ? item?.combo_id : item?.product_variant_id, 1, item?.combo_id && "combo")
                   : addToCartDBGuest(item?.combo_id ? item?.combo_id : item?.product_variant_id, 1, item?.combo_id && "combo")
               }
-              className="cursor-pointer text-primarymagenta hover:bg-creamline hover:text-natural rounded-full p-2"
+              className="cursor-pointer text-primarymagenta hover:bg-creamline hover:text-secondary rounded-full p-2"
             >
               <GoPlus className='text-[16px] lg:text-[18px]' />
             </button>
@@ -103,7 +103,7 @@ export default function CartTableRow({
 
         {/* Subtotal */}
         <td className="py-[10px] lg:py-[20px] px-[15px] lg:px-[30px] lg:w-1/6 text-[14px] lg:text-[16px]">
-          ৳ {(item.price * item.quantity).toFixed(0)}
+          <span className="dirham-symbol">ê</span> {(item.price * item.quantity).toFixed(0)}
         </td>
       </tr>
 
@@ -137,7 +137,7 @@ export default function CartTableRow({
                       />
                     </div>
                     <div>
-                      <Link href={`/shop/${product?.slug}?variant=${product?.variant}`} className='text-[14px] hover:text-natural'>{product?.name} {product.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{product.variant}</span>}</Link>
+                      <Link href={`/shop/${product?.slug}?variant=${product?.variant}`} className='text-[14px] hover:text-secondary'>{product?.name} {product.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{product.variant}</span>}</Link>
                     </div>
                   </div>)
               }

@@ -148,10 +148,10 @@ export default function PriceRangeFilter({
                                 onChange={handleMinInputChange}
                                 className="px-2 py-1 w-[80px] border border-gray-300 rounded text-center text-sm focus:outline-none focus:border-primary"
                             />
-                            <span className="text-gray-500 text-sm ml-4">৳</span>
+                            <span className="text-gray-500 text-sm ml-4">D</span>
                         </div>
                         <div>
-                            <span className="text-gray-500 text-sm mr-4">৳</span>
+                            <span className="text-gray-500 text-sm mr-4">D</span>
                             <input
                                 // type="number"
                                 min={absoluteMin}

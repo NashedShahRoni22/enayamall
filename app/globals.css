@@ -21,3 +21,15 @@
   --color-customgreen: #33B27F;
   --color-nav: #FFFEF9;
 }
+
+@font-face {
+  font-family: UAESymbol;
+  src: url(../public/dirham/new-dirham-symbol.ttf) format("truetype");
+  font-weight: 400;
+  font-style: normal
+}
+
+.dirham-symbol {
+  font-family: UAESymbol;
+  font-weight: 400;
+}

@@ -163,7 +163,7 @@ export default function CartPage() {
                     <button
                       onClick={handleApplyCoupon}
                       disabled={applyCoupon.isPending}
-                      className="cursor-pointer text-[14px] lg:text-[18px] text-white py-[12px] md:py-[24px] md:h-[60px] w-1/3 bg-primary hover:bg-secondary rounded-[5px] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="cursor-pointer text-[14px] lg:text-[18px] text-white py-[12px] md:py-[24px] md:h-[60px] w-1/3 bg-primary hover:bg-white  hover:text-primary rounded-[5px] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {applyCoupon.isPending ? 'Applying...' : 'Apply'}
                     </button>
@@ -171,10 +171,10 @@ export default function CartPage() {
                 </div>
 
                 {/* sub total  */}
-                <div className="py-[20px] px-[20px] md:px-[40px] bg-[#FCF7EE] rounded-[10px] flex-1 2xl:flex-none">
+                <div className="py-[20px] px-[20px] md:px-[40px] bg-creamline rounded-[10px] flex-1 2xl:flex-none">
                   <p className="text-[16px] md:text-[18px] py-[10px] md:py-[20px] text-primarymagenta flex justify-between">
                     <span className="font-[550]">Sub total</span>
-                    <span>৳ {token ? totalDB : totalDBGuest} Taka</span>
+                    <span><span className="dirham-symbol">ê</span> {token ? totalDB : totalDBGuest}</span>
                   </p>
 
                   {appliedCoupon && couponData && (
@@ -185,7 +185,7 @@ export default function CartPage() {
                           {couponData.coupon_code}
                           {" "}
                           {couponData.discount_type === 'fixed' ?
-                            <>( - {couponData.discount} ৳)</> :
+                            <>( - {couponData.discount} <span className="dirham-symbol">ê</span>)</> :
                             <>( - {couponData.discount} %)</>
                           }
                         </p>
@@ -193,9 +193,9 @@ export default function CartPage() {
 
                       <div className="flex flex-col gap-[24px]">
                         {couponData.discount_type === 'fixed' ? (
-                          <p>-৳ {couponData.discount} Taka</p>
+                          <p>-<span className="dirham-symbol">ê</span> {couponData.discount}</p>
                         ) : (
-                          <p>-৳ {Math.round(((token ? totalDB : totalDBGuest) * couponData.discount) / 100)} Taka</p>
+                          <p>-<span className="dirham-symbol">ê</span> {Math.round(((token ? totalDB : totalDBGuest) * couponData.discount) / 100)}</p>
                         )}
                         {/* <p className="text-[12px] text-secondary cursor-pointer">Remove coupon</p> */}
                       </div>
@@ -207,18 +207,18 @@ export default function CartPage() {
                     {couponData ? (
                       <span>
                         {couponData.discount_type === "fixed" ?
-                          <>৳ {(token ? totalDB : totalDBGuest) - couponData.discount} Taka</> :
-                          <>৳ {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100))} Taka</>
+                          <><span className="dirham-symbol">ê</span> {(token ? totalDB : totalDBGuest) - couponData.discount}</> :
+                          <><span className="dirham-symbol">ê</span> {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100))}</>
                         }
                       </span>
                     ) : (
-                      <span>৳ {token ? totalDB : totalDBGuest} Taka</span>
+                      <span><span className="dirham-symbol">ê</span> {token ? totalDB : totalDBGuest}</span>
                     )}
                   </p>
 
                   <Link
                     href={"checkout"}
-                    className="mt-[20px] cursor-pointer text-[14px] lg:text-[18px] text-white min-w-full py-[12px] sm:py-[24px] bg-primary hover:bg-secondary rounded-[5px] block text-center"
+                    className="mt-[20px] cursor-pointer text-[14px] lg:text-[18px] text-white min-w-full py-[12px] sm:py-[24px] bg-primary hover:bg-white  hover:text-primary rounded-[5px] block text-center"
                   >
                     Process to checkout
                   </Link>

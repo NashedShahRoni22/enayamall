@@ -53,11 +53,11 @@ export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB }) {
                             {
                                 w?.discount !== null ?
                                     <div className='flex gap-2'>
-                                        <span>৳ {w?.discount?.discount_price} Taka</span>
-                                        <span className='line-through opacity-50 text-button'>৳ {w?.base_price} Taka</span>
+                                        <span>D {w?.discount?.discount_price} Taka</span>
+                                        <span className='line-through opacity-50 text-button'>D {w?.base_price} Taka</span>
                                     </div>
                                     :
-                                    <span>৳ {w?.base_price} Taka</span>
+                                    <span>D {w?.base_price} Taka</span>
                             }
                         </div>
                         {/* Date */}

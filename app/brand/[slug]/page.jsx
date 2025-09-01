@@ -20,7 +20,7 @@ import { CiFilter } from "react-icons/ci";
 import { FilterIcon } from "lucide-react";
 
 export default function page() {
-  const { categories, brands, skinTypes } = useAppContext();
+  const { categories, brands, lang } = useAppContext();
   const params = useParams();
   const slug = params?.slug ?? null;
 
@@ -155,157 +155,154 @@ export default function page() {
       </div>
       {/* filters & products here  */}
       <Container>
-        <div className="lg:max-w-7xl lg:mx-auto">
-          <div className='py-[60px] lg:py-[120px]'>
-            {/* filetrs actions  */}
-            <div className="sticky top-18 lg:static lg:flex lg:gap-[24px] bg-white z-10">
-              {/* for large device  */}
-              <div className="hidden  text-primary lg:w-2/6 2xl:w-1/4 lg:flex gap-[12px] items-center">
-                {/* <Image src={filterIcon} alt="filter icon" /> */}
-                <FilterIcon />
-                <p className="text-[24px]">Filtered by</p>
-              </div>
-
-              {/* <div className="h-[1px] w-full bg-creamline my-[20px] lg:hidden"></div> */}
-
-              <div className="lg:w-4/6 2xl:w-3/4">
-                {/* brands logo here  */}
-                {!brands ? (
-                  <div className="mb-[20px]">
-                    <div className="animate-pulse flex space-x-4">
-                      <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
-                      <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
-                      <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
-                    </div>
-                  </div>
-                ) : (
-                  <BrandLogoDisplay
-                    brands={brands}
-                    brandIds={brandIds}
-                    setBrandIds={setBrandIds}
-                  />
-                )}
-
-                <div className="bg-light p-[8px] rounded-[10px] flex justify-between items-center">
-                  {/* product layouts buttons  */}
-                  <div className="flex gap-[20px] items-center">
-                    <div className="flex gap-[8px]">
-                      <button
-                        onClick={() => setViewStyle(0)}
-                        className={`cursor-pointer p-[16px] rounded-[10px] ${viewStyle === 0 ? "bg-primary text-white" : "bg-white text-primary"}`}>
-                        {/* <Image src={gridIcon} alt="filter icon" /> */}
-                        <IoGridOutline className="text-[20px]" />
-                      </button>
-                      <button
-                        onClick={() => setViewStyle(1)}
-                        className={`cursor-pointer p-[16px] rounded-[10px] ${viewStyle === 1 ? "bg-primary text-white" : "bg-white text-primary"}`}>
-                        {/* <Image src={listIcon} alt="list icon" /> */}
-                        <FaList className="text-[20px]" />
-                      </button>
-                      <button
-                        onClick={() => setShowFilters(!showFilters)}
-                        className={`lg:hidden cursor-pointer p-[16px] rounded-[10px] ${showFilters ? "bg-primary text-white" : "bg-white text-primary"}`}>
-                        {/* <Image src={listIcon} alt="list icon" /> */}
-                        <CiFilter className="text-[20px]" />
-                      </button>
-                    </div>
-                    {
-                      productData?.meta?.total > 0 &&
-                      <p className="hidden lg:block text-primarymagenta text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
-                    }
-                  </div>
-                  {/* product sorting options  */}
-                  <div className="text-[16px] text-primarymagenta bg-white min-w-[160px] lg:min-w-[190px] px-[16px] lg:px-[20px] py-[12px] lg:py-[16px] rounded-[5px] relative">
-                    <button
-                      onClick={() => setShowSortOptions(!showSortOptions)}
-                      className="flex min-w-full justify-between items-center cursor-pointer text-[14px] lg:text-[16px]"
-                    >
-                      {sortOptions[sortOption]}
-                      {showSortOptions ? <FaChevronUp className="text-xs" /> : <FaChevronDown className="text-xs" />}
-                    </button>
-
-                    {showSortOptions && (
-                      <div className="flex flex-col items-start absolute min-w-full z-10 p-[4px] top-11 lg:top-14 left-0 bg-white rounded-[10px] border border-creamline">
-                        {sortOptions.map((label, index) => (
-                          <button
-                            key={index}
-                            onClick={() => {
-                              setSortOption(index);
-                              setShowSortOptions(false);
-                            }}
-                            className={`px-[12px] py-[8px] min-w-full text-left text-[14px] lg:text-[16px] rounded-[10px] hover:text-primary hover:bg-creamline cursor-pointer ${sortOption === index && 'font-[550] text-primary'}`}
-                          >
-                            {label}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
+        <div className='py-[60px] lg:py-[120px]'>
+          {/* filetrs actions  */}
+          <div className="sticky top-18 lg:static lg:flex lg:gap-[24px] bg-white z-10">
+            {/* for large device  */}
+            <div className="hidden  text-primary lg:w-2/6 2xl:w-1/4 lg:flex gap-[12px] items-center">
+              {/* <Image src={filterIcon} alt="filter icon" /> */}
+              <FilterIcon />
+              <p className="text-[24px]">Filtered by</p>
             </div>
 
-            <div className="lg:flex lg:gap-[24px] mt-[30px]">
-              {/* filters options here for large device  */}
-              <div className='hidden lg:block lg:w-2/6 2xl:w-1/4'>
-                <div className='flex flex-col gap-[20px] lg:gap-[30px]'>
-                  {/* category */}
-                  <Categories categories={categories} parentCategorytIds={parentCategorytIds} setParentCategorytIds={setParentCategorytIds} childCategoryId={childCategoryId} setChildCategoryId={setChildCategoryId} />
-                  {/* skin types  */}
-                  {/* <SkinTypes skinTypes={skinTypes} skinTypeIds={skinTypeIds} setSkinTypeIds={setSkinTypeIds} /> */}
-                  {/* Price Range Filter */}
-                  <PriceRangeFilter
-                    minPrice={minPrice}
-                    maxPrice={maxPrice}
-                    setMinPrice={setMinPrice}
-                    setMaxPrice={setMaxPrice}
-                    absoluteMin={0}
-                    absoluteMax={50000}
-                    onFilter={handlePriceFilter}
-                  />
-                  {/* brands */}
-                  <Brands brands={brands} brandIds={brandIds} setBrandIds={setBrandIds} />
-                </div>
-              </div>
+            {/* <div className="h-[1px] w-full bg-creamline my-[20px] lg:hidden"></div> */}
 
-              {/* products here  */}
-              <div className='lg:w-4/6 2xl:w-3/4'>
-                <Products
-                  viewStyle={viewStyle}
-                  parentCategorytIds={parentCategorytIds}
-                  childCategoryId={childCategoryId}
+            <div className="lg:w-4/6 2xl:w-3/4">
+              {/* brands logo here  */}
+              {!brands ? (
+                <div className="mb-[20px]">
+                  <div className="animate-pulse flex space-x-4">
+                    <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
+                    <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
+                    <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
+                  </div>
+                </div>
+              ) : (
+                <BrandLogoDisplay
+                  brands={brands}
                   brandIds={brandIds}
-                  skinTypeIds={skinTypeIds}
-                  sortOption={sortOption}
-                  minPrice={minPrice}
-                  maxPrice={maxPrice}
-                  isLoading={isLoading && page === 1}
-                  error={error}
-                  products={allProducts}
+                  setBrandIds={setBrandIds}
                 />
-                {/* pagination here  */}
-                {
-                  productData?.links?.next !== null &&
-                  <div className="mt-20 flex flex-col gap-5 items-center justify-center">
-                    <p className="hidden lg:block text-primarymagenta text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
+              )}
+
+              <div className="bg-light p-[8px] rounded-[10px] flex justify-between items-center">
+                {/* product layouts buttons  */}
+                <div className="flex gap-[20px] items-center">
+                  <div className="flex gap-[8px]">
                     <button
-                      disabled={isLoadingMore}
-                      onClick={handleLoadMore}
-                      className="px-8 py-3 bg-primary text-white text-sm rounded-[5px] cursor-pointer hover:bg-creamline hover:text-primarymagenta disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {
-                        isLoadingMore ? (
-                          <div className="flex items-center gap-2">
-                            <FaSpinner className="animate-spin" />
-                            <span>Loading more...</span>
-                          </div>
-                        ) : "Load more items"
-                      }
+                      onClick={() => setViewStyle(0)}
+                      className={`cursor-pointer p-[16px] rounded-[10px] ${viewStyle === 0 ? "bg-primary text-white" : "bg-white text-primary"}`}>
+                      {/* <Image src={gridIcon} alt="filter icon" /> */}
+                      <IoGridOutline className="text-[20px]" />
+                    </button>
+                    <button
+                      onClick={() => setViewStyle(1)}
+                      className={`cursor-pointer p-[16px] rounded-[10px] ${viewStyle === 1 ? "bg-primary text-white" : "bg-white text-primary"}`}>
+                      {/* <Image src={listIcon} alt="list icon" /> */}
+                      <FaList className="text-[20px]" />
+                    </button>
+                    <button
+                      onClick={() => setShowFilters(!showFilters)}
+                      className={`lg:hidden cursor-pointer p-[16px] rounded-[10px] ${showFilters ? "bg-primary text-white" : "bg-white text-primary"}`}>
+                      {/* <Image src={listIcon} alt="list icon" /> */}
+                      <CiFilter className="text-[20px]" />
                     </button>
                   </div>
-                }
+                  {
+                    productData?.meta?.total > 0 &&
+                    <p className="hidden lg:block text-primarymagenta text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
+                  }
+                </div>
+                {/* product sorting options  */}
+                <div className="text-[16px] text-primarymagenta bg-white min-w-[160px] lg:min-w-[190px] px-[16px] lg:px-[20px] py-[12px] lg:py-[16px] rounded-[5px] relative">
+                  <button
+                    onClick={() => setShowSortOptions(!showSortOptions)}
+                    className="flex min-w-full justify-between items-center cursor-pointer text-[14px] lg:text-[16px]"
+                  >
+                    {sortOptions[sortOption]}
+                    {showSortOptions ? <FaChevronUp className="text-xs" /> : <FaChevronDown className="text-xs" />}
+                  </button>
+
+                  {showSortOptions && (
+                    <div className="flex flex-col items-start absolute min-w-full z-10 p-[4px] top-11 lg:top-14 left-0 bg-white rounded-[10px] border border-creamline">
+                      {sortOptions.map((label, index) => (
+                        <button
+                          key={index}
+                          onClick={() => {
+                            setSortOption(index);
+                            setShowSortOptions(false);
+                          }}
+                          className={`px-[12px] py-[8px] min-w-full text-left text-[14px] lg:text-[16px] rounded-[10px] hover:text-primary hover:bg-creamline cursor-pointer ${sortOption === index && 'font-[550] text-primary'}`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
+            </div>
+
+          </div>
+
+          <div className="lg:flex lg:gap-[24px] mt-[30px]">
+            {/* filters options here for large device  */}
+            <div className='hidden lg:block lg:w-2/6 2xl:w-1/4'>
+              <div className='flex flex-col gap-[20px] lg:gap-[30px]'>
+                {/* category */}
+                <Categories lang={lang} categories={categories} parentCategorytIds={parentCategorytIds} setParentCategorytIds={setParentCategorytIds} childCategoryId={childCategoryId} setChildCategoryId={setChildCategoryId} />
+
+                {/* Price Range Filter */}
+                <PriceRangeFilter
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                  setMinPrice={setMinPrice}
+                  setMaxPrice={setMaxPrice}
+                  absoluteMin={0}
+                  absoluteMax={50000}
+                  onFilter={handlePriceFilter}
+                />
+                {/* brands */}
+                <Brands lang={lang} brands={brands} brandIds={brandIds} setBrandIds={setBrandIds} />
+              </div>
+            </div>
+
+            {/* products here  */}
+            <div className='lg:w-4/6 2xl:w-3/4'>
+              <Products
+                viewStyle={viewStyle}
+                parentCategorytIds={parentCategorytIds}
+                childCategoryId={childCategoryId}
+                brandIds={brandIds}
+                skinTypeIds={skinTypeIds}
+                sortOption={sortOption}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                isLoading={isLoading && page === 1}
+                error={error}
+                products={allProducts}
+              />
+              {/* pagination here  */}
+              {
+                productData?.links?.next !== null &&
+                <div className="mt-20 flex flex-col gap-5 items-center justify-center">
+                  <p className="hidden lg:block text-primarymagenta text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
+                  <button
+                    disabled={isLoadingMore}
+                    onClick={handleLoadMore}
+                    className="px-8 py-3 bg-primary text-white text-sm rounded-[5px] cursor-pointer hover:bg-creamline hover:text-primarymagenta disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {
+                      isLoadingMore ? (
+                        <div className="flex items-center gap-2">
+                          <FaSpinner className="animate-spin" />
+                          <span>Loading more...</span>
+                        </div>
+                      ) : "Load more items"
+                    }
+                  </button>
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -331,6 +328,7 @@ export default function page() {
 
               {/* category */}
               <Categories
+                lang={lang}
                 categories={categories}
                 parentCategorytIds={parentCategorytIds}
                 setParentCategorytIds={setParentCategorytIds}
@@ -338,11 +336,8 @@ export default function page() {
                 setChildCategoryId={setChildCategoryId}
               />
 
-              {/* skin types */}
-              {/* <SkinTypes skinTypes={skinTypes} skinTypeIds={skinTypeIds} setSkinTypeIds={setSkinTypeIds} /> */}
-
               {/* brands */}
-              <Brands brands={brands} brandIds={brandIds} setBrandIds={setBrandIds} />
+              <Brands lang={lang} brands={brands} brandIds={brandIds} setBrandIds={setBrandIds} />
             </div>
 
             {/* Click-outside area to close filter */}

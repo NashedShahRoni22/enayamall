@@ -51,7 +51,7 @@ export default function HoverCartCard({
               :
               <Link href={`/shop/${item?.slug}?variant=${item?.variant}`} className="leading-6 font-medium text-[14px] hover:text-natural line-clamp-2">{item.name} {item.variant && <span className='px-2.5 py-0.5 bg-primarycream text-button rounded-[10px]'>{item.variant}</span>} </Link>
             }
-            <p className="mt-[8px] text-[14px]">৳ {item.price}</p>
+            <p className="mt-[8px] text-[14px]">D {item.price}</p>
           </div>
         </div>
 
