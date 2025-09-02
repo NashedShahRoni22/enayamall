@@ -107,9 +107,9 @@ export default function CartPage() {
           <Container>
             <div className="my-[60px] flex flex-col 2xl:flex-row gap-[24px]">
               {/* cart products here  */}
-              <div className="2xl:w-2/3 overflow-x-auto border border-creamline rounded-xl">
+              <div className="2xl:w-2/3 overflow-x-auto border border-creamline rounded-xl bg-gray-100 p-4">
                 {/* mobile card  */}
-                <div className="sm:hidden">
+                {/* <div className="sm:hidden">
                   {currentCart?.map((item, index) => ( 
                     <CartCard
                       key={index}
@@ -121,24 +121,9 @@ export default function CartPage() {
                       removeFromCartDBGuest={removeFromCartDBGuest}
                     />
                   ))}
-                </div>
+                </div> */}
                 {/* tablet t0 large devices card  */}
-                <table className="hidden sm:table w-full table-fixed text-left border-collapse">
-                  <colgroup>
-                    <col style={{ width: '50%' }} />  {/* Product */}
-                    <col style={{ width: '16.66%' }} /> {/* Price */}
-                    <col style={{ width: '16.66%' }} /> {/* Quantity */}
-                    <col style={{ width: '16.66%' }} /> {/* Subtotal */}
-                  </colgroup>
-                  <thead>
-                    <tr className="bg-creamline text-primarymagenta text-[16px] md:text-[18px] font-[550]">
-                      <th className="py-[12px] lg:py-[24px] px-[15px] lg:px-[30px]">Product</th>
-                      <th className="py-[12px] lg:py-[24px] px-[15px] lg:px-[30px]">Price</th>
-                      <th className="py-[12px] lg:py-[24px] px-[15px] lg:px-[30px]">Quantity</th>
-                      <th className="py-[12px] lg:py-[24px] px-[15px] lg:px-[30px]">Subtotal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                
                     {currentCart?.map((item, index) => (
                       <CartTableRow
                         key={index}
@@ -150,8 +135,7 @@ export default function CartPage() {
                         removeFromCartDBGuest={removeFromCartDBGuest}
                       />
                     ))}
-                  </tbody>
-                </table>
+                  
               </div>
               {/* coupon and subtotal  */}
               <div className="2xl:w-1/3 flex flex-col lg:flex-row 2xl:flex-col gap-[24px] lg:gap-[30px]">
@@ -159,9 +143,9 @@ export default function CartPage() {
 
                 {/* sub total  */}
                 <div className="py-[20px] px-[20px] bg-creamline rounded-[10px] flex-1 2xl:flex-none">
-                  <p className="text-[16px] md:text-[18px] py-[10px] text-primarymagenta flex justify-between">
+                  <p className="text-[16px] md:text-[18px] py-[10px] text-primarymagenta flex justify-between items-center gap-1">
                     <span className="font-[400]">Item subtotal</span>
-                    <span><span className="dirham-symbol">ê</span> {token ? totalDB : totalDBGuest}</span>
+                    <span><span className="dirham-symbol">ê</span> {Number(token ? totalDB : totalDBGuest).toLocaleString()}</span>
                   </p>
 
                   {appliedCoupon && couponData && (
@@ -194,12 +178,12 @@ export default function CartPage() {
                     {couponData ? (
                       <span>
                         {couponData.discount_type === "fixed" ?
-                          <><span className="dirham-symbol">ê</span> {(token ? totalDB : totalDBGuest) - couponData.discount}</> :
-                          <><span className="dirham-symbol">ê</span> {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100))}</>
+                          <span className="flex items-center gap-1"><span className="dirham-symbol">ê</span> {(token ? totalDB : totalDBGuest) - couponData.discount}</span> :
+                          <span className="flex items-center gap-1"><span className="dirham-symbol">ê</span> {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100))}</span>
                         }
                       </span>
                     ) : (
-                      <span><span className="dirham-symbol">ê</span> {token ? totalDB : totalDBGuest}</span>
+                      <span className="flex items-center gap-1"><span className="dirham-symbol">ê</span> {token ? totalDB : totalDBGuest}</span>
                     )}
                   </p>
 

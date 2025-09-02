@@ -99,7 +99,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                     </button>
                                     <div className="text-gray-600 hidden xl:block">
                                         <p className="text-sm">Cart</p>
-                                        <p className="font-semibold flex items-center gap-1"> <span className="dirham-symbol">ê</span> {cartInfo?.total || "0"}</p>
+                                        <p className="font-semibold flex items-center gap-1"> <span className="dirham-symbol">ê</span> {Number(cartInfo?.total || 0).toLocaleString()}</p>
                                     </div>
                                 </Link>
                         </div>
