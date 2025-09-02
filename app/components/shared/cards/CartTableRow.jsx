@@ -15,7 +15,7 @@ export default function CartTableRow({
   return (
     <>
       {/* regular product info  */}
-      <tr className="border-b border-creamline text-primarymagenta relative">
+      <tr className="border-b last:border-b-0 border-creamline text-primarymagenta relative">
         {/* Product */}
         <td className="py-[10px] lg:py-[20px] px-[10px] lg:px-[30px] lg:w-3/6">
           <div className="flex gap-[10px] lg:gap-[30px] items-center">

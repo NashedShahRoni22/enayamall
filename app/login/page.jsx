@@ -7,7 +7,7 @@ import PublicRoute from '../components/shared/public/PublicRoute'
 export default function page() {
     return (
         <PublicRoute>
-            <AuthHeader title={"Login"} from={"Home"} to={"login"} />
+            {/* <AuthHeader title={"Login"} from={"Home"} to={"login"} /> */}
             <Container>
                 <div className='max-w-2xl mx-auto py-[40px] lg:py-[80px]'>
                     <Suspense>

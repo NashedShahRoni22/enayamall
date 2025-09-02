@@ -17,7 +17,7 @@ export default function CartCard({
   return (
     <div>
       {/* regular product info  */}
-      <div className="flex w-full items-center gap-4 py-4 border-b border-gray-200 text-primarymagenta">
+      <div className="flex w-full items-center gap-4 py-4 px-4 border-b border-gray-200 text-primarymagenta">
 
         {/* Remove button */}
         <button
@@ -54,7 +54,7 @@ export default function CartCard({
           </div>
 
           {/* Quantity Controls */}
-          <div className="mt-3 w-fit bg-creamline text-natural rounded-[10px] flex items-center px-3 py-2.5">
+          <div className="mt-3 w-fit bg-creamline text-black rounded-[10px] flex items-center px-3 py-2.5">
             <button
               onClick={() =>
                 token

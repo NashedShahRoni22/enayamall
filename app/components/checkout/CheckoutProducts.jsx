@@ -182,10 +182,10 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
             <div className='bg-successbg rounded-[10px] py-[20px] px-[20px] sm:px-[40px] border border-customgreen'>
                 <div>
                     <p className='text-[16px] text-customgreen flex gap-[5px] mt-[14px]'>
-                        <span className='dirham-symbol size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>
+                        {/* <span className='dirham-symbol size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>
                             ê
-                        </span>
-                        Your are saving <span className="dirham-symbol">ê</span> {totalDiscountDB}.
+                        </span> */}
+                        Your are saving <span className="dirham-symbol">ê</span> {totalDiscountDB}
                     </p>
 
                     {appliedCoupon && couponData && (

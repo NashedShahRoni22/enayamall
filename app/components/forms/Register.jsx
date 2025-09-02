@@ -211,7 +211,7 @@ export default function Register() {
                   placeholder="Enter name"
                   value={signUpForm.name}
                   onChange={handleChange}
-                  className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.name ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                  className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.name ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                 />
 
                 {/* Email */}
@@ -229,7 +229,7 @@ export default function Register() {
                   placeholder="Enter email address"
                   value={signUpForm.email}
                   onChange={handleChange}
-                  className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                  className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                 />
 
                 {/* Phone */}
@@ -248,7 +248,7 @@ export default function Register() {
                   value={signUpForm.phone}
                   onChange={handlePhoneChange}
                   maxLength="11"
-                  className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                  className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                 />
 
                 {/* Password */}
@@ -267,7 +267,7 @@ export default function Register() {
                     placeholder="Enter your password"
                     value={signUpForm.password}
                     onChange={handleChange}
-                    className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
+                    className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                   />
                   <div onClick={togglePasswordVisibility} className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                     {showPassword ? <FiEyeOff size={24} color="#ccc" /> : <FiEye size={24} color="#ccc" />}
@@ -290,7 +290,7 @@ export default function Register() {
                     placeholder="Retype your password"
                     value={signUpForm.retype_password}
                     onChange={handleChange}
-                    className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.retype_password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
+                    className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.retype_password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                   />
                   <div onClick={togglePasswordVisibility} className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                     {showPassword ? <FiEyeOff size={24} color="#ccc" /> : <FiEye size={24} color="#ccc" />}
@@ -299,7 +299,7 @@ export default function Register() {
 
                 <button
                   type="submit"
-                  className={`py-[12px] sm:py-[24px] text-[14px] sm:text-[16px] ${option === 2 ? "bg-primary text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? "cursor-not-allowed bg-creamline" : "cursor-pointer"}`}
+                  className={`py-[12px] text-[14px] rounded-xl sm:text-[16px] ${option === 2 ? "bg-primary text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? "cursor-not-allowed bg-creamline" : "cursor-pointer"}`}
                   disabled={postUser.isLoading || loading}
                 >
                   {!loading ? "Sign up" : null}

@@ -126,7 +126,7 @@ export default function VerticalProductCard({ p }) {
             />
 
             {/* Gradient Overlay on Hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" /> */}
 
             {/* Badges Container */}
             <div className={`absolute top-3 ${lang === 'ar' ? 'right-3' : 'left-3'} flex flex-col gap-2 z-10`}>
@@ -161,7 +161,7 @@ export default function VerticalProductCard({ p }) {
               <button
                 disabled={p?.stock === 0}
                 onClick={(e) => handleAddToCart(e, p)}
-                className="w-full bg-creamline text-primarymagenta py-3 px-4 rounded font-medium hover:bg-primary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3 px-4 rounded-xl font-medium bg-primary text-white transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
               >
                 <ShoppingCart size={16} />
                 {p?.stock > 0 ? t.addToCart : t.outOfStock}

@@ -166,7 +166,7 @@ export default function Login() {
                                     placeholder="Enter email address"
                                     value={form.email}
                                     onChange={handleChange}
-                                    className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                                    className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                                 />
 
                                 {/* Password */}
@@ -185,7 +185,7 @@ export default function Login() {
                                         placeholder="Enter your password"
                                         value={form.password}
                                         onChange={handleChange}
-                                        className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
+                                        className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                                     />
                                     <div
                                         onClick={togglePasswordVisibility}
@@ -204,7 +204,7 @@ export default function Login() {
                                 {/* Submit Button */}
                                 <button
                                     type="submit"
-                                    className={`py-[12px] sm:py-[24px] text-[14px] sm:text-[16px] ${option === 2 ? "bg-primary text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline' : 'cursor-pointer'}`}
+                                    className={`py-[12px] text-[14px] sm:text-[16px] ${option === 2 ? "bg-primary text-white" : "bg-creamline"} rounded-xl mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline' : 'cursor-pointer'}`}
                                     disabled={postLogin.isLoading || loading}
                                 >
                                     {!loading ? "Sign in" : null}

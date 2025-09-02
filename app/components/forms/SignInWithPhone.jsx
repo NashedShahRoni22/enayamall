@@ -254,7 +254,7 @@ export default function SignInWithPhone({ option }) {
                     value={otpForm.phone}
                     onChange={handleOtpChange}
                     placeholder='Enter 11-digit phone number'
-                    className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] pl-[70px] sm:pl-[85px] pr-[15px] sm:pr-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] w-full`}
+                    className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] pl-[70px] sm:pl-[85px] pr-[15px] sm:pr-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] w-full`}
                     maxLength="11"
                     disabled={otpSent}
                 />
@@ -287,7 +287,7 @@ export default function SignInWithPhone({ option }) {
             {/* Submit Button */}
             <button
                 type="submit"
-                className={`py-[12px] sm:py-[24px] text-[14px] sm:text-[16px] ${option === 1 ? "bg-primary text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline' : 'cursor-pointer'}`}
+                className={`py-[12px] text-[14px] rounded-xl sm:text-[16px] ${option === 1 ? "bg-primary text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? 'cursor-not-allowed bg-creamline' : 'cursor-pointer'}`}
                 disabled={postRequestOtp.isLoading || postVerifyOtp.isLoading || loading}
             >
                 {!loading ? otpSent ? 'Verify OTP' : 'Send OTP' : null}

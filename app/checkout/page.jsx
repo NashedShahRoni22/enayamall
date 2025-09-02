@@ -62,9 +62,9 @@ export default function page() {
     
     return (
         <PrivateRoute>
-            <PageHeader title={"Checkout"} from={"Home"} to={"checkout"} />
+            {/* <PageHeader title={"Checkout"} from={"Home"} to={"checkout"} /> */}
             <Container>
-                <div className='my-[60px] lg:my-[120px] flex flex-col xl:flex-row gap-[24px]'>
+                <div className='my-[60px] flex flex-col xl:flex-row gap-[24px]'>
                     {/* left side form  */}
                     <div className='xl:w-1/2'>
                         <BillForm 

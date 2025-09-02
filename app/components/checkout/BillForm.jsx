@@ -306,7 +306,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 Cancel
                             </button>
                         </div>
-                        <div className="bg-natural h-[1px] w-full mt-[10px] sm:mt-[20px] mb-[20px]  sm:mb-[40px]"></div>
+                        <div className="bg-creamline h-[1px] w-full mt-[10px] sm:mt-[30px] mb-[10px]"></div>
                         <div className="">
                             {/* Personal Information Section */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
@@ -323,7 +323,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                         name="fullName"
                                         value={formData.fullName}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.fullName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[20px] text-[16px] text-primarymagenta`}
+                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.fullName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta`}
                                     />
                                 </div>
 
@@ -340,7 +340,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                         name="mobileNumber"
                                         value={formData.mobileNumber}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.mobileNumber ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[20px] text-[16px] text-primarymagenta`}
+                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.mobileNumber ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta`}
                                     />
                                 </div>
                             </div>
@@ -371,7 +371,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             name={field.name}
                                             value={formData[field.name]}
                                             onChange={handleChange}
-                                            className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors[field.name] ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[20px] text-[16px] text-primarymagenta`}
+                                            className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors[field.name] ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta`}
                                         />
                                     </div>
                                 ))}
@@ -389,7 +389,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             value={selectedDistrictId || ""}
                                             onChange={handleDistrictChange}
                                             disabled={isDistrictsLoading}
-                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.district ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[20px] text-[16px] text-primarymagenta bg-white`}
+                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.district ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta bg-white`}
                                         >
                                             <option value="">
                                                 {isDistrictsLoading ? "Loading districts..." : "Select District"}
@@ -400,7 +400,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                                 </option>
                                             ))}
                                         </select>
-                                        <BiChevronDown className="absolute top-1/2 right-5 text-xl text-natural" />
+                                        <BiChevronDown className="absolute top-42/100 right-5 text-xl text-gray-300" />
                                     </div>
                                 </div>
 
@@ -417,7 +417,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             value={selectedCityId || ""}
                                             onChange={handleCityChange}
                                             disabled={!selectedDistrictId || isCitiesLoading}
-                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.city ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[20px] text-[16px] text-primarymagenta bg-white`}
+                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.city ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta bg-white`}
                                         >
                                             <option value="">
                                                 {!selectedDistrictId
@@ -433,7 +433,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                                 </option>
                                             ))}
                                         </select>
-                                        <BiChevronDown className="absolute top-1/2 right-5 text-xl text-natural" />
+                                        <BiChevronDown className="absolute top-42/100 right-5 text-xl text-gray-300" />
                                     </div>
                                 </div>
                             </div>
@@ -447,7 +447,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                     name="additionalAddress"
                                     value={formData.additionalAddress}
                                     onChange={handleChange}
-                                    className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[20px] text-[16px] text-primarymagenta"
+                                    className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta"
                                     rows={3}
                                 />
                             </div>
@@ -458,9 +458,9 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                     <button
                                         onClick={handleAddAddress}
                                         disabled={loading}
-                                        className={`py-[12px] sm:py-[24px] text-[18px] w-full ease-linear duration-300 font-medium rounded-md cursor-pointer ${loading
+                                        className={`py-[12px] text-[18px] w-full ease-linear duration-300 font-medium rounded-md cursor-pointer ${loading
                                             ? 'bg-creamline text-primarymagenta cursor-not-allowed'
-                                            : 'bg-natural text-white hover:bg-creamline hover:text-primarymagenta cursor-pointer'
+                                            : 'bg-primary text-white cursor-pointer'
                                             }`}
                                     >
                                         {
@@ -471,9 +471,9 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                     <button
                                         onClick={() => handleUpdateAddress(editableAddress.id)}
                                         disabled={loading}
-                                        className={`py-[12px] sm:py-[24px] text-[18px] w-full ease-linear duration-300 font-medium rounded-md cursor-pointer transition ${loading
+                                        className={`py-[12px] text-[18px] w-full ease-linear duration-300 font-medium rounded-md cursor-pointer transition ${loading
                                             ? 'bg-creamline text-primarymagenta cursor-not-allowed'
-                                            : 'bg-natural text-white hover:bg-creamline hover:text-primarymagenta cursor-pointer'
+                                            : 'bg-primary text-white cursor-pointer'
                                             }`}
                                     >
                                         {
@@ -488,7 +488,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
             ) : (
                 <>
                     {/* shipping details management  */}
-                    <div className="bg-[#FCF7EE]  py-[16px] sm:py-[20px]  px-[20px] sm:px-[40px] rounded-[10px]">
+                    <div className="bg-creamline  p-[20px] rounded-[10px]">
                         {/* add new address button  */}
                         <div className="flex justify-between items-center">
                             <p className="text-[18px] md:text-[20px] text-primarymagenta font-[650]">Shipping details</p>
@@ -497,7 +497,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                     setEditableAddress({});
                                     setShowForm(true);
                                 }}
-                                className="flex items-center gap-[6px] sm:gap-[12px] px-[12px] sm:px-[24px] py-[6px] sm:py-[12px] text-[14px] sm:text-[18px] bg-white rounded-[10px] text-natural cursor-pointer"
+                                className="flex items-center gap-[6px] sm:gap-[12px] px-[12px] sm:px-[24px] py-[6px] sm:py-[12px] text-[14px] sm:text-[14px] bg-primary rounded-xl text-white cursor-pointer"
                             >
                                 <FaPlus />
                                 <span>Add new address</span>
@@ -506,7 +506,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
 
                         {/* shipping address  */}
                         {address?.is_completed ? (
-                            <div className="mt-[20px] sm:mt-[40px] flex flex-col gap-[15px] sm:gap-[30px]">
+                            <div className="mt-[10px] sm:mt-[40px] flex flex-col gap-[15px] sm:gap-[30px]">
                                 {address?.data?.map((a) => (
                                     <div className="flex justify-between items-center" key={a?.id}>
                                         <button onClick={() => setAddressId(a?.id)} className="flex gap-[18px] w-4/6 cursor-pointer">
@@ -562,11 +562,11 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
             )}
 
             {/* choose options  */}
-            <div className="bg-[#F9F9F9] py-[20px]  px-[20px] sm:px-[40px] rounded-[10px] mt-[30px]">
+            <div className="bg-creamline p-[20px] rounded-xl mt-[30px]">
                 <p className='text-[18px] text-primarymagenta font-[650]'>
                     Select Payment method
                 </p>
-                <div className="flex flex-col sm:flex-row gap-[20px] sm:gap-[40px] mt-[15px] sm:mt-[30px]">
+                <div className="flex flex-col sm:flex-row gap-[20px] sm:gap-[40px] mt-[15px]">
                     <button onClick={() => setMethod("cod")} className="flex items-center gap-[6px] sm:gap-[12px] cursor-pointer">
                         <span>
                             {
