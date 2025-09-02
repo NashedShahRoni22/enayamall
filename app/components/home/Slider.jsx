@@ -77,16 +77,16 @@ export default function Slider() {
             disableOnInteraction: false,
           }}
           modules={[Pagination, Autoplay, Navigation]}
-          className="mySwiper custom-swiper h-96 md:h-[500px]"
+          className="mySwiper custom-swiper"
         >
         {banners?.map((banner, index) => (
           <SwiperSlide key={banner.id}>
             <Image
               src={banner.image}
-              height={1080}
+              height={450}
               width={1920}
               alt={banner.alt}
-              className="object-cover w-full h-full"
+              className="object-cover"
               priority={index === 0}
               loading={index === 0 ? 'eager' : 'lazy'}
             />

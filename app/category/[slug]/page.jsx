@@ -237,7 +237,7 @@ export default function page() {
                   </button>
 
                   {showSortOptions && (
-                    <div className="flex flex-col items-start absolute min-w-full z-50 p-[4px] top-11 lg:top-14 left-0 bg-white rounded-[10px] border border-creamline">
+                    <div className="flex flex-col items-start absolute min-w-full z-40 p-[4px] top-11 lg:top-14 left-0 bg-white rounded-[10px] border border-creamline">
                       {sortOptions.map((label, index) => (
                         <button
                           key={index}

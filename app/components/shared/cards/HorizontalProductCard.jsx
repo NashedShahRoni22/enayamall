@@ -78,7 +78,7 @@ export default function HorizontalProductCard({ p }) {
     <div className={lang === 'ar' ? 'rtl' : 'ltr'}>
       <Link
         href={`/shop/${p?.slug}?variant=${p?.variant}`}
-        className={`group flex items-center gap-[20px] bg-white rounded-[10px] py-[16px] text-primarymagenta border border-creamline ${lang === 'ar' ? 'pr-[8px] pl-[32px]' : 'pl-[8px] pr-[32px]'
+        className={`group flex items-center gap-[16px] bg-white rounded-[10px] py-[16px] text-primarymagenta border border-creamline ${lang === 'ar' ? 'pr-[8px] pl-[32px]' : 'pl-[8px] pr-[32px]'
           }`}
       >
         <div className="flex justify-center items-center rounded-[10px] relative w-1/3 h-[120px] lg:h-[160px] overflow-hidden">
@@ -97,7 +97,7 @@ export default function HorizontalProductCard({ p }) {
         </div>
 
         <div className="w-2/3">
-          <p className="text-[12px] lg:text-[14px] text-secondary">{categoryName}</p>
+          {/* <p className="text-[12px] lg:text-[14px] text-secondary">{categoryName}</p> */}
           <p className="text-[14px] lg:text-[18px] mt-[10px] line-clamp-2">
             {productName}
             {variantName && (
@@ -138,7 +138,7 @@ export default function HorizontalProductCard({ p }) {
               </p>
             ) : (
               <div className={`flex gap-[10px] ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-                <p>
+                <p className="flex items-center">
                   <span className="dirham-symbol">ê</span> {p?.discount?.discount_price ?? "0.00"}
                 </p>
                 <p className="text-secondary line-through opacity-50">

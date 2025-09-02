@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import "swiper/swiper-bundle.css";
 import Container from "../shared/Container";
 import ShopNowButton from "../shared/ShopNowButton";
@@ -14,25 +14,27 @@ export default function TrendingPicks() {
   const products = data?.data;
 
   return (
-    <Container>
-      {/* starting section  */}
-      <section className="flex flex-col items-center lg:flex-row lg:justify-between my-[20px] lg:my-[40px]">
-        {/* caption here  */}
-        <div>
-          <h5 className="text-[24px] 2xl:text-[36px] text-primarymagenta text-center lg:text-left">
-            Recommended by Enayamall
-          </h5>
-        </div>
+    <section className="py-[30px]">
+      <Container>
+        {/* starting section  */}
+        <section className="flex flex-col items-center lg:flex-row lg:justify-between">
+          {/* caption here  */}
+          <div>
+            <h5 className="text-[24px] 2xl:text-[36px] text-primarymagenta text-center lg:text-left">
+              <span className="font-semibold text-primary">Recommended</span> by Enayamall
+            </h5>
+          </div>
 
-        <div>
-          <ShopNowButton />
-        </div>
-      </section>
+          <div>
+            <ShopNowButton />
+          </div>
+        </section>
 
-      {/* products section*/}
-      <div>
-        <ProductsSlider products={products} />
-      </div>
-    </Container>
+        {/* products section*/}
+        <div>
+          <ProductsSlider products={products} />
+        </div>
+      </Container>
+    </section>
   );
 }

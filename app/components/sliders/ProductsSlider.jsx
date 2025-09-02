@@ -8,10 +8,10 @@ import { Autoplay } from "swiper/modules";
 export default function ProductsSlider({ products }) {
     const swiperRef = useRef(null);
     return (
-        <section className="relative my-[20px] lg:my-[40px]">
+        <section className="relative my-[10px] lg:my-[20px]">
             <Swiper
                 ref={swiperRef}
-                spaceBetween={20}
+                spaceBetween={16}
                 slidesPerView={2}
                 autoplay={{
                     delay: 3500,

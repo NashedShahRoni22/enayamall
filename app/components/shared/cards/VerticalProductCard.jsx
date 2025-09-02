@@ -139,7 +139,7 @@ export default function VerticalProductCard({ p }) {
 
               {/* Stock Badge */}
               {p?.stock === 0 && (
-                <div className="bg-gray-800 text-white px-3 py-1 rounded text-xs font-medium">
+                <div className="bg-red-500 text-white px-3 py-1 rounded text-xs font-medium">
                   {t.outOfStock}
                 </div>
               )}
@@ -148,11 +148,12 @@ export default function VerticalProductCard({ p }) {
             {/* Wishlist Button */}
             <button
               onClick={(e) => handleAddToWishlist(e, p?.product_variant_id)}
-              className={`absolute top-3 ${lang === 'ar' ? 'left-3' : 'right-3'} w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-white hover:shadow-lg transform hover:scale-110 transition-all duration-200 z-10`}
+              className={`absolute top-3 ${lang === 'ar' ? 'left-3' : 'right-3'} flex items-center justify-center`}
             >
               <Heart
-                size={18}
-                className="text-gray-600 hover:text-red-500 hover:fill-red-500 transition-all duration-200"
+                size={24}
+                strokeWidth={1}
+                className="text-[var(--color-primary)] hover:text-[var(--color-primary)] hover:fill-[var(--color-primary)] transition-all duration-200 cursor-pointer"
               />
             </button>
 
@@ -185,7 +186,7 @@ export default function VerticalProductCard({ p }) {
             </div> */}
 
             {/* Product Name */}
-            <h3 className="text-primarymagenta leading-tight line-clamp-2 min-h-[40px] group-hover:text-secondary transition-colors duration-200">
+            <h3 className="text-primarymagenta mb-0 leading-tight line-clamp-2 min-h-[40px] group-hover:text-primary transition-colors duration-200">
               {productName}
               {variantName && (
                 <span className="text-gray-600">
@@ -212,19 +213,19 @@ export default function VerticalProductCard({ p }) {
             )}
 
             {/* Price */}
-            <div className={`flex items-baseline gap-2 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+            <div className={`float-left gap-2 ${lang === 'ar' ? 'float-right' : ''}`}>
               {p?.discount ? (
                 <>
-                  <span className="text-xl font-bold text-primarymagenta">
-                    <span className="dirham-symbol">ê</span> {p?.discount?.discount_price ?? "0.00"}
+                  <span className="text-xl font-bold text-primarymagenta flex items-center">
+                    <span className="dirham-symbol text-[17px] mr-1">ê</span> {p?.discount?.discount_price ?? "0.00"}
                   </span>
-                  <span className="text-sm text-gray-500 line-through">
-                    <span className="dirham-symbol">ê</span> {p?.price ?? "0.00"}
+                  <span className={`text-sm text-gray-500 line-through flex items-center ${lang === 'ar' ? 'justify-end' : 'justify-start'}`}>
+                    {p?.price ?? "0.00"}
                   </span>
                 </>
               ) : (
-                <span className="text-xl font-bold text-primarymagenta">
-                  <span className="dirham-symbol">ê</span> {p?.price ?? "0.00"}
+                <span className="text-xl font-bold text-primarymagenta flex items-center min-h-[48px]">
+                  <span className="dirham-symbol text-[17px] mr-1">ê</span> {p?.price ?? "0.00"}
                 </span>
               )}
             </div>

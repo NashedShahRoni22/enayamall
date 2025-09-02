@@ -136,18 +136,18 @@ export default function page() {
     return (
         <section className="relative">
             <div className="relative">
-                <ShopHeader title={"Shop"} from={"home"} to={"shop"} />
+                {/* <ShopHeader title={"Shop"} from={"home"} to={"shop"} /> */}
                 {/* categories here  */}
-                <ShopCategorySlider categories={categories} lang={lang} />
+                {/* <ShopCategorySlider categories={categories} lang={lang} /> */}
             </div>
             {/* filters & products here  */}
             <Container>
-                <div className='py-[60px] lg:py-[310px]'>
+                <div className='py-[40px]'>
 
                     {/* filetrs actions  */}
                     <div className="sticky top-16 lg:static  lg:flex lg:gap-[24px] bg-white z-10">
                         {/* for large device  */}
-                        <div className="hidden  lg:w-2/6 2xl:w-1/4 lg:flex gap-[12px] items-center text-primary">
+                        <div className="hidden  lg:w-1/4 2xl:w-1/5 lg:flex gap-[12px] items-center text-primary">
                             {/* <Image src={filterIcon} alt="filter icon" /> */}
                             <FilterIcon />
                             <p className="text-[24px]">Filtered by</p>
@@ -156,7 +156,7 @@ export default function page() {
                         {/* <div className="h-[1px] w-full bg-creamline my-[20px] lg:hidden"></div> */}
 
                         {/* views and sorting options here  */}
-                        <div className="lg:w-4/6 2xl:w-3/4 bg-light p-[8px] rounded-[10px] flex justify-between items-center">
+                        <div className="lg:w-3/4 2xl:w-4/5 bg-light p-[8px] rounded-[10px] flex justify-between items-center">
                             {/* product layouts buttons  */}
                             <div className="flex gap-[20px] items-center">
                                 <div className="flex gap-[8px]">
@@ -195,7 +195,7 @@ export default function page() {
                                 </button>
 
                                 {showSortOptions && (
-                                    <div className="flex flex-col items-start absolute min-w-full z-50 p-[4px] top-11 lg:top-14 left-0 bg-white rounded-[10px] border border-creamline">
+                                    <div className="flex flex-col items-start absolute min-w-full z-40 p-[4px] top-11 lg:top-14 left-0 bg-white rounded-[10px] border border-creamline">
                                         {sortOptions.map((label, index) => (
                                             <button
                                                 key={index}
@@ -216,7 +216,7 @@ export default function page() {
 
                     <div className="lg:flex lg:gap-[24px] mt-[30px]">
                         {/* filters options here for large device  */}
-                        <div className='hidden lg:block lg:w-2/6 2xl:w-1/4'>
+                        <div className='hidden lg:block lg:w-1/4 2xl:w-1/5'>
                             <div className='flex flex-col gap-[20px] lg:gap-[30px]'>
 
                                 {/* Price Range Filter */}
@@ -249,7 +249,7 @@ export default function page() {
                         </div>
 
                         {/* products here  */}
-                        <div className='lg:w-4/6 2xl:w-3/4'>
+                        <div className='lg:w-3/4 2xl:w-4/5'>
                             <Products
                                 viewStyle={viewStyle}
                                 parentCategorytIds={parentCategorytIds}

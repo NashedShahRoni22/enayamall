@@ -113,19 +113,19 @@ export default function Footer() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center lg:text-left">
                         <div className="flex items-center justify-center lg:justify-start gap-2">
                             <Truck size={20} />
-                            <span className="text-sm">Free Shipping over $99</span>
+                            <span className="text-sm">Free shipping for orders 200 AED and above</span>
                         </div>
                         <div className="flex items-center justify-center lg:justify-start gap-2">
                             <RotateCcw size={20} />
-                            <span className="text-sm">30 Days money back</span>
-                        </div>
-                        <div className="flex items-center justify-center lg:justify-start gap-2">
-                            <Shield size={20} />
-                            <span className="text-sm">100% Authentic Products</span>
+                            <span className="text-sm">Free Returns within 7 days</span>
                         </div>
                         <div className="flex items-center justify-center lg:justify-start gap-2">
                             <CreditCard size={20} />
-                            <span className="text-sm">Flexible payment options</span>
+                            <span className="text-sm">Cash or credit card payment on delivery is available</span>
+                        </div>
+                        <div className="flex items-center justify-center lg:justify-start gap-2">
+                            <Shield size={20} />
+                            <span className="text-sm">We only sell authentic products with Brand Waranty</span>
                         </div>
                     </div>
                 </Container>
@@ -148,11 +148,11 @@ export default function Footer() {
 
                             {/* Email subscription */}
                             <div className="mb-6">
-                                <div className="flex">
+                                <div className="flex justify-between border border-gray-300 rounded overflow-hidden">
                                     <input
                                         type="email"
                                         placeholder="Email Address"
-                                        className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-l focus:outline-none focus:border-primary"
+                                        className="px-3 py-2 text-sm border border-gray-300 rounded-l focus:outline-none focus:border-primary"
                                     />
                                     <button className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-r hover:bg-teal-600">
                                         SUBSCRIBE
@@ -193,11 +193,11 @@ export default function Footer() {
             </div>
 
             {/* Bottom footer */}
-            <div className="bg-white py-6 border-t">
+            <div className="bg-white py-6 border-t border-gray-200">
                 <Container>
-                    <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+                    {/* <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
 
-                        {/* Currency and Language */}
+                        Currency and Language
                         <div className="flex items-center gap-4">
                             <select className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none">
                                 <option>USD</option>
@@ -211,7 +211,7 @@ export default function Footer() {
                             </select>
                         </div>
 
-                        {/* Payment Methods */}
+                        Payment Methods
                         <div className="flex items-center gap-3">
                             {paymentMethods.map((method, index) => (
                                 <div key={index} className={`w-12 h-8 ${method.bg} rounded flex items-center justify-center p-1`}>
@@ -224,7 +224,7 @@ export default function Footer() {
                             ))}
                         </div>
 
-                        {/* App Downloads */}
+                        App Downloads
                         <div className="flex items-center gap-2">
                             <span className="text-sm text-gray-600">Download App</span>
                             <div className="flex gap-2">
@@ -250,12 +250,12 @@ export default function Footer() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Copyright */}
-                    <div className="text-center mt-6 pt-4 border-t">
+                    <div className="text-center">
                         <p className="text-sm text-gray-500">
-                            © 2024 <strong>Enayamall</strong> . All Rights Reserved
+                            © 2025 <strong>Enayamall</strong>. All Rights Reserved.
                         </p>
                     </div>
                 </Container>

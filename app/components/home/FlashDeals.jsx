@@ -18,17 +18,17 @@ export default function FlashDeals() {
   const products = data?.data?.products;
 
   return (
-    <section className={`${location === "/" && "bg-light py-[1px]"}`}>
+    <section className={`${location === "/" && "bg-light py-[30px]"}`}>
       <Container>
         {/* starting section  */}
         {
           location === "/" &&
-          <section className="flex flex-col items-center lg:flex-row lg:justify-between my-[20px] lg:my-[40px]">
+          <section className="flex flex-col items-center lg:flex-row lg:justify-between">
             {/* caption here  */}
             <div>
               <h5 className="text-[24px] 2xl:text-[36px] text-primarymagenta text-center lg:text-left">
                 {/* Flash Deals You'll Love */}
-                Clearance Sale
+                <span className="font-semibold text-primary">Clearance</span> Sale
               </h5>
             </div>
 

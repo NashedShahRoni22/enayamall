@@ -41,11 +41,11 @@ export default function Category() {
                             },
                             768: {
                                 slidesPerView: 6,
-                                spaceBetween: 24,
+                                spaceBetween: 16,
                             },
                             1024: {
                                 slidesPerView: 8,
-                                spaceBetween: 32,
+                                spaceBetween: 16,
                             },
                         }}
                         className="category-swiper"
