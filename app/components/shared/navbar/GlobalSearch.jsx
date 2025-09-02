@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaSpinner } from "react-icons/fa";
 import SearchProductCard from "../cards/SeachProductCard";
 
-const BASE_URL = process.env.NEXT_PUBLIC_LAMINUX_API_BASE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_WEB_API_BASE_URL;
 
 export default function GlobalSearch({ 
     isOpen = false,

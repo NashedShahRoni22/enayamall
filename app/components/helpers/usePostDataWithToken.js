@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-const BASE_URL = process.env.NEXT_PUBLIC_LAMINUX_API_BASE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_WEB_API_BASE_URL;
 
 export const usePostDataWithToken = (endpoint) => {
   return useMutation({

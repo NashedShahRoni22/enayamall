@@ -5,17 +5,23 @@ import Clearance from './components/home/Clearance'
 import Newarrival from './components/home/Newarrival'
 import Babymilestone from './components/home/Babymilestone'
 import LastAdd from './components/home/LastAdd'
+import TrendingPicks from './components/home/TrendingPicks'
+import FlashDeals from './components/home/FlashDeals'
+import LatestProduct from './components/home/LatestProduct'
 
 export default function page() {
   return (
     <main>
       <Slider/>
       <Category/>
-      <Recommended/>
-      <Babymilestone/>
-      <Clearance/>
-      <Newarrival/>
-      <LastAdd/>
+      <FlashDeals/>
+      <TrendingPicks/>
+      <LatestProduct/>
+      {/* <Recommended/> */}
+      {/* <Babymilestone/> */}
+      {/* <Clearance/> */}
+      {/* <Newarrival/> */}
+      {/* <LastAdd/> */}
     </main>
   )
 }

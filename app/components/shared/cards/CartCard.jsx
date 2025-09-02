@@ -1,9 +1,9 @@
 import { FaMinus, FaPlus } from 'react-icons/fa'
-import { IoIosCloseCircleOutline } from 'react-icons/io'
 import Image from "next/image";
 import { BiChevronDown, BiChevronUp } from 'react-icons/bi';
 import { useState } from 'react';
 import Link from 'next/link';
+import { Trash2 } from 'lucide-react';
 
 export default function CartCard({
   token,
@@ -26,7 +26,7 @@ export default function CartCard({
             token ? removeFromCartDB(item.cart_id) : removeFromCartDBGuest(item.cart_id);
           }}
         >
-          <IoIosCloseCircleOutline />
+          <Trash2 />
         </button>
 
         {/* Product Image */}

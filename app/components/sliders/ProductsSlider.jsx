@@ -8,19 +8,19 @@ import { Autoplay } from "swiper/modules";
 export default function ProductsSlider({ products }) {
     const swiperRef = useRef(null);
     return (
-        <section className="hidden lg:block relative mt-[60px] mb-[50px] lg:mb-[120px]">
+        <section className="relative my-[20px] lg:my-[40px]">
             <Swiper
                 ref={swiperRef}
                 spaceBetween={20}
-                slidesPerView={1}
+                slidesPerView={2}
                 autoplay={{
                     delay: 3500,
                     disableOnInteraction: false,
                 }}
                 modules={[Autoplay]}
                 breakpoints={{
-                    640: { slidesPerView: 2 },
-                    1024: { slidesPerView: 3 },
+                    640: { slidesPerView: 3 },
+                    1024: { slidesPerView: 4 },
                     1536: { slidesPerView: 5 },
                 }}
             >

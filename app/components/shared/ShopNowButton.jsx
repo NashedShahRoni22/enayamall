@@ -7,7 +7,7 @@ export default function ShopNowButton() {
   return (
     <Link
       href={"/shop"}
-      className='group text-[18px] 2xl:text-[24px] text-button hover:text-natural flex gap-[12px] items-center transition-all duration-300 ease-in-out'
+      className='group text-[16px] 2xl:text-[20px] text-button hover:text-natural flex gap-[12px] items-center transition-all duration-300 ease-in-out'
     >
       <div className='relative h-6 w-6'>
         <Image

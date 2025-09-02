@@ -9,6 +9,8 @@ import hero3 from "@/public/hero (3).jpg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { useGetData } from "../helpers/useGetData";
+import ScreenLoader from "../loaders/ScreenLoader";
 
 // Custom styles for Swiper
 const swiperStyles = `
@@ -51,24 +53,11 @@ const swiperStyles = `
 `;
 
 export default function Slider() {
-  // Static images array
-  const banners = [
-    {
-      id: 1,
-      image: hero1,
-      alt: "Hero Banner 1"
-    },
-    {
-      id: 2,
-      image: hero2,
-      alt: "Hero Banner 2"
-    },
-    {
-      id: 3,
-      image: hero3,
-      alt: "Hero Banner 3"
-    }
-  ];
+  const { data, isLoading, error } = useGetData("banners");
+  const banners = data?.data;
+  
+  if (isLoading) return <ScreenLoader />;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <>
@@ -103,7 +92,7 @@ export default function Slider() {
             />
           </SwiperSlide>
         ))}
-              </Swiper>
+        </Swiper>
       </section>
     </>
   );

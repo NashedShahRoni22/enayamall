@@ -113,10 +113,10 @@ export default function VerticalProductCard({ p }) {
   return (
     <div className={`group relative ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
       <Link href={`/shop/${p?.slug}?variant=${p?.variant}`} className="block">
-        <div className="bg-white rounded shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-gray-200">
+        <div className="bg-white rounded-xl overflow-hidden border border-creamline group-hover:border-gray-200">
 
           {/* Product Image Container with Enhanced Hover Effects */}
-          <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 aspect-square">
+          <div className="relative overflow-hidden aspect-square">
             <Image
               src={p?.main_image || productImg}
               alt={productName || "Product Image"}
@@ -173,7 +173,7 @@ export default function VerticalProductCard({ p }) {
           <div className="p-4 space-y-3">
 
             {/* Category */}
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-gray-500 uppercase tracking-wider line-through">
                 {categoryName}
               </span>
@@ -182,10 +182,10 @@ export default function VerticalProductCard({ p }) {
                   {lang === 'ar' ? `${p?.total_sold} ${t.sold}` : `${p?.total_sold} ${t.sold}`}
                 </span>
               )}
-            </div>
+            </div> */}
 
             {/* Product Name */}
-            <h3 className="font-semibold text-primarymagenta leading-tight line-clamp-1 group-hover:text-secondary transition-colors duration-200">
+            <h3 className="text-primarymagenta leading-tight line-clamp-2 min-h-[40px] group-hover:text-secondary transition-colors duration-200">
               {productName}
               {variantName && (
                 <span className="text-gray-600">

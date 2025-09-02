@@ -163,9 +163,9 @@ export default function page() {
 
   return (
     <section className="relative">
-      <div className="relative">
+      {/* <div className="relative">
         <PageHeader title={"Top Category"} from={"home"} to={"Category"} />
-      </div>
+      </div> */}
       {/* filters & products here  */}
       <Container>
         <div className='py-[60px] lg:py-[120px]'>
@@ -237,7 +237,7 @@ export default function page() {
                   </button>
 
                   {showSortOptions && (
-                    <div className="flex flex-col items-start absolute min-w-full z-10 p-[4px] top-11 lg:top-14 left-0 bg-white rounded-[10px] border border-creamline">
+                    <div className="flex flex-col items-start absolute min-w-full z-50 p-[4px] top-11 lg:top-14 left-0 bg-white rounded-[10px] border border-creamline">
                       {sortOptions.map((label, index) => (
                         <button
                           key={index}
@@ -262,9 +262,6 @@ export default function page() {
             {/* filters options here for large device  */}
             <div className='hidden lg:block lg:w-2/6 2xl:w-1/4'>
               <div className='flex flex-col gap-[20px] lg:gap-[30px]'>
-                {/* category */}
-                <Categories lang={lang} categories={categories} parentCategorytIds={parentCategorytIds} setParentCategorytIds={setParentCategorytIds} childCategoryId={childCategoryId} setChildCategoryId={setChildCategoryId} />
-
                 {/* Price Range Filter */}
                 <PriceRangeFilter
                   minPrice={minPrice}
@@ -275,6 +272,9 @@ export default function page() {
                   absoluteMax={50000}
                   onFilter={handlePriceFilter}
                 />
+
+                {/* category */}
+                <Categories lang={lang} categories={categories} parentCategorytIds={parentCategorytIds} setParentCategorytIds={setParentCategorytIds} childCategoryId={childCategoryId} setChildCategoryId={setChildCategoryId} />
 
                 {/* brands */}
                 <Brands lang={lang} brands={brands} brandIds={brandIds} setBrandIds={setBrandIds} />

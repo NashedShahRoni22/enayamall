@@ -83,10 +83,10 @@ export default function Category() {
                 </div>
 
                 {/* add banners here  */}
-                <div className='flex flex-col md:flex-row md:justify-between gap-5 mt-8 md:mt-16'>
+                {/* <div className='flex flex-col md:flex-row md:justify-between gap-5 mt-8 md:mt-16'>
                     <Image src={bannerLeft} alt='Category Add Image' />
                     <Image src={bannerRight} alt='Category Add Image' />
-                </div>
+                </div> */}
             </div>
         </Container>
     );

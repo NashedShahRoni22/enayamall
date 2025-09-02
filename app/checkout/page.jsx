@@ -32,7 +32,7 @@ export default function page() {
             try {
                 setShippingLoading(true);
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_LAMINUX_API_BASE_URL}get-shipping-cost?address_id=${addressId}`
+                    `${process.env.NEXT_PUBLIC_WEB_API_BASE_URL}get-shipping-cost?address_id=${addressId}`
                 );
                 
                 if (!response.ok) {

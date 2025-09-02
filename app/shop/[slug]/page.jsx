@@ -3,7 +3,7 @@ import ProductPage from './ProductPage';
 // Server-side meta data fetching
 async function getProductData(slug, variant, token = null) {
     const query = variant ? `?variant=${variant}` : '';
-    const url = `${process.env.NEXT_PUBLIC_LAMINUX_API_BASE_URL}product/${slug}${query}`;
+    const url = `${process.env.NEXT_PUBLIC_WEB_API_BASE_URL}product/${slug}${query}`;
 
     const headers = token
         ? { Authorization: `Bearer ${token}` }
@@ -35,7 +35,7 @@ export async function generateMetadata({ params, searchParams }) {
         const thumbnailUrl = product?.thumbnail_image
             ? product.thumbnail_image.startsWith('http')
                 ? product.thumbnail_image
-                : `${process.env.NEXT_PUBLIC_LAMINUX_API_BASE_URL}/${product.thumbnail_image}`
+                : `${process.env.NEXT_PUBLIC_WEB_API_BASE_URL}/${product.thumbnail_image}`
             : null;
 
         return {

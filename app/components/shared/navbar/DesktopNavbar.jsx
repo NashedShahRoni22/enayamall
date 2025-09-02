@@ -13,7 +13,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
     const [showCategories, setShowCategories] = useState(false);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
-    
+
     // Get language state and setter from context
     const { lang, setLang } = useAppContext();
 
@@ -38,15 +38,15 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
             <div className="hidden lg:block relative">
                 <Container>
                     {/* Top section */}
-                    <div className="flex justify-between py-5">
+                    <div className="flex justify-between items-center py-5">
                         {/* Logo */}
                         <Link href="/">
                             <Image src={logo} height={50} width={200} alt="Logo" />
                         </Link>
 
                         {/* Search */}
-                        <div className="flex-1 max-w-md mx-8">
-                            <button 
+                        <div className="flex-1 w-full mx-8">
+                            <button
                                 onClick={() => setShowSearch(true)}
                                 className="w-full flex items-center gap-3 bg-gray-100 hover:bg-gray-50 px-5 py-3 rounded-full transition-colors group"
                             >
@@ -59,7 +59,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                         <div className="flex gap-4 items-center">
                             {/* Wishlist */}
                             <Link href="/wishlist">
-                                <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative">
+                                <button className="cursor-pointer bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative">
                                     <Heart className="size-5" />
                                     {wishlistCount > 0 && (
                                         <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full size-5 flex items-center justify-center">
@@ -88,9 +88,8 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                             </div>
 
                             {/* Cart action */}
-                            <div className="flex gap-2 items-center">
-                                <Link href="/cart">
-                                    <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative">
+                                <Link href="/cart" className="flex gap-2 items-center">
+                                    <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative cursor-pointer">
                                         <ShoppingBag className="size-5" />
                                         {cartInfo?.itemCount > 0 && (
                                             <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full size-5 flex items-center justify-center">
@@ -98,12 +97,11 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                             </span>
                                         )}
                                     </button>
+                                    <div className="text-gray-600 hidden xl:block">
+                                        <p className="text-sm">Cart</p>
+                                        <p className="font-semibold flex items-center gap-1"> <span className="dirham-symbol">ê</span> {cartInfo?.total || "0"}</p>
+                                    </div>
                                 </Link>
-                                <div className="text-gray-600 hidden xl:block">
-                                    <p className="text-sm">Cart</p>
-                                    <p className="font-semibold flex items-center gap-1"> <span className="dirham-symbol">ê</span> {cartInfo?.total || "0"}</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </Container>
@@ -155,7 +153,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
 
                                 {/* Language Selector */}
                                 <div className="relative">
-                                    <div 
+                                    <div
                                         className="flex gap-2 items-center cursor-pointer hover:opacity-80 transition-opacity"
                                         onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
                                     >
@@ -170,11 +168,10 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                                 <button
                                                     key={language.code}
                                                     onClick={() => handleLanguageChange(language.code)}
-                                                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors flex items-center gap-2 ${
-                                                        lang === language.code 
-                                                            ? 'text-primary font-medium bg-gray-50' 
+                                                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors flex items-center gap-2 ${lang === language.code
+                                                            ? 'text-primary font-medium bg-gray-50'
                                                             : 'text-gray-700'
-                                                    }`}
+                                                        }`}
                                                 >
                                                     <span>{language.label}</span>
                                                     {lang === language.code && (
@@ -187,7 +184,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
 
                                     {/* Overlay to close dropdown when clicking outside */}
                                     {showLanguageDropdown && (
-                                        <div 
+                                        <div
                                             className="fixed inset-0 z-40"
                                             onClick={() => setShowLanguageDropdown(false)}
                                         />
@@ -200,7 +197,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
             </div>
 
             {/* Search Modal */}
-            <GlobalSearch 
+            <GlobalSearch
                 isOpen={showSearch}
                 onClose={() => setShowSearch(false)}
                 isMobile={false}

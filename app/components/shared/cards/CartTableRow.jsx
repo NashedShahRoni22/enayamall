@@ -1,8 +1,8 @@
-import { IoIosCloseCircleOutline } from 'react-icons/io';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { GoPlus } from 'react-icons/go';
+import { Trash2 } from 'lucide-react';
 
 export default function CartTableRow({
   token,
@@ -26,7 +26,7 @@ export default function CartTableRow({
               }}
               className="cursor-pointer"
             >
-              <IoIosCloseCircleOutline className="text-[20px] lg:text-[24px] text-ash hover:text-button" />
+              <Trash2 className="text-[20px] lg:text-[24px] text-ash hover:text-button" />
             </button>
 
             {/* Fixed responsive image container */}

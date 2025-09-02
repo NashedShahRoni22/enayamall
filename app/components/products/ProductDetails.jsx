@@ -58,7 +58,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
 
     // share product 
     const shareCurrentProduct = () => {
-        const productUrl = `https://laminax.com.bd/shop/${slug}?variant=${variant}`;
+        const productUrl = `${process.env.NEXT_PUBLIC_WEB_SHOP_BASE_URL}${slug}?variant=${variant}`;
         handleShare(productUrl, getText('checkOutThisProduct'));
     };
 

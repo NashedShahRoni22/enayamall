@@ -29,7 +29,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
             const formData = new FormData();
             formData.append('guest_token', guestToken);
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_LAMINUX_API_BASE_URL}check-if-coupon-applied`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API_BASE_URL}check-if-coupon-applied`, {
                 method: 'POST',
                 body: formData,
             });
