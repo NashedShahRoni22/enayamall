@@ -8,9 +8,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function VerticalProductCard({ p }) {
-  console.log('====================================');
-  console.log(p);
-  console.log('====================================');
   const router = useRouter();
   const { token, addToWishlist, addToCartDB, addToCartDBGuest, lang } = useAppContext();
 

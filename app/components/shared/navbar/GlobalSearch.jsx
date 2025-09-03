@@ -5,17 +5,36 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaSpinner } from "react-icons/fa";
 import SearchProductCard from "../cards/SeachProductCard";
+import { useAppContext } from "@/app/context/AppContext";
 
 const BASE_URL = process.env.NEXT_PUBLIC_WEB_API_BASE_URL;
 
-export default function GlobalSearch({ 
+export default function GlobalSearch({
     isOpen = false,
     onClose,
     isMobile = false
 }) {
+    // Get language from context
+    const { lang } = useAppContext();
+    const isArabic = lang === 'ar';
+
     // Search states
     const [searchInput, setSearchInput] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
+
+    // Translations
+    const translations = {
+        searchPlaceholder: isArabic ? "البحث عن المنتجات..." : "Search products...",
+        searching: isArabic ? "جاري البحث..." : "Searching...",
+        searchResults: isArabic ? "نتائج البحث عن" : "Search results for",
+        found: isArabic ? "تم العثور على" : "found",
+        startSearching: isArabic ? "ابدأ البحث" : "Start searching",
+        typeToSearch: isArabic ? "اكتب شيئاً للبحث عن المنتجات" : "Type something to search for products",
+        searchingProducts: isArabic ? "البحث عن المنتجات..." : "Searching for products...",
+        somethingWrong: isArabic ? "حدث خطأ ما" : "Something went wrong",
+        noProductsFound: isArabic ? "لم يتم العثور على منتجات" : "No products found",
+        tryDifferentKeywords: isArabic ? "حاول البحث بكلمات مفتاحية مختلفة" : "Try searching with different keywords"
+    };
 
     // Handle search debounce
     useEffect(() => {
@@ -68,12 +87,12 @@ export default function GlobalSearch({
                 handleClose();
             }
         };
-        
+
         if (isOpen) {
             document.addEventListener('keydown', handleEscape);
             document.body.style.overflow = 'hidden';
         }
-        
+
         return () => {
             document.removeEventListener('keydown', handleEscape);
             document.body.style.overflow = 'unset';
@@ -87,27 +106,29 @@ export default function GlobalSearch({
             {/* Search Modal */}
             <div className={`
                 bg-white shadow-2xl
-                ${isMobile ? 
-                    'absolute inset-0' : 
+                ${isMobile ?
+                    'absolute inset-0' :
                     'absolute top-20 left-1/2 transform -translate-x-1/2 w-full max-w-4xl mx-4 rounded-2xl max-h-[80vh]'
                 }
                 overflow-hidden
+                ${isArabic ? 'rtl' : 'ltr'}
             `}>
                 {/* Search Header */}
                 <div className="px-4 sm:px-6 py-4 border-b border-gray-200 bg-white sticky top-0 z-10">
-                    <div className="flex items-center gap-4">
-                        <div className="flex-1 flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/20 border border-transparent focus-within:border-primary/30 transition-all">
+                    <div className={`flex items-center gap-4 ${isArabic ? 'flex-row-reverse' : ''}`}>
+                        <div className={`flex-1 flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/20 border border-transparent focus-within:border-primary/30 transition-all ${isArabic ? 'flex-row-reverse' : ''}`}>
                             <Search className="size-5 text-gray-400" />
                             <input
                                 type="text"
-                                placeholder="Search products..."
-                                className="flex-1 bg-transparent focus:outline-none text-gray-700 placeholder:text-gray-500"
+                                placeholder={translations.searchPlaceholder}
+                                className={`flex-1 bg-transparent focus:outline-none text-gray-700 placeholder:text-gray-500 ${isArabic ? 'text-right' : 'text-left'}`}
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
                                 autoFocus
+                                dir={isArabic ? 'rtl' : 'ltr'}
                             />
                             {searchInput && (
-                                <button 
+                                <button
                                     onClick={() => setSearchInput('')}
                                     className="text-gray-400 hover:text-gray-600 hover:bg-gray-200 p-1 rounded-full transition-all"
                                 >
@@ -115,21 +136,21 @@ export default function GlobalSearch({
                                 </button>
                             )}
                         </div>
-                        <button 
+                        <button
                             onClick={handleClose}
                             className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-full transition-all"
                         >
                             <X className="size-6" />
                         </button>
                     </div>
-                    
+
                     {/* Search Stats */}
                     {debouncedSearch && (
-                        <div className="flex items-center gap-2 mt-3 text-sm text-gray-600">
+                        <div className={`flex items-center gap-2 mt-3 text-sm text-gray-600 ${isArabic ? 'flex-row-reverse text-right' : ''}`}>
                             {isSearchLoading && <FaSpinner className="animate-spin text-primary" />}
                             <span>
-                                {isSearchLoading ? 'Searching...' : 
-                                `Search results for "${debouncedSearch}" ${searchProducts.length > 0 ? `(${searchProducts.length} found)` : ''}`}
+                                {isSearchLoading ? translations.searching :
+                                    `${translations.searchResults} "${debouncedSearch}" ${searchProducts.length > 0 ? `(${searchProducts.length} ${translations.found})` : ''}`}
                             </span>
                         </div>
                     )}
@@ -140,57 +161,57 @@ export default function GlobalSearch({
                     <div className="px-4 sm:px-6 py-6">
                         {/* No search yet */}
                         {!debouncedSearch && (
-                            <div className="text-center py-16">
+                            <div className={`text-center py-16 ${isArabic ? 'rtl' : 'ltr'}`}>
                                 <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                                     <Search className="size-8 text-gray-400" />
                                 </div>
-                                <h3 className="text-lg font-medium text-gray-900 mb-2">Start searching</h3>
-                                <p className="text-gray-500">Type something to search for products</p>
+                                <h3 className="text-lg font-medium text-gray-900 mb-2">{translations.startSearching}</h3>
+                                <p className="text-gray-500">{translations.typeToSearch}</p>
                             </div>
                         )}
 
                         {/* Loading */}
                         {isSearchLoading && debouncedSearch && (
-                            <div className="flex items-center gap-3 justify-center py-16 text-primary">
+                            <div className={`flex items-center gap-3 justify-center py-16 text-primary ${isArabic ? 'flex-row-reverse' : ''}`}>
                                 <FaSpinner className="animate-spin text-xl" />
-                                <span className="font-medium">Searching for products...</span>
+                                <span className="font-medium">{translations.searchingProducts}</span>
                             </div>
                         )}
 
                         {/* Error */}
                         {searchError && (
-                            <div className="text-center py-16">
+                            <div className={`text-center py-16 ${isArabic ? 'rtl' : 'ltr'}`}>
                                 <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
                                     <X className="size-8 text-red-500" />
                                 </div>
-                                <h3 className="text-lg font-medium text-gray-900 mb-2">Something went wrong</h3>
+                                <h3 className="text-lg font-medium text-gray-900 mb-2">{translations.somethingWrong}</h3>
                                 <p className="text-gray-500">{searchError.message}</p>
                             </div>
                         )}
 
                         {/* No Results */}
                         {!isSearchLoading && !searchError && debouncedSearch && searchProducts?.length === 0 && (
-                            <div className="text-center py-16">
+                            <div className={`text-center py-16 ${isArabic ? 'rtl' : 'ltr'}`}>
                                 <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                                     <Search className="size-8 text-gray-400" />
                                 </div>
-                                <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
-                                <p className="text-gray-500">Try searching with different keywords</p>
+                                <h3 className="text-lg font-medium text-gray-900 mb-2">{translations.noProductsFound}</h3>
+                                <p className="text-gray-500">{translations.tryDifferentKeywords}</p>
                             </div>
                         )}
 
                         {/* Results Grid */}
                         {!isSearchLoading && !searchError && searchProducts?.length > 0 && (
-                            <div className={`grid gap-4 ${
-                                isMobile ? 
-                                    'grid-cols-1 xs:grid-cols-2' : 
+                            <div className={`grid gap-4 ${isMobile ?
+                                    'grid-cols-1 xs:grid-cols-2' :
                                     'grid-cols-2 sm:grid-cols-3'
-                            }`}>
+                                } ${isArabic ? 'rtl' : 'ltr'}`}>
                                 {searchProducts.map((product, index) => (
                                     <div key={index} onClick={handleProductClick}>
-                                        <SearchProductCard 
-                                            p={product} 
-                                            setShowSearch={handleProductClick} 
+                                        <SearchProductCard
+                                            p={product}
+                                            lang={lang}
+                                            setShowSearch={handleProductClick}
                                         />
                                     </div>
                                 ))}
@@ -201,7 +222,7 @@ export default function GlobalSearch({
             </div>
 
             {/* Overlay to close */}
-            <div 
+            <div
                 className="absolute inset-0 -z-10"
                 onClick={handleClose}
             />

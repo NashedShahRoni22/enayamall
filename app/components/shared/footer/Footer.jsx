@@ -1,3 +1,4 @@
+"use client";
 import {
     Truck,
     RotateCcw,
@@ -11,74 +12,145 @@ import {
 } from "lucide-react";
 import Container from "../Container";
 import Link from "next/link";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function Footer() {
-    // Menu data arrays
-    const topCategories = [
-        "Pregnant & Postpartum",
-        "Milks & Foods",
-        "Diapers & Wipes",
-        "Infant",
-        "Eat & Drink Supplies",
-        "Baby Fashion",
-        "Baby Out",
-        "Toys & Study",
-        "Stroller, Crib, Chair",
-        "Washes & Bath",
-        "Homewares"
-    ];
+    // Get language and categories from context
+    const { lang, categories = [] } = useAppContext();
 
+    // Translation object
+    const translations = {
+        en: {
+            // Benefits section
+            freeShipping: "Free shipping for orders 200 AED and above",
+            freeReturns: "Free Returns within 7 days",
+            paymentOptions: "Cash or credit card payment on delivery is available",
+            authenticity: "We only sell authentic products with Brand Warranty",
+            
+            // Section titles
+            topCategories: "Top Categories",
+            company: "Company",
+            helpCenter: "Help Center",
+            partner: "Partner",
+            subscribeOffer: "Subscribe & Get",
+            off: "OFF",
+            
+            // Company links
+            about: "About",
+            contact: "Contact",
+            career: "Career",
+            blog: "Blog",
+            
+            // Help center links
+            customerService: "Customer Service",
+            policy: "Policy",
+            termsConditions: "Terms & Conditions",
+            trackOrder: "Track Order",
+            faqs: "FAQs",
+            myAccount: "My Account",
+            productSupport: "Product Support",
+            
+            // Partner links
+            becomeSeller: "Become Seller",
+            affiliate: "Affiliate",
+            advertise: "Advertise",
+            partnership: "Partnership",
+            careServices: "Care Services",
+            
+            // Subscribe section
+            emailPlaceholder: "Email Address",
+            subscribe: "SUBSCRIBE",
+            privacyPolicy: "By subscribing, you accept the Privacy Policy",
+            
+            // Contact info
+            hotline: "Hotline 24/7:",
+            workHours: "Work Hours:",
+            workHoursText: "Monday-Saturday: 9.00am - 5.00pm",
+            mail: "Mail:",
+            
+            // Copyright
+            copyright: "© 2025 Enayamall. All Rights Reserved."
+        },
+        ar: {
+            // Benefits section
+            freeShipping: "شحن مجاني للطلبات 200 درهم فما فوق",
+            freeReturns: "إرجاع مجاني خلال 7 أيام",
+            paymentOptions: "الدفع نقداً أو بالبطاقة الائتمانية عند التسليم متاح",
+            authenticity: "نبيع فقط منتجات أصلية مع ضمان العلامة التجارية",
+            
+            // Section titles
+            topCategories: "أهم الفئات",
+            company: "الشركة",
+            helpCenter: "مركز المساعدة",
+            partner: "الشركاء",
+            subscribeOffer: "اشترك واحصل على",
+            off: "خصم",
+            
+            // Company links
+            about: "من نحن",
+            contact: "اتصل بنا",
+            career: "الوظائف",
+            blog: "المدونة",
+            
+            // Help center links
+            customerService: "خدمة العملاء",
+            policy: "السياسة",
+            termsConditions: "الشروط والأحكام",
+            trackOrder: "تتبع الطلب",
+            faqs: "الأسئلة الشائعة",
+            myAccount: "حسابي",
+            productSupport: "دعم المنتج",
+            
+            // Partner links
+            becomeSeller: "كن بائعاً",
+            affiliate: "التسويق بالعمولة",
+            advertise: "الإعلان",
+            partnership: "الشراكة",
+            careServices: "خدمات الرعاية",
+            
+            // Subscribe section
+            emailPlaceholder: "عنوان البريد الإلكتروني",
+            subscribe: "اشتراك",
+            privacyPolicy: "بالاشتراك، فإنك توافق على سياسة الخصوصية",
+            
+            // Contact info
+            hotline: "الخط الساخن 24/7:",
+            workHours: "ساعات العمل:",
+            workHoursText: "الاثنين-السبت: 9.00ص - 5.00م",
+            mail: "البريد الإلكتروني:",
+            
+            // Copyright
+            copyright: "© 2025 إنايا مول. جميع الحقوق محفوظة."
+        }
+    };
+
+    // Get current translations
+    const t = translations[lang] || translations.en;
+
+    // Static menu data with translations
     const companyLinks = [
-        "About",
-        "Contact",
-        "Career",
-        "Blog",
+        { en: t.about, ar: t.about, href: "/about" },
+        { en: t.contact, ar: t.contact, href: "/contact" },
+        { en: t.career, ar: t.career, href: "/career" },
+        { en: t.blog, ar: t.blog, href: "/blog" }
     ];
 
     const helpCenterLinks = [
-        "Customer Service",
-        "Policy",
-        "Terms & Conditions",
-        "Track Order",
-        "FAQs",
-        "My Account",
-        "Product Support"
+        { en: t.customerService, ar: t.customerService, href: "/customer-service" },
+        { en: t.policy, ar: t.policy, href: "/policy" },
+        { en: t.termsConditions, ar: t.termsConditions, href: "/terms" },
+        { en: t.trackOrder, ar: t.trackOrder, href: "/track-order" },
+        { en: t.faqs, ar: t.faqs, href: "/faqs" },
+        { en: t.myAccount, ar: t.myAccount, href: "/account" },
+        { en: t.productSupport, ar: t.productSupport, href: "/support" }
     ];
 
     const partnerLinks = [
-        "Become Seller",
-        "Affiliate",
-        "Advertise",
-        "Partnership",
-        "Care Services"
-    ];
-
-    const paymentMethods = [
-        {
-            name: "PayPal",
-            icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/paypal.svg",
-            bg: "bg-blue-600"
-        },
-        {
-            name: "Mastercard",
-            icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/mastercard.svg",
-            bg: "bg-red-500"
-        },
-        {
-            name: "Visa",
-            icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/visa.svg",
-            bg: "bg-blue-500"
-        },
-        {
-            name: "Stripe",
-            icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg",
-            bg: "bg-purple-600"
-        },
-        {
-            name: "Klarna",
-            icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/klarna.svg",
-            bg: "bg-pink-400"
-        }
+        { en: t.becomeSeller, ar: t.becomeSeller, href: "/become-seller" },
+        { en: t.affiliate, ar: t.affiliate, href: "/affiliate" },
+        { en: t.advertise, ar: t.advertise, href: "/advertise" },
+        { en: t.partnership, ar: t.partnership, href: "/partnership" },
+        { en: t.careServices, ar: t.careServices, href: "/care-services" }
     ];
 
     const socialLinks = [
@@ -89,15 +161,36 @@ export default function Footer() {
         { icon: MapPin, href: "#" }
     ];
 
-    // Reusable menu component
+    // Function to get category name based on language
+    const getCategoryName = (category) => {
+        return (lang === 'ar' && category.ar_name) ? category.ar_name : category.name;
+    };
+
+    // Reusable menu component for static links
     const MenuSection = ({ title, links }) => (
         <div>
-            <h3 className="font-semibold text-gray-800 mb-4">{title}</h3>
-            <ul className="space-y-2 text-sm text-gray-600">
+            <h3 className={`font-semibold text-gray-800 mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{title}</h3>
+            <ul className={`space-y-2 text-sm text-gray-600 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                 {links.map((link, index) => (
                     <li key={index}>
-                        <Link href="#" className="hover:text-gray-800">
-                            {link}
+                        <Link href={link.href || "#"} className="hover:text-gray-800">
+                            {lang === 'ar' ? link.ar : link.en}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+
+    // Dynamic categories menu component
+    const CategoriesSection = () => (
+        <div>
+            <h3 className={`font-semibold text-gray-800 mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{t.topCategories}</h3>
+            <ul className={`space-y-2 text-sm text-gray-600 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                {categories.slice(0, 11).map((category) => (
+                    <li key={category.id}>
+                        <Link href={`/category/${category.slug}`} className="hover:text-gray-800">
+                            {getCategoryName(category)}
                         </Link>
                     </li>
                 ))}
@@ -106,26 +199,26 @@ export default function Footer() {
     );
 
     return (
-        <footer className="mt-10 md:mt-20">
+        <footer className={lang === 'ar' ? 'rtl' : 'ltr'}>
             {/* Top benefits bar */}
             <div className="bg-primary text-white py-4">
                 <Container>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center lg:text-left">
-                        <div className="flex items-center justify-center lg:justify-start gap-2">
+                    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center lg:text-left ${lang === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}>
+                        <div className={`flex items-center justify-center gap-2 ${lang === 'ar' ? 'lg:justify-end flex-row-reverse' : 'lg:justify-start'}`}>
                             <Truck size={20} />
-                            <span className="text-sm">Free shipping for orders 200 AED and above</span>
+                            <span className="text-sm">{t.freeShipping}</span>
                         </div>
-                        <div className="flex items-center justify-center lg:justify-start gap-2">
+                        <div className={`flex items-center justify-center gap-2 ${lang === 'ar' ? 'lg:justify-end flex-row-reverse' : 'lg:justify-start'}`}>
                             <RotateCcw size={20} />
-                            <span className="text-sm">Free Returns within 7 days</span>
+                            <span className="text-sm">{t.freeReturns}</span>
                         </div>
-                        <div className="flex items-center justify-center lg:justify-start gap-2">
+                        <div className={`flex items-center justify-center gap-2 ${lang === 'ar' ? 'lg:justify-end flex-row-reverse' : 'lg:justify-start'}`}>
                             <CreditCard size={20} />
-                            <span className="text-sm">Cash or credit card payment on delivery is available</span>
+                            <span className="text-sm">{t.paymentOptions}</span>
                         </div>
-                        <div className="flex items-center justify-center lg:justify-start gap-2">
+                        <div className={`flex items-center justify-center gap-2 ${lang === 'ar' ? 'lg:justify-end flex-row-reverse' : 'lg:justify-start'}`}>
                             <Shield size={20} />
-                            <span className="text-sm">We only sell authentic products with Brand Waranty</span>
+                            <span className="text-sm">{t.authenticity}</span>
                         </div>
                     </div>
                 </Container>
@@ -134,50 +227,53 @@ export default function Footer() {
             {/* Main footer content */}
             <div className="bg-gray-50 py-12">
                 <Container>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-                        <MenuSection title="Top Categories" links={topCategories} />
-                        <MenuSection title="Company" links={companyLinks} />
-                        <MenuSection title="Help Center" links={helpCenterLinks} />
-                        <MenuSection title="Partner" links={partnerLinks} />
+                    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 ${lang === 'ar' ? 'lg:grid-flow-col-reverse' : ''}`}>
+                        <CategoriesSection />
+                        <MenuSection title={t.company} links={companyLinks} />
+                        <MenuSection title={t.helpCenter} links={helpCenterLinks} />
+                        <MenuSection title={t.partner} links={partnerLinks} />
 
                         {/* Subscribe & Contact */}
                         <div>
-                            <h3 className="font-semibold text-gray-800 mb-4">
-                                Subscribe & Get <span className="text-orange-500">10% OFF</span>
+                            <h3 className={`font-semibold text-gray-800 mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                                {t.subscribeOffer} <span className="text-orange-500">10% {t.off}</span>
                             </h3>
 
                             {/* Email subscription */}
                             <div className="mb-6">
-                                <div className="flex justify-between border border-gray-300 rounded overflow-hidden">
+                                <div className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} justify-between border border-gray-300 rounded overflow-hidden`}>
                                     <input
                                         type="email"
-                                        placeholder="Email Address"
-                                        className="px-3 py-2 text-sm border border-gray-300 rounded-l focus:outline-none focus:border-primary"
+                                        placeholder={t.emailPlaceholder}
+                                        className={`px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:border-primary ${lang === 'ar' ? 'rounded-r text-right' : 'rounded-l text-left'}`}
                                     />
-                                    <button className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-r hover:bg-teal-600">
-                                        SUBSCRIBE
+                                    <button className={`px-4 py-2 bg-primary text-white text-sm font-medium hover:bg-teal-600 ${lang === 'ar' ? 'rounded-l' : 'rounded-r'}`}>
+                                        {t.subscribe}
                                     </button>
                                 </div>
-                                <p className="text-xs text-gray-500 mt-2">
-                                    By subscribing, you accept the <Link href="#" className="text-primary">Privacy Policy</Link>
+                                <p className={`text-xs text-gray-500 mt-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                                    {t.privacyPolicy.split('Privacy Policy')[0]}
+                                    <Link href="#" className="text-primary">
+                                        {lang === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy'}
+                                    </Link>
                                 </p>
                             </div>
 
                             {/* Contact Info */}
-                            <div className="mb-4">
+                            <div className={`mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                                 <p className="text-sm text-gray-600 mb-1">
-                                    <strong>Hotline 24/7:</strong> <Link href="tel:+32536862516" className="text-primary">+325) 3686 25 16</Link>
+                                    <strong>{t.hotline}</strong> <Link href="tel:+32536862516" className="text-primary">+325) 3686 25 16</Link>
                                 </p>
                                 <p className="text-sm text-gray-600 mb-1">
-                                    <strong>Work Hours:</strong> Monday-Saturday: 9.00am - 5.00pm
+                                    <strong>{t.workHours}</strong> {t.workHoursText}
                                 </p>
                                 <p className="text-sm text-gray-600">
-                                    <strong>Mail:</strong> <Link href="mailto:contact@enayamall.com" className="text-primary">contact@enayamall.com</Link>
+                                    <strong>{t.mail}</strong> <Link href="mailto:contact@enayamall.com" className="text-primary">contact@enayamall.com</Link>
                                 </p>
                             </div>
 
                             {/* Social Media */}
-                            <div className="flex gap-3">
+                            <div className={`flex gap-3 ${lang === 'ar' ? 'justify-end' : 'justify-start'}`}>
                                 {socialLinks.map((social, index) => {
                                     const IconComponent = social.icon;
                                     return (
@@ -195,67 +291,10 @@ export default function Footer() {
             {/* Bottom footer */}
             <div className="bg-white py-6 border-t border-gray-200">
                 <Container>
-                    {/* <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-
-                        Currency and Language
-                        <div className="flex items-center gap-4">
-                            <select className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none">
-                                <option>USD</option>
-                                <option>EUR</option>
-                                <option>GBP</option>
-                            </select>
-                            <select className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none">
-                                <option>🇺🇸 Eng</option>
-                                <option>🇪🇸 Esp</option>
-                                <option>🇫🇷 Fra</option>
-                            </select>
-                        </div>
-
-                        Payment Methods
-                        <div className="flex items-center gap-3">
-                            {paymentMethods.map((method, index) => (
-                                <div key={index} className={`w-12 h-8 ${method.bg} rounded flex items-center justify-center p-1`}>
-                                    <img 
-                                        src={method.icon} 
-                                        alt={method.name}
-                                        className="w-full h-full object-contain filter brightness-0 invert"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-
-                        App Downloads
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-600">Download App</span>
-                            <div className="flex gap-2">
-                                <div className="shadow bg-white px-3 py-2 rounded text-xs flex items-center gap-2 border">
-                                    <img 
-                                        width="20" 
-                                        height="20" 
-                                        src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/apple.svg" 
-                                        alt="app-store" 
-                                        className="filter brightness-0"
-                                    />
-                                    <span className="font-medium">App Store</span>
-                                </div>
-                                <div className="shadow bg-white px-3 py-2 rounded text-xs flex items-center gap-2 border">
-                                    <img 
-                                        width="20" 
-                                        height="20" 
-                                        src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googleplay.svg" 
-                                        alt="google-play" 
-                                        className="filter brightness-0"
-                                    />
-                                    <span className="font-medium">Google Play</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
-
                     {/* Copyright */}
                     <div className="text-center">
                         <p className="text-sm text-gray-500">
-                            © 2025 <strong>Enayamall</strong>. All Rights Reserved.
+                            {t.copyright}
                         </p>
                     </div>
                 </Container>

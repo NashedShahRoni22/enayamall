@@ -7,15 +7,38 @@ import { useState } from "react";
 import Container from "../Container";
 import CategoryDropdown from "./CategoryDropdown";
 import GlobalSearch from "./GlobalSearch";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function MobileNavbar({ logo, menuItems = [], categories = [], contactInfo, cartInfo }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const [showCategories, setShowCategories] = useState(false);
 
+    // Get language state from context
+    const { lang } = useAppContext();
+
+    // Translation object
+    const translations = {
+        en: {
+            categories: "Categories",
+            loginRegister: "Log In / Register",
+            wishlist: "Wishlist",
+            hotline: "Hotline:"
+        },
+        ar: {
+            categories: "الفئات",
+            loginRegister: "تسجيل الدخول / التسجيل",
+            wishlist: "قائمة الأمنيات",
+            hotline: "الخط الساخن:"
+        }
+    };
+
+    // Get current translations
+    const t = translations[lang] || translations.en;
+
     return (
         <>
-            <div className="lg:hidden">
+            <div className={`lg:hidden ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
                 <Container>
                     {/* Mobile Header */}
                     <div className="flex justify-between items-center py-4">
@@ -67,8 +90,9 @@ export default function MobileNavbar({ logo, menuItems = [], categories = [], co
                                             href={item.href} 
                                             className="block py-2 px-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors rounded"
                                             onClick={() => setIsMobileMenuOpen(false)}
+                                            style={{ textAlign: lang === 'ar' ? 'right' : 'left' }}
                                         >
-                                            {item.name}
+                                            {lang === 'ar' && item.nameAr ? item.nameAr : item.name}
                                         </Link>
                                     ))}
                                     
@@ -76,11 +100,12 @@ export default function MobileNavbar({ logo, menuItems = [], categories = [], co
                                         <button 
                                             onClick={() => setShowCategories(!showCategories)}
                                             className="w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors rounded"
+                                            style={{ textAlign: lang === 'ar' ? 'right' : 'left' }}
                                         >
-                                            Categories
+                                            {t.categories}
                                         </button>
                                         {showCategories && (
-                                            <div className="mt-2 ml-4">
+                                            <div className={`mt-2 ${lang === 'ar' ? 'mr-4' : 'ml-4'}`}>
                                                 <CategoryDropdown 
                                                     categories={categories} 
                                                     onClose={() => setShowCategories(false)}
@@ -95,28 +120,28 @@ export default function MobileNavbar({ logo, menuItems = [], categories = [], co
                                 <div className="border-t pt-4 space-y-3">
                                     <Link 
                                         href="/login"
-                                        className="flex items-center gap-3 py-2 px-4"
+                                        className={`flex items-center gap-3 py-2 px-4 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
                                         onClick={() => setIsMobileMenuOpen(false)}
                                     >
                                         <User className="size-5 text-gray-600" />
                                         <span className="text-gray-700 hover:text-primary transition-colors">
-                                            Log In / Register
+                                            {t.loginRegister}
                                         </span>
                                     </Link>
                                     
                                     <Link 
                                         href="/wishlist"
-                                        className="flex items-center gap-3 py-2 px-4"
+                                        className={`flex items-center gap-3 py-2 px-4 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
                                         onClick={() => setIsMobileMenuOpen(false)}
                                     >
                                         <Heart className="size-5 text-gray-600" />
-                                        <span className="text-gray-700">Wishlist</span>
+                                        <span className="text-gray-700">{t.wishlist}</span>
                                     </Link>
                                     
                                     {contactInfo?.phone && (
-                                        <div className="flex items-center gap-3 py-2 px-4">
+                                        <div className={`flex items-center gap-3 py-2 px-4 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                                             <Phone className="size-5 text-gray-600" />
-                                            <span className="text-gray-700">Hotline: {contactInfo.phone}</span>
+                                            <span className="text-gray-700">{t.hotline} {contactInfo.phone}</span>
                                         </div>
                                     )}
                                 </div>

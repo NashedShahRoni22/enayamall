@@ -23,6 +23,29 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
         { code: 'ar', label: 'العربية', }
     ];
 
+    // Translation object
+    const translations = {
+        en: {
+            searchPlaceholder: "Search anything...",
+            welcome: "Welcome",
+            loginRegister: "Log In / Register",
+            cart: "Cart",
+            listCategory: "List Category",
+            hotline: "Hotline 24/7"
+        },
+        ar: {
+            searchPlaceholder: "البحث عن أي شيء...",
+            welcome: "مرحباً",
+            loginRegister: "تسجيل الدخول / التسجيل",
+            cart: "السلة",
+            listCategory: "قائمة الفئات",
+            hotline: "الخط الساخن 24/7"
+        }
+    };
+
+    // Get current translations
+    const t = translations[lang] || translations.en;
+
     // Handle language change
     const handleLanguageChange = (languageCode) => {
         setLang(languageCode);
@@ -35,10 +58,10 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
 
     return (
         <>
-            <div className="hidden lg:block relative">
+            <div className={`hidden lg:block relative ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
                 <Container>
                     {/* Top section */}
-                    <div className="flex justify-between items-center py-5">
+                    <div className={`flex justify-between items-center py-5 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                         {/* Logo */}
                         <Link href="/">
                             <Image src={logo} height={50} width={200} alt="Logo" />
@@ -48,15 +71,15 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                         <div className="flex-1 w-full mx-8">
                             <button
                                 onClick={() => setShowSearch(true)}
-                                className="w-full flex items-center gap-3 bg-gray-100 hover:bg-gray-50 px-5 py-3 rounded-full transition-colors group"
+                                className={`w-full flex items-center gap-3 bg-gray-100 hover:bg-gray-50 px-5 py-3 rounded-full transition-colors group ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
                             >
                                 <Search className="size-5 text-gray-500 group-hover:text-primary transition-colors" />
-                                <span className="flex-1 text-left text-sm text-gray-500">Search anything...</span>
+                                <span className={`flex-1 text-sm text-gray-500 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{t.searchPlaceholder}</span>
                             </button>
                         </div>
 
                         {/* Actions */}
-                        <div className="flex gap-4 items-center">
+                        <div className={`flex gap-4 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                             {/* Wishlist */}
                             <Link href="/wishlist">
                                 <button className="cursor-pointer bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative">
@@ -70,25 +93,25 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                             </Link>
 
                             {/* User actions */}
-                            <div className="flex gap-2 items-center">
+                            <div className={`flex gap-2 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                                 <Link href="/login">
                                     <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors">
                                         <User className="size-5" />
                                     </button>
                                 </Link>
                                 <div className="text-gray-600 hidden xl:block">
-                                    <p className="text-sm">Welcome</p>
+                                    <p className={`text-sm ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{t.welcome}</p>
                                     {contactInfo?.name ?
                                         <Link href="/account" className="font-semibold hover:text-primary transition-colors">{contactInfo?.name}</Link>
                                         :
                                         <Link href="/login" className="font-semibold hover:text-primary transition-colors">
-                                            Log In / Register
+                                            {t.loginRegister}
                                         </Link>}
                                 </div>
                             </div>
 
                             {/* Cart action */}
-                                <Link href="/cart" className="flex gap-2 items-center">
+                                <Link href="/cart" className={`flex gap-2 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                                     <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative cursor-pointer">
                                         <ShoppingBag className="size-5" />
                                         {cartInfo?.itemCount > 0 && (
@@ -98,8 +121,10 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                         )}
                                     </button>
                                     <div className="text-gray-600 hidden xl:block">
-                                        <p className="text-sm">Cart</p>
-                                        <p className="font-semibold flex items-center gap-1"> <span className="dirham-symbol">ê</span> {cartInfo?.total || "0"}</p>
+                                        <p className={`text-sm ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{t.cart}</p>
+                                        <p className={`font-semibold flex items-center gap-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}> 
+                                            <span className="dirham-symbol">ê</span> {cartInfo?.total || "0"}
+                                        </p>
                                     </div>
                                 </Link>
                         </div>
@@ -109,23 +134,23 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                 {/* Menu Section */}
                 <div className="bg-primary text-white py-5">
                     <Container>
-                        <div className="flex justify-between items-center">
-                            {/* Left side */}
-                            <div className="flex gap-8 items-center">
+                        <div className={`flex justify-between items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                            {/* Left/Right side based on language */}
+                            <div className={`flex gap-8 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                                 {/* Category */}
                                 <div
-                                    className="relative flex gap-2 items-center cursor-pointer"
+                                    className={`relative flex gap-2 items-center cursor-pointer ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
                                     onClick={() => setShowCategories(!showCategories)}
                                 >
                                     <Menu className="size-5" />
-                                    <p>List Category</p>
+                                    <p>{t.listCategory}</p>
 
                                     {/* Categories Dropdown */}
                                     {showCategories && (
                                         <CategoryDropdown
                                             categories={categories}
                                             onClose={() => setShowCategories(false)}
-                                            className="absolute top-full left-0 mt-2"
+                                            className={`absolute top-full mt-2 ${lang === 'ar' ? 'right-0' : 'left-0'}`}
                                         />
                                     )}
                                 </div>
@@ -137,24 +162,24 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                         href={item.href}
                                         className="hover:text-gray-200 transition-colors"
                                     >
-                                        {item.name}
+                                        {lang === 'ar' && item.nameAr ? item.nameAr : item.name}
                                     </Link>
                                 ))}
                             </div>
 
-                            {/* Right side */}
-                            <div className="flex gap-8 items-center">
+                            {/* Right/Left side based on language */}
+                            <div className={`flex gap-8 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                                 {contactInfo?.phone && (
-                                    <div className="flex gap-2 items-center border border-white/30 py-2 px-4 rounded-full hover:bg-white/10 transition-colors">
+                                    <div className={`flex gap-2 items-center border border-white/30 py-2 px-4 rounded-full hover:bg-white/10 transition-colors ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                                         <Phone className="size-4" />
-                                        <p className="text-sm">Hotline 24/7 {contactInfo.phone}</p>
+                                        <p className="text-sm">{t.hotline} {contactInfo.phone}</p>
                                     </div>
                                 )}
 
                                 {/* Language Selector */}
                                 <div className="relative">
                                     <div
-                                        className="flex gap-2 items-center cursor-pointer hover:opacity-80 transition-opacity"
+                                        className={`flex gap-2 items-center cursor-pointer hover:opacity-80 transition-opacity ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
                                         onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
                                     >
                                         <p className="text-sm">{currentLanguage.label}</p>
@@ -163,19 +188,19 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
 
                                     {/* Language Dropdown */}
                                     {showLanguageDropdown && (
-                                        <div className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[120px] z-50">
+                                        <div className={`absolute top-full ${lang === 'ar' ? 'left-0' : 'right-0'} mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[120px] z-50`}>
                                             {languages.map((language) => (
                                                 <button
                                                     key={language.code}
                                                     onClick={() => handleLanguageChange(language.code)}
-                                                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors flex items-center gap-2 ${lang === language.code
+                                                    className={`w-full px-4 py-2 text-sm hover:bg-gray-100 transition-colors flex items-center gap-2 ${lang === language.code
                                                             ? 'text-primary font-medium bg-gray-50'
                                                             : 'text-gray-700'
-                                                        }`}
+                                                        } ${lang === 'ar' ? 'text-right flex-row-reverse' : 'text-left'}`}
                                                 >
                                                     <span>{language.label}</span>
                                                     {lang === language.code && (
-                                                        <span className="ml-auto text-primary">✓</span>
+                                                        <span className={`text-primary ${lang === 'ar' ? 'mr-auto' : 'ml-auto'}`}>✓</span>
                                                     )}
                                                 </button>
                                             ))}

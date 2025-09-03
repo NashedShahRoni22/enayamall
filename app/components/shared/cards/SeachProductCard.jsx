@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-export default function SearchProductCard({ p, setShowSearch }) {
+export default function SearchProductCard({ p, setShowSearch, lang }) {
   return (
     <Link onClick={() => setShowSearch(false)} href={`/shop/${p?.slug}?variant=${p?.variant}`} className="group flex items-center gap-[20px] bg-white rounded-[10px] py-[8px] pl-[16px] pr-[32px] text-primarymagenta border border-creamline">
 
@@ -22,7 +22,10 @@ export default function SearchProductCard({ p, setShowSearch }) {
 
       <div className="w-3/4">
         <p className="text-[14px] line-clamp-3">
-          {p?.name} {p?.variant && p?.variant}
+          {
+            lang === "ar" ? p?.ar_name : p?.name
+          }
+          {p?.variant && p?.variant}
         </p>
         <div className="flex gap-[10px] text-[14px] mt-[2.5px]">
           {
