@@ -17,7 +17,7 @@ export default function CartCard({
   return (
     <div>
       {/* regular product info  */}
-      <div className="flex w-full items-center gap-4 py-4 px-4 border-b border-gray-200 text-primarymagenta">
+      <div className="flex w-full bg-white items-center gap-4 py-4 px-4 border-b border-gray-200 text-primarymagenta">
 
         {/* Remove button */}
         <button
