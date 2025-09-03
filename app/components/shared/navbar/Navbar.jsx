@@ -26,10 +26,15 @@ export default function Navbar() {
             href: "/contact" 
         },
         { 
-            name: "Shop", 
-            nameAr: "المتجر", 
-            href: "/shop" 
+            name: "Brand", 
+            nameAr: "اتصل بنا", 
+            href: "/brand" 
         },
+        // { 
+        //     name: "Shop", 
+        //     nameAr: "المتجر", 
+        //     href: "/shop" 
+        // },
         { 
             name: "Blog", 
             nameAr: "المدونة", 

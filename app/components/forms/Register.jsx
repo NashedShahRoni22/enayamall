@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { usePostData } from '../helpers/usePostData';
 import toast from 'react-hot-toast';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAppContext } from '@/app/context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePostDataWithToken } from '../helpers/usePostDataWithToken';
@@ -12,6 +12,7 @@ import SignInWithPhone from './SignInWithPhone';
 import LoadingSvg from '../shared/LoadingSvg';
 
 export default function Register() {
+  const location = usePathname();
   const [option, setOption] = useState(2);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -34,6 +35,7 @@ export default function Register() {
     phone: '',
     password: '',
     retype_password: '',
+    code: '',
   });
 
   const postUser = usePostData('register-with-email');
@@ -114,6 +116,14 @@ export default function Register() {
     formData.append('phone', signUpForm.phone);
     formData.append('password', signUpForm.password);
     formData.append('retype_password', signUpForm.retype_password);
+    {
+      location === "/affiliate" &&
+        formData.append("referral_code", signUpForm.code)
+    }
+    {
+      location === "/affiliate" &&
+        formData.append("affiliated", 1)
+    }
 
     toast.promise(
       postUser.mutateAsync(formData)
@@ -176,7 +186,14 @@ export default function Register() {
 
   return (
     <div>
-      <h5 className='text-[24px] sm:text-[26px] text-primarymagenta'>Register</h5>
+      <h5 className='text-[24px] sm:text-[26px] text-primarymagenta'>
+        {
+          location === "/affiliate" ?
+            "Join us as a affiliate"
+            :
+            "Register"
+        }
+      </h5>
       <p className='text-[16px] sm:text-[18px] text-ash mt-[30px]'>
         Create your account. Unlock the experience. <br />
         One step closer to something better.
@@ -297,6 +314,27 @@ export default function Register() {
                   </div>
                 </div>
 
+                {/* Affiliate Code here  */}
+                {
+                  location === "/affiliate" &&
+                  <div className="relative mt-[20px]">
+                    {/* Affiliate Code here */}
+                    <label className="flex justify-between font-medium text-gray-700">
+                      <p className='text-[16px] sm:text-[18px] text-ash'>
+                        Referral Code
+                      </p>
+                    </label>
+                    <input
+                      type="text"
+                      name="code"
+                      placeholder="Referral code"
+                      value={signUpForm.code}
+                      onChange={handleChange}
+                      className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline mt-[20px] w-full`}
+                    />
+                  </div>
+                }
+
                 <button
                   type="submit"
                   className={`py-[12px] text-[14px] rounded-xl sm:text-[16px] ${option === 2 ? "bg-primary text-white" : "bg-creamline"} rounded mt-[40px] w-full ${loading ? "cursor-not-allowed bg-creamline" : "cursor-pointer"}`}
@@ -309,7 +347,18 @@ export default function Register() {
               </form>
           }
 
-          <p className='text-primarymagenta mt-[20px] sm:mt-[40px]'>Already have an account?   <Link href={"/login"} className='text-primary hover:underline'>Login</Link> </p>
+          <p className='text-primarymagenta mt-[20px] sm:mt-[40px]'>
+            Already have an account?
+            <Link href={"/login"} className='text-primary hover:underline ml-2'>
+              {
+                location === "/affiliate" ?
+                  "Login your affiliate account"
+                  :
+                  "Login"
+              }
+
+            </Link>
+          </p>
 
         </div>
       </div>

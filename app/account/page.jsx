@@ -18,7 +18,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { useRouter } from 'next/navigation';
 
 export default function Page() {
-    const { token } = useAppContext();
+    const { token, handleLogout } = useAppContext();
     const router = useRouter();
     // manage bar 
     const [show, setShow] = useState(false);
@@ -48,33 +48,6 @@ export default function Page() {
     const profileTab = useMemo(() => <Profile address={address} />, );
     const ordersTab = useMemo(() => <Orders orders={orders} />,);
 
-    // Handle logout
-    const postLogout = usePostDataWithToken('logout');
-    const queryClient = useQueryClient();
-
-    const handleLogout = async () => {
-        try {
-            await toast.promise(
-                postLogout.mutateAsync({
-                    formData: new FormData(),
-                    token,
-                }),
-                {
-                    loading: 'Logging out...',
-                    success: 'Logged out successfully!',
-                    error: (err) => err.message || 'Failed to logout',
-                }
-            );
-
-            localStorage.removeItem('LaminaxUser');
-            localStorage.removeItem('LaminaxAuthToken');
-            queryClient.clear();
-            window.location.href = '/';
-        } catch (err) {
-            console.error("Logout error:", err);
-        }
-    };
-
     const renderActiveTab = () => {
         switch (activeTab) {
             case "Profile":
@@ -93,13 +66,13 @@ export default function Page() {
 
     return (
         <PrivateRoute>
-            <PageHeader title={"My Account"} from={"Home"} to={"account"} />
+            {/* <PageHeader title={"My Account"} from={"Home"} to={"account"} /> */}
             <Container>
                 <section className='pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[120px] flex flex-col lg:flex-row gap-[24px] lg:max-w-6xl lg:mx-auto'>
                     {/* Mobilebar  */}
                     <div className='relative lg:hidden'>
                         <div className='flex justify-end'>
-                            <button className='p-1.5 bg-natural text-white rounded-[5px] cursor-pointer' onClick={() => setShow(!show)}>
+                            <button className='p-1.5 bg-primary text-white rounded-[5px] cursor-pointer' onClick={() => setShow(!show)}>
                                 <HiDotsHorizontal className='text-xl' />
                             </button>
                         </div>
@@ -118,8 +91,8 @@ export default function Page() {
                                             }}
                                             key={index}
                                             className={`cursor-pointer w-full flex items-center gap-[10px] px-[16px] py-[8px] border-t-2 border-white transition-colors duration-200 ${isActive
-                                                ? "text-secondary"
-                                                : "text-primarymagenta hover:text-secondary"
+                                                ? "text-primary"
+                                                : "text-primarymagenta hover:text-primary"
                                                 }`}
                                         >
                                             <IconComponent
@@ -135,7 +108,7 @@ export default function Page() {
                                 {/* Logout Button */}
                                 <button
                                     onClick={handleLogout}
-                                    className='cursor-pointer w-full flex items-center text-secondary gap-[10px] px-[16px] py-[8px] border-t-2 border-white'
+                                    className='cursor-pointer w-full flex items-center text-primary gap-[10px] px-[16px] py-[8px] border-t-2 border-white'
                                 >
                                     <FiLogOut className='size-[20px]' />
                                     Logout
@@ -187,7 +160,7 @@ export default function Page() {
                                             }
                                         }}
                                         key={index}
-                                        className={`cursor-pointer w-full flex items-center gap-[20px] py-[20px] border-t-2 border-white transition-colors duration-200 ${isActive ? "text-secondary" : "text-primarymagenta hover:text-secondary"
+                                        className={`cursor-pointer w-full flex items-center gap-[20px] py-[20px] border-t-2 border-white transition-colors duration-200 ${isActive ? "text-primary" : "text-primarymagenta hover:text-primary"
                                             }`}
                                     >
                                         <IconComponent size={20} />

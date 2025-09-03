@@ -1,4 +1,3 @@
-import React from 'react'
 import Container from '../shared/Container'
 import VerticalProductCard from '../shared/cards/VerticalProductCard'
 

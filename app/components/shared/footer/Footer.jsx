@@ -38,7 +38,7 @@ export default function Footer() {
             // Company links
             about: "About",
             contact: "Contact",
-            career: "Career",
+            // career: "Career",
             blog: "Blog",
             
             // Help center links
@@ -51,7 +51,7 @@ export default function Footer() {
             productSupport: "Product Support",
             
             // Partner links
-            becomeSeller: "Become Seller",
+            // becomeSeller: "Become Seller",
             affiliate: "Affiliate",
             advertise: "Advertise",
             partnership: "Partnership",
@@ -89,7 +89,7 @@ export default function Footer() {
             // Company links
             about: "من نحن",
             contact: "اتصل بنا",
-            career: "الوظائف",
+            // career: "الوظائف",
             blog: "المدونة",
             
             // Help center links
@@ -102,7 +102,7 @@ export default function Footer() {
             productSupport: "دعم المنتج",
             
             // Partner links
-            becomeSeller: "كن بائعاً",
+            // becomeSeller: "كن بائعاً",
             affiliate: "التسويق بالعمولة",
             advertise: "الإعلان",
             partnership: "الشراكة",
@@ -235,34 +235,10 @@ export default function Footer() {
 
                         {/* Subscribe & Contact */}
                         <div>
-                            <h3 className={`font-semibold text-gray-800 mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-                                {t.subscribeOffer} <span className="text-orange-500">10% {t.off}</span>
-                            </h3>
-
-                            {/* Email subscription */}
-                            <div className="mb-6">
-                                <div className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} justify-between border border-gray-300 rounded overflow-hidden`}>
-                                    <input
-                                        type="email"
-                                        placeholder={t.emailPlaceholder}
-                                        className={`px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:border-primary ${lang === 'ar' ? 'rounded-r text-right' : 'rounded-l text-left'}`}
-                                    />
-                                    <button className={`px-4 py-2 bg-primary text-white text-sm font-medium hover:bg-teal-600 ${lang === 'ar' ? 'rounded-l' : 'rounded-r'}`}>
-                                        {t.subscribe}
-                                    </button>
-                                </div>
-                                <p className={`text-xs text-gray-500 mt-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
-                                    {t.privacyPolicy.split('Privacy Policy')[0]}
-                                    <Link href="#" className="text-primary">
-                                        {lang === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy'}
-                                    </Link>
-                                </p>
-                            </div>
-
                             {/* Contact Info */}
                             <div className={`mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                                 <p className="text-sm text-gray-600 mb-1">
-                                    <strong>{t.hotline}</strong> <Link href="tel:+32536862516" className="text-primary">+325) 3686 25 16</Link>
+                                    <strong>{t.hotline}</strong> <Link href="tel:+32536862516" className="text-primary">(+325) 3686 25 16</Link>
                                 </p>
                                 <p className="text-sm text-gray-600 mb-1">
                                     <strong>{t.workHours}</strong> {t.workHoursText}

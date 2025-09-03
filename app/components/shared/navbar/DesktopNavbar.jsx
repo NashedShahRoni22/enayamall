@@ -1,9 +1,9 @@
 // DesktopNavbar.jsx
 "use client";
-import { ChevronDown, Heart, Menu, Phone, Search, ShoppingBag, User } from "lucide-react";
+import { ChevronDown, Heart, Menu, Phone, Search, ShoppingBag, User, LogOut, Package, UserCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Container from "../Container";
 import CategoryDropdown from "./CategoryDropdown";
 import GlobalSearch from "./GlobalSearch";
@@ -13,9 +13,18 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
     const [showCategories, setShowCategories] = useState(false);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
+    const [showAccountPopover, setShowAccountPopover] = useState(false);
+
+    // Refs for click outside detection
+    const categoryRef = useRef(null);
+    const languageRef = useRef(null);
+    const accountRef = useRef(null);
 
     // Get language state and setter from context
-    const { lang, setLang } = useAppContext();
+    const { lang, setLang, handleLogout } = useAppContext();
+
+    // Check if user is logged in (you might need to adjust this based on your auth logic)
+    const isLoggedIn = contactInfo?.name; // Assuming if name exists, user is logged in
 
     // Language options
     const languages = [
@@ -31,7 +40,10 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
             loginRegister: "Log In / Register",
             cart: "Cart",
             listCategory: "List Category",
-            hotline: "Hotline 24/7"
+            hotline: "Hotline 24/7",
+            myProfile: "My Profile",
+            myOrders: "My Orders",
+            logout: "Logout"
         },
         ar: {
             searchPlaceholder: "البحث عن أي شيء...",
@@ -39,7 +51,10 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
             loginRegister: "تسجيل الدخول / التسجيل",
             cart: "السلة",
             listCategory: "قائمة الفئات",
-            hotline: "الخط الساخن 24/7"
+            hotline: "الخط الساخن 24/7",
+            myProfile: "ملفي الشخصي",
+            myOrders: "طلباتي",
+            logout: "تسجيل الخروج"
         }
     };
 
@@ -55,6 +70,31 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
 
     // Get current language display
     const currentLanguage = languages.find(l => l.code === lang) || languages[0];
+
+    // Click outside handler
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // Close category dropdown
+            if (categoryRef.current && !categoryRef.current.contains(event.target)) {
+                setShowCategories(false);
+            }
+
+            // Close language dropdown
+            if (languageRef.current && !languageRef.current.contains(event.target)) {
+                setShowLanguageDropdown(false);
+            }
+
+            // Close account popover
+            if (accountRef.current && !accountRef.current.contains(event.target)) {
+                setShowAccountPopover(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     return (
         <>
@@ -93,40 +133,74 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                             </Link>
 
                             {/* User actions */}
-                            <div className={`flex gap-2 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-                                <Link href="/login">
+                            <div
+                                ref={accountRef}
+                                className={`flex gap-2 items-center relative ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
+                                onMouseEnter={() => isLoggedIn && setShowAccountPopover(true)}
+                                onMouseLeave={() => setShowAccountPopover(false)}
+                            >
+                                <Link href={isLoggedIn ? "/account" : "/login"}>
                                     <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors">
                                         <User className="size-5" />
                                     </button>
                                 </Link>
                                 <div className="text-gray-600 hidden xl:block">
                                     <p className={`text-sm ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{t.welcome}</p>
-                                    {contactInfo?.name ?
-                                        <Link href="/account" className="font-semibold hover:text-primary transition-colors">{contactInfo?.name}</Link>
-                                        :
+                                    {isLoggedIn ? (
+                                        <Link href="/account" className="font-semibold hover:text-primary transition-colors">
+                                            {contactInfo?.name}
+                                        </Link>
+                                    ) : (
                                         <Link href="/login" className="font-semibold hover:text-primary transition-colors">
                                             {t.loginRegister}
-                                        </Link>}
+                                        </Link>
+                                    )}
                                 </div>
+
+                                {/* Account Popover */}
+                                {isLoggedIn && showAccountPopover && (
+                                    <div className={`absolute top-full ${lang === 'ar' ? 'left-0' : 'right-0'} mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[180px] z-50`}>
+                                        <Link href="/account">
+                                            <button className={`w-full px-4 py-3 text-sm hover:bg-gray-100 transition-colors flex items-center gap-3 text-gray-700 ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
+                                                <UserCircle className="size-4" />
+                                                <span>{t.myProfile}</span>
+                                            </button>
+                                        </Link>
+                                        <Link href="/orders">
+                                            <button className={`w-full px-4 py-3 text-sm hover:bg-gray-100 transition-colors flex items-center gap-3 text-gray-700 ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
+                                                <Package className="size-4" />
+                                                <span>{t.myOrders}</span>
+                                            </button>
+                                        </Link>
+                                        <hr className="my-2 border-gray-200" />
+                                        <button
+                                            onClick={handleLogout}
+                                            className={`w-full px-4 py-3 text-sm hover:bg-gray-100 transition-colors flex items-center gap-3 text-red-600 ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}
+                                        >
+                                            <LogOut className="size-4" />
+                                            <span>{t.logout}</span>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Cart action */}
-                                <Link href="/cart" className={`flex gap-2 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-                                    <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative cursor-pointer">
-                                        <ShoppingBag className="size-5" />
-                                        {cartInfo?.itemCount > 0 && (
-                                            <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full size-5 flex items-center justify-center">
-                                                {cartInfo.itemCount}
-                                            </span>
-                                        )}
-                                    </button>
-                                    <div className="text-gray-600 hidden xl:block">
-                                        <p className={`text-sm ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{t.cart}</p>
-                                        <p className={`font-semibold flex items-center gap-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}> 
-                                            <span className="dirham-symbol">ê</span> {cartInfo?.total || "0"}
-                                        </p>
-                                    </div>
-                                </Link>
+                            <Link href="/cart" className={`flex gap-2 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                                <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative cursor-pointer">
+                                    <ShoppingBag className="size-5" />
+                                    {cartInfo?.itemCount > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full size-5 flex items-center justify-center">
+                                            {cartInfo.itemCount}
+                                        </span>
+                                    )}
+                                </button>
+                                <div className="text-gray-600 hidden xl:block">
+                                    <p className={`text-sm ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{t.cart}</p>
+                                    <p className={`font-semibold flex items-center gap-1 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                                        <span className="dirham-symbol">ê</span> {cartInfo?.total || "0"}
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </Container>
@@ -139,18 +213,21 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                             <div className={`flex gap-8 items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                                 {/* Category */}
                                 <div
-                                    className={`relative flex gap-2 items-center cursor-pointer ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
+                                    ref={categoryRef}
+                                    className={`relative`}
                                     onClick={() => setShowCategories(!showCategories)}
                                 >
-                                    <Menu className="size-5" />
-                                    <p>{t.listCategory}</p>
+                                    <button className={`flex gap-2 items-center cursor-pointer hover:text-gray-200 transition-colors ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                                        <Menu className="size-5" />
+                                        <p>{t.listCategory}</p>
+                                    </button>
 
                                     {/* Categories Dropdown */}
                                     {showCategories && (
                                         <CategoryDropdown
                                             categories={categories}
                                             onClose={() => setShowCategories(false)}
-                                            className={`absolute top-full mt-2 ${lang === 'ar' ? 'right-0' : 'left-0'}`}
+                                            className={`absolute top-full mt-2 ${lang === 'ar' ? 'right-0' : 'left-0'} z-50`}
                                         />
                                     )}
                                 </div>
@@ -177,7 +254,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                 )}
 
                                 {/* Language Selector */}
-                                <div className="relative">
+                                <div className="relative" ref={languageRef}>
                                     <div
                                         className={`flex gap-2 items-center cursor-pointer hover:opacity-80 transition-opacity ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
                                         onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
@@ -194,8 +271,8 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                                     key={language.code}
                                                     onClick={() => handleLanguageChange(language.code)}
                                                     className={`w-full px-4 py-2 text-sm hover:bg-gray-100 transition-colors flex items-center gap-2 ${lang === language.code
-                                                            ? 'text-primary font-medium bg-gray-50'
-                                                            : 'text-gray-700'
+                                                        ? 'text-primary font-medium bg-gray-50'
+                                                        : 'text-gray-700'
                                                         } ${lang === 'ar' ? 'text-right flex-row-reverse' : 'text-left'}`}
                                                 >
                                                     <span>{language.label}</span>
@@ -205,14 +282,6 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                                 </button>
                                             ))}
                                         </div>
-                                    )}
-
-                                    {/* Overlay to close dropdown when clicking outside */}
-                                    {showLanguageDropdown && (
-                                        <div
-                                            className="fixed inset-0 z-40"
-                                            onClick={() => setShowLanguageDropdown(false)}
-                                        />
                                     )}
                                 </div>
                             </div>

@@ -73,12 +73,30 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // ✅ Add logout function to clear token and user data
-  const logout = () => {
-    setToken(null);
-    setUser(null);
-    localStorage.removeItem('EnayamallAuthToken');
-    localStorage.removeItem('EnayamallUser');
+  
+  // Handle logout
+  const postLogout = usePostDataWithToken('logout');
+  const handleLogout = async () => {
+    try {
+      await toast.promise(
+        postLogout.mutateAsync({
+          formData: new FormData(),
+          token,
+        }),
+        {
+          loading: 'Logging out...',
+          success: 'Logged out successfully!',
+          error: (err) => err.message || 'Failed to logout',
+        }
+      );
+
+      localStorage.removeItem('EnayamallAuthToken');
+      localStorage.removeItem('EnayamallUser');
+      queryClient.clear();
+      window.location.href = '/';
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
 
   // ✅ Add product to cart DB 
@@ -288,7 +306,7 @@ export const AppProvider = ({ children }) => {
         token,
         setToken,
         login,
-        logout,
+        handleLogout,
         guestToken,
         user,
         setUser,
