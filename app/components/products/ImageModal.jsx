@@ -152,7 +152,7 @@ export default function ImageModal({ isOpen, images, activeIndex, productName, o
                         <button
                             onClick={handleModalPrev}
                             disabled={modalActiveIndex === 0}
-                            className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-full bg-natural hover:bg-natural/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-full bg-primary hover:bg-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             title="Previous image"
                         >
                             <IoChevronBack className="w-5 h-5 text-white" />
@@ -161,7 +161,7 @@ export default function ImageModal({ isOpen, images, activeIndex, productName, o
                         {/* Close Button */}
                         <button
                             onClick={handleModalClose}
-                            className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-full bg-natural hover:bg-natural/80 transition-colors"
+                            className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-full bg-primary hover:bg-primary/80 transition-colors"
                             title="Close (ESC)"
                         >
                             <IoClose className="w-5 h-5 text-white" />
@@ -171,7 +171,7 @@ export default function ImageModal({ isOpen, images, activeIndex, productName, o
                         <button
                             onClick={handleModalNext}
                             disabled={modalActiveIndex === (images.length - 1)}
-                            className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-full bg-natural hover:bg-natural/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="cursor-pointer flex items-center justify-center w-10 h-10 rounded-full bg-primary hover:bg-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             title="Next image"
                         >
                             <IoChevronForward className="w-5 h-5 text-white" />

@@ -181,8 +181,8 @@ export default function ProductImageGallery({
                                     <SwiperSlide key={index}>
                                         <button
                                             onClick={() => handleImageSelect(image, index)}
-                                            className={`size-[100px] sm:size-[120px] border-2 rounded-[10px] cursor-pointer transition-all duration-300 overflow-hidden hover:border-natural/60 ${activeIndex === index
-                                                    ? "border-natural"
+                                            className={`size-[100px] sm:size-[120px] border-2 rounded-[10px] cursor-pointer transition-all duration-300 overflow-hidden hover:border-primary/60 ${activeIndex === index
+                                                    ? "border-primary"
                                                     : "border-creamline"
                                                 }`}
                                         >

@@ -18,6 +18,7 @@ import PriceRangeFilter from "@/app/components/filters/PriceRangeFilter";
 import { useGetData } from "@/app/components/helpers/useGetData";
 import { CiFilter } from "react-icons/ci";
 import { FilterIcon } from "lucide-react";
+import BrandBannerDisplay from "@/app/components/filters/BrandBannerDisplay";
 
 export default function page() {
   const { categories, brands, lang } = useAppContext();
@@ -155,37 +156,33 @@ export default function page() {
       </div> */}
       {/* filters & products here  */}
       <Container>
-        <div className='py-[60px] lg:py-[120px]'>
+        <div className='py-[20px] lg:py-[40px]'>
           {/* filetrs actions  */}
           <div className="sticky top-18 lg:static lg:flex lg:gap-[24px] bg-white z-10">
             {/* for large device  */}
-            <div className="hidden  text-primary lg:w-2/6 2xl:w-1/4 lg:flex gap-[12px] items-center">
-              {/* <Image src={filterIcon} alt="filter icon" /> */}
+            <div className="hidden text-primary lg:w-2/6 2xl:w-1/4">
               <FilterIcon />
               <p className="text-[24px]">Filtered by</p>
             </div>
 
-            {/* <div className="h-[1px] w-full bg-creamline my-[20px] lg:hidden"></div> */}
-
-            <div className="lg:w-4/6 2xl:w-3/4">
-              {/* brands logo here  */}
+            <div className="w-full">
+              {/* brands banner here  */}
               {!brands ? (
                 <div className="mb-[20px]">
-                  <div className="animate-pulse flex space-x-4">
-                    <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
-                    <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
-                    <div className="rounded-[8px] bg-gray-200 h-[64px] w-[84px]"></div>
+                  <div className="animate-pulse flex space-x-4 items-center">
+                    <div className="rounded-[8px] bg-gray-200 h-[100px] w-[240px] hidden lg:block"></div>
+                    <div className="rounded-[8px] bg-gray-200 h-[100px] md:h-[200px] w-full"></div>
                   </div>
                 </div>
               ) : (
-                <BrandLogoDisplay
+                <BrandBannerDisplay
                   brands={brands}
                   brandIds={brandIds}
                   setBrandIds={setBrandIds}
                 />
               )}
 
-              <div className="bg-light p-[8px] rounded-[10px] flex justify-between items-center">
+              <div className="bg-light p-[8px] rounded-[10px] flex justify-between items-center mt-[20px]">
                 {/* product layouts buttons  */}
                 <div className="flex gap-[20px] items-center">
                   <div className="flex gap-[8px]">
@@ -203,7 +200,7 @@ export default function page() {
                     </button>
                     <button
                       onClick={() => setShowFilters(!showFilters)}
-                      className={`lg:hidden cursor-pointer p-[16px] rounded-[10px] ${showFilters ? "bg-primary text-white" : "bg-white text-primary"}`}>
+                      className={`hidden cursor-pointer p-[16px] rounded-[10px] ${showFilters ? "bg-primary text-white" : "bg-white text-primary"}`}>
                       {/* <Image src={listIcon} alt="list icon" /> */}
                       <CiFilter className="text-[20px]" />
                     </button>
@@ -247,7 +244,7 @@ export default function page() {
 
           <div className="lg:flex lg:gap-[24px] mt-[30px]">
             {/* filters options here for large device  */}
-            <div className='hidden lg:block lg:w-2/6 2xl:w-1/4'>
+            <div className='hidden lg:w-2/6 2xl:w-1/4'>
               <div className='flex flex-col gap-[20px] lg:gap-[30px]'>
                 {/* Price Range Filter */}
                 <PriceRangeFilter
@@ -269,7 +266,7 @@ export default function page() {
             </div>
 
             {/* products here  */}
-            <div className='lg:w-4/6 2xl:w-3/4'>
+            <div className=''>
               <Products
                 viewStyle={viewStyle}
                 parentCategorytIds={parentCategorytIds}
@@ -282,6 +279,7 @@ export default function page() {
                 isLoading={isLoading && page === 1}
                 error={error}
                 products={allProducts}
+                gridCount={5}
               />
               {/* pagination here  */}
               {

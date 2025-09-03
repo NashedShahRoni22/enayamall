@@ -163,22 +163,16 @@ export default function page() {
 
   return (
     <section className="relative">
-      {/* <div className="relative">
-        <PageHeader title={"Top Category"} from={"home"} to={"Category"} />
-      </div> */}
       {/* filters & products here  */}
       <Container>
-        <div className='py-[60px] lg:py-[120px]'>
+        <div className='py-[20px] lg:py-[40px]'>
           {/* filetrs actions  */}
           <div className="sticky top-16 lg:static lg:flex lg:gap-[24px] bg-white z-10">
             {/* for large device  */}
-            <div className="hidden  lg:w-2/6 2xl:w-1/4 lg:flex gap-[12px] items-center text-primary">
-              {/* <Image src={filterIcon} alt="filter icon" /> */}
+            <div className="hidden lg:w-2/6 2xl:w-1/4 lg:flex gap-[12px] items-center text-primary">
               <FilterIcon />
               <p className="text-[24px]">Filtered by</p>
             </div>
-
-            {/* <div className="h-[1px] w-full bg-creamline my-[20px] lg:hidden"></div> */}
 
             <div className="lg:w-4/6 2xl:w-3/4">
               {/* brands logo here  */}
