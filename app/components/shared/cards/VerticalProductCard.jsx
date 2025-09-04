@@ -9,7 +9,8 @@ import Link from "next/link";
 
 export default function VerticalProductCard({ p }) {
   const router = useRouter();
-  const { token, addToWishlist, addToCartDB, addToCartDBGuest, lang } = useAppContext();
+  const { token, addToWishlist, addToCartDB, addToCartDBGuest, lang } =
+    useAppContext();
 
   // Translation object
   const translations = {
@@ -18,27 +19,27 @@ export default function VerticalProductCard({ p }) {
       outOfStock: "Out of Stock",
       off: "OFF",
       sold: "sold",
-      pleaseLogin: "Please login to use wishlist!"
+      pleaseLogin: "Please login to use wishlist!",
     },
     ar: {
       addToCart: "أضف إلى السلة",
       outOfStock: "نفد من المخزون",
       off: "خصم",
       sold: "تم البيع",
-      pleaseLogin: "يرجى تسجيل الدخول لاستخدام قائمة الأماني!"
-    }
+      pleaseLogin: "يرجى تسجيل الدخول لاستخدام قائمة الأماني!",
+    },
   };
 
   const t = translations[lang] || translations.en;
 
   // Helper function to get localized field
   const getLocalizedField = (obj, fieldName) => {
-    if (!obj) return '';
+    if (!obj) return "";
 
-    if (lang === 'ar' && obj[`ar_${fieldName}`]) {
+    if (lang === "ar" && obj[`ar_${fieldName}`]) {
       return obj[`ar_${fieldName}`];
     }
-    return obj[fieldName] || '';
+    return obj[fieldName] || "";
   };
 
   // Function to calculate filled stars based on rating
@@ -69,49 +70,52 @@ export default function VerticalProductCard({ p }) {
         <Star
           key={i}
           size={12}
-          className={`${i <= filledStars ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'} transition-colors`}
+          className={`${
+            i <= filledStars
+              ? "fill-yellow-400 text-yellow-400"
+              : "text-gray-300"
+          } transition-colors`}
         />
       );
     }
     return stars;
   };
 
-  // manage add to cart 
+  // manage add to cart
   const handleAddToCart = (e, p) => {
     e.preventDefault();
     e.stopPropagation();
     if (token === null) {
-      addToCartDBGuest(p?.product_variant_id, 1)
+      addToCartDBGuest(p?.product_variant_id, 1);
     } else {
-      addToCartDB(p?.product_variant_id, 1)
+      addToCartDB(p?.product_variant_id, 1);
     }
   };
 
-  // manage add to wishlist 
+  // manage add to wishlist
   const handleAddToWishlist = (e, id) => {
     e.preventDefault();
     e.stopPropagation();
     if (token === null) {
       toast.error(t.pleaseLogin);
-      router.push("login")
+      router.push("login");
     } else {
-      addToWishlist(id)
+      addToWishlist(id);
     }
-  }
+  };
 
   const discountPercentage = p?.discount
     ? Math.round(((p?.price - p?.discount?.discount_price) / p?.price) * 100)
     : 0;
 
   // Get localized product data
-  const productName = getLocalizedField(p, 'name');
-  const categoryName = getLocalizedField(p?.main_category, 'name');
-  const variantName = getLocalizedField(p, 'variant');
+  const productName = getLocalizedField(p, "name");
+  const categoryName = getLocalizedField(p?.main_category, "name");
+  const variantName = getLocalizedField(p, "variant");
   return (
-    <div className={`group relative ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
+    <div className={`group relative ${lang === "ar" ? "rtl" : "ltr"}`}>
       <Link href={`/shop/${p?.slug}?variant=${p?.variant}`} className="block">
         <div className="bg-white rounded-xl overflow-hidden border border-creamline group-hover:border-gray-200">
-
           {/* Product Image Container with Enhanced Hover Effects */}
           <div className="relative overflow-hidden aspect-square">
             <Image
@@ -126,11 +130,17 @@ export default function VerticalProductCard({ p }) {
             {/* <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" /> */}
 
             {/* Badges Container */}
-            <div className={`absolute top-3 ${lang === 'ar' ? 'right-3' : 'left-3'} flex flex-col gap-2 z-10`}>
+            <div
+              className={`absolute top-3 ${
+                lang === "ar" ? "right-3" : "left-3"
+              } flex flex-col gap-2 z-10`}
+            >
               {/* Discount Badge */}
               {p?.discount && (
                 <div className="bg-red-500 text-white px-3 py-1 rounded text-xs font-semibold shadow-lg animate-pulse">
-                  {lang === 'ar' ? `${discountPercentage}% ${t.off}` : `${discountPercentage}% ${t.off}`}
+                  {lang === "ar"
+                    ? `${discountPercentage}% ${t.off}`
+                    : `${discountPercentage}% ${t.off}`}
                 </div>
               )}
 
@@ -145,7 +155,9 @@ export default function VerticalProductCard({ p }) {
             {/* Wishlist Button */}
             <button
               onClick={(e) => handleAddToWishlist(e, p?.product_variant_id)}
-              className={`absolute top-3 ${lang === 'ar' ? 'left-3' : 'right-3'} flex items-center justify-center`}
+              className={`absolute top-3 ${
+                lang === "ar" ? "left-3" : "right-3"
+              } flex items-center justify-center`}
             >
               <Heart
                 size={24}
@@ -169,7 +181,6 @@ export default function VerticalProductCard({ p }) {
 
           {/* Product Information */}
           <div className="p-4 space-y-3">
-
             {/* Category */}
             {/* <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-gray-500 uppercase tracking-wider line-through">
@@ -187,17 +198,19 @@ export default function VerticalProductCard({ p }) {
               {productName}
               {variantName && (
                 <span className="text-gray-600">
-                  {lang === 'ar' ? ` - ${variantName}` : ` - ${variantName}`}
+                  {lang === "ar" ? ` - ${variantName}` : ` - ${variantName}`}
                 </span>
               )}
             </h3>
 
             {/* Rating */}
             {p?.ratings?.total_rating > 0 && (
-              <div className={`flex items-center gap-2 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-                <div className="flex items-center gap-1">
-                  {renderStars()}
-                </div>
+              <div
+                className={`flex items-center gap-2 ${
+                  lang === "ar" ? "flex-row-reverse" : ""
+                }`}
+              >
+                <div className="flex items-center gap-1">{renderStars()}</div>
                 <span className="text-xs text-gray-600">
                   ({p?.ratings?.total_rating})
                 </span>
@@ -210,20 +223,56 @@ export default function VerticalProductCard({ p }) {
             )}
 
             {/* Price */}
-            <div className={`float-left gap-2 ${lang === 'ar' ? 'float-right' : ''}`}>
-              {p?.discount ? (
-                <>
-                  <span className="text-xl font-bold text-primarymagenta flex items-center">
-                    <span className="dirham-symbol text-[17px] mr-1">ê</span> {p?.discount?.discount_price ?? "0.00"}
-                  </span>
-                  <span className={`text-sm text-gray-500 line-through flex items-center ${lang === 'ar' ? 'justify-end' : 'justify-start'}`}>
+            <div
+              className={`flex items-end mb-0 justify-between ${
+                lang === "ar" ? "flex-row-reverse" : ""
+              }`}
+            >
+              <div
+                className={`float-left block gap-2 ${
+                  lang === "ar" ? "float-right" : ""
+                }`}
+              >
+                {p?.discount ? (
+                  <>
+                    <span className="text-xl font-bold text-primarymagenta flex items-center">
+                      <span className="dirham-symbol text-[17px] mr-1">ê</span>{" "}
+                      {p?.discount?.discount_price ?? "0.00"}
+                    </span>
+                    <span
+                      className={`text-sm text-gray-500 line-through flex items-center ${
+                        lang === "ar" ? "justify-end" : "justify-start"
+                      }`}
+                    >
+                      {p?.price ?? "0.00"}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-xl font-bold text-primarymagenta flex items-center min-h-[48px]">
+                    <span className="dirham-symbol text-[17px] mr-1">ê</span>{" "}
                     {p?.price ?? "0.00"}
                   </span>
-                </>
-              ) : (
-                <span className="text-xl font-bold text-primarymagenta flex items-center min-h-[48px]">
-                  <span className="dirham-symbol text-[17px] mr-1">ê</span> {p?.price ?? "0.00"}
-                </span>
+                )}
+              </div>
+              {/* Express delivery */}
+              {p?.is_express && (
+                <div className="relative inline-block">
+                  <img
+                    src="https://enayamall.com/image/express.png"
+                    alt="Express"
+                    className="cursor-pointer peer"
+                    width={60}
+                  />
+                  <span
+                    className={`absolute bottom-full mb-2 ${
+                      lang === "ar" ? "left-0" : "right-0"
+                    }
+                   hidden peer-hover:block bg-primary text-white text-xs 
+                   px-2 py-1 rounded whitespace-nowrap pointer-events-none`}
+                  >
+                    Express Delivery
+                  </span>
+                </div>
               )}
             </div>
 
@@ -238,7 +287,7 @@ export default function VerticalProductCard({ p }) {
             </button>
           </div>
         </div>
-      </Link >
-    </div >
+      </Link>
+    </div>
   );
 }

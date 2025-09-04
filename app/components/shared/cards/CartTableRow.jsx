@@ -79,6 +79,22 @@ export default function CartTableRow({
                 {/* <td className="text-[14px] lg:text-[16px]">
                 <span className="dirham-symbol">ê</span> {item.price}
               </td> */}
+              {/* {item?.name && (
+                <div className="relative inline-block">
+                  <img
+                    src="https://enayamall.com/image/express.png"
+                    alt="Express"
+                    className="cursor-pointer peer mt-2"
+                    width={60}
+                  />
+                  <span
+                    className="absolute bottom-full hidden peer-hover:block bg-primary text-white text-xs 
+                   px-2 py-1 rounded whitespace-nowrap pointer-events-none"
+                  >
+                    Express Delivery
+                  </span>
+                </div>
+              )} */}
               </div>
             )}
           </div>
