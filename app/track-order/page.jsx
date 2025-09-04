@@ -1,11 +1,11 @@
 "use client";
 import Container from '../components/shared/Container';
 import PageHeader from '../components/shared/PageHeader';
-import arrowImage from "../resources/track/arrow.png";
-import deliveredImage from "../resources/track/delivered.png";
-import shippingImage from "../resources/track/shipping.png";
-import confirmedImage from "../resources/track/confirmed.png";
-import processingImage from "../resources/track/processing.png";
+import arrowImage from "../resources/track/track_icons_blue/arrow.webp";
+import deliveredImage from "../resources/track/track_icons_blue/delivered.webp";
+import shippingImage from "../resources/track/track_icons_blue/shipping.webp";
+import confirmedImage from "../resources/track/track_icons_blue/confirmed.webp";
+import processingImage from "../resources/track/track_icons_blue/processing.webp";
 import arrowImageMute from "../resources/track/arrow_muted.png";
 import deliveredImageMute from "../resources/track/delivered_mute.png";
 import shippingImageMute from "../resources/track/shipping_mute.png";
@@ -32,6 +32,9 @@ export default function Page() {
         return 'Shipping';
       case 'delivered':
         return 'Delivered';
+      case 'cancelled':
+      case 'canceled':
+        return 'Cancelled';
       case 'pending':
       default:
         return 'Pending';
@@ -67,6 +70,22 @@ export default function Page() {
   };
 
   const getStatusImage = (statusType, currentStatus) => {
+    // If order is cancelled, show all images as muted
+    if (currentStatus === 'Cancelled') {
+      switch (statusType) {
+        case 'Pending':
+          return processingImageMute;
+        case 'Processing':
+          return confirmedImageMute;
+        case 'Shipping':
+          return shippingImageMute;
+        case 'Delivered':
+          return deliveredImageMute;
+        default:
+          return processingImageMute;
+      }
+    }
+
     const statusOrder = ['Pending', 'Processing', 'Shipping', 'Delivered'];
     const currentIndex = statusOrder.indexOf(currentStatus);
     const statusIndex = statusOrder.indexOf(statusType);
@@ -87,6 +106,11 @@ export default function Page() {
   };
 
   const getArrowImage = (beforeStatus, currentStatus) => {
+    // If order is cancelled, show all arrows as muted
+    if (currentStatus === 'Cancelled') {
+      return arrowImageMute;
+    }
+
     const statusOrder = ['Pending', 'Processing', 'Shipping', 'Delivered'];
     const currentIndex = statusOrder.indexOf(currentStatus);
     const beforeIndex = statusOrder.indexOf(beforeStatus);
@@ -119,7 +143,7 @@ export default function Page() {
           {trackingResult && (
             <div className='text-center mb-[30px]'>
               <p className='text-[18px] font-semibold'>Current Status: {deliveryStatus}</p>
-              {trackingResult.data?.estimated_delivery && (
+              {trackingResult.data?.estimated_delivery && deliveryStatus !== 'Cancelled' && (
                 <p className='text-[16px] mt-[10px]'>
                   Estimated Delivery: {trackingResult.data.estimated_delivery}
                 </p>

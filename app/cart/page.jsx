@@ -13,7 +13,7 @@ import { toast } from "react-hot-toast";
 import { useApplyCoupon } from "../components/helpers/useApplyCoupon";
 
 export default function CartPage() {
-  const { token, guestToken, cartDB, totalDB, removeFromCartDB, addToCartDB, addToCartDBGuest, cartDBGuest, totalDBGuest, removeFromCartDBGuest } = useAppContext();
+  const { token, lang, guestToken, cartDB, totalDB, removeFromCartDB, addToCartDB, addToCartDBGuest, cartDBGuest, totalDBGuest, removeFromCartDBGuest } = useAppContext();
 
   // Use cartDB if a token exists, otherwise use the guest cart
   const currentCart = token ? cartDB : cartDBGuest;
@@ -66,7 +66,7 @@ export default function CartPage() {
     toast.promise(
       applyCoupon.mutateAsync({
         couponCode: couponInput,
-        token: token, 
+        token: token,
         guestToken: guestToken
       }),
       {
@@ -105,7 +105,7 @@ export default function CartPage() {
           </div>
           :
           <Container>
-            <div className="my-[60px] flex flex-col 2xl:flex-row gap-[24px]">
+            <div className={`my-[60px] flex flex-col ${lang === "en" ? "2xl:flex-row" : "2xl:flex-row-reverse" } gap-[24px]`}>
               {/* cart products here  */}
               <div className="2xl:w-2/3 overflow-x-auto border border-creamline rounded-xl bg-gray-100 p-4">
                 {/* mobile card  */}
@@ -123,23 +123,23 @@ export default function CartPage() {
                   ))}
                 </div> */}
                 {/* tablet t0 large devices card  */}
-                
-                    {currentCart?.map((item, index) => (
-                      <CartTableRow
-                        key={index}
-                        item={item}
-                        token={token}
-                        removeFromCartDB={removeFromCartDB}
-                        addToCartDB={addToCartDB}
-                        addToCartDBGuest={addToCartDBGuest}
-                        removeFromCartDBGuest={removeFromCartDBGuest}
-                      />
-                    ))}
-                  
+
+                {currentCart?.map((item, index) => (
+                  <CartTableRow
+                    key={index}
+                    item={item}
+                    token={token}
+                    removeFromCartDB={removeFromCartDB}
+                    addToCartDB={addToCartDB}
+                    addToCartDBGuest={addToCartDBGuest}
+                    removeFromCartDBGuest={removeFromCartDBGuest}
+                  />
+                ))}
+
               </div>
               {/* coupon and subtotal  */}
               <div className="2xl:w-1/3 flex flex-col lg:flex-row 2xl:flex-col gap-[24px] lg:gap-[30px]">
-                
+
 
                 {/* sub total  */}
                 <div className="py-[20px] px-[20px] bg-creamline rounded-[10px] flex-1 2xl:flex-none">
@@ -178,12 +178,21 @@ export default function CartPage() {
                     {couponData ? (
                       <span>
                         {couponData.discount_type === "fixed" ?
-                          <span className="flex items-center gap-1"><span className="dirham-symbol">ê</span> {(token ? totalDB : totalDBGuest) - couponData.discount}</span> :
-                          <span className="flex items-center gap-1"><span className="dirham-symbol">ê</span> {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100))}</span>
+                          <span className="flex items-center gap-1">
+                            <span className="dirham-symbol">ê</span>
+                            {((token ? totalDB : totalDBGuest) - couponData.discount).toLocaleString()}
+                          </span> :
+                          <span className="flex items-center gap-1">
+                            <span className="dirham-symbol">ê</span>
+                            {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100)).toLocaleString()}
+                          </span>
                         }
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1"><span className="dirham-symbol">ê</span> {token ? totalDB : totalDBGuest}</span>
+                      <span className="flex items-center gap-1">
+                        <span className="dirham-symbol">ê</span>
+                        {(token ? totalDB : totalDBGuest).toLocaleString()}
+                      </span>
                     )}
                   </p>
 

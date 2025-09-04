@@ -3,14 +3,12 @@
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
-import hero1 from "@/public/hero (1).jpg";
-import hero2 from "@/public/hero (2).jpg";
-import hero3 from "@/public/hero (3).jpg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { useGetData } from "../helpers/useGetData";
 import ScreenLoader from "../loaders/ScreenLoader";
+import { useAppContext } from "@/app/context/AppContext";
 
 // Custom styles for Swiper
 const swiperStyles = `
@@ -27,7 +25,7 @@ const swiperStyles = `
   
   .custom-swiper .swiper-button-next:hover,
   .custom-swiper .swiper-button-prev:hover {
-    background: var(--primary-color, #3b82f6);
+    background: var(--primary-color, #51A6DD);
     color: white;
   }
   
@@ -46,16 +44,16 @@ const swiperStyles = `
   }
   
   .custom-swiper .swiper-pagination-bullet-active {
-    background: var(--primary-color, #3b82f6);
+    background: var(--primary-color, #51A6DD);
     opacity: 1;
     transform: scale(1.2);
   }
 `;
 
 export default function Slider() {
+  const {lang} = useAppContext();
   const { data, isLoading, error } = useGetData("banners");
   const banners = data?.data;
-  
   if (isLoading) return <ScreenLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -82,10 +80,10 @@ export default function Slider() {
         {banners?.map((banner, index) => (
           <SwiperSlide key={banner.id}>
             <Image
-              src={banner.image}
+              src={ lang === "en" ? banner?.image : banner?.ar_image }
               height={450}
               width={1920}
-              alt={banner.alt}
+              alt={banner?.alt || "Banner Image" }
               className="object-cover"
               priority={index === 0}
               loading={index === 0 ? 'eager' : 'lazy'}
