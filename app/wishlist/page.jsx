@@ -19,31 +19,31 @@ export default function page() {
       <Container>
         <section className="lg:max-w-6xl lg:mx-auto">
           {
-            token !== null ?
-              <>
-                {
-                  wishlist?.length > 0 ?
-                    <div className="pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[120px] flex flex-col gap-[10px] md:gap-[20px]">
-                      {
-                        wishlist?.map((w, index) => <WishlistCard key={index} w={w} token={token} removeFromWishlistDB={removeFromWishlistDB} addToCartDB={addToCartDB} />)
-                      }
-                    </div>
-                    :
-                    <div className="mt-[10px] h-[60px] py-[20px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
-                      <Image alt="Error Icon" src={errorIcon} />
-                      <p className="text-[18px] text-button">There are no products on the Wishlist!</p>
-                    </div>
-                }
-              </>
-              :
+            token == null ?
               <div>
                 <div className="mt-[10px] h-[60px] py-[20px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
                   <Image alt="Error Icon" src={errorIcon} />
                   <p className="text-[18px] text-button">Please <Link href={"login"} className="font-[650] underline">login</Link> to use the wishlist.</p>
                 </div>
               </div>
+              :
+              <>
+                {
+                  wishlist?.length < 0 ?
+                    <div className="mt-[10px] h-[60px] py-[20px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
+                      <Image alt="Error Icon" src={errorIcon} />
+                      <p className="text-[18px] text-button">There are no products on the Wishlist!</p>
+                    </div>
+                    :
+                    <div className="pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[60px] grid grid-cols-1 lg:grid-cols-2 gap-[10px] md:gap-[20px]">
+                      {
+                        wishlist?.map((w, index) => <WishlistCard key={index} w={w} token={token} removeFromWishlistDB={removeFromWishlistDB} addToCartDB={addToCartDB} />)
+                      }
+                    </div>
+                }
+              </> 
           }
-          <div className="mt-[50px] mb-[120px] flex justify-center">
+          <div className="mb-[60px] flex justify-center">
             <ShopNowButton />
           </div>
         </section>

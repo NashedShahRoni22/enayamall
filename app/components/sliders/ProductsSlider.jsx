@@ -44,7 +44,7 @@ export default function ProductsSlider({ products }) {
                             className='bg-white size-[48px] flex justify-center items-center rounded-full cursor-pointer shadow-xl'
                             onClick={() => swiperRef.current.swiper.slidePrev()}
                         >
-                            <GoChevronLeft className='text-natural text-[24px]' />
+                            <GoChevronLeft className='text-primary text-[24px]' />
                         </button>
                     </div>
                     <div className='absolute top-1/3 -right-5 transform -translate-y-1/2 z-10'>
@@ -52,7 +52,7 @@ export default function ProductsSlider({ products }) {
                             className='bg-white size-[48px] flex justify-center items-center rounded-full cursor-pointer shadow-xl'
                             onClick={() => swiperRef.current.swiper.slideNext()}
                         >
-                            <GoChevronRight className='text-natural text-[24px]' />
+                            <GoChevronRight className='text-primary text-[24px]' />
                         </button>
                     </div>
                 </>

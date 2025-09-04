@@ -17,8 +17,8 @@ export default function CartTableRow({
     <div className="mb-3 last:mb-0">
       {/* regular product info  */}
       <div class="p-b-0 p-4 rounded-md bg-white shadow-sm">
-        <div class="flex items-center justify-between border-b border-creamline pb-4">
-          <div className="flex gap-[10px] lg:gap-[30px]">
+        <div class={`flex items-center justify-between border-b border-creamline pb-4 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+          <div className={`flex gap-[10px] lg:gap-[30px] ${lang === 'en' ? 'flex-row' : 'flex-row-reverse'}`}>
             {/* Fixed responsive image container */}
             <div className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] flex items-center justify-center overflow-hidden bg-white flex-shrink-0">
               <Image
@@ -82,7 +82,7 @@ export default function CartTableRow({
             )}
           </div>
 
-          <div className="flex flex-col lg:gap-[10px] items-end">
+          <div className={`flex flex-col gap-4 ${lang === 'en' ? 'items-end' : 'items-start'}`}>
             <td className="text-[14px] lg:text-[16px] flex items-center gap-1">
               <span className="dirham-symbol text-[14px]">ê</span> {item?.price}
               <span className="line-through text-ash text-[14px]">{item?.price != item?.original_price ? item?.original_price : null}</span>
@@ -145,23 +145,25 @@ export default function CartTableRow({
           </div>
         </div>
         {/* remove button  */}
-        <div className="flex justify-between items-center mt-3">
+        <div className={`mt-4 flex items-center justify-between ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
           <button
             onClick={() => {
               token
                 ? removeFromCartDB(item.cart_id)
                 : removeFromCartDBGuest(item.cart_id);
             }}
-            className="cursor-pointer text-[14px] flex items-center gap-1 text-ash"
+            className={`cursor-pointer text-[14px] flex items-center gap-1 text-ash ${lang === 'en' ? '' : 'flex-row-reverse'}`}
           >
             <Trash2 size={18} className="text-ash" /> {lang === 'en' ? 'Remove' : 'حذف'}
           </button>
-          <td className="text-[14px] lg:text-[16px] flex items-center gap-1">
+          <td className={`text-[14px] lg:text-[16px] flex items-center gap-1 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
             <span className="text-[16px] text-ash">
-              {lang === 'en' ? 'Sub-total:' : 'المجموع الفرعي:'}
+              {lang === 'en' ? 'Sub-total:' : ':المجموع الفرعي'}
             </span>{" "}
-            <span className="dirham-symbol text-[14px]">ê</span>{" "}
-            {Number((item?.price * item?.quantity).toFixed(0))}
+            <div className="flex items-center">
+              <span className="dirham-symbol text-[14px] mr-1">ê</span>{" "}
+              {Number((item?.price * item?.quantity).toFixed(0))}
+            </div>
           </td>
         </div>
 
