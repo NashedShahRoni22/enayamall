@@ -10,15 +10,17 @@ import { usePostDataWithToken } from '../helpers/usePostDataWithToken';
 import { useQueryClient } from '@tanstack/react-query';
 import SignInWithPhone from './SignInWithPhone';
 import LoadingSvg from '../shared/LoadingSvg';
+import translations from "@/app/locales/translations.json";
 
 export default function Login() {
     const [option, setOption] = useState(1);
     const router = useRouter();
     const searchParams = useSearchParams();
-    const { setUser, setToken } = useAppContext();
+    const { setUser, setToken, lang } = useAppContext();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const { guestToken } = useAppContext();
+    const t = (key) => translations[key]?.[lang] || translations[key]?.en || key;
 
     // Error state for form validation
     const [errors, setErrors] = useState({});
@@ -132,17 +134,17 @@ export default function Login() {
 
     return (
         <div>
-            <h5 className='text-[24px] sm:text-[26px] text-primarymagenta'>Login</h5>
-            <p className='text-[16px] sm:text-[18px] text-ash mt-[30px]'>
-                Welcome back. You've been missed! <br /> Please Log in to your account to continue
+            <h5 className={`text-[24px] sm:text-[26px] text-primarymagenta flex flex-col ${lang === "en" ? "flex-row" : "flex-row-reverse text-right" }`}>{t("login")}</h5>
+            <p className={`text-[16px] sm:text-[18px] text-ash mt-[30px] flex flex-col ${lang === "en" ? "flex-row" : "flex-row-reverse text-right" }`}>
+                {t("welcome_back")} <br /> {t("please_login")}
             </p>
 
             {/* tabs here  */}
             <div className='mt-[50px]'>
                 {/* tab buttons  */}
-                <div className='flex gap-[50px]'>
-                    <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>Sign in with OTP</button>
-                    <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>Sign in with Password</button>
+                <div className={`flex gap-[30px] pb-[10px] ${lang === "en" ? "flex-row" : "flex-row-reverse" }`}>
+                    <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>{t("sign_in_otp")}</button>
+                    <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>{t("sign_in_password")}</button>
                 </div>
                 {/* tab forms */}
                 <div className='mt-[25px] sm:mt-[50px]'>
@@ -214,7 +216,7 @@ export default function Login() {
                             </form>
                     }
 
-                    <p className='text-primarymagenta mt-[20px] sm:mt-[40px]'>Don't have an account?   <Link href={"/register"} className='text-primary hover:underline'>Register Now</Link> </p>
+                    <p className={`text-primarymagenta mt-[20px] sm:mt-[40px] flex flex-col ${lang === "en" ? "flex-row" : "flex-row-reverse" }`}>{t("dont_have_account")}   <Link href={"/register"} className={`text-primary hover:underline ${lang === "en" ? "ml-2" : "mr-2" }`}>{t("register_now")}</Link> </p>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ export default function page() {
   
   return (
     <section>
-      <PageHeader title={"Wishlist"} from={"Home"} to={"wishlist"} />
+      {/* <PageHeader title={"Wishlist"} from={"Home"} to={"wishlist"} /> */}
       <Container>
         <section className="lg:max-w-6xl lg:mx-auto">
           {

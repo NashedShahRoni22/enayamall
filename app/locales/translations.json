@@ -1,0 +1,32 @@
+{
+    "login": {
+        "en": "Login",
+        "ar": "تسجيل الدخول"
+    },
+    "welcome_back": {
+        "en": "Welcome back. You've been missed!",
+        "ar": "مرحبًا بعودتك. لقد افتقدناك!"
+    },
+    "please_login": {
+        "en": "Please Log in to your account to continue",
+        "ar": "يرجى تسجيل الدخول إلى حسابك للمتابعة"
+    },
+    "sign_in_password": {
+        "en": "Sign in with Password",
+        "ar": "تسجيل الدخول باستخدام كلمة المرور"
+    },
+    "sign_in_otp": {
+        "en": "Sign in with OTP",
+        "ar": "تسجيل الدخول باستخدام رمز التحقق"
+    },
+    "dont_have_account": {
+        "en": "Don't have an account?",
+        "ar": "ليس لديك حساب؟"
+    },
+    "register_now": {
+        "en": "Register Now",
+        "ar": "سجل الآن"
+    }
+
+    
+}
