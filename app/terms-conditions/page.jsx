@@ -6,7 +6,7 @@ import PageHeader from "../components/shared/PageHeader";
 
 export default function page() {
   // fetch content
-  const { data, isLoading, error } = useGetData('page?title=about');
+  const { data, isLoading, error } = useGetData('page?title=Terms Conditions');
   if (isLoading) return <ScreenLoader/>;
   if (error) return <div>Error: {error.message}</div>;
   return (

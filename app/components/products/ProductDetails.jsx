@@ -320,7 +320,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
             {/* ask que, share or call from here  */}
             <div className="mt-[30px] 2xl:mt-[50px] flex flex-col 2xl:flex-row gap-[20px] 2xl:gap-[40px]">
                 <Link
-                    href="https://wa.me/8801711996466"
+                    href="https://wa.me/+971506065857"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex gap-[12px] items-center text-ash"
@@ -334,7 +334,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                     <p className="text-[16px] 2xl:text-[18px]">{getText('socialShare')}</p>
                 </button>
 
-                <Link href="tel:+8801711996466" className="flex gap-[12px] items-center text-ash">
+                <Link href="tel:+971506065857" className="flex gap-[12px] items-center text-ash">
                     <Phone className="text-[24px]" />
                     <p className="text-[16px] 2xl:text-[18px]">
                         {getText('callForOrder')}

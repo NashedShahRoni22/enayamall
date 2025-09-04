@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ReviewForm from '../forms/ReviewForm';
 import { useAppContext } from '@/app/context/AppContext';
+import he from "he"
 
 export default function ProductUseReviews({ product, reviewable, variantId, token, productType }) {
     const [activeTab, setActiveTab] = useState("description");
@@ -20,17 +21,17 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
         const texts = {
             en: {
                 description: "Description",
-                howtouse: "How to use",
-                benefits: "Benefits",
+                // howtouse: "How to use",
+                // benefits: "Benefits",
                 reviews: "Reviews",
-                keyBenefits: "Key Benefits"
+                // keyBenefits: "Key Benefits"
             },
             ar: {
                 description: "الوصف",
-                howtouse: "كيفية الاستخدام",
-                benefits: "الفوائد",
+                // howtouse: "كيفية الاستخدام",
+                // benefits: "الفوائد",
                 reviews: "المراجعات",
-                keyBenefits: "الفوائد الرئيسية"
+                // keyBenefits: "الفوائد الرئيسية"
             }
         };
         return texts[lang]?.[key] || texts.en[key];
@@ -99,7 +100,7 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
         <section className="mt-[60px] 2xl:mt-[120px] relative">
             {/* Sticky Nav Buttons */}
             <div className={`sticky top-16 lg:top-22 z-10 bg-white border-b border-creamline py-4 ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
-                <div className="flex justify-between 2xl:justify-center 2xl:gap-[80px] text-[18px] 2xl:text-[26px] font-[550]">
+                <div className="flex gap-5 2xl:justify-center 2xl:gap-[80px] text-[18px] 2xl:text-[26px] font-[550]">
                     <button
                         className={`transition-colors ${activeTab === 'description' ? 'text-primary' : 'text-primarymagenta'
                             } hover:text-primary cursor-pointer`}
@@ -107,20 +108,20 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
                     >
                         {getText('description')}
                     </button>
-                    <button
+                    {/* <button
                         className={`transition-colors ${activeTab === 'howtouse' ? 'text-primary' : 'text-primarymagenta'
                             } hover:text-primary cursor-pointer`}
                         onClick={() => scrollToSection(usageRef, 'howtouse')}
                     >
                         {getText('howtouse')}
-                    </button>
-                    <button
+                    </button> */}
+                    {/* <button
                         className={`transition-colors ${activeTab === 'benefits' ? 'text-primary' : 'text-primarymagenta'
                             } hover:text-primary cursor-pointer`}
                         onClick={() => scrollToSection(benefitsRef, 'benefits')}
                     >
                         {getText('benefits')}
-                    </button>
+                    </button> */}
                     <button
                         className={`transition-colors ${activeTab === 'reviews' ? 'text-primary' : 'text-primarymagenta'
                             } hover:text-primary cursor-pointer`}
@@ -134,34 +135,34 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
             {/* Related details */}
             <div className={`text-[18px] ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
                 {/* Description */}
-                <div ref={descriptionRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] mt-[25px] 2xl:mt-[50px]">
+                <div ref={descriptionRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash">
                     <p className="font-[550]">{getText('keyBenefits')}</p> <br />
                     <div 
                         id='preview' 
                         className="text-[16px] 2xl:text-[18px]" 
-                        dangerouslySetInnerHTML={{ __html: lang === 'ar' ? product?.long_description_ar || product?.long_description : product?.long_description }} 
+                        dangerouslySetInnerHTML={{ __html: lang === 'ar' ? he.decode(product?.long_description_ar) || he.decode(product?.long_description) : he.decode(product?.long_description) }} 
                     />
                 </div>
 
                 {/* How to use */}
-                <div ref={usageRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] border-t border-creamline mt-[25px] 2xl:mt-[50px]">
+                {/* <div ref={usageRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] border-t border-creamline mt-[25px] 2xl:mt-[50px]">
                     <p className="font-[550]">{getText('howtouse')}</p> <br />
                     <div 
                         id='preview' 
                         className="text-[16px] 2xl:text-[18px]" 
                         dangerouslySetInnerHTML={{ __html: lang === 'ar' ? product?.how_to_use_ar || product?.how_to_use : product?.how_to_use }} 
                     />
-                </div>
+                </div> */}
 
                 {/* Benefits */}
-                <div ref={benefitsRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] border-t border-creamline mt-[25px] 2xl:mt-[50px]">
+                {/* <div ref={benefitsRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] border-t border-creamline mt-[25px] 2xl:mt-[50px]">
                     <p className="font-[550]">{getText('benefits')}</p> <br />
                     <div 
                         id='preview' 
                         className="text-[16px] 2xl:text-[18px]" 
                         dangerouslySetInnerHTML={{ __html: lang === 'ar' ? product?.benefits_ar || product?.benefits : product?.benefits }} 
                     />
-                </div>
+                </div> */}
             </div>
 
             {/* Review section for regular product */}

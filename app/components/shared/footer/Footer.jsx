@@ -26,7 +26,7 @@ export default function Footer() {
             freeReturns: "Free Returns within 7 days",
             paymentOptions: "Cash or credit card payment on delivery is available",
             authenticity: "We only sell authentic products with Brand Warranty",
-            
+
             // Section titles
             topCategories: "Top Categories",
             company: "Company",
@@ -34,40 +34,41 @@ export default function Footer() {
             partner: "Partner",
             subscribeOffer: "Subscribe & Get",
             off: "OFF",
-            
+
             // Company links
             about: "About",
             contact: "Contact",
             // career: "Career",
             blog: "Blog",
-            
+
             // Help center links
-            customerService: "Customer Service",
-            policy: "Policy",
+            customerService: "Delivery Information",
+            policy: "Privacy Policy",
             termsConditions: "Terms & Conditions",
-            trackOrder: "Track Order",
+            returnRefund: "Return & Refund",
             faqs: "FAQs",
+            trackOrder: "Track Order",
             myAccount: "My Account",
             productSupport: "Product Support",
-            
+
             // Partner links
             // becomeSeller: "Become Seller",
             affiliate: "Affiliate",
             advertise: "Advertise",
             partnership: "Partnership",
             careServices: "Care Services",
-            
+
             // Subscribe section
             emailPlaceholder: "Email Address",
             subscribe: "SUBSCRIBE",
             privacyPolicy: "By subscribing, you accept the Privacy Policy",
-            
+
             // Contact info
             hotline: "Hotline 24/7:",
             workHours: "Work Hours:",
             workHoursText: "Monday-Saturday: 9.00am - 5.00pm",
             mail: "Mail:",
-            
+
             // Copyright
             copyright: "© 2025 Enayamall. All Rights Reserved."
         },
@@ -77,7 +78,7 @@ export default function Footer() {
             freeReturns: "إرجاع مجاني خلال 7 أيام",
             paymentOptions: "الدفع نقداً أو بالبطاقة الائتمانية عند التسليم متاح",
             authenticity: "نبيع فقط منتجات أصلية مع ضمان العلامة التجارية",
-            
+
             // Section titles
             topCategories: "أهم الفئات",
             company: "الشركة",
@@ -85,40 +86,40 @@ export default function Footer() {
             partner: "الشركاء",
             subscribeOffer: "اشترك واحصل على",
             off: "خصم",
-            
+
             // Company links
             about: "من نحن",
             contact: "اتصل بنا",
             // career: "الوظائف",
             blog: "المدونة",
-            
+
             // Help center links
             customerService: "خدمة العملاء",
             policy: "السياسة",
             termsConditions: "الشروط والأحكام",
-            trackOrder: "تتبع الطلب",
+            returnRefund: "تتبع الطلب",
             faqs: "الأسئلة الشائعة",
             myAccount: "حسابي",
             productSupport: "دعم المنتج",
-            
+
             // Partner links
             // becomeSeller: "كن بائعاً",
             affiliate: "التسويق بالعمولة",
             advertise: "الإعلان",
             partnership: "الشراكة",
             careServices: "خدمات الرعاية",
-            
+
             // Subscribe section
             emailPlaceholder: "عنوان البريد الإلكتروني",
             subscribe: "اشتراك",
             privacyPolicy: "بالاشتراك، فإنك توافق على سياسة الخصوصية",
-            
+
             // Contact info
             hotline: "الخط الساخن 24/7:",
             workHours: "ساعات العمل:",
             workHoursText: "الاثنين-السبت: 9.00ص - 5.00م",
             mail: "البريد الإلكتروني:",
-            
+
             // Copyright
             copyright: "© 2025 إنايا مول. جميع الحقوق محفوظة."
         }
@@ -136,11 +137,12 @@ export default function Footer() {
     ];
 
     const helpCenterLinks = [
-        { en: t.customerService, ar: t.customerService, href: "/customer-service" },
-        { en: t.policy, ar: t.policy, href: "/policy" },
-        { en: t.termsConditions, ar: t.termsConditions, href: "/terms" },
-        { en: t.trackOrder, ar: t.trackOrder, href: "/track-order" },
+        { en: t.customerService, ar: t.customerService, href: "/delivery-information" },
+        { en: t.policy, ar: t.policy, href: "/privacy-policy" },
+        { en: t.termsConditions, ar: t.termsConditions, href: "/terms-conditions" },
+        { en: t.returnRefund, ar: t.returnRefund, href: "/return-refund" },
         { en: t.faqs, ar: t.faqs, href: "/faqs" },
+        { en: t.trackOrder, ar: t.trackOrder, href: "/track-order" },
         { en: t.myAccount, ar: t.myAccount, href: "/account" },
         { en: t.productSupport, ar: t.productSupport, href: "/support" }
     ];
@@ -238,13 +240,14 @@ export default function Footer() {
                             {/* Contact Info */}
                             <div className={`mb-4 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
                                 <p className="text-sm text-gray-600 mb-1">
-                                    <strong>{t.hotline}</strong> <Link href="tel:+32536862516" className="text-primary">(+325) 3686 25 16</Link>
+                                    <strong>{t.hotline}</strong> <Link href="tel:+971506065857" className="text-primary">+971506065857</Link>
                                 </p>
                                 <p className="text-sm text-gray-600 mb-1">
-                                    <strong>{t.workHours}</strong> {t.workHoursText}
+                                    <strong>Address: </strong>
+                                    <span className="text-primary">P.O.Box 27042, Dubai United Arab Emirates</span>
                                 </p>
                                 <p className="text-sm text-gray-600">
-                                    <strong>{t.mail}</strong> <Link href="mailto:contact@enayamall.com" className="text-primary">contact@enayamall.com</Link>
+                                    <strong>{t.mail}</strong> <Link href="mailto:info@enayamall.com" className="text-primary">info@enayamall.com</Link>
                                 </p>
                             </div>
 

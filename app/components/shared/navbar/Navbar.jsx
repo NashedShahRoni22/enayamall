@@ -6,7 +6,7 @@ import MobileNavbar from "./MobileNavbar";
 import { useAppContext } from '@/app/context/AppContext';
 
 export default function Navbar() {
-    const { categories, cartDBCount, cartDBCountGuest, totalDB, totalDBGuest, user, wishlistCount } = useAppContext();
+    const { categories, cartDBCount, cartDBCountGuest, totalDB, totalDBGuest, user, wishlistCount, token } = useAppContext();
     
     // Dynamic menu items with Arabic translations
     const menuItems = [
@@ -49,9 +49,12 @@ export default function Navbar() {
 
     // Cart info (this could come from a cart context)
     const cartInfo = {
-        itemCount: cartDBCount ? cartDBCount : cartDBCountGuest,
-        total: totalDB ? totalDB : totalDBGuest
+        itemCount: token ? cartDBCount : cartDBCountGuest,
+        total: token ? totalDB : totalDBGuest
     };
+
+    console.log(cartDBCountGuest);
+    
 
     return (
         <nav className="sticky top-0 z-50 bg-white shadow-sm">
