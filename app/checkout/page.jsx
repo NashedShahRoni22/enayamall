@@ -11,7 +11,7 @@ import ScreenLoader from '../components/loaders/ScreenLoader'
 import { useEffect, useState as useStateForShipping } from 'react'
 
 export default function page() {
-    const { token } = useAppContext();
+    const { token, lang } = useAppContext();
     const [addressId, setAddressId] = useState(null);
     const [method, setMethod] = useState(null);
     const [acceptTerms, setAcceptTerms] = useState(false);
@@ -64,7 +64,7 @@ export default function page() {
         <PrivateRoute>
             {/* <PageHeader title={"Checkout"} from={"Home"} to={"checkout"} /> */}
             <Container>
-                <div className='my-[60px] flex flex-col xl:flex-row gap-[24px]'>
+                <div className={`my-[60px] flex flex-col ${lang === "en" ? "xl:flex-row" : "xl:flex-row-reverse"} gap-[24px]`}>
                     {/* left side form  */}
                     <div className='xl:w-1/2'>
                         <BillForm 

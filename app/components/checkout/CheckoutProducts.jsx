@@ -9,12 +9,64 @@ import Link from 'next/link';
 import { MdCheckCircle, MdOutlineRadioButtonUnchecked } from 'react-icons/md';
 
 export default function CheckoutProducts({ addressId, method, shippingCost, acceptTerms, setAcceptTerms }) {
-    const { token, guestToken, cart, cartDB, total, totalDB, totalDiscountDB } = useAppContext();
+    const { token, guestToken, cart, cartDB, total, totalDB, totalDiscountDB, lang } = useAppContext();
     const currentCart = token ? cartDB : cart;
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [appliedCoupon, setAppliedCoupon] = useState(false);
     const [couponData, setCouponData] = useState(null);
+    console.log(currentCart);
+    
+
+    // Localization texts
+    const texts = {
+        en: {
+            product: "Product",
+            subTotal: "Sub total",
+            subtotal: "Subtotal",
+            yourSaving: "Your are saving",
+            youSaving: "You are saving",
+            inThisOrder: "in this order.",
+            deliveryCharge: "Your Delivery charge",
+            amountPayable: "Amount Payable",
+            byContinuing: "By continuing you agree to",
+            termsConditions: "Terms & Conditions",
+            privacyPolicy: "Privacy Policy",
+            refundReturn: "Refund & Return Policy",
+            placeOrder: "Place order",
+            placingOrder: "Placing order",
+            selectShippingAddress: "Select shipping address!",
+            selectPaymentMethod: "Select payment method!",
+            agreeTermsConditions: "Agree to Terms & Conditions, Privacy Policy, Refund & Return Policy!",
+            placingOrderText: "Placing order...",
+            orderPlacedSuccess: "Order placed successfully!",
+            failedSubmitOrder: "Failed to submit order"
+        },
+        ar: {
+            product: "المنتج",
+            subTotal: "المجموع الفرعي",
+            subtotal: "المجموع الفرعي",
+            yourSaving: "أنت توفر",
+            youSaving: "أنت توفر",
+            inThisOrder: "في هذا الطلب.",
+            deliveryCharge: "رسوم التوصيل",
+            amountPayable: "المبلغ المستحق",
+            byContinuing: "بالمتابعة فإنك توافق على",
+            termsConditions: "الشروط والأحكام",
+            privacyPolicy: "سياسة الخصوصية",
+            refundReturn: "سياسة الاسترداد والإرجاع",
+            placeOrder: "تأكيد الطلب",
+            placingOrder: "جاري تأكيد الطلب",
+            selectShippingAddress: "اختر عنوان الشحن!",
+            selectPaymentMethod: "اختر طريقة الدفع!",
+            agreeTermsConditions: "وافق على الشروط والأحكام وسياسة الخصوصية وسياسة الاسترداد والإرجاع!",
+            placingOrderText: "جاري تأكيد الطلب...",
+            orderPlacedSuccess: "تم تأكيد الطلب بنجاح!",
+            failedSubmitOrder: "فشل في تأكيد الطلب"
+        }
+    };
+
+    const t = texts[lang] || texts.en;
 
     // Calculate discount amount
     const discountAmount = couponData && appliedCoupon
@@ -55,25 +107,23 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
         }
     };
 
-
-
     // place order
     const postOrder = usePostDataWithToken('order');
     const queryClient = useQueryClient();
 
     const handleOrderPlace = async () => {
         if (addressId === null) {
-            toast.error("Select shipping address!");
+            toast.error(t.selectShippingAddress);
             return;
         }
 
         if (method === null) {
-            toast.error("Select payment method!");
+            toast.error(t.selectPaymentMethod);
             return;
         }
 
         if (acceptTerms === false) {
-            toast.error("Agree to Terms & Conditions, Privacy Policy, Refund & Return Policy!");
+            toast.error(t.agreeTermsConditions);
             return;
         }
 
@@ -110,9 +160,9 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
             const orderResponse = await toast.promise(
                 postOrder.mutateAsync({ formData: form, token }),
                 {
-                    loading: 'Placing order...',
-                    success: 'Order placed successfully!',
-                    error: (err) => err.message || 'Failed to submit order',
+                    loading: t.placingOrderText,
+                    success: t.orderPlacedSuccess,
+                    error: (err) => err.message || t.failedSubmitOrder,
                 }
             );
 
@@ -148,8 +198,8 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
             <div className='bg-[#FCF7EE] rounded-[10px] py-[20px]  px-[20px] sm:px-[40px]'>
                 {/* Header Row */}
                 <div className='flex justify-between items-center'>
-                    <p className='text-[16px] sm:text-[18px] font-[650] w-[70%]'>Product</p>
-                    <p className='text-[16px] sm:text-[18px] font-[650] w-[30%] text-right'>Sub total</p>
+                    <p className='text-[16px] sm:text-[18px] font-[650] w-[70%]'>{t.product}</p>
+                    <p className='text-[16px] sm:text-[18px] font-[650] w-[30%] text-right'>{t.subTotal}</p>
                 </div>
 
                 {/* Divider */}
@@ -160,7 +210,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                     {currentCart?.map((c, index) => (
                         <div key={index} className='flex justify-between items-center'>
                             <div className='flex justify-between items-center w-[70%]'>
-                                <p className="truncate pr-2">{c.name}</p>
+                                <p className="truncate pr-2">{lang === 'ar' ? c.ar_name : c.name}</p>
                                 <p className="whitespace-nowrap">x {c.quantity}</p>
                             </div>
                             <p className='w-[30%] text-right'><span className="dirham-symbol">ê</span> {(c.price * c.quantity).toFixed(2)}</p>
@@ -173,7 +223,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
 
                 {/* Subtotal Row */}
                 <div className='flex justify-between items-center'>
-                    <p className='text-[16px] sm:text-[18px] w-[70%]'>Subtotal</p>
+                    <p className='text-[16px] sm:text-[18px] w-[70%]'>{t.subtotal}</p>
                     <p className='text-[16px] sm:text-[18px] w-[30%] text-right'><span className="dirham-symbol">ê</span> {(token ? totalDB : total)}</p>
                 </div>
             </div>
@@ -185,13 +235,13 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                         {/* <span className='dirham-symbol size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>
                             ê
                         </span> */}
-                        Your are saving <span className="dirham-symbol">ê</span> {totalDiscountDB}
+                        {t.yourSaving} <span className="dirham-symbol">ê</span> {totalDiscountDB}
                     </p>
 
                     {appliedCoupon && couponData && (
                         <p className='text-[16px] text-customgreen flex gap-[5px]'>
                             <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>D</span>
-                            You are saving <span className="dirham-symbol">ê</span> {discountAmount} in this order.
+                            {t.youSaving} <span className="dirham-symbol">ê</span> {discountAmount} {t.inThisOrder}
                         </p>
                     )}
 
@@ -199,7 +249,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                         shippingCost &&
                         <p className='text-[16px] text-customgreen flex gap-[5px] mt-[14px]'>
                             <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>D</span>
-                            Your Delivery charge <span className="dirham-symbol">ê</span> {shippingCost}
+                            {t.deliveryCharge} <span className="dirham-symbol">ê</span> {shippingCost}
                         </p>
                     }
 
@@ -208,7 +258,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                 <div className="bg-customgreen h-[1px] w-full my-[20px] sm:my-[30px]"></div>
 
                 <div className='flex justify-between'>
-                    <p className='text-[20px] sm:text-[24px] font-[650]'>Amount Payable</p>
+                    <p className='text-[20px] sm:text-[24px] font-[650]'>{t.amountPayable}</p>
                     <p className='text-[20px] sm:text-[24px] font-[650]'>
                         <span className="dirham-symbol">ê</span> {(token ? totalDB : total) - discountAmount + shippingCost}
                     </p>
@@ -226,7 +276,9 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                                 <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primarymagenta" />
                         }
                     </span>
-                    <p className='text-left'>By continuing you agree to <Link href={"/terms-and-conditions"} className='hover:text-natural hover:underline'>Terms & Conditions</Link>, <Link href={"/privacy-policy"} className='hover:text-natural hover:underline'>Privacy Policy</Link>, <Link href={"/return-and-refund-policy"} className='hover:text-natural hover:underline'>Refund & Return Policy</Link></p>
+                    <p className='text-left'>
+                        {t.byContinuing} <Link href={"/terms-and-conditions"} className='hover:text-natural hover:underline'>{t.termsConditions}</Link>, <Link href={"/privacy-policy"} className='hover:text-natural hover:underline'>{t.privacyPolicy}</Link>, <Link href={"/return-and-refund-policy"} className='hover:text-natural hover:underline'>{t.refundReturn}</Link>
+                    </p>
                 </button>
 
                 {/* place order button  */}
@@ -238,9 +290,9 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                         : 'bg-natural text-white hover:bg-accent cursor-pointer'
                         }`}>
                     {loading ? (
-                        <LoadingSvg label='Placing order' color="text-primarymagenta" />
+                        <LoadingSvg label={t.placingOrder} color="text-primarymagenta" />
                     ) : (
-                        "Place order"
+                        t.placeOrder
                     )}
                 </button>
             </div>
