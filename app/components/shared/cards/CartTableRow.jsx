@@ -16,8 +16,8 @@ export default function CartTableRow({
   return (
     <div className="mb-3 last:mb-0">
       {/* regular product info  */}
-      <div class="p-b-0 p-4 rounded-md bg-white shadow-sm">
-        <div class={`flex items-center justify-between border-b border-creamline pb-4 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+      <div className="p-b-0 p-4 rounded-md bg-white shadow-sm">
+        <div className={`flex items-center justify-between border-b border-creamline pb-4 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
           <div className={`flex gap-[10px] lg:gap-[30px] ${lang === 'en' ? 'flex-row' : 'flex-row-reverse'}`}>
             {/* Fixed responsive image container */}
             <div className="w-[60px] h-[60px] lg:w-[80px] lg:h-[80px] flex items-center justify-center overflow-hidden bg-white flex-shrink-0">
@@ -83,11 +83,11 @@ export default function CartTableRow({
           </div>
 
           <div className={`flex flex-col gap-4 ${lang === 'en' ? 'items-end' : 'items-start'}`}>
-            <td className="text-[14px] lg:text-[16px] flex items-center gap-1">
+            <div className="text-[14px] lg:text-[16px] flex items-center gap-1">
               <span className="dirham-symbol text-[14px]">ê</span> {item?.price}
               <span className="line-through text-ash text-[14px]">{item?.price != item?.original_price ? item?.original_price : null}</span>
               {/* {(item.price * item.quantity).toFixed(0)} */}
-            </td>
+            </div>
             <div className="flex items-center text-secondary h-[40px] rounded-[10px] justify-center bg-[#F8F8F8]">
               <button
                 onClick={() =>
@@ -156,7 +156,7 @@ export default function CartTableRow({
           >
             <Trash2 size={18} className="text-ash" /> {lang === 'en' ? 'Remove' : 'حذف'}
           </button>
-          <td className={`text-[14px] lg:text-[16px] flex items-center gap-1 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+          <div className={`text-[14px] lg:text-[16px] flex items-center gap-1 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
             <span className="text-[16px] text-ash">
               {lang === 'en' ? 'Sub-total:' : ':المجموع الفرعي'}
             </span>{" "}
@@ -164,7 +164,7 @@ export default function CartTableRow({
               <span className="dirham-symbol text-[14px] mr-1">ê</span>{" "}
               {Number((item?.price * item?.quantity).toFixed(0))}
             </div>
-          </td>
+          </div>
         </div>
 
       </div>

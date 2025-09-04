@@ -157,7 +157,7 @@ export default function CartPage() {
                     <div className="text-[12px] md:text-[16px] text-primarymagenta flex justify-between">
                       <div className={`flex flex-col 2xl:flex-row gap-1 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                         <p className="font-[400]">
-                          {lang === 'en' ? 'Coupon' : 'رمز القسيمة'}
+                          {lang === 'en' ? 'Discount' : 'الخصم'}
                         </p>
                         <p className="font-bold inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">
                           {couponData.coupon_code}
@@ -165,18 +165,18 @@ export default function CartPage() {
                           {couponData.discount_type === 'fixed' ? (
                             <>( <span className="dirham-symbol mr-[2px]">ê</span> {couponData.discount})</>
                           ) : (
-                            <>( - {couponData.discount} %)</>
+                            <>( {couponData.discount} %)</>
                           )}
                         </p>
+                        {/* <p className="text-[12px] text-secondary cursor-pointer">Remove coupon</p> */}
                       </div>
 
                       <div className="flex flex-col gap-[24px]">
                         {couponData.discount_type === 'fixed' ? (
-                          <p>-<span className="dirham-symbol">ê</span> {couponData.discount}</p>
+                          <p><span className="dirham-symbol">ê</span> {couponData.discount}</p>
                         ) : (
-                          <p>-<span className="dirham-symbol">ê</span> {Math.round(((token ? totalDB : totalDBGuest) * couponData.discount) / 100)}</p>
+                          <p><span className="dirham-symbol">ê</span> {Math.round((Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, "")) * couponData.discount) / 100)}</p>
                         )}
-                        {/* <p className="text-[12px] text-secondary cursor-pointer">Remove coupon</p> */}
                       </div>
                     </div>
                   )}
@@ -188,19 +188,19 @@ export default function CartPage() {
                         {couponData.discount_type === "fixed" ? (
                           <span className="flex items-center gap-1">
                             <span className="dirham-symbol">ê</span>
-                            {((token ? totalDB : totalDBGuest) - couponData.discount)}
+                            {(Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, "")) - couponData.discount)}
                           </span>
                         ) : (
                           <span className="flex items-center gap-1">
                             <span className="dirham-symbol">ê</span>
-                            {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100))}
+                            {Math.round(Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, "")) - ((Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, "")) * couponData.discount) / 100))}
                           </span>
                         )}
                       </span>
                     ) : (
                       <span className="flex items-center gap-1">
                         <span className="dirham-symbol">ê</span>
-                        {(token ? totalDB : totalDBGuest)}
+                        {Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, ""))}
                       </span>
                     )}
                   </p>

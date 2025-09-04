@@ -2,12 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link';
 import { CalendarDays, ShoppingCart, Trash2 } from 'lucide-react';
 
-export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB }) {
+export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB, lang }) {
     return (
-        <div className='relative flex justify-between items-center gap-4 px-2 sm:px-4 border border-creamline rounded-[10px] text-primarymagenta min-h-[160px]'>
+        <div className={`relative flex justify-between items-center gap-4 px-2 sm:px-4 border border-creamline rounded-[10px] text-primarymagenta min-h-[160px] ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
 
             {/* Remove Button & Add to Cart - Mobile */}
-            <div className='absolute top-1/2 right-3 transform -translate-y-1/2 sm:hidden'>
+            <div className={`absolute ${lang === 'en' ? 'right-2' : 'left-2'} flex items-center gap-2 sm:gap-4 sm:hidden`}>
                 <div className='flex flex-col gap-2'>
                     <button onClick={() => addToCartDB(w?.product_variant_id, 1)} className='text-[16px] p-[8px] bg-customgreen text-white rounded-full'>
                         <ShoppingCart size={18} />
@@ -19,7 +19,7 @@ export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB }) {
             </div>
 
             {/* Left Section */}
-            <div className='flex items-center gap-4 sm:gap-6 w-5/6 sm:w-2/3'>
+            <div className={`flex items-center gap-4 sm:gap-6 w-5/6 sm:w-2/3 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
 
                 {/* Remove button - Desktop */}
                 <button className='hidden sm:block cursor-pointer' onClick={() => removeFromWishlistDB(w.wishlist_id)}>
@@ -27,7 +27,7 @@ export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB }) {
                 </button>
 
                 {/* Product Info */}
-                <div className='flex items-center gap-2 sm:gap-6 w-full'>
+                <div className={`flex items-center gap-2 sm:gap-6 w-full ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                     <div className='w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] bg-white flex items-center justify-center overflow-hidden flex-shrink-0'>
                         <Image
                             alt={w.name}
@@ -37,16 +37,16 @@ export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB }) {
                             className='object-contain max-w-full max-h-full'
                         />
                     </div>
-                    <div className='flex flex-col justify-between min-h-[80px] overflow-hidden'>
+                    <div className={`flex flex-col justify-between min-h-[80px] overflow-hidden ${lang === 'en' ? '' : 'text-right'}`}>
                         {/* Name */}
                         {
                             w?.items?.length > 0 ?
-                                <Link href={`/combo/${w?.slug}`} className="text-[16px] font-medium line-clamp-3 hover:text-natural">{w.name} {w?.items?.length > 0 && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>Combo</span>}</Link>
+                                <Link href={`/combo/${w?.slug}`} className="text-[16px] font-medium line-clamp-3 hover:text-primarymagenta">{`${lang == 'en' ? w.name : w.ar_name}`} {w?.items?.length > 0 && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>Combo</span>}</Link>
                                 :
-                                <Link href={`/shop/${w?.slug}?variant=${w?.variant}`} className="text-[16px] font-medium line-clamp-3 hover:text-natural">{w.name} {w.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{w.variant}</span>} </Link>
+                                <Link href={`/shop/${w?.slug}?variant=${w?.variant}`} className="text-[16px] font-medium line-clamp-3 hover:text-primarymagenta">{`${lang == 'en' ? w.name : w.ar_name}`} {w.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{w.variant}</span>} </Link>
                         }
                         {/* Pricing */}
-                        <div className='my-2 text-[12px] sm:text-[14px] md:text-[16px]'>
+                        <div className={`my-2 text-[12px] sm:text-[14px] md:text-[16px] ${lang === 'en' ? '' : 'text-right'}`}>
                             {
                                 w?.discount !== null ?
                                     <div className='flex gap-2'>
@@ -58,7 +58,7 @@ export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB }) {
                             }
                         </div>
                         {/* Date */}
-                        <p className='text-ash flex items-center gap-2 text-[12px] sm:text-[14px] md:text-[16px]'>
+                        <p className={`text-ash flex items-center gap-2 text-[12px] sm:text-[14px] md:text-[16px] ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                             <CalendarDays size={18}/>{w?.created_at}
                         </p>
                     </div>

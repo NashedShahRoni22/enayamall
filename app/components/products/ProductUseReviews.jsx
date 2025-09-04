@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ReviewForm from '../forms/ReviewForm';
 import { useAppContext } from '@/app/context/AppContext';
+import he from "he"; 
 
 export default function ProductUseReviews({ product, reviewable, variantId, token, productType }) {
     const [activeTab, setActiveTab] = useState("description");
@@ -14,6 +15,8 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
     const usageRef = useRef(null);
     const benefitsRef = useRef(null);
     const reviewsRef = useRef(null);
+
+    console.log("ProductUseReviews rendered", product.long_description);
 
     // Language-specific text
     const getText = (key) => {
@@ -139,7 +142,7 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
                     <div 
                         id='preview' 
                         className="text-[16px] 2xl:text-[18px]" 
-                        dangerouslySetInnerHTML={{ __html: lang === 'ar' ? product?.long_description_ar || product?.long_description : product?.long_description }} 
+                        dangerouslySetInnerHTML={{ __html: he.decode(product.long_description) }} 
                     />
                 </div>
 

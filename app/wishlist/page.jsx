@@ -1,17 +1,17 @@
 'use client';
 import Image from "next/image";
 import Container from "../components/shared/Container";
-import PageHeader from "../components/shared/PageHeader";
+// import PageHeader from "../components/shared/PageHeader";
 import errorIcon from "../resources/icons/errorIco.svg";
 import ShopNowButton from "../components/shared/ShopNowButton";
 import Link from "next/link";
 import { useAppContext } from "../context/AppContext";
-import { useGetDataWithToken } from "../components/helpers/useGetDataWithToken";
+// import { useGetDataWithToken } from "../components/helpers/useGetDataWithToken";
 import WishlistCard from "../components/shared/cards/WishlistCard";
 // import FlashDeals from "../components/home/FlashDeals";
 
 export default function page() {
-  const { token, wishlist, removeFromWishlistDB, addToCartDB } = useAppContext();
+  const { token, wishlist, removeFromWishlistDB, addToCartDB, lang } = useAppContext();
   
   return (
     <section>
@@ -37,7 +37,7 @@ export default function page() {
                     :
                     <div className="pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[60px] grid grid-cols-1 lg:grid-cols-2 gap-[10px] md:gap-[20px]">
                       {
-                        wishlist?.map((w, index) => <WishlistCard key={index} w={w} token={token} removeFromWishlistDB={removeFromWishlistDB} addToCartDB={addToCartDB} />)
+                        wishlist?.map((w, index) => <WishlistCard key={index} w={w} token={token} removeFromWishlistDB={removeFromWishlistDB} addToCartDB={addToCartDB} lang={lang} />)
                       }
                     </div>
                 }
