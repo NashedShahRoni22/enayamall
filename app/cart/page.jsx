@@ -105,7 +105,7 @@ export default function CartPage() {
           </div>
           :
           <Container>
-            <div className={`my-[60px] flex flex-col ${lang === "en" ? "2xl:flex-row" : "2xl:flex-row-reverse" } gap-[24px]`}>
+            <div className={`my-[60px] flex flex-col ${lang === "en" ? "2xl:flex-row" : "2xl:flex-row-reverse"} gap-[24px]`}>
               {/* cart products here  */}
               <div className="2xl:w-2/3 overflow-x-auto border border-creamline rounded-xl bg-gray-100 p-4">
                 {/* mobile card  */}
@@ -126,6 +126,7 @@ export default function CartPage() {
 
                 {currentCart?.map((item, index) => (
                   <CartTableRow
+                    lang={lang}
                     key={index}
                     item={item}
                     token={token}
@@ -144,21 +145,26 @@ export default function CartPage() {
                 {/* sub total  */}
                 <div className="py-[20px] px-[20px] bg-creamline rounded-[10px] flex-1 2xl:flex-none">
                   <p className="text-[16px] md:text-[18px] py-[10px] text-primarymagenta flex justify-between items-center gap-1">
-                    <span className="font-[400]">Item subtotal</span>
-                    <span><span className="dirham-symbol">ê</span> {Number(token ? totalDB : totalDBGuest).toLocaleString()}</span>
+                    <span className="font-[400]">
+                      {lang === 'en' ? 'Item subtotal' : 'المجموع الفرعي'}
+                    </span>
+                    <span><span className="dirham-symbol">ê</span> {Number(token ? totalDB : totalDBGuest)}</span>
                   </p>
 
                   {appliedCoupon && couponData && (
                     <div className="text-[16px] md:text-[18px] py-[10px] border-t border-b border-secondary text-primarymagenta flex justify-between">
                       <div className="flex flex-col 2xl:flex-row gap-[24px]">
-                        <p className="font-[550]">Coupon code</p>
+                        <p className="font-[550]">
+                          {lang === 'en' ? 'Coupon code' : 'رمز القسيمة'}
+                        </p>
                         <p className="font-bold text-secondary">
                           {couponData.coupon_code}
                           {" "}
-                          {couponData.discount_type === 'fixed' ?
-                            <>( - {couponData.discount} <span className="dirham-symbol">ê</span>)</> :
+                          {couponData.discount_type === 'fixed' ? (
+                            <>( - {couponData.discount} <span className="dirham-symbol">ê</span>)</>
+                          ) : (
                             <>( - {couponData.discount} %)</>
-                          }
+                          )}
                         </p>
                       </div>
 
@@ -174,24 +180,25 @@ export default function CartPage() {
                   )}
 
                   <p className="text-[16px] md:text-[18px] py-[10px] font-[550] text-primarymagenta flex justify-between">
-                    <span className="">Total</span>
+                    <span>{lang === 'en' ? 'Total' : 'الإجمالي'}</span>
                     {couponData ? (
                       <span>
-                        {couponData.discount_type === "fixed" ?
+                        {couponData.discount_type === "fixed" ? (
                           <span className="flex items-center gap-1">
                             <span className="dirham-symbol">ê</span>
-                            {((token ? totalDB : totalDBGuest) - couponData.discount).toLocaleString()}
-                          </span> :
-                          <span className="flex items-center gap-1">
-                            <span className="dirham-symbol">ê</span>
-                            {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100)).toLocaleString()}
+                            {((token ? totalDB : totalDBGuest) - couponData.discount)}
                           </span>
-                        }
+                        ) : (
+                          <span className="flex items-center gap-1">
+                            <span className="dirham-symbol">ê</span>
+                            {Math.round((token ? totalDB : totalDBGuest) - (((token ? totalDB : totalDBGuest) * couponData.discount) / 100))}
+                          </span>
+                        )}
                       </span>
                     ) : (
                       <span className="flex items-center gap-1">
                         <span className="dirham-symbol">ê</span>
-                        {(token ? totalDB : totalDBGuest).toLocaleString()}
+                        {(token ? totalDB : totalDBGuest)}
                       </span>
                     )}
                   </p>
@@ -200,27 +207,29 @@ export default function CartPage() {
                     href={"checkout"}
                     className="mt-[20px] cursor-pointer text-[14px] lg:text-[18px] text-white min-w-full py-[12px] bg-primary block text-center rounded-xl font-semibold"
                   >
-                    Proceed to Checkout
+                    {lang === 'en' ? 'Proceed to Checkout' : 'الانتقال إلى الدفع'}
                   </Link>
                 </div>
 
                 {/* coupon card  */}
                 <div className="p-[20px] rounded-[10px] bg-creamline flex-1 2xl:flex-none h-fit">
-                  <p className="text-[16px] md:text-[18px] font-[550] text-primarymagenta">Coupon code</p>
+                  <p className="text-[16px] md:text-[18px] font-[550] text-primarymagenta">
+                    {lang === 'en' ? 'Coupon code' : 'رمز القسيمة'}
+                  </p>
                   <div className="flex gap-[8px] items-center mt-[10px]">
                     <input
                       type="text"
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value)}
                       className="rounded-xl py-[12px] w-2/3 text-left px-4 text-[14px] lg:text-[18px] text-primarymagenta bg-white focus:outline-none border border-dashed border-creamline"
-                      placeholder="Enter code"
+                      placeholder={lang === 'en' ? "Enter code" : "أدخل الرمز"}
                     />
                     <button
                       onClick={handleApplyCoupon}
                       disabled={applyCoupon.isPending}
                       className="cursor-pointer text-[14px] lg:text-[18px] text-white py-[12px] w-1/3 bg-primary font-semibold rounded-xl flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {applyCoupon.isPending ? 'Applying...' : 'Apply'}
+                      {applyCoupon.isPending ? (lang === 'en' ? 'Applying...' : 'جارٍ التقديم...') : (lang === 'en' ? 'Apply' : 'تطبيق')}
                     </button>
                   </div>
                 </div>

@@ -13,11 +13,107 @@ import LoadingSvg from "../shared/LoadingSvg";
 import { BiChevronDown } from "react-icons/bi";
 
 const BillForm = ({ address, addressId, setAddressId, method, setMethod, selectedDistrictId, setSelectedDistrictId }) => {
-    const { token } = useAppContext();
+    const { token, lang } = useAppContext();
     const [showForm, setShowForm] = useState(false);
     const [editableAddress, setEditableAddress] = useState(null);
     const [loading, setLoading] = useState(false);
     const [selectedCityId, setSelectedCityId] = useState(null);
+
+    // Localization texts
+    const texts = {
+        en: {
+            shippingDetails: "Shipping details",
+            cancel: "Cancel",
+            addNewAddress: "Add new address",
+            fullName: "Full name",
+            mobileNumber: "Mobile number",
+            flatNumber: "Flat number",
+            houseNumber: "House Number",
+            roadNumber: "Road number",
+            block: "Block",
+            area: "Area",
+            postCode: "Post code",
+            district: "District",
+            city: "City",
+            additionalAddress: "Additional Address for better finding",
+            saveAddress: "Save address",
+            updateAddress: "Update address",
+            selectDistrict: "Select District",
+            loadingDistricts: "Loading districts...",
+            selectDistrictFirst: "Select district first",
+            loadingCities: "Loading cities...",
+            selectCity: "Select City",
+            noAddressFound: "No address found",
+            selectPaymentMethod: "Select Payment method",
+            cashOnDelivery: "Cash on delivery",
+            payOnline: "Pay online",
+            nameRequired: "Name is required",
+            mobileRequired: "Mobile number is required",
+            flatRequired: "Flat number is required",
+            houseRequired: "House number is required",
+            areaRequired: "Area is required",
+            districtRequired: "District is required",
+            cityRequired: "City is required",
+            submittingAddress: "Submitting address...",
+            addressSubmitted: "Address submitted successfully!",
+            failedSubmit: "Failed to submit address",
+            updatingAddress: "Updating address...",
+            addressUpdated: "Address updated successfully!",
+            failedUpdate: "Failed to update address",
+            deletingAddress: "Deleting address...",
+            addressDeleted: "Address deleted successfully!",
+            failedDelete: "Failed to delete address",
+            savingAddress: "Saving address",
+            updating: "Updating"
+        },
+        ar: {
+            shippingDetails: "تفاصيل الشحن",
+            cancel: "إلغاء",
+            addNewAddress: "إضافة عنوان جديد",
+            fullName: "الاسم الكامل",
+            mobileNumber: "رقم الهاتف المحمول",
+            flatNumber: "رقم الشقة",
+            houseNumber: "رقم المنزل",
+            roadNumber: "رقم الطريق",
+            block: "المجمع",
+            area: "المنطقة",
+            postCode: "الرمز البريدي",
+            district: "المقاطعة",
+            city: "المدينة",
+            additionalAddress: "عنوان إضافي للعثور بشكل أفضل",
+            saveAddress: "حفظ العنوان",
+            updateAddress: "تحديث العنوان",
+            selectDistrict: "اختر المقاطعة",
+            loadingDistricts: "جاري تحميل المقاطعات...",
+            selectDistrictFirst: "اختر المقاطعة أولاً",
+            loadingCities: "جاري تحميل المدن...",
+            selectCity: "اختر المدينة",
+            noAddressFound: "لم يتم العثور على عنوان",
+            selectPaymentMethod: "اختر طريقة الدفع",
+            cashOnDelivery: "الدفع عند الاستلام",
+            payOnline: "الدفع عبر الإنترنت",
+            nameRequired: "الاسم مطلوب",
+            mobileRequired: "رقم الهاتف المحمول مطلوب",
+            flatRequired: "رقم الشقة مطلوب",
+            houseRequired: "رقم المنزل مطلوب",
+            areaRequired: "المنطقة مطلوبة",
+            districtRequired: "المقاطعة مطلوبة",
+            cityRequired: "المدينة مطلوبة",
+            submittingAddress: "جاري إرسال العنوان...",
+            addressSubmitted: "تم إرسال العنوان بنجاح!",
+            failedSubmit: "فشل في إرسال العنوان",
+            updatingAddress: "جاري تحديث العنوان...",
+            addressUpdated: "تم تحديث العنوان بنجاح!",
+            failedUpdate: "فشل في تحديث العنوان",
+            deletingAddress: "جاري حذف العنوان...",
+            addressDeleted: "تم حذف العنوان بنجاح!",
+            failedDelete: "فشل في حذف العنوان",
+            savingAddress: "حفظ العنوان",
+            updating: "جاري التحديث"
+        }
+    };
+
+    const t = texts[lang] || texts.en;
 
     // manage address form
     const [formData, setFormData] = useState({
@@ -46,7 +142,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
     const getDistrictNameById = (districtId) => {
         if (!districtsData?.data || !districtId) return '';
         const district = districtsData.data.find(d => d.id.toString() === districtId.toString());
-        return district?.name || '';
+        return district ? (lang === 'ar' ? district.ar_name : district.name) || '' : '';
     };
 
     // Reset form data when starting fresh (add new address)
@@ -86,8 +182,8 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                 flatNumber: editableAddress?.house_name_or_flat_number || "",
                 houseNumber: editableAddress?.house_number || "",
                 area: editableAddress?.area || "",
-                city: editableAddress?.city_name || "", 
-                district: editableAddress?.district_name || "", 
+                city: lang === 'ar' ? editableAddress?.city_ar_name || editableAddress?.city_name : editableAddress?.city_name || "", 
+                district: lang === 'ar' ? editableAddress?.district_ar_name || editableAddress?.district_name : editableAddress?.district_name || "", 
                 postCode: editableAddress?.post_code || "",
                 roadNumber: editableAddress?.road_number || "",
                 block: editableAddress?.block || "",
@@ -96,7 +192,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
         } else if (editableAddress !== null) {
             resetFormData();
         }
-    }, [editableAddress]);
+    }, [editableAddress, lang]);
 
     // Reset city when district changes (only for new addresses)
     useEffect(() => {
@@ -115,11 +211,12 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
             }
 
             if (selectedCityId && citiesData?.data) {
-                const cityName = citiesData.data.find(c => c.id.toString() === selectedCityId.toString())?.name || "";
+                const city = citiesData.data.find(c => c.id.toString() === selectedCityId.toString());
+                const cityName = city ? (lang === 'ar' ? city.ar_name : city.name) || "" : "";
                 setFormData(prev => ({ ...prev, city: cityName }));
             }
         }
-    }, [selectedDistrictId, selectedCityId, districtsData, citiesData, editableAddress]);
+    }, [selectedDistrictId, selectedCityId, districtsData, citiesData, editableAddress, lang]);
 
     // Handle input changes
     const handleChange = (e) => {
@@ -137,7 +234,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
         setSelectedCityId(null); // Reset city when district changes
         setFormData(prev => ({
             ...prev,
-            district: selectedDistrict?.name || "",
+            district: selectedDistrict ? (lang === 'ar' ? selectedDistrict.ar_name : selectedDistrict.name) || "" : "",
             city: "" // Reset city name
         }));
         setErrors(prev => ({ ...prev, district: "", city: "" }));
@@ -151,7 +248,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
         setSelectedCityId(cityId ? Number(cityId) : null);
         setFormData(prev => ({
             ...prev,
-            city: selectedCity?.name || ""
+            city: selectedCity ? (lang === 'ar' ? selectedCity.ar_name : selectedCity.name) || "" : ""
         }));
         setErrors(prev => ({ ...prev, city: "" }));
     };
@@ -160,13 +257,13 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
     const validate = () => {
         const newErrors = {};
 
-        if (!formData.fullName.trim()) newErrors.fullName = "Name is required";
-        if (!formData.mobileNumber.trim()) newErrors.mobileNumber = "Mobile number is required";
-        if (!formData.flatNumber.trim()) newErrors.flatNumber = "Flat number is required";
-        if (!formData.houseNumber.trim()) newErrors.houseNumber = "House number is required";
-        if (!formData.area.trim()) newErrors.area = "Area is required";
-        if (!selectedDistrictId) newErrors.district = "District is required";
-        if (!selectedCityId) newErrors.city = "City is required";
+        if (!formData.fullName.trim()) newErrors.fullName = t.nameRequired;
+        if (!formData.mobileNumber.trim()) newErrors.mobileNumber = t.mobileRequired;
+        if (!formData.flatNumber.trim()) newErrors.flatNumber = t.flatRequired;
+        if (!formData.houseNumber.trim()) newErrors.houseNumber = t.houseRequired;
+        if (!formData.area.trim()) newErrors.area = t.areaRequired;
+        if (!selectedDistrictId) newErrors.district = t.districtRequired;
+        if (!selectedCityId) newErrors.city = t.cityRequired;
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -201,9 +298,9 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
             await toast.promise(
                 postAddress.mutateAsync({ formData: form, token }),
                 {
-                    loading: 'Submitting address...',
-                    success: 'Address submitted successfully!',
-                    error: (err) => err.message || 'Failed to submit address',
+                    loading: t.submittingAddress,
+                    success: t.addressSubmitted,
+                    error: (err) => err.message || t.failedSubmit,
                 }
             );
             setShowForm(false);
@@ -245,9 +342,9 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     formData: updateData
                 }),
                 {
-                    loading: 'Updating address...',
-                    success: 'Address updated successfully!',
-                    error: (err) => err.message || 'Failed to update address',
+                    loading: t.updatingAddress,
+                    success: t.addressUpdated,
+                    error: (err) => err.message || t.failedUpdate,
                 }
             );
 
@@ -273,9 +370,9 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     token,
                 }),
                 {
-                    loading: 'Deleting address...',
-                    success: 'Address deleted successfully!',
-                    error: (err) => err.message || 'Failed to delete address',
+                    loading: t.deletingAddress,
+                    success: t.addressDeleted,
+                    error: (err) => err.message || t.failedDelete,
                 }
             );
             queryClient.invalidateQueries({ queryKey: ['address'] });
@@ -298,12 +395,12 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     {/* address form  */}
                     <div>
                         <div className="flex justify-between items-center">
-                            <p className="text-[18px] md:text-[20px] font-[650] text-primarymagenta">Shipping details</p>
+                            <p className="text-[18px] md:text-[20px] font-[650] text-primarymagenta">{t.shippingDetails}</p>
                             <button
                                 onClick={handleCancelForm}
                                 className="px-[16px] py-[8px] bg-button text-white rounded-[10px] cursor-pointer"
                             >
-                                Cancel
+                                {t.cancel}
                             </button>
                         </div>
                         <div className="bg-creamline h-[1px] w-full mt-[10px] sm:mt-[30px] mb-[10px]"></div>
@@ -313,7 +410,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 {/* Full Name */}
                                 <div>
                                     <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                        <p>Full name <span className="text-button">*</span></p>
+                                        <p>{t.fullName} <span className="text-button">*</span></p>
                                         {errors.fullName && (
                                             <span className="text-button ml-2">{errors.fullName}</span>
                                         )}
@@ -330,7 +427,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 {/* Mobile Number */}
                                 <div>
                                     <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                        <p>Mobile number <span className="text-button">*</span></p>
+                                        <p>{t.mobileNumber} <span className="text-button">*</span></p>
                                         {errors.mobileNumber && (
                                             <span className="text-button ml-2">{errors.mobileNumber}</span>
                                         )}
@@ -348,12 +445,12 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                             {/* Address Section */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
                                 {[
-                                    { label: "Flat number", name: "flatNumber" },
-                                    { label: "House Number", name: "houseNumber" },
-                                    { label: "Road number", name: "roadNumber" },
-                                    { label: "Block", name: "block" },
-                                    { label: "Area", name: "area" },
-                                    { label: "Post code", name: "postCode" },
+                                    { label: t.flatNumber, name: "flatNumber" },
+                                    { label: t.houseNumber, name: "houseNumber" },
+                                    { label: t.roadNumber, name: "roadNumber" },
+                                    { label: t.block, name: "block" },
+                                    { label: t.area, name: "area" },
+                                    { label: t.postCode, name: "postCode" },
                                 ].map((field) => (
                                     <div key={field.name}>
                                         <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
@@ -379,7 +476,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 {/* District Select */}
                                 <div>
                                     <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                        <p>District <span className="text-button">*</span></p>
+                                        <p>{t.district} <span className="text-button">*</span></p>
                                         {errors.district && (
                                             <span className="text-button ml-2">{errors.district}</span>
                                         )}
@@ -392,11 +489,11 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.district ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta bg-white`}
                                         >
                                             <option value="">
-                                                {isDistrictsLoading ? "Loading districts..." : "Select District"}
+                                                {isDistrictsLoading ? t.loadingDistricts : t.selectDistrict}
                                             </option>
                                             {districtsData?.data?.map((district) => (
                                                 <option key={district.id} value={district.id}>
-                                                    {district.name}
+                                                    {lang === 'ar' ? district.ar_name : district.name}
                                                 </option>
                                             ))}
                                         </select>
@@ -407,7 +504,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 {/* City Select */}
                                 <div className="relative">
                                     <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                        <p>City <span className="text-button">*</span></p>
+                                        <p>{t.city} <span className="text-button">*</span></p>
                                         {errors.city && (
                                             <span className="text-button ml-2">{errors.city}</span>
                                         )}
@@ -421,15 +518,15 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                         >
                                             <option value="">
                                                 {!selectedDistrictId
-                                                    ? "Select district first"
+                                                    ? t.selectDistrictFirst
                                                     : isCitiesLoading
-                                                        ? "Loading cities..."
-                                                        : "Select City"
+                                                        ? t.loadingCities
+                                                        : t.selectCity
                                                 }
                                             </option>
                                             {citiesData?.data?.map((city) => (
                                                 <option key={city.id} value={city.id}>
-                                                    {city.name}
+                                                    {lang === 'ar' ? city.ar_name : city.name}
                                                 </option>
                                             ))}
                                         </select>
@@ -441,7 +538,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                             {/* Additional Address */}
                             <div>
                                 <label className="block font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                    Additional Address for better finding
+                                    {t.additionalAddress}
                                 </label>
                                 <textarea
                                     name="additionalAddress"
@@ -464,7 +561,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             }`}
                                     >
                                         {
-                                            loading ? <LoadingSvg label="Saving address" color="text-primarymagenta" /> : "Save address"
+                                            loading ? <LoadingSvg label={t.savingAddress} color="text-primarymagenta" /> : t.saveAddress
                                         }
                                     </button>
                                 ) : (
@@ -477,7 +574,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             }`}
                                     >
                                         {
-                                            loading ? <LoadingSvg label="Updating" color="text-primarymagenta" /> : "Update address"
+                                            loading ? <LoadingSvg label={t.updating} color="text-primarymagenta" /> : t.updateAddress
                                         }
                                     </button>
                                 )}
@@ -491,7 +588,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     <div className="bg-creamline  p-[20px] rounded-[10px]">
                         {/* add new address button  */}
                         <div className="flex justify-between items-center">
-                            <p className="text-[18px] md:text-[20px] text-primarymagenta font-[650]">Shipping details</p>
+                            <p className="text-[18px] md:text-[20px] text-primarymagenta font-[650]">{t.shippingDetails}</p>
                             <button
                                 onClick={() => {
                                     setEditableAddress({});
@@ -500,7 +597,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 className="flex items-center gap-[6px] sm:gap-[12px] px-[12px] sm:px-[24px] py-[6px] sm:py-[12px] text-[14px] sm:text-[14px] bg-primary rounded-xl text-white cursor-pointer"
                             >
                                 <FaPlus />
-                                <span>Add new address</span>
+                                <span>{t.addNewAddress}</span>
                             </button>
                         </div>
 
@@ -524,9 +621,9 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                                     a?.phone,
                                                     a?.house_name_or_flat_number,
                                                     a?.house_number,
-                                                    // Use the city_name and district_name from response for display
-                                                    a?.city_name,
-                                                    a?.district_name
+                                                    // Use the appropriate language version for display
+                                                    lang === 'ar' ? a?.city_ar_name || a?.city_name : a?.city_name,
+                                                    lang === 'ar' ? a?.district_ar_name || a?.district_name : a?.district_name
                                                 ]
                                                     .filter(Boolean)
                                                     .join(', ')}
@@ -554,7 +651,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                             </div>
                         ) : (
                             <div className="py-[40px] flex items-center justify-center">
-                                <p className="text-[14px] text-button">No address found</p>
+                                <p className="text-[14px] text-button">{t.noAddressFound}</p>
                             </div>
                         )}
                     </div>
@@ -564,7 +661,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
             {/* choose options  */}
             <div className="bg-creamline p-[20px] rounded-xl mt-[30px]">
                 <p className='text-[18px] text-primarymagenta font-[650]'>
-                    Select Payment method
+                    {t.selectPaymentMethod}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-[20px] sm:gap-[40px] mt-[15px]">
                     <button onClick={() => setMethod("cod")} className="flex items-center gap-[6px] sm:gap-[12px] cursor-pointer">
@@ -576,7 +673,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                     <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primarymagenta" />
                             }
                         </span>
-                        <span className={`text-[16px] sm:text-[18px] ${method === "cod" ? "text-customgreen font-[650]" : "text-ash"}`}>Cash on delivery</span>
+                        <span className={`text-[16px] sm:text-[18px] ${method === "cod" ? "text-customgreen font-[650]" : "text-ash"}`}>{t.cashOnDelivery}</span>
                     </button>
 
                     <button onClick={() => setMethod("online")} className="flex items-center gap-[6px] sm:gap-[12px] cursor-pointer">
@@ -588,7 +685,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                     <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primarymagenta" />
                             }
                         </span>
-                        <span className={`text-[16px] sm:text-[18px] ${method === "online" ? "text-customgreen font-[650]" : "text-ash"}`}>Pay online</span>
+                        <span className={`text-[16px] sm:text-[18px] ${method === "online" ? "text-customgreen font-[650]" : "text-ash"}`}>{t.payOnline}</span>
                     </button>
                 </div>
             </div>

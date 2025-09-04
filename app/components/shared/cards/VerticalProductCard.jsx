@@ -255,7 +255,7 @@ export default function VerticalProductCard({ p }) {
                 )}
               </div>
               {/* Express delivery */}
-              {p?.is_express && (
+              {/* {p?.is_express && (
                 <div className="relative inline-block">
                   <img
                     src="https://enayamall.com/image/express.png"
@@ -273,7 +273,7 @@ export default function VerticalProductCard({ p }) {
                     Express Delivery
                   </span>
                 </div>
-              )}
+              )} */}
             </div>
 
             {/* Mobile Add to Cart Button */}

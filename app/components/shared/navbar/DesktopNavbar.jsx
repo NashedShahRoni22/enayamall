@@ -1,4 +1,3 @@
-// DesktopNavbar.jsx
 "use client";
 import { ChevronDown, Heart, Menu, Phone, Search, ShoppingBag, User, LogOut, Package, UserCircle } from "lucide-react";
 import Image from "next/image";

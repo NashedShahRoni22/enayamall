@@ -5,6 +5,7 @@ import { GoPlus } from "react-icons/go";
 import { Trash2 } from "lucide-react";
 
 export default function CartTableRow({
+  lang,
   token,
   item,
   removeFromCartDB,
@@ -36,7 +37,7 @@ export default function CartTableRow({
                   href={`/combo/${item?.slug}`}
                   className="text-[14px] lg:text-[16px] font-medium flex-1 hover:text-secondary line-clamp-3"
                 >
-                  {item.name}{" "}
+                  {lang === 'en' ? item.name : item.ar_name}{" "}
                   {item.variant && (
                     <span className="px-2 bg-primarycream text-button rounded-[10px]">
                       {item.variant}
@@ -44,10 +45,11 @@ export default function CartTableRow({
                   )}{" "}
                   {item?.items?.length > 0 && (
                     <span className="px-4 py-0.5 bg-primarycream text-button rounded-[10px]">
-                      Combo
+                      {lang === 'en' ? 'Combo' : 'كومبو'}
                     </span>
                   )}
                 </Link>
+
                 <ul className="mt-2">
                   {item?.items?.map((product, index) => (
                     <li key={index}>
@@ -56,7 +58,7 @@ export default function CartTableRow({
                         className="text-[14px] hover:text-secondary line-clamp-1"
                       >
                         {" "}
-                        - {product?.name}{" "}
+                        - {lang === 'en' ? product.name : product.ar_name}{" "}
                         {product.variant && <span>-{product.variant}</span>}
                       </Link>
                     </li>
@@ -69,40 +71,21 @@ export default function CartTableRow({
                   href={`/shop/${item?.slug}?variant=${item?.variant}`}
                   className="text-[14px] lg:text-[16px] font-medium flex-1 hover:text-secondary line-clamp-3"
                 >
-                  {item.name}{" "}
+                  {lang === 'en' ? item.name : item.ar_name}{" "}
                   {item.variant && (
                     <span className="px-2 bg-primarycream text-button rounded-[10px]">
                       {item.variant}
                     </span>
                   )}
                 </Link>
-                {/* <td className="text-[14px] lg:text-[16px]">
-                <span className="dirham-symbol">ê</span> {item.price}
-              </td> */}
-              {/* {item?.name && (
-                <div className="relative inline-block">
-                  <img
-                    src="https://enayamall.com/image/express.png"
-                    alt="Express"
-                    className="cursor-pointer peer mt-2"
-                    width={60}
-                  />
-                  <span
-                    className="absolute bottom-full hidden peer-hover:block bg-primary text-white text-xs 
-                   px-2 py-1 rounded whitespace-nowrap pointer-events-none"
-                  >
-                    Express Delivery
-                  </span>
-                </div>
-              )} */}
               </div>
             )}
           </div>
 
           <div className="flex flex-col lg:gap-[10px] items-end">
             <td className="text-[14px] lg:text-[16px] flex items-center gap-1">
-              <span className="dirham-symbol text-[14px]">ê</span> {item.price.toLocaleString()} 
-              <span className="line-through text-ash text-[14px]">{item.price!=item.original_price ? item.original_price.toLocaleString() : null}</span>
+              <span className="dirham-symbol text-[14px]">ê</span> {item?.price}
+              <span className="line-through text-ash text-[14px]">{item?.price != item?.original_price ? item?.original_price : null}</span>
               {/* {(item.price * item.quantity).toFixed(0)} */}
             </td>
             <div className="flex items-center text-secondary h-[40px] rounded-[10px] justify-center bg-[#F8F8F8]">
@@ -110,21 +93,21 @@ export default function CartTableRow({
                 onClick={() =>
                   token
                     ? addToCartDB(
-                        item?.combo_id
-                          ? item?.combo_id
-                          : item?.product_variant_id,
-                        1,
-                        item?.combo_id && "combo",
-                        "decrement"
-                      )
+                      item?.combo_id
+                        ? item?.combo_id
+                        : item?.product_variant_id,
+                      1,
+                      item?.combo_id && "combo",
+                      "decrement"
+                    )
                     : addToCartDBGuest(
-                        item?.combo_id
-                          ? item?.combo_id
-                          : item?.product_variant_id,
-                        1,
-                        item?.combo_id && "combo",
-                        "decrement"
-                      )
+                      item?.combo_id
+                        ? item?.combo_id
+                        : item?.product_variant_id,
+                      1,
+                      item?.combo_id && "combo",
+                      "decrement"
+                    )
                 }
                 disabled={item?.quantity === 1}
                 className="cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-primarymagenta p-2"
@@ -140,19 +123,19 @@ export default function CartTableRow({
                 onClick={() =>
                   token
                     ? addToCartDB(
-                        item?.combo_id
-                          ? item?.combo_id
-                          : item?.product_variant_id,
-                        1,
-                        item?.combo_id && "combo"
-                      )
+                      item?.combo_id
+                        ? item?.combo_id
+                        : item?.product_variant_id,
+                      1,
+                      item?.combo_id && "combo"
+                    )
                     : addToCartDBGuest(
-                        item?.combo_id
-                          ? item?.combo_id
-                          : item?.product_variant_id,
-                        1,
-                        item?.combo_id && "combo"
-                      )
+                      item?.combo_id
+                        ? item?.combo_id
+                        : item?.product_variant_id,
+                      1,
+                      item?.combo_id && "combo"
+                    )
                 }
                 className="cursor-pointer text-primarymagenta p-2"
               >
@@ -171,14 +154,17 @@ export default function CartTableRow({
             }}
             className="cursor-pointer text-[14px] flex items-center gap-1 text-ash"
           >
-            <Trash2 size={18} className="text-ash" /> Remove
+            <Trash2 size={18} className="text-ash" /> {lang === 'en' ? 'Remove' : 'حذف'}
           </button>
           <td className="text-[14px] lg:text-[16px] flex items-center gap-1">
-            <span className="text-[16px] text-ash">Sub-total: </span>{" "}
+            <span className="text-[16px] text-ash">
+              {lang === 'en' ? 'Sub-total:' : 'المجموع الفرعي:'}
+            </span>{" "}
             <span className="dirham-symbol text-[14px]">ê</span>{" "}
-            {Number((item.price * item.quantity).toFixed(0)).toLocaleString()}
+            {Number((item?.price * item?.quantity).toFixed(0))}
           </td>
         </div>
+
       </div>
 
       {/* showing combo here  */}
