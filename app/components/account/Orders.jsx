@@ -47,7 +47,7 @@ export default function Orders({ orders }) {
                               }
 
                             </div>
-                            <p>D {od?.price * od?.quantity} Taka</p>
+                            <p><span className="dirham-symbol text-[17px] mr-1">ê</span>{" "} {od?.price * od?.quantity}</p>
                           </div>)
                       }
                     </div>
@@ -57,26 +57,26 @@ export default function Orders({ orders }) {
                       order?.coupon_discount !== null &&
                       <div className="text-button text-[16px] flex justify-between mb-[10px]">
                         <p>Applied discounnt</p>
-                        <p>{order?.coupon_discount} Taka</p>
+                        <p>{order?.coupon_discount}</p>
                       </div>
                     }
 
                     {/* Delivery charge  */}
                     <div className="text-successText text-[16px] flex justify-between pb-[20px] border-b border-creamline">
                       <p>Delivery charge</p>
-                      <p>{order?.shipping_cost} Taka</p>
+                      <p><span className="dirham-symbol text-[17px] mr-1">ê</span>{" "} {order?.shipping_cost}</p>
                     </div>
 
                     <div className="text-[16px] lg:text-[20px] flex justify-between mt-[10px]">
                       <p className="font-[650]">Amount payable</p>
-                      <p className="font-[650]">D {order?.amount_payable?.toFixed(2)} Taka</p>
+                      <p className="font-[650]"><span className="dirham-symbol text-[17px] mr-1">ê</span>{" "} {order?.amount_payable?.toFixed(2)}</p>
                     </div>
                   </div>
 
                   {/* shipping details here  */}
                   <div className="mt-[40px] text-primarymagenta flex gap-[20px]">
                     <div className="flex-1">
-                      <MdHome className="text-natural text-[24px]" />
+                      <MdHome className="text-primary text-[24px]" />
                     </div>
                     <div className="text-[16px]">
                       <p>{order?.address?.name}</p>

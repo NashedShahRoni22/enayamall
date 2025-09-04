@@ -203,7 +203,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                 </div>
 
                 {/* Divider */}
-                <div className="bg-natural h-[1px] w-full my-[20px] sm:my-[30px]"></div>
+                <div className="bg-primary h-[1px] w-full my-[20px] sm:my-[30px]"></div>
 
                 {/* Product List */}
                 <div className='flex flex-col gap-[20px]'>
@@ -219,7 +219,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                 </div>
 
                 {/* Divider */}
-                <div className="bg-natural h-[1px] w-full my-[20px] sm:my-[30px]"></div>
+                <div className="bg-primary h-[1px] w-full my-[20px] sm:my-[30px]"></div>
 
                 {/* Subtotal Row */}
                 <div className='flex justify-between items-center'>
@@ -277,7 +277,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                         }
                     </span>
                     <p className='text-left'>
-                        {t.byContinuing} <Link href={"/terms-and-conditions"} className='hover:text-natural hover:underline'>{t.termsConditions}</Link>, <Link href={"/privacy-policy"} className='hover:text-natural hover:underline'>{t.privacyPolicy}</Link>, <Link href={"/return-and-refund-policy"} className='hover:text-natural hover:underline'>{t.refundReturn}</Link>
+                        {t.byContinuing} <Link href={"/terms-and-conditions"} className='hover:text-primary hover:underline'>{t.termsConditions}</Link>, <Link href={"/privacy-policy"} className='hover:text-primary hover:underline'>{t.privacyPolicy}</Link>, <Link href={"/return-and-refund-policy"} className='hover:text-primary hover:underline'>{t.refundReturn}</Link>
                     </p>
                 </button>
 
@@ -287,7 +287,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                     disabled={loading === true}
                     className={`text-center min-w-full py-[16px] rounded-[5px] ease-linear duration-300 cursor-pointer transition ${loading
                         ? 'bg-creamline text-primarymagenta cursor-not-allowed'
-                        : 'bg-natural text-white hover:bg-accent cursor-pointer'
+                        : 'bg-primary text-white hover:bg-creamline hover:text-primary cursor-pointer'
                         }`}>
                     {loading ? (
                         <LoadingSvg label={t.placingOrder} color="text-primarymagenta" />

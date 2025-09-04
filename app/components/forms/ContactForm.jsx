@@ -103,7 +103,7 @@ export default function ContactForm() {
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        className='mt-[20px] text-ash rounded-[5px] w-full px-[10px] sm:px-[20px] py-[10px] sm:py-[20px] border border-creamline focus:outline-none'
+                        className='mt-[20px] text-ash rounded-xl w-full px-[10px] sm:px-[20px] py-[10px] border border-creamline focus:outline-none'
                     />
                 </div>
 
@@ -117,7 +117,7 @@ export default function ContactForm() {
                         name="email"
                         value={form.email}
                         onChange={handleChange}
-                        className='mt-[20px] text-ash rounded-[5px] w-full px-[10px] sm:px-[20px] py-[10px] sm:py-[20px] border border-creamline focus:outline-none'
+                        className='mt-[20px] text-ash rounded-xl w-full px-[10px] sm:px-[20px] py-[10px] border border-creamline focus:outline-none'
                     />
                 </div>
             </div>
@@ -132,7 +132,7 @@ export default function ContactForm() {
                     name="subject"
                     value={form.subject}
                     onChange={handleChange}
-                    className='mt-[20px] text-ash rounded-[5px] w-full px-[10px] sm:px-[20px] py-[10px] sm:py-[20px] border border-creamline focus:outline-none'
+                    className='mt-[20px] text-ash rounded-xl w-full px-[10px] sm:px-[20px] py-[10px] border border-creamline focus:outline-none'
                 />
             </div>
 
@@ -145,13 +145,13 @@ export default function ContactForm() {
                     name="message"
                     value={form.message}
                     onChange={handleChange}
-                    className='mt-[20px] text-ash rounded-[5px] w-full px-[10px] sm:px-[20px] py-[10px] sm:py-[20px] border border-creamline focus:outline-none'
+                    className='mt-[20px] text-ash rounded-xl w-full px-[10px] sm:px-[20px] py-[10px] border border-creamline focus:outline-none'
                 />
             </div>
 
             <button
                 type="submit"
-                className="mt-[15px] sm:mt-[30px] transition-all ease-linear duration-300 text-[18px] w-full rounded-[5px] flex justify-center items-center bg-natural text-white py-[10px] sm:py-[20px] cursor-pointer"
+                className="mt-[15px] sm:mt-[30px] transition-all ease-linear duration-300 text-[18px] w-full rounded-xl flex justify-center items-center bg-primary text-white py-[10px] cursor-pointer"
             >
                 Send
             </button>

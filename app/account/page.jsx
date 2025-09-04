@@ -68,7 +68,7 @@ export default function Page() {
         <PrivateRoute>
             {/* <PageHeader title={"My Account"} from={"Home"} to={"account"} /> */}
             <Container>
-                <section className='pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[120px] flex flex-col lg:flex-row gap-[24px] lg:max-w-6xl lg:mx-auto'>
+                <section className='pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[120px] flex flex-col lg:flex-row gap-[24px]'>
                     {/* Mobilebar  */}
                     <div className='relative lg:hidden'>
                         <div className='flex justify-end'>
