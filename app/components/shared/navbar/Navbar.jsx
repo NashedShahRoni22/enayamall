@@ -26,7 +26,7 @@ export default function Navbar() {
             href: "/contact" 
         },
         { 
-            name: "Brand", 
+            name: "Brands", 
             nameAr: "اتصل بنا", 
             href: "/brand" 
         },

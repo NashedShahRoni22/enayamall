@@ -156,7 +156,7 @@ export default function page() {
       </div> */}
       {/* filters & products here  */}
       <Container>
-        <div className='py-[20px] lg:py-[40px]'>
+        <div className='py-[20px]'>
           {/* filetrs actions  */}
           <div className="sticky top-18 lg:static lg:flex lg:gap-[24px] bg-white z-10">
             {/* for large device  */}
@@ -179,6 +179,7 @@ export default function page() {
                   brands={brands}
                   brandIds={brandIds}
                   setBrandIds={setBrandIds}
+                  lang={lang}
                 />
               )}
 
@@ -284,12 +285,12 @@ export default function page() {
               {/* pagination here  */}
               {
                 productData?.links?.next !== null &&
-                <div className="mt-20 flex flex-col gap-5 items-center justify-center">
+                <div className="mt-5 flex flex-col gap-5 items-center justify-center">
                   <p className="hidden lg:block text-primarymagenta text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
                   <button
                     disabled={isLoadingMore}
                     onClick={handleLoadMore}
-                    className="px-8 py-3 bg-primary text-white text-sm rounded-[5px] cursor-pointer hover:bg-creamline hover:text-primarymagenta disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-8 py-3 bg-primary text-white text-sm rounded-[5px] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {
                       isLoadingMore ? (

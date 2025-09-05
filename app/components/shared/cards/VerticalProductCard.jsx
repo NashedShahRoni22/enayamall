@@ -194,7 +194,7 @@ export default function VerticalProductCard({ p }) {
             </div> */}
 
             {/* Product Name */}
-            <h3 className="text-primarymagenta mb-0 leading-tight line-clamp-2 min-h-[40px] group-hover:text-primary transition-colors duration-200">
+            <h3 className={`text-primarymagenta mb-0 leading-tight line-clamp-2 min-h-[40px] group-hover:text-primary transition-colors duration-200 ${lang === "ar" ? "text-right" : "text-left"}`}>
               {productName}
               {variantName && (
                 <span className="text-gray-600">

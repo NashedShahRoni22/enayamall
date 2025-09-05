@@ -1,7 +1,7 @@
 import { IoCloseOutline } from "react-icons/io5";
 import Image from "next/image";
 
-const BrandBannerDisplay = ({ brands, brandIds, setBrandIds }) => {
+const BrandBannerDisplay = ({ brands, brandIds, setBrandIds, lang }) => {
   // Function to remove a brand ID from the brandIds array
   const removeBrandId = (idToRemove) => {
     setBrandIds(prevIds => prevIds.filter(id => id !== idToRemove));
@@ -21,10 +21,10 @@ const BrandBannerDisplay = ({ brands, brandIds, setBrandIds }) => {
   }
 
   return (
-    <div className="flex justify-between items-center">
-      <Image src={selectedBrands[0]?.logo} alt="Banner Image" height={160} width={240} className="hidden lg:block" />
+    <div className={`flex justify-between items-center gap-4 mb-6 ${lang == "en" ? "flex-row" : "flex-row-reverse"}`}>
+      <Image src={selectedBrands[0]?.logo} alt={selectedBrands[0]?.name} height={200} width={200} className="hidden lg:block" />
       <div>
-        <Image src={selectedBrands[0]?.ar_brand_image} alt="Banner Image" height={500} width={1000} />
+        <Image src={lang == "en" ? selectedBrands[0]?.brand_image : selectedBrands[0]?.ar_brand_image} alt={selectedBrands[0]?.name} height={500} width={1070} />
       </div>
     </div>
   );

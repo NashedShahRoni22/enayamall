@@ -88,7 +88,7 @@ export default function MobileNavbar({ logo, menuItems = [], categories = [], co
                                         <Link 
                                             key={index}
                                             href={item.href} 
-                                            className="block py-2 px-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors rounded"
+                                            className="block py-2 px-4 text-gray-700 hover:text-primary transition-colors rounded"
                                             onClick={() => setIsMobileMenuOpen(false)}
                                             style={{ textAlign: lang === 'ar' ? 'right' : 'left' }}
                                         >
@@ -99,7 +99,7 @@ export default function MobileNavbar({ logo, menuItems = [], categories = [], co
                                     <div className="relative">
                                         <button 
                                             onClick={() => setShowCategories(!showCategories)}
-                                            className="w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors rounded"
+                                            className="w-full text-left py-2 px-4 text-gray-700 hover:text-primary transition-colors rounded"
                                             style={{ textAlign: lang === 'ar' ? 'right' : 'left' }}
                                         >
                                             {t.categories}

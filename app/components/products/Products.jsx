@@ -33,7 +33,7 @@ export default function Products({
                                     ))}
                                 </div>
                             ) : (
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2 gap-x-[16px] gap-y-[16px]">
+                                <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-x-[16px] gap-y-[16px]">
                                     {products.map((p, index) => (
                                         <HorizontalProductCard key={index} p={p} />
                                     ))}

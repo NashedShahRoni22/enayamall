@@ -38,7 +38,7 @@ export default function Brands() {
               Just In
             </p>
             <h5 className="mt-[20px] lg:mt-[35px] text-[30px] 2xl:text-[40px] text-primarymagenta text-center lg:text-left">
-              <span>Authentic Brands</span> for You
+              <span className="font-[750] text-white">Authentic Brands</span> for You
             </h5>
           </motion.div>
 

@@ -38,7 +38,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
             welcome: "Welcome",
             loginRegister: "Log In / Register",
             cart: "Cart",
-            listCategory: "List Category",
+            listCategory: "Browse Categories",
             hotline: "Hotline 24/7",
             myProfile: "My Profile",
             myOrders: "My Orders",
@@ -49,7 +49,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
             welcome: "مرحباً",
             loginRegister: "تسجيل الدخول / التسجيل",
             cart: "السلة",
-            listCategory: "قائمة الفئات",
+            listCategory: "تصفح الفئات",
             hotline: "الخط الساخن 24/7",
             myProfile: "ملفي الشخصي",
             myOrders: "طلباتي",
@@ -110,7 +110,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                         <div className="flex-1 w-full mx-8">
                             <button
                                 onClick={() => setShowSearch(true)}
-                                className={`w-full flex items-center gap-3 bg-gray-100 hover:bg-gray-50 px-5 py-3 rounded-full transition-colors group ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
+                                className={`w-full flex items-center gap-3 bg-gray-100 px-5 py-3 rounded-full transition-colors group ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
                             >
                                 <Search className="size-5 text-gray-500 group-hover:text-primary transition-colors" />
                                 <span className={`flex-1 text-sm text-gray-500 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>{t.searchPlaceholder}</span>
@@ -216,7 +216,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                     className={`relative`}
                                     onClick={() => setShowCategories(!showCategories)}
                                 >
-                                    <button className={`flex gap-2 items-center cursor-pointer hover:text-gray-200 transition-colors ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                                    <button className={`flex gap-2 items-center cursor-pointer hover:text-gray-200 w-[200px] transition-colors ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                                         <Menu className="size-5" />
                                         <p>{t.listCategory}</p>
                                     </button>
@@ -226,7 +226,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                         <CategoryDropdown
                                             categories={categories}
                                             onClose={() => setShowCategories(false)}
-                                            className={`absolute top-full mt-2 ${lang === 'ar' ? 'right-0' : 'left-0'} z-50`}
+                                            className={`absolute top-full mt-5 ${lang === 'ar' ? 'right-0' : 'left-0'} z-50`}
                                         />
                                     )}
                                 </div>

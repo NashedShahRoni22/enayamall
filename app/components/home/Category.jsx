@@ -22,16 +22,17 @@ export default function Category() {
 
     return (
         <Container>
-            <div className="py-10 md:py-20">
-                <h5 className="text-xl md:text-3xl font-semibold text-primary text-center mb-8 md:mb-16">
-                    Most popular categories
+            <div className="py-10">
+                <h5 className="text-[24px] 2xl:text-[36px] text-primarymagenta text-center mb-8">
+                {/* Flash Deals You'll Love */}
+                    <span className="font-semibold text-primary">Most Popular</span> Categories
                 </h5>
 
                 {/* Swiper for categories */}
                 <div className="relative">
                     <Swiper
                         modules={[Navigation, Autoplay]}
-                        spaceBetween={16}
+                        spaceBetween={8}
                         slidesPerView={4}
                         navigation={{
                             prevEl: '.swiper-button-prev-custom',
@@ -63,9 +64,9 @@ export default function Category() {
                                 <SwiperSlide key={index}>
                                     <Link href={`/category/${category?.slug}`}>
                                         <div className='flex justify-center'>
-                                            <Image src={category?.icon} alt='Featured Category Icon' height={100} width={100} loading='eager' />
+                                            <Image src={category?.icon} alt={category?.name} height={130} width={130} loading='eager' />
                                         </div>
-                                        <p className='text-center mt-2.5'>
+                                        <p className='text-center mt-2.5 text-lg font-medium'>
                                             {lang === "en" ? category?.name : category?.ar_name}
                                         </p>
                                     </Link>
@@ -75,11 +76,11 @@ export default function Category() {
                     </Swiper>
 
                     {/* Custom Navigation Buttons */}
-                    <button className="swiper-button-prev-custom absolute left-0 lg:-left-5 top-1/3 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors duration-200">
+                    <button className="swiper-button-prev-custom absolute left-0 lg:-left-5 top-1/3 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full border border-gray-200 flex items-center justify-center transition-colors duration-200">
                         <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-gray-600" />
                     </button>
 
-                    <button className="swiper-button-next-custom absolute right-0 lg:-right-5 top-1/3 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors duration-200">
+                    <button className="swiper-button-next-custom absolute right-0 lg:-right-5 top-1/3 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full border border-gray-200 flex items-center justify-center transition-colors duration-200">
                         <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-gray-600" />
                     </button>
                 </div>
