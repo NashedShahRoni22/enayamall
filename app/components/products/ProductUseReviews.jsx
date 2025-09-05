@@ -1,153 +1,187 @@
-'use client'
-import { useEffect, useRef, useState } from 'react';
-import ReviewForm from '../forms/ReviewForm';
-import { useAppContext } from '@/app/context/AppContext';
-import he from "he"
+"use client";
+import { useEffect, useRef, useState } from "react";
+import ReviewForm from "../forms/ReviewForm";
+import { useAppContext } from "@/app/context/AppContext";
+import he from "he";
 
-export default function ProductUseReviews({ product, reviewable, variantId, token, productType }) {
-    const [activeTab, setActiveTab] = useState("description");
-    
-    // Get language from context
-    const { lang } = useAppContext();
+export default function ProductUseReviews({
+  product,
+  reviewable,
+  variantId,
+  token,
+  productType,
+}) {
+  const [activeTab, setActiveTab] = useState("description");
 
-    // Refs for sections - separate ref for each section
-    const descriptionRef = useRef(null);
-    const usageRef = useRef(null);
-    const benefitsRef = useRef(null);
-    const reviewsRef = useRef(null);
+  // Get language from context
+  const { lang } = useAppContext();
 
-    console.log("ProductUseReviews rendered", product.long_description);
+  // Refs for sections - separate ref for each section
+  const descriptionRef = useRef(null);
+  const usageRef = useRef(null);
+  const benefitsRef = useRef(null);
+  const reviewsRef = useRef(null);
 
-    // Language-specific text
-    const getText = (key) => {
-        const texts = {
-            en: {
-                description: "Description",
-                // howtouse: "How to use",
-                // benefits: "Benefits",
-                reviews: "Reviews",
-                // keyBenefits: "Key Benefits"
-            },
-            ar: {
-                description: "الوصف",
-                // howtouse: "كيفية الاستخدام",
-                // benefits: "الفوائد",
-                reviews: "المراجعات",
-                // keyBenefits: "الفوائد الرئيسية"
-            }
-        };
-        return texts[lang]?.[key] || texts.en[key];
+  // console.log("ProductUseReviews rendered", product.long_description);
+
+  // Language-specific text
+  const getText = (key) => {
+    const texts = {
+      en: {
+        description: "Description",
+        // howtouse: "How to use",
+        // benefits: "Benefits",
+        reviews: "Reviews",
+        // keyBenefits: "Key Benefits"
+      },
+      ar: {
+        description: "الوصف",
+        // howtouse: "كيفية الاستخدام",
+        // benefits: "الفوائد",
+        reviews: "المراجعات",
+        // keyBenefits: "الفوائد الرئيسية"
+      },
+    };
+    return texts[lang]?.[key] || texts.en[key];
+  };
+
+  // Scroll to section on click
+  const scrollToSection = (ref, section) => {
+    setActiveTab(section);
+    ref?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // Detect active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      // Get viewport height for better threshold calculation
+      const viewportHeight = window.innerHeight;
+      const threshold = viewportHeight * 0.3;
+
+      const descTop =
+        descriptionRef.current?.getBoundingClientRect().top ?? Infinity;
+      const usageTop =
+        usageRef.current?.getBoundingClientRect().top ?? Infinity;
+      const benefitsTop =
+        benefitsRef.current?.getBoundingClientRect().top ?? Infinity;
+      const reviewTop =
+        reviewsRef.current?.getBoundingClientRect().top ?? Infinity;
+
+      // Check which section is currently in view (closest to top within threshold)
+      const sections = [
+        { name: "description", top: descTop, ref: descriptionRef.current },
+        { name: "howtouse", top: usageTop, ref: usageRef.current },
+        { name: "benefits", top: benefitsTop, ref: benefitsRef.current },
+        { name: "reviews", top: reviewTop, ref: reviewsRef.current },
+      ].filter((section) => section.ref); // Only include sections that exist
+
+      // Find the section that's currently most visible
+      let activeSection = "description";
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.top <= threshold) {
+          activeSection = section.name;
+          break;
+        }
+      }
+
+      setActiveTab(activeSection);
     };
 
-    // Scroll to section on click
-    const scrollToSection = (ref, section) => {
-        setActiveTab(section);
-        ref?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Initial check
+    handleScroll();
+
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    // Detect active section on scroll
-    useEffect(() => {
-        const handleScroll = () => {
-            // Get viewport height for better threshold calculation
-            const viewportHeight = window.innerHeight;
-            const threshold = viewportHeight * 0.3;
-            
-            const descTop = descriptionRef.current?.getBoundingClientRect().top ?? Infinity;
-            const usageTop = usageRef.current?.getBoundingClientRect().top ?? Infinity;
-            const benefitsTop = benefitsRef.current?.getBoundingClientRect().top ?? Infinity;
-            const reviewTop = reviewsRef.current?.getBoundingClientRect().top ?? Infinity;
+    window.addEventListener("scroll", throttledHandleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledHandleScroll);
+  }, [reviewable]);
 
-            // Check which section is currently in view (closest to top within threshold)
-            const sections = [
-                { name: 'description', top: descTop, ref: descriptionRef.current },
-                { name: 'howtouse', top: usageTop, ref: usageRef.current },
-                { name: 'benefits', top: benefitsTop, ref: benefitsRef.current },
-                { name: 'reviews', top: reviewTop, ref: reviewsRef.current }
-            ].filter(section => section.ref); // Only include sections that exist
+  console.log(
+    "AR description:",
+    product?.ar_long_description,
+    typeof product?.ar_long_description
+  );
 
-            // Find the section that's currently most visible
-            let activeSection = 'description';
-            
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const section = sections[i];
-                if (section.top <= threshold) {
-                    activeSection = section.name;
-                    break;
-                }
-            }
-
-            setActiveTab(activeSection);
-        };
-
-        // Initial check
-        handleScroll();
-
-        // Throttle scroll events for better performance
-        let ticking = false;
-        const throttledHandleScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    handleScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', throttledHandleScroll);
-    }, [reviewable]);
-
-    return (
-        <section className="mt-[60px] 2xl:mt-[120px] relative">
-            {/* Sticky Nav Buttons */}
-            <div className={`sticky top-16 lg:top-22 z-10 bg-white border-b border-creamline py-4 ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
-                <div className="flex gap-5 2xl:justify-center 2xl:gap-[80px] text-[18px] 2xl:text-[26px] font-[550]">
-                    <button
-                        className={`transition-colors ${activeTab === 'description' ? 'text-primary' : 'text-primaryblack'
-                            } hover:text-primary cursor-pointer`}
-                        onClick={() => scrollToSection(descriptionRef, 'description')}
-                    >
-                        {getText('description')}
-                    </button>
-                    {/* <button
+  return (
+    <section className="mt-[60px] 2xl:mt-[120px] relative">
+      {/* Sticky Nav Buttons */}
+      <div
+        className={`sticky top-16 lg:top-22 z-10 bg-white border-b border-creamline py-4 ${
+          lang === "ar" ? "rtl" : "ltr"
+        }`}
+      >
+        <div className={`flex gap-5 2xl:justify-center 2xl:gap-[80px] text-[18px] 2xl:text-[26px] font-[550] ${lang === "ar" ? "flex-row-reverse" : ""}`}>
+          <button
+            className={`transition-colors ${
+              activeTab === "description" ? "text-primary" : "text-primaryblack"
+            } hover:text-primary cursor-pointer`}
+            onClick={() => scrollToSection(descriptionRef, "description")}
+          >
+            {getText("description")}
+          </button>
+          {/* <button
                         className={`transition-colors ${activeTab === 'howtouse' ? 'text-primary' : 'text-primaryblack'
                             } hover:text-primary cursor-pointer`}
                         onClick={() => scrollToSection(usageRef, 'howtouse')}
                     >
                         {getText('howtouse')}
                     </button> */}
-                    {/* <button
+          {/* <button
                         className={`transition-colors ${activeTab === 'benefits' ? 'text-primary' : 'text-primaryblack'
                             } hover:text-primary cursor-pointer`}
                         onClick={() => scrollToSection(benefitsRef, 'benefits')}
                     >
                         {getText('benefits')}
                     </button> */}
-                    <button
-                        className={`transition-colors ${activeTab === 'reviews' ? 'text-primary' : 'text-primaryblack'
-                            } hover:text-primary cursor-pointer`}
-                        onClick={() => scrollToSection(reviewsRef, 'reviews')}
-                    >
-                        {getText('reviews')}
-                    </button>
-                </div>
-            </div>
+          <button
+            className={`transition-colors ${
+              activeTab === "reviews" ? "text-primary" : "text-primaryblack"
+            } hover:text-primary cursor-pointer`}
+            onClick={() => scrollToSection(reviewsRef, "reviews")}
+          >
+            {getText("reviews")}
+          </button>
+        </div>
+      </div>
 
-            {/* Related details */}
-            <div className={`text-[18px] ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
-                {/* Description */}
-                <div ref={descriptionRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash">
-                    <p className="font-[550]">{getText('keyBenefits')}</p> <br />
-                    <div 
-                        id='preview' 
-                        className="text-[16px] 2xl:text-[18px]" 
-                        dangerouslySetInnerHTML={{ __html: lang === 'ar' ? he.decode(product?.long_description_ar) || he.decode(product?.long_description) : he.decode(product?.long_description) }} 
-                    />
-                </div>
+      {/* Related details */}
+      <div className={`text-[18px] ${lang === "ar" ? "rtl" : "ltr"}`}>
+        {/* Description */}
+        <div
+          ref={descriptionRef}
+          className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash"
+        >
+          <p className="font-[550]">{getText("keyBenefits")}</p> <br />
+          <div
+            id="preview"
+            className={`text-[16px] 2xl:text-[18px] longDescription ${
+              lang === "ar" ? "rtl text-right" : "ltr text-left"
+            } text-[#38444f]`}
+            dir={lang === "ar" ? "rtl" : "ltr"}
+            dangerouslySetInnerHTML={{
+              __html:
+                lang === "ar"
+                  ? he.decode(product?.ar_long_description) ||
+                    he.decode(product?.long_description)
+                  : he.decode(product?.long_description),
+            }}
+          />
+        </div>
 
-                {/* How to use */}
-                {/* <div ref={usageRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] border-t border-creamline mt-[25px] 2xl:mt-[50px]">
+        {/* How to use */}
+        {/* <div ref={usageRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] border-t border-creamline mt-[25px] 2xl:mt-[50px]">
                     <p className="font-[550]">{getText('howtouse')}</p> <br />
                     <div 
                         id='preview' 
@@ -156,8 +190,8 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
                     />
                 </div> */}
 
-                {/* Benefits */}
-                {/* <div ref={benefitsRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] border-t border-creamline mt-[25px] 2xl:mt-[50px]">
+        {/* Benefits */}
+        {/* <div ref={benefitsRef} className="scroll-mt-[128px] lg:scroll-mt-[163px] text-ash py-[25px] 2xl:py-[50px] border-t border-creamline mt-[25px] 2xl:mt-[50px]">
                     <p className="font-[550]">{getText('benefits')}</p> <br />
                     <div 
                         id='preview' 
@@ -165,16 +199,18 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
                         dangerouslySetInnerHTML={{ __html: lang === 'ar' ? product?.benefits_ar || product?.benefits : product?.benefits }} 
                     />
                 </div> */}
-            </div>
+      </div>
 
-            {/* Review section for regular product */}
-            {
-                reviewable &&
-                <div ref={reviewsRef}>
-                    <ReviewForm variantId={variantId} token={token} productType={productType} />
-                </div>
-            }
-
-        </section>
-    );
+      {/* Review section for regular product */}
+      {reviewable && (
+        <div ref={reviewsRef}>
+          <ReviewForm
+            variantId={variantId}
+            token={token}
+            productType={productType}
+          />
+        </div>
+      )}
+    </section>
+  );
 }

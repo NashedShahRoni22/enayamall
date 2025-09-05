@@ -33,3 +33,54 @@
   font-family: UAESymbol;
   font-weight: 400;
 }
+
+.longDescription ul {
+  list-style: disc !important;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+.longDescription ol {
+  list-style: decimal !important;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+.longDescription p, .longDescription li {
+  font-size: 16px;
+}
+
+.longDescription h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+.longDescription h3 strong {
+  font-weight: 700 !important;
+}
+
+.longDescription hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  position: relative;
+  margin: 2rem 0;
+}
+
+.longDescription.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.longDescription.rtl ul {
+  list-style-position: outside; 
+  padding-right: 40px;        
+  padding-left: 0;
+}
+
+.longDescription.rtl ol {
+  list-style-position: outside; 
+  padding-right: 40px;
+  padding-left: 0;
+  counter-reset: item;
+}

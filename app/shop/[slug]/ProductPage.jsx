@@ -14,7 +14,7 @@ import RelatedProducts from "@/app/components/products/RelatedProducts";
 import ImageModal from "@/app/components/products/ImageModal";
 
 export default function ProductPage() {
-    const { token } = useAppContext();
+    const { token, lang } = useAppContext();
     const params = useParams();
     const slug = params?.slug;
     const searchParams = useSearchParams();
@@ -74,7 +74,7 @@ export default function ProductPage() {
             <Container>
                 <section className="py-[40px]">
                     {/* product information here  */}
-                    <div className="flex flex-col gap-[20px] md:flex-row md:gap-[40px] 2xl:gap-[80px]">
+                    <div className={`flex flex-col gap-[20px] md:flex-row md:gap-[40px] ${lang === 'ar' ? 'md:flex-row-reverse' : ''}`}>
                         {/* product image */}
                         <div className="w-full md:w-1/2 md:sticky md:top-26">
                             <ProductImageGallery
@@ -114,7 +114,7 @@ export default function ProductPage() {
 
                     {/* customers reviews here  */}
                     <div className="mt-[50px]">
-                        <p className='text-primaryblack text-[18px] 2xl:text-[20px] font-[650]'>Trusted by Skincare Lovers</p>
+                        {/* <p className='text-primaryblack text-[18px] 2xl:text-[20px] font-[650]'>Trusted by Skincare Lovers</p> */}
                         <div className="mt-[50px] ">
                             {
                                 product?.reviews?.length > 0 ?
@@ -124,7 +124,7 @@ export default function ProductPage() {
                                         ))}
                                     </div>
                                     :
-                                    <p className="text-button">No reviews yet</p>
+                                    <p className="text-xl text-primaryblack">No reviews yet</p>
                             }
                         </div>
                     </div>

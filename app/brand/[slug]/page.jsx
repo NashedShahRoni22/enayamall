@@ -262,7 +262,7 @@ export default function page() {
                 <Categories lang={lang} categories={categories} parentCategorytIds={parentCategorytIds} setParentCategorytIds={setParentCategorytIds} childCategoryId={childCategoryId} setChildCategoryId={setChildCategoryId} />
 
                 {/* brands */}
-                <Brands lang={lang} brands={brands} brandIds={brandIds} setBrandIds={setBrandIds} />
+                {/* <Brands lang={lang} brands={brands} brandIds={brandIds} setBrandIds={setBrandIds} /> */}
               </div>
             </div>
 

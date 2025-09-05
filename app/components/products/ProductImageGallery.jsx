@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
+import { useAppContext } from '@/app/context/AppContext';
 
 export default function ProductImageGallery({
     product,
@@ -19,6 +20,7 @@ export default function ProductImageGallery({
     const [activeIndex, setActiveIndex] = useState(0);
     const mainSwiperRef = useRef(null);
     const thumbsSwiperRef = useRef(null);
+    const { lang } = useAppContext();
     
     // Handle image selection
     const handleImageSelect = (selectedImage, index) => {
@@ -82,7 +84,7 @@ export default function ProductImageGallery({
     }, [imageModal.isOpen]);
 
     return (
-        <section className="flex flex-col md:flex-row gap-4 md:gap-6">
+        <section className={`flex flex-col md:flex-row gap-4 md:gap-6 ${lang === 'ar' ? 'md:flex-row-reverse' : ''}`}>
             {
                 product?.main_image?.length > 0 ?
                     <>

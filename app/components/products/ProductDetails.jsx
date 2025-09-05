@@ -194,12 +194,12 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                 {lang === 'en' ? product?.name : product?.ar_name || product?.name}
             </h1>
 
-            <div className="text-[16px] 2xl:text-[18px] my-[20px] 2xl:my-[30px]">
+            {/* <div className="text-[16px] 2xl:text-[18px] my-[20px] 2xl:my-[30px]">
                 <p className="font-[550] text-primaryblack">{getText('aboutThisItem')}</p> <br />
                 <p className="text-ash 2xl:w-[70%]" dangerouslySetInnerHTML={{ 
                     __html: lang === 'en' ? product?.short_description : product?.ar_short_description || product?.short_description 
                 }} />
-            </div>
+            </div> */}
 
             {/* ratings */}
             {

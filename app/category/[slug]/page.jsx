@@ -225,12 +225,12 @@ export default function page() {
                 />
 
                 {/* brands */}
-                <Brands
+                {/* <Brands
                   lang={lang}
                   brands={brands}
                   brandIds={brandIds}
                   setBrandIds={setBrandIds}
-                />
+                /> */}
               </div>
             </div>
 
