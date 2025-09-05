@@ -23,7 +23,7 @@ export default function Category() {
     return (
         <Container>
             <div className="py-10">
-                <h5 className="text-[24px] 2xl:text-[36px] text-primarymagenta text-center mb-8">
+                <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center mb-8">
                 {/* Flash Deals You'll Love */}
                     <span className="font-semibold text-primary">Most Popular</span> Categories
                 </h5>
@@ -46,7 +46,7 @@ export default function Category() {
                         breakpoints={{
                             640: {
                                 slidesPerView: 4,
-                                spaceBetween: 20,
+                                spaceBetween: 16,
                             },
                             768: {
                                 slidesPerView: 6,
@@ -66,7 +66,7 @@ export default function Category() {
                                         <div className='flex justify-center'>
                                             <Image src={category?.icon} alt={category?.name} height={130} width={130} loading='eager' />
                                         </div>
-                                        <p className='text-center mt-2.5 text-lg font-medium'>
+                                        <p className='text-center mt-2.5 text-md font-medium'>
                                             {lang === "en" ? category?.name : category?.ar_name}
                                         </p>
                                     </Link>

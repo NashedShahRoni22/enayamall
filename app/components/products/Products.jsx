@@ -12,14 +12,7 @@ export default function Products({
     if (isLoading) return <VerticalCardLoadingScreen value={6} />;
     if (error) return <div>Error: {error.message}</div>;
 
-    const gridColsClass = {
-        2: '2xl:grid-cols-2',
-        3: '2xl:grid-cols-3',
-        4: '2xl:grid-cols-4',
-        5: '2xl:grid-cols-5',
-        6: '2xl:grid-cols-6',
-    }[gridCount] || '2xl:grid-cols-4';
-    const verticalGridClasses = `grid grid-cols-2 md:grid-cols-3 ${gridColsClass} gap-x-[16px] gap-y-[16px]`;
+    const verticalGridClasses = `grid grid-cols-2 md:grid-cols-4 gap-x-[16px] gap-y-[16px]`;
     return (
         <>
             {

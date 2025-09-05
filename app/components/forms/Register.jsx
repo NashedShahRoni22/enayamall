@@ -186,7 +186,7 @@ export default function Register() {
 
   return (
     <div>
-      <h5 className='text-[24px] sm:text-[26px] text-primarymagenta'>
+      <h5 className='text-[24px] sm:text-[26px] text-primaryblack'>
         {
           location === "/affiliate" ?
             "Join us as a affiliate"
@@ -203,8 +203,8 @@ export default function Register() {
       <div className='mt-[50px]'>
         {/* tab buttons  */}
         <div className='flex gap-[50px]'>
-          {/* <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>Sign up with OTP</button> */}
-          <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>Sign up with Password</button>
+          {/* <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primaryblack"}`}>Sign up with OTP</button> */}
+          <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-primary border-b-2 border-primary font-[650]" : "text-primaryblack"}`}>Sign up with Password</button>
         </div>
         {/* tab forms */}
         <div className='mt-[25px] sm:mt-[50px]'>
@@ -228,7 +228,7 @@ export default function Register() {
                   placeholder="Enter name"
                   value={signUpForm.name}
                   onChange={handleChange}
-                  className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.name ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                  className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.name ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                 />
 
                 {/* Email */}
@@ -246,7 +246,7 @@ export default function Register() {
                   placeholder="Enter email address"
                   value={signUpForm.email}
                   onChange={handleChange}
-                  className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                  className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                 />
 
                 {/* Phone */}
@@ -265,7 +265,7 @@ export default function Register() {
                   value={signUpForm.phone}
                   onChange={handlePhoneChange}
                   maxLength="11"
-                  className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                  className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                 />
 
                 {/* Password */}
@@ -284,7 +284,7 @@ export default function Register() {
                     placeholder="Enter your password"
                     value={signUpForm.password}
                     onChange={handleChange}
-                    className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
+                    className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                   />
                   <div onClick={togglePasswordVisibility} className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                     {showPassword ? <FiEyeOff size={24} color="#ccc" /> : <FiEye size={24} color="#ccc" />}
@@ -307,7 +307,7 @@ export default function Register() {
                     placeholder="Retype your password"
                     value={signUpForm.retype_password}
                     onChange={handleChange}
-                    className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.retype_password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
+                    className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.retype_password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                   />
                   <div onClick={togglePasswordVisibility} className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                     {showPassword ? <FiEyeOff size={24} color="#ccc" /> : <FiEye size={24} color="#ccc" />}
@@ -330,7 +330,7 @@ export default function Register() {
                       placeholder="Referral code"
                       value={signUpForm.code}
                       onChange={handleChange}
-                      className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline mt-[20px] w-full`}
+                      className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline mt-[20px] w-full`}
                     />
                   </div>
                 }
@@ -347,7 +347,7 @@ export default function Register() {
               </form>
           }
 
-          <p className='text-primarymagenta mt-[20px] sm:mt-[40px]'>
+          <p className='text-primaryblack mt-[20px] sm:mt-[40px]'>
             Already have an account?
             <Link href={"/login"} className='text-primary hover:underline ml-2'>
               {

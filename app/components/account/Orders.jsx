@@ -18,11 +18,11 @@ export default function Orders({ orders }) {
                     </div>
                     <div>
                       <p className="text-button text-[14px] lg:text-[18px]">Date: {order?.ordered_at}</p>
-                      <p className="text-[16px] lg:text-[20px] mt-[20px] font-[650]"> <span className="text-primarymagenta">Status:</span> <span className="text-customgreen">{order?.status}</span> </p>
+                      <p className="text-[16px] lg:text-[20px] mt-[20px] font-[650]"> <span className="text-primaryblack">Status:</span> <span className="text-customgreen">{order?.status}</span> </p>
                     </div>
                   </div>
                   {/* products here  */}
-                  <div className="text-primarymagenta mt-[40px]">
+                  <div className="text-primaryblack mt-[40px]">
                     <p className="text-[16px] lg:text-[20px] font-[650]">Product</p>
                     <div className="border-t border-b border-creamline pb-[20px] mt-[8px] mb-[20px]">
                       {
@@ -74,7 +74,7 @@ export default function Orders({ orders }) {
                   </div>
 
                   {/* shipping details here  */}
-                  <div className="mt-[40px] text-primarymagenta flex gap-[20px]">
+                  <div className="mt-[40px] text-primaryblack flex gap-[20px]">
                     <div className="flex-1">
                       <MdHome className="text-primary text-[24px]" />
                     </div>

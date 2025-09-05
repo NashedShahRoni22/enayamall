@@ -190,12 +190,12 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                     className="h-[120px] w-[160px]"
                 />
             </Link>
-            <h1 className="text-primarymagenta text-[20px] 2xl:text-[26px] font-[550]">
+            <h1 className="text-primaryblack text-[20px] 2xl:text-[26px] font-[550]">
                 {lang === 'en' ? product?.name : product?.ar_name || product?.name}
             </h1>
 
             <div className="text-[16px] 2xl:text-[18px] my-[20px] 2xl:my-[30px]">
-                <p className="font-[550] text-primarymagenta">{getText('aboutThisItem')}</p> <br />
+                <p className="font-[550] text-primaryblack">{getText('aboutThisItem')}</p> <br />
                 <p className="text-ash 2xl:w-[70%]" dangerouslySetInnerHTML={{ 
                     __html: lang === 'en' ? product?.short_description : product?.ar_short_description || product?.short_description 
                 }} />
@@ -207,7 +207,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                 <div className="flex gap-[30px]">
                     <div className="flex gap-[6px] items-center">
                         {renderStars()}
-                        <p className="text-[18px] 2xl:text-[20px] font-[550] text-primarymagenta ml-2">
+                        <p className="text-[18px] 2xl:text-[20px] font-[550] text-primaryblack ml-2">
                             ( {product?.ratings?.rating || 0} )
                         </p>
                     </div>
@@ -259,7 +259,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                         product?.variants?.map(pv => (
                             <button
                                 key={pv?.product_variant_id}
-                                className={`border cursor-pointer ${pv?.variant === defaultVarient ? "bg-primary text-white border-primary" : "bg-white text-primarymagenta border-creamline"} w-[100px] 2xl:w-[130px] h-[50px] 2xl:h-[60px] rounded-[10px]`}
+                                className={`border cursor-pointer ${pv?.variant === defaultVarient ? "bg-primary text-white border-primary" : "bg-white text-primaryblack border-creamline"} w-[100px] 2xl:w-[130px] h-[50px] 2xl:h-[60px] rounded-[10px]`}
                                 onClick={() => handleVariantChange(pv?.variant)}
                             >
                                 {lang === 'en' ? pv?.variant : pv?.ar_variant || pv?.variant}
@@ -273,16 +273,16 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
             <div className="flex gap-[10px] 2xl:gap-[20px] items-center">
                 {/* quantity selector */}
                 <div className="flex items-center gap-[20px] 2xl:gap-[30px] px-[20px] rounded-[10px] text-[18px] 2xl:text-[22px] justify-center bg-white border border-creamline h-[50px] 2xl:h-[60px] w-2/5">
-                    <button disabled={defaultQuantity === 1} className="cursor-pointer text-primarymagenta hover:bg-creamline hover:text-primary rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity - 1)}>
+                    <button disabled={defaultQuantity === 1} className="cursor-pointer text-primaryblack hover:bg-creamline hover:text-primary rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity - 1)}>
                         <AiOutlineMinus />
                     </button>
                     <input
                         min={1}
                         value={defaultQuantity}
                         readOnly
-                        className="w-8 text-center bg-transparent focus:outline-none text-primarymagenta"
+                        className="w-8 text-center bg-transparent focus:outline-none text-primaryblack"
                     />
-                    <button className="cursor-pointer text-primarymagenta hover:bg-creamline hover:text-primary rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity + 1)}>
+                    <button className="cursor-pointer text-primaryblack hover:bg-creamline hover:text-primary rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity + 1)}>
                         <GoPlus />
                     </button>
                 </div>
@@ -291,7 +291,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                 <button
                     disabled={stock === 0}
                     onClick={() => handleAddToCart(product)}
-                    className={`cursor-pointer disabled:cursor-not-allowed flex-1 h-[50px] 2xl:h-[60px] rounded-[10px] bg-light disabled:bg-button hover:bg-primary text-primarymagenta disabled:text-white hover:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
+                    className={`cursor-pointer disabled:cursor-not-allowed flex-1 h-[50px] 2xl:h-[60px] rounded-[10px] bg-light disabled:bg-button hover:bg-primary text-primaryblack disabled:text-white hover:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
                     {stock > 0 ? getText('addToCart') : getText('outOfStock')}
                 </button>
 
@@ -311,7 +311,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                     <button
                         disabled={stock === 0}
                         onClick={() => handleAddToCart(product, "now")}
-                        className={`cursor-pointer disabled:cursor-not-allowed flex-1 w-full h-[50px] 2xl:h-[60px] rounded-[10px] bg-primary disabled:bg-button hover:bg-creamline text-white disabled:text-white hover:text-primarymagenta ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
+                        className={`cursor-pointer disabled:cursor-not-allowed flex-1 w-full h-[50px] 2xl:h-[60px] rounded-[10px] bg-primary disabled:bg-button hover:bg-creamline text-white disabled:text-white hover:text-primaryblack ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
                         {stock > 0 ? getText('buyItNow') : getText('outOfStock')}
                     </button>
                 </div>
@@ -344,13 +344,13 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
 
             {/* product other informations  */}
             <div className="mt-[20px] 2xl:mt-[40px] text-[16px] 2xl:text-[18px]">
-                <p><span className="text-primarymagenta font-[550]">{getText('productCode')}</span> <span className="text-ash">{product?.product_code}</span> </p>
+                <p><span className="text-primaryblack font-[550]">{getText('productCode')}</span> <span className="text-ash">{product?.product_code}</span> </p>
                 {
-                    stock > 0 && <p className="mt-[20px]"><span className="text-primarymagenta font-[550]">{getText('availableStock')}</span> <span className="text-ash">{stock} {getText('items')}</span> </p>
+                    stock > 0 && <p className="mt-[20px]"><span className="text-primaryblack font-[550]">{getText('availableStock')}</span> <span className="text-ash">{stock} {getText('items')}</span> </p>
                 }
 
                 <p className="mt-[20px]">
-                    <span className="text-primarymagenta font-[550]">{getText('categories')}</span>{" "}
+                    <span className="text-primaryblack font-[550]">{getText('categories')}</span>{" "}
                     {product?.other_categories?.map((pc, index, array) => (
                         <Link href={`/category/${pc?.slug}`} className="text-ash hover:text-secondary" key={index}>
                             {lang === 'en' ? pc?.name : pc?.ar_name || pc?.name}
@@ -361,7 +361,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                 </p>
 
                 <p className="mt-[20px]">
-                    <span className="text-primarymagenta font-[550]">{getText('tags')}</span>{" "}
+                    <span className="text-primaryblack font-[550]">{getText('tags')}</span>{" "}
                     {product?.tags?.map((pt, index, array) => (
                         <span className="text-ash capitalize" key={index}>
                             {lang === 'en' ? pt : (product?.ar_tags && product?.ar_tags[index]) || pt}
@@ -373,7 +373,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
             </div>
 
             {/* benefit card  */}
-            {/* <div className="text-primarymagenta border border-creamline p-[20px] mt-[56px] relative rounded-[5px]">
+            {/* <div className="text-primaryblack border border-creamline p-[20px] mt-[56px] relative rounded-[5px]">
                 <p className="absolute -top-[14px] left-1/2 -translate-x-1/2 bg-white px-[16px] text-[16px] 2xl:text-[18px] text-center">
                     {getText('benefitsTitle')}
                 </p>

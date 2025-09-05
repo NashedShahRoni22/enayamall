@@ -110,14 +110,14 @@ export default function CartTableRow({
                     )
                 }
                 disabled={item?.quantity === 1}
-                className="cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-primarymagenta p-2"
+                className="cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-primaryblack p-2"
               >
                 <AiOutlineMinus className="text-[16px] lg:text-[18px]" />
               </button>
               <input
                 value={item.quantity}
                 readOnly
-                className="w-6 text-center bg-transparent font-semibold focus:outline-none text-primarymagenta text-[16px] lg:text-[18px]"
+                className="w-6 text-center bg-transparent font-semibold focus:outline-none text-primaryblack text-[16px] lg:text-[18px]"
               />
               <button
                 onClick={() =>
@@ -137,7 +137,7 @@ export default function CartTableRow({
                       item?.combo_id && "combo"
                     )
                 }
-                className="cursor-pointer text-primarymagenta p-2"
+                className="cursor-pointer text-primaryblack p-2"
               >
                 <GoPlus className="text-[16px] lg:text-[18px]" />
               </button>
@@ -173,7 +173,7 @@ export default function CartTableRow({
       {/* {
         item?.items?.length > 0 &&
 
-        <div className='px-4 py-2 mt-2 rounded-[10px] text-primarymagenta bg-white'>
+        <div className='px-4 py-2 mt-2 rounded-[10px] text-primaryblack bg-white'>
           <button onClick={() => setShowCombo(!showCombo)} className='cursor-pointer w-full flex justify-between items-center text-[14px]'>
             Show Items
             {

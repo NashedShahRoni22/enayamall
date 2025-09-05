@@ -21,7 +21,7 @@ export default function TestimonialCard({ testimonial }) {
       <div className="w-full h-[1px] bg-creamline mt-[14px] mb-[20px]"></div>
       <div className="">
         <p className="text-[14px] text-button">{testimonial?.rating_title}</p>
-        <p className="text-[14px] text-primarymagenta mt-[8px] leading-[21px]">
+        <p className="text-[14px] text-primaryblack mt-[8px] leading-[21px]">
           {testimonial?.review}
         </p>
 

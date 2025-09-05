@@ -37,7 +37,7 @@ export default function Brands() {
             <p className="text-[18px] 2xl:text-[24px] text-button text-center lg:text-left">
               Just In
             </p>
-            <h5 className="mt-[20px] lg:mt-[35px] text-[30px] 2xl:text-[40px] text-primarymagenta text-center lg:text-left">
+            <h5 className="mt-[20px] lg:mt-[35px] text-[30px] 2xl:text-[40px] text-primaryblack text-center lg:text-left">
               <span className="font-[750] text-white">Authentic Brands</span> for You
             </h5>
           </motion.div>
@@ -51,7 +51,7 @@ export default function Brands() {
               className={`cursor-pointer flex gap-[10px] items-center transition-colors duration-200 ${
                 active === 2
                   ? "bg-natural text-white"
-                  : "bg-white text-primarymagenta hover:bg-secondary"
+                  : "bg-white text-primaryblack hover:bg-secondary"
               } py-[10px] sm:py-[15px] px-[10px] sm:px-[20px] rounded-[5px]`}
             >
               <Image
@@ -70,7 +70,7 @@ export default function Brands() {
               className={`cursor-pointer flex gap-[10px] items-center transition-colors duration-200 ${
                 active === 1
                   ? "bg-natural text-white"
-                  : "bg-white text-primarymagenta hover:bg-secondary"
+                  : "bg-white text-primaryblack hover:bg-secondary"
               } py-[10px] sm:py-[15px] px-[10px] sm:px-[20px] rounded-[5px]`}
             >
               <Image

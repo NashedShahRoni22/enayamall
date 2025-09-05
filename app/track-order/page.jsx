@@ -122,7 +122,7 @@ export default function Page() {
     <section>
       {/* <PageHeader title="Track order" from="home" to="track-order" /> */}
       <Container>
-        <div className='pt-[90px] pb-[120px] lg:w-1/2 lg:mx-auto text-primarymagenta min-h-[80vh]'>
+        <div className='pt-[90px] pb-[120px] lg:w-1/2 lg:mx-auto text-primaryblack min-h-[80vh]'>
           <p className='text-center text-[20px]'>
             To track your order please enter your Order ID in the box below <br />
             and press the "Track" button.
@@ -158,7 +158,7 @@ export default function Page() {
             value={orderId}
             onChange={(e) => setOrderId(e.target.value)}
             placeholder="Enter your order ID"
-            className="w-full px-[10px] sm:px-[20px] py-[10px] border border-creamline rounded-xl focus:outline-none mt-[20px] text-[16px] text-primarymagenta"
+            className="w-full px-[10px] sm:px-[20px] py-[10px] border border-creamline rounded-xl focus:outline-none mt-[20px] text-[16px] text-primaryblack"
           />
 
           {/* Button */}
@@ -172,7 +172,7 @@ export default function Page() {
             }`}
           >
             {loading ? (
-              <LoadingSvg label="Track Order" color="text-primarymagenta" />
+              <LoadingSvg label="Track Order" color="text-primaryblack" />
             ) : (
               "Track Order"
             )}

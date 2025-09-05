@@ -65,7 +65,7 @@ const UserProfilePhoto = ({ userPhoto, setUserPhoto, previewPhoto, setPreviewPho
             />
             :
             <div className='size-[200px] flex justify-center items-center bg-creamline rounded-full'>
-              <BiUser className='text-[100px] text-primarymagenta' />
+              <BiUser className='text-[100px] text-primaryblack' />
             </div>
 
         }

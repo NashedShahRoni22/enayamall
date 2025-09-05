@@ -16,7 +16,7 @@ export default function SkinTypes({ skinTypes, skinTypeIds, setSkinTypeIds, }) {
         }
     };
     return (
-        <div className="p-[20px] flex flex-col gap-[20px] text-primarymagenta rounded-[5px] border border-creamline">
+        <div className="p-[20px] flex flex-col gap-[20px] text-primaryblack rounded-[5px] border border-creamline">
 
             <div className="flex justify-between items-center">
                 <p className="text-[20px]">Skin Type</p>
@@ -25,9 +25,9 @@ export default function SkinTypes({ skinTypes, skinTypeIds, setSkinTypeIds, }) {
                 }} className="cursor-pointer">
                     {
                         !show ?
-                            <FaChevronDown className="text-primarymagenta" />
+                            <FaChevronDown className="text-primaryblack" />
                             :
-                            <FaChevronUp className="text-primarymagenta" />
+                            <FaChevronUp className="text-primaryblack" />
                     }
                 </button>
             </div>
@@ -35,7 +35,7 @@ export default function SkinTypes({ skinTypes, skinTypeIds, setSkinTypeIds, }) {
             {
                 show &&
                 <>
-                    <div className="h-[1px] w-full bg-primarymagenta"></div>
+                    <div className="h-[1px] w-full bg-primaryblack"></div>
                     {/* brands option will be render here  */}
                     <div className="flex flex-col">
                         {
@@ -50,7 +50,7 @@ export default function SkinTypes({ skinTypes, skinTypeIds, setSkinTypeIds, }) {
                                                 ?
                                                 <MdCheckBox className="size-[20px] text-natural" />
                                                 :
-                                                <MdCheckBoxOutlineBlank className="size-[20px] text-primarymagenta" />
+                                                <MdCheckBoxOutlineBlank className="size-[20px] text-primaryblack" />
                                         }
                                     </span>
                                     <p className={skinTypeIds.includes(skin?.id) ? "text-natural" : ""}>

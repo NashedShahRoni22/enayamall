@@ -24,7 +24,7 @@ const BrandBannerDisplay = ({ brands, brandIds, setBrandIds, lang }) => {
     <div className={`flex justify-between items-center gap-4 mb-6 ${lang == "en" ? "flex-row" : "flex-row-reverse"}`}>
       <Image src={selectedBrands[0]?.logo} alt={selectedBrands[0]?.name} height={200} width={200} className="hidden lg:block" />
       <div>
-        <Image src={lang == "en" ? selectedBrands[0]?.brand_image : selectedBrands[0]?.ar_brand_image} alt={selectedBrands[0]?.name} height={500} width={1070} />
+        <Image src={lang == "en" ? selectedBrands[0]?.brand_image : selectedBrands[0]?.ar_brand_image} alt={selectedBrands[0]?.name} height={220} width={1070} />
       </div>
     </div>
   );

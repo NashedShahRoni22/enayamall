@@ -92,7 +92,7 @@ export default function Page() {
                                             key={index}
                                             className={`cursor-pointer w-full flex items-center gap-[10px] px-[16px] py-[8px] border-t-2 border-white transition-colors duration-200 ${isActive
                                                 ? "text-primary"
-                                                : "text-primarymagenta hover:text-primary"
+                                                : "text-primaryblack hover:text-primary"
                                                 }`}
                                         >
                                             <IconComponent
@@ -130,12 +130,12 @@ export default function Page() {
                                 />
                             ) : (
                                 <div className='size-[100px] flex justify-center items-center bg-white rounded-full'>
-                                    <BiUser className='text-[50px] text-primarymagenta' />
+                                    <BiUser className='text-[50px] text-primaryblack' />
                                 </div>
                             )}
 
                             <div className='flex flex-col items-start gap-[20px]'>
-                                <p className='text-[20px] text-primarymagenta'>{address?.name}</p>
+                                <p className='text-[20px] text-primaryblack'>{address?.name}</p>
                                 <button onClick={() => setActiveTab("Profile")} className='text-[14px] text-primary cursor-pointer'>
                                     Edit profile
                                 </button>
@@ -160,7 +160,7 @@ export default function Page() {
                                             }
                                         }}
                                         key={index}
-                                        className={`cursor-pointer w-full flex items-center gap-[20px] py-[20px] border-t-2 border-white transition-colors duration-200 ${isActive ? "text-primary" : "text-primarymagenta hover:text-primary"
+                                        className={`cursor-pointer w-full flex items-center gap-[20px] py-[20px] border-t-2 border-white transition-colors duration-200 ${isActive ? "text-primary" : "text-primaryblack hover:text-primary"
                                             }`}
                                     >
                                         <IconComponent size={20} />

@@ -1,5 +1,5 @@
 "use client";
-import { Heart, Star, ShoppingCart, Eye } from "lucide-react";
+import { Heart, Star, ShoppingBag } from "lucide-react";
 import productImg from "@/public/productImg.jpeg";
 import Image from "next/image";
 import { useAppContext } from "@/app/context/AppContext";
@@ -123,7 +123,7 @@ export default function VerticalProductCard({ p }) {
               alt={productName || "Product Image"}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-contain p-4 group-hover:scale-110 transition-transform duration-700 ease-out"
+              className="object-contain p-8 pb-0 group-hover:scale-110 transition-transform duration-700 ease-out"
             />
 
             {/* Gradient Overlay on Hover */}
@@ -171,9 +171,9 @@ export default function VerticalProductCard({ p }) {
               <button
                 disabled={p?.stock === 0}
                 onClick={(e) => handleAddToCart(e, p)}
-                className="w-full py-3 px-4 rounded-xl font-medium bg-primary text-white transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-2 px-4 rounded-lg text-sm bg-primary text-white transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
               >
-                <ShoppingCart size={16} />
+                <ShoppingBag size={16} />
                 {p?.stock > 0 ? t.addToCart : t.outOfStock}
               </button>
             </div>
@@ -194,14 +194,14 @@ export default function VerticalProductCard({ p }) {
             </div> */}
 
             {/* Product Name */}
-            <h3 className={`text-primarymagenta mb-0 leading-tight line-clamp-2 min-h-[40px] group-hover:text-primary transition-colors duration-200 ${lang === "ar" ? "text-right" : "text-left"}`}>
+            <span className={`text-primaryblack text-[14px] mb-0 leading-tight line-clamp-2 min-h-[36px] group-hover:text-primary transition-colors duration-200 ${lang === "ar" ? "text-right" : "text-left"}`}>
               {productName}
               {variantName && (
                 <span className="text-gray-600">
                   {lang === "ar" ? ` - ${variantName}` : ` - ${variantName}`}
                 </span>
               )}
-            </h3>
+            </span>
 
             {/* Rating */}
             {p?.ratings?.total_rating > 0 && (
@@ -235,7 +235,7 @@ export default function VerticalProductCard({ p }) {
               >
                 {p?.discount ? (
                   <>
-                    <span className="text-xl font-bold text-primarymagenta flex items-center">
+                    <span className="text-xl font-bold text-primaryblack flex items-center">
                       <span className="dirham-symbol text-[17px] mr-1">ê</span>{" "}
                       {p?.discount?.discount_price ?? "0.00"}
                     </span>
@@ -248,14 +248,14 @@ export default function VerticalProductCard({ p }) {
                     </span>
                   </>
                 ) : (
-                  <span className="text-xl font-bold text-primarymagenta flex items-center min-h-[48px]">
+                  <span className="text-xl font-bold text-primaryblack flex items-center min-h-[48px]">
                     <span className="dirham-symbol text-[17px] mr-1">ê</span>{" "}
                     {p?.price ?? "0.00"}
                   </span>
                 )}
               </div>
               {/* Express delivery */}
-              {/* {p?.is_express && (
+              {p?.is_express && (
                 <div className="relative inline-block">
                   <img
                     src="https://enayamall.com/image/express.png"
@@ -273,16 +273,16 @@ export default function VerticalProductCard({ p }) {
                     Express Delivery
                   </span>
                 </div>
-              )} */}
+              )}
             </div>
 
             {/* Mobile Add to Cart Button */}
             <button
               disabled={p?.stock === 0}
               onClick={(e) => handleAddToCart(e, p)}
-              className="md:hidden w-full bg-creamline text-primarymagenta py-3 px-4 rounded font-medium hover:bg-secondary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="md:hidden w-full bg-creamline text-primaryblack py-2 px-4 rounded font-medium hover:bg-secondary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              <ShoppingCart size={16} />
+              <ShoppingBag size={16} />
               {p?.stock > 0 ? t.addToCart : t.outOfStock}
             </button>
           </div>

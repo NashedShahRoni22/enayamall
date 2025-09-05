@@ -395,7 +395,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     {/* address form  */}
                     <div>
                         <div className="flex justify-between items-center">
-                            <p className="text-[18px] md:text-[20px] font-[650] text-primarymagenta">{t.shippingDetails}</p>
+                            <p className="text-[18px] md:text-[20px] font-[650] text-primaryblack">{t.shippingDetails}</p>
                             <button
                                 onClick={handleCancelForm}
                                 className="px-[16px] py-[8px] bg-button text-white rounded-[10px] cursor-pointer"
@@ -420,7 +420,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                         name="fullName"
                                         value={formData.fullName}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.fullName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta`}
+                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.fullName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
                                     />
                                 </div>
 
@@ -437,7 +437,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                         name="mobileNumber"
                                         value={formData.mobileNumber}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.mobileNumber ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta`}
+                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.mobileNumber ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
                                     />
                                 </div>
                             </div>
@@ -468,7 +468,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             name={field.name}
                                             value={formData[field.name]}
                                             onChange={handleChange}
-                                            className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors[field.name] ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta`}
+                                            className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors[field.name] ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
                                         />
                                     </div>
                                 ))}
@@ -486,7 +486,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             value={selectedDistrictId || ""}
                                             onChange={handleDistrictChange}
                                             disabled={isDistrictsLoading}
-                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.district ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta bg-white`}
+                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.district ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack bg-white`}
                                         >
                                             <option value="">
                                                 {isDistrictsLoading ? t.loadingDistricts : t.selectDistrict}
@@ -514,7 +514,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             value={selectedCityId || ""}
                                             onChange={handleCityChange}
                                             disabled={!selectedDistrictId || isCitiesLoading}
-                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.city ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta bg-white`}
+                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.city ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack bg-white`}
                                         >
                                             <option value="">
                                                 {!selectedDistrictId
@@ -544,7 +544,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                     name="additionalAddress"
                                     value={formData.additionalAddress}
                                     onChange={handleChange}
-                                    className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primarymagenta"
+                                    className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
                                     rows={3}
                                 />
                             </div>
@@ -556,12 +556,12 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                         onClick={handleAddAddress}
                                         disabled={loading}
                                         className={`py-[12px] text-[18px] w-full ease-linear duration-300 font-medium rounded-md cursor-pointer ${loading
-                                            ? 'bg-creamline text-primarymagenta cursor-not-allowed'
+                                            ? 'bg-creamline text-primaryblack cursor-not-allowed'
                                             : 'bg-primary text-white cursor-pointer'
                                             }`}
                                     >
                                         {
-                                            loading ? <LoadingSvg label={t.savingAddress} color="text-primarymagenta" /> : t.saveAddress
+                                            loading ? <LoadingSvg label={t.savingAddress} color="text-primaryblack" /> : t.saveAddress
                                         }
                                     </button>
                                 ) : (
@@ -569,12 +569,12 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                         onClick={() => handleUpdateAddress(editableAddress.id)}
                                         disabled={loading}
                                         className={`py-[12px] text-[18px] w-full ease-linear duration-300 font-medium rounded-md cursor-pointer transition ${loading
-                                            ? 'bg-creamline text-primarymagenta cursor-not-allowed'
+                                            ? 'bg-creamline text-primaryblack cursor-not-allowed'
                                             : 'bg-primary text-white cursor-pointer'
                                             }`}
                                     >
                                         {
-                                            loading ? <LoadingSvg label={t.updating} color="text-primarymagenta" /> : t.updateAddress
+                                            loading ? <LoadingSvg label={t.updating} color="text-primaryblack" /> : t.updateAddress
                                         }
                                     </button>
                                 )}
@@ -588,7 +588,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     <div className="bg-creamline  p-[20px] rounded-[10px]">
                         {/* add new address button  */}
                         <div className="flex justify-between items-center">
-                            <p className="text-[18px] md:text-[20px] text-primarymagenta font-[650]">{t.shippingDetails}</p>
+                            <p className="text-[18px] md:text-[20px] text-primaryblack font-[650]">{t.shippingDetails}</p>
                             <button
                                 onClick={() => {
                                     setEditableAddress({});
@@ -612,7 +612,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                                     addressId === a?.id ?
                                                         <MdCheckCircle className="text-[20px] sm:text-[24px] text-natural" />
                                                         :
-                                                        <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primarymagenta" />
+                                                        <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
                                                 }
                                             </span>
                                             <p className="text-[16px] text-ash text-left">
@@ -660,7 +660,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
 
             {/* choose options  */}
             <div className="bg-creamline p-[20px] rounded-xl mt-[30px]">
-                <p className='text-[18px] text-primarymagenta font-[650]'>
+                <p className='text-[18px] text-primaryblack font-[650]'>
                     {t.selectPaymentMethod}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-[20px] sm:gap-[40px] mt-[15px]">
@@ -670,7 +670,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 method === "cod" ?
                                     <MdCheckCircle className="text-[20px] sm:text-[24px] text-customgreen" />
                                     :
-                                    <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primarymagenta" />
+                                    <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
                             }
                         </span>
                         <span className={`text-[16px] sm:text-[18px] ${method === "cod" ? "text-customgreen font-[650]" : "text-ash"}`}>{t.cashOnDelivery}</span>
@@ -682,7 +682,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 method === "online" ?
                                     <MdCheckCircle className="text-[20px] sm:text-[24px] text-customgreen" />
                                     :
-                                    <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primarymagenta" />
+                                    <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
                             }
                         </span>
                         <span className={`text-[16px] sm:text-[18px] ${method === "online" ? "text-customgreen font-[650]" : "text-ash"}`}>{t.payOnline}</span>

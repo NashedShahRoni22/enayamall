@@ -87,7 +87,7 @@ export default function ContactForm() {
     };
     return (
         <form onSubmit={handleSubmit} className='lg:w-1/2'>
-            <h5 className='text-[20px] lg:text-[26px] text-primarymagenta'>Get in touch</h5>
+            <h5 className='text-[20px] lg:text-[26px] text-primaryblack'>Get in touch</h5>
             <p className='text-[14px] lg:text-[18px] text-ash mt-[30px] sm:w-2/3'>
                 Please enter the details of your request. A member of our support staff will respond as soon as possible.
             </p>
@@ -95,7 +95,7 @@ export default function ContactForm() {
             <div className='mt-[40px] grid lg:grid-cols-2 gap-[15px] sm:gap-[30px]'>
                 <div>
                     <div className='flex justify-between items-center'>
-                        <p className='text-[14px] lg:text-[18px] text-primarymagenta'>Your Name <span className='text-danger'>*</span></p>
+                        <p className='text-[14px] lg:text-[18px] text-primaryblack'>Your Name <span className='text-danger'>*</span></p>
                         {errors.name && <span className='text-[12px] lg:text-[14px] text-button'>{errors.name}</span>}
                     </div>
                     <input
@@ -109,7 +109,7 @@ export default function ContactForm() {
 
                 <div>
                     <div className='flex justify-between items-center'>
-                        <p className='text-[14px] lg:text-[18px] text-primarymagenta'>Email address <span className='text-danger'>*</span></p>
+                        <p className='text-[14px] lg:text-[18px] text-primaryblack'>Email address <span className='text-danger'>*</span></p>
                         {errors.email && <span className='text-[12px] lg:text-[14px] text-button'>{errors.email}</span>}
                     </div>
                     <input
@@ -124,7 +124,7 @@ export default function ContactForm() {
 
             <div className='mt-[15px] sm:mt-[30px]'>
                 <div className='flex justify-between items-center'>
-                    <p className='text-[14px] lg:text-[18px] text-primarymagenta'>Subject <span className='text-danger'>*</span></p>
+                    <p className='text-[14px] lg:text-[18px] text-primaryblack'>Subject <span className='text-danger'>*</span></p>
                     {errors.subject && <span className='text-[12px] lg:text-[14px] text-button'>{errors.subject}</span>}
                 </div>
                 <input
@@ -138,7 +138,7 @@ export default function ContactForm() {
 
             <div className='mt-[15px] sm:mt-[30px]'>
                 <div className='flex justify-between items-center'>
-                    <p className='text-[14px] lg:text-[18px] text-primarymagenta'>Message <span className='text-danger'>*</span></p>
+                    <p className='text-[14px] lg:text-[18px] text-primaryblack'>Message <span className='text-danger'>*</span></p>
                     {errors.message && <span className='text-[12px] lg:text-[14px] text-button'>{errors.message}</span>}
                 </div>
                 <textarea

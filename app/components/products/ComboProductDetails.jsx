@@ -121,11 +121,11 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
 
     return (
         <div>
-            <h1 className="text-primarymagenta text-[20px] 2xl:text-[26px] font-[550]">
+            <h1 className="text-primaryblack text-[20px] 2xl:text-[26px] font-[550]">
                 {product?.name}
             </h1>
 
-            <div className="text-[16px] text-primarymagenta 2xl:text-[18px] my-[10px] md:my-[20px]">
+            <div className="text-[16px] text-primaryblack 2xl:text-[18px] my-[10px] md:my-[20px]">
                 <p className="font-[550]">Combo Items:</p> <br />
                 <ul className="list-disc list-inside">
                     {
@@ -140,7 +140,7 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
                 <div className="flex gap-[30px]">
                     <div className="flex gap-[6px] items-center">
                         {renderStars()}
-                        <p className="text-[18px] 2xl:text-[20px] font-[550] text-primarymagenta ml-2">
+                        <p className="text-[18px] 2xl:text-[20px] font-[550] text-primaryblack ml-2">
                             ( {product?.ratings?.rating || 0} )
                         </p>
                     </div>
@@ -176,7 +176,7 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
             <div className="flex gap-[10px] 2xl:gap-[20px] items-center 2xl:w-[80%]">
                 {/* quantity selector */}
                 <div className="flex items-center gap-[20px] 2xl:gap-[30px] px-[20px] rounded-[10px] text-[18px] 2xl:text-[22px] justify-center bg-white border border-creamline h-[50px] 2xl:h-[60px] w-2/5">
-                    <button disabled={defaultQuantity === 1} className="cursor-pointer text-primarymagenta hover:bg-creamline hover:text-natural rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity - 1)}>
+                    <button disabled={defaultQuantity === 1} className="cursor-pointer text-primaryblack hover:bg-creamline hover:text-natural rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity - 1)}>
                         <AiOutlineMinus />
                     </button>
                     <input
@@ -185,7 +185,7 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
                         readOnly
                         className="w-8 text-center bg-transparent focus:outline-none text-natural"
                     />
-                    <button className="cursor-pointer text-primarymagenta hover:bg-creamline hover:text-natural rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity + 1)}>
+                    <button className="cursor-pointer text-primaryblack hover:bg-creamline hover:text-natural rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity + 1)}>
                         <GoPlus />
                     </button>
                 </div>
@@ -193,7 +193,7 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
                 {/* add to cart */}
                 <button
                     onClick={() => handleAddToCart(product)}
-                    className="cursor-pointer flex-1 h-[50px] 2xl:h-[60px] bg-light rounded-[10px] hover:bg-natural hover:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] text-primarymagenta flex items-center justify-center">
+                    className="cursor-pointer flex-1 h-[50px] 2xl:h-[60px] bg-light rounded-[10px] hover:bg-natural hover:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] text-primaryblack flex items-center justify-center">
                     Add to cart
                 </button>
 
@@ -243,9 +243,9 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
 
             {/* product other informations  */}
             <div className="mt-[20px] 2xl:mt-[40px] text-[16px] 2xl:text-[18px]">
-                <p><span className="text-primarymagenta font-[550]">Product Code:</span> <span className="text-ash">{product?.product_code}</span> </p>
+                <p><span className="text-primaryblack font-[550]">Product Code:</span> <span className="text-ash">{product?.product_code}</span> </p>
                 <p className="my-[20px]">
-                    <span className="text-primarymagenta font-[550]">Categories:</span>{" "}
+                    <span className="text-primaryblack font-[550]">Categories:</span>{" "}
                     {product?.other_categories?.map((pc, index, array) => (
                         <Link href={`/category/${pc?.slug}`} className="text-ash hover:text-natural" key={pc?.id}>
                             {pc?.name}
@@ -256,7 +256,7 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
                 </p>
 
                 <p>
-                    <span className="text-primarymagenta font-[550]">Tags:</span>{" "}
+                    <span className="text-primaryblack font-[550]">Tags:</span>{" "}
                     {product?.tags?.map((pt, index, array) => (
                         <span className="text-ash capitalize" key={index}>
                             {pt}
@@ -268,7 +268,7 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
             </div>
 
             {/* benefit card  */}
-            <div className="text-primarymagenta border border-creamline p-[20px] mt-[56px] relative rounded-[5px]">
+            <div className="text-primaryblack border border-creamline p-[20px] mt-[56px] relative rounded-[5px]">
                 {/* Heading positioned over top border */}
                 <p className="absolute -top-[14px] left-1/2 -translate-x-1/2 bg-white px-[16px] text-[16px] 2xl:text-[18px] text-center">
                     The benefits of choosing us

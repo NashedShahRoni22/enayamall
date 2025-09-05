@@ -100,7 +100,7 @@ export default function CartPage() {
         currentCart?.length === 0 ?
           <div className="p-8 text-center text-xl min-h-[80vh] flex flex-col justify-center items-center">
             <PiSmileySadLight className="text-9xl text-secondary" />
-            <p className="text-[24px] text-primarymagenta mt-[48px] mb-[24px]">Your cart is empty 🛒</p>
+            <p className="text-[24px] text-primaryblack mt-[48px] mb-[24px]">Your cart is empty 🛒</p>
             <ShopNowButton />
           </div>
           :
@@ -143,10 +143,10 @@ export default function CartPage() {
 
                 {/* sub total  */}
                 <div className="py-[20px] px-[20px] bg-gray-100 rounded-[10px] flex-1 2xl:flex-none">
-                  <p className={`text-[20px] font-[650] text-primarymagenta pb-2 ${lang === 'en' ? '' : 'text-right'}`}>
+                  <p className={`text-[20px] font-[650] text-primaryblack pb-2 ${lang === 'en' ? '' : 'text-right'}`}>
                     {lang === 'en' ? 'Order Summary' : 'ملخص الطلب'}
                   </p>
-                  <p className={`text-[12px] md:text-[16px] py-[10px] text-primarymagenta flex justify-between items-center gap-1 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+                  <p className={`text-[12px] md:text-[16px] py-[10px] text-primaryblack flex justify-between items-center gap-1 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                     <span className="font-[400]">
                       {lang === 'en' ? 'Item subtotal' : 'المجموع الفرعي'}
                     </span>
@@ -154,7 +154,7 @@ export default function CartPage() {
                   </p>
 
                   {appliedCoupon && couponData && (
-                    <div className="text-[12px] md:text-[16px] text-primarymagenta flex justify-between">
+                    <div className="text-[12px] md:text-[16px] text-primaryblack flex justify-between">
                       <div className={`flex flex-col 2xl:flex-row gap-1 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                         <p className="font-[400]">
                           {lang === 'en' ? 'Discount' : 'الخصم'}
@@ -181,7 +181,7 @@ export default function CartPage() {
                     </div>
                   )}
 
-                  <p className={`text-[16px] md:text-[18px] py-[10px] font-[550] text-primarymagenta flex justify-between items-center ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+                  <p className={`text-[16px] md:text-[18px] py-[10px] font-[550] text-primaryblack flex justify-between items-center ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                     <span>{lang === 'en' ? 'Total' : 'الإجمالي'}</span>
                     {couponData ? (
                       <span>
@@ -215,7 +215,7 @@ export default function CartPage() {
 
                 {/* coupon card  */}
                 <div className="p-[20px] rounded-[10px] bg-creamline flex-1 2xl:flex-none h-fit">
-                  <p className={`text-[20px] font-[650] text-primarymagenta ${lang === 'en' ? '' : 'text-right'}`}>
+                  <p className={`text-[20px] font-[650] text-primaryblack ${lang === 'en' ? '' : 'text-right'}`}>
                     {lang === 'en' ? 'Coupon code' : 'رمز القسيمة'}
                   </p>
                   <div className={`flex gap-[8px] items-center mt-[10px] ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
@@ -223,7 +223,7 @@ export default function CartPage() {
                       type="text"
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value)}
-                      className={`rounded-xl py-[12px] w-2/3 px-4 text-[14px] lg:text-[18px] text-primarymagenta bg-white focus:outline-none border border-dashed border-creamline ${lang === 'en' ? 'text-left' : 'text-right'}`}
+                      className={`rounded-xl py-[12px] w-2/3 px-4 text-[14px] lg:text-[18px] text-primaryblack bg-white focus:outline-none border border-dashed border-creamline ${lang === 'en' ? 'text-left' : 'text-right'}`}
                       placeholder={lang === 'en' ? "Enter code" : "أدخل الرمز"}
                     />
                     <button

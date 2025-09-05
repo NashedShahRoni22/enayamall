@@ -134,7 +134,7 @@ export default function Login() {
 
     return (
         <div>
-            <h5 className={`text-[24px] sm:text-[26px] text-primarymagenta flex flex-col ${lang === "en" ? "flex-row" : "flex-row-reverse text-right" }`}>{t("login")}</h5>
+            <h5 className={`text-[24px] sm:text-[26px] text-primaryblack flex flex-col ${lang === "en" ? "flex-row" : "flex-row-reverse text-right" }`}>{t("login")}</h5>
             <p className={`text-[16px] sm:text-[18px] text-ash mt-[30px] flex flex-col ${lang === "en" ? "flex-row" : "flex-row-reverse text-right" }`}>
                 {t("welcome_back")} <br /> {t("please_login")}
             </p>
@@ -143,8 +143,8 @@ export default function Login() {
             <div className='mt-[50px]'>
                 {/* tab buttons  */}
                 <div className={`flex gap-[30px] pb-[10px] ${lang === "en" ? "flex-row" : "flex-row-reverse" }`}>
-                    <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>{t("sign_in_otp")}</button>
-                    <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-primary border-b-2 border-primary font-[650]" : "text-primarymagenta"}`}>{t("sign_in_password")}</button>
+                    <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primaryblack"}`}>{t("sign_in_otp")}</button>
+                    <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-primary border-b-2 border-primary font-[650]" : "text-primaryblack"}`}>{t("sign_in_password")}</button>
                 </div>
                 {/* tab forms */}
                 <div className='mt-[25px] sm:mt-[50px]'>
@@ -168,7 +168,7 @@ export default function Login() {
                                     placeholder="Enter email address"
                                     value={form.email}
                                     onChange={handleChange}
-                                    className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                                    className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                                 />
 
                                 {/* Password */}
@@ -187,7 +187,7 @@ export default function Login() {
                                         placeholder="Enter your password"
                                         value={form.password}
                                         onChange={handleChange}
-                                        className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
+                                        className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                                     />
                                     <div
                                         onClick={togglePasswordVisibility}
@@ -216,7 +216,7 @@ export default function Login() {
                             </form>
                     }
 
-                    <p className={`text-primarymagenta mt-[20px] sm:mt-[40px] flex flex-col ${lang === "en" ? "flex-row" : "flex-row-reverse" }`}>{t("dont_have_account")}   <Link href={"/register"} className={`text-primary hover:underline ${lang === "en" ? "ml-2" : "mr-2" }`}>{t("register_now")}</Link> </p>
+                    <p className={`text-primaryblack mt-[20px] sm:mt-[40px] flex flex-col ${lang === "en" ? "flex-row" : "flex-row-reverse" }`}>{t("dont_have_account")}   <Link href={"/register"} className={`text-primary hover:underline ${lang === "en" ? "ml-2" : "mr-2" }`}>{t("register_now")}</Link> </p>
                 </div>
             </div>
         </div>

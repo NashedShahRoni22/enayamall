@@ -254,7 +254,7 @@ export default function SignInWithPhone({ option }) {
                     value={otpForm.phone}
                     onChange={handleOtpChange}
                     placeholder='Enter 11-digit phone number'
-                    className={`text-[14px] sm:text-[16px] rounded-xl text-primarymagenta py-[12px] pl-[70px] sm:pl-[85px] pr-[15px] sm:pr-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] w-full`}
+                    className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] pl-[70px] sm:pl-[85px] pr-[15px] sm:pr-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] w-full`}
                     maxLength="11"
                     disabled={otpSent}
                 />
@@ -277,7 +277,7 @@ export default function SignInWithPhone({ option }) {
                         value={otpForm.otp}
                         onChange={handleOtpChange}
                         placeholder='Enter your OTP code number'
-                        className={`text-[14px] sm:text-[16px] text-primarymagenta py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.otp ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
+                        className={`text-[14px] sm:text-[16px] text-primaryblack py-[12px] sm:py-[24px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.otp ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                         maxLength="6"
                         required
                     />
@@ -303,7 +303,7 @@ export default function SignInWithPhone({ option }) {
                     {timer > 0 ? (
                         <div className='text-ash text-[14px] sm:text-[16px]'>
                             <p>Didn't receive OTP?</p>
-                            <p className='text-primarymagenta font-medium'>
+                            <p className='text-primaryblack font-medium'>
                                 Try again in {formatTimer(timer)}
                             </p>
                         </div>

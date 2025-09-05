@@ -75,7 +75,7 @@ export default function ComboCard({ p }) {
     }
 
     return (
-        <Link href={`/combo/${p?.slug}`} className="group relative text-primarymagenta">
+        <Link href={`/combo/${p?.slug}`} className="group relative text-primaryblack">
             {/* Product Image Here  */}
             <div className="flex justify-center items-center bg-[#FAFAFA] rounded-[10px] relative overflow-hidden h-[260px] lg:h-[360px]">
                 <Image

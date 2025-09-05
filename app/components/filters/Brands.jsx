@@ -16,7 +16,7 @@ export default function Brands({ brands, brandIds, setBrandIds, lang }) {
     };
 
     return (
-        <div className="p-[20px] flex flex-col gap-[20px] text-primarymagenta rounded-[5px] border border-creamline max-h-[60vh] overflow-y-scroll">
+        <div className="p-[20px] flex flex-col gap-[20px] text-primaryblack rounded-[5px] border border-creamline max-h-[60vh] overflow-y-scroll">
             <div className="flex justify-between items-center">
                 <p className="text-[20px]">
                     {lang === "en" ? "Brands" : "العلامات التجارية" }
@@ -26,9 +26,9 @@ export default function Brands({ brands, brandIds, setBrandIds, lang }) {
                 }} className="cursor-pointer">
                     {
                         !show ?
-                            <FaChevronDown className="text-primarymagenta" />
+                            <FaChevronDown className="text-primaryblack" />
                             :
-                            <FaChevronUp className="text-primarymagenta" />
+                            <FaChevronUp className="text-primaryblack" />
                     }
                 </button>
             </div>
@@ -36,7 +36,7 @@ export default function Brands({ brands, brandIds, setBrandIds, lang }) {
                 show &&
 
                 <>
-                    <div className="h-[1px] w-full bg-primarymagenta"></div>
+                    <div className="h-[1px] w-full bg-primaryblack"></div>
                     {/* brands option will be render here  */}
                     <div className="flex flex-col">
                         {
@@ -51,7 +51,7 @@ export default function Brands({ brands, brandIds, setBrandIds, lang }) {
                                                 ?
                                                 <MdCheckBox className="size-[20px] text-primary" />
                                                 :
-                                                <MdCheckBoxOutlineBlank className="size-[20px] text-primarymagenta" />
+                                                <MdCheckBoxOutlineBlank className="size-[20px] text-primaryblack" />
                                         }
                                     </span>
                                     <p className={brandIds.includes(brand?.id)  ? "text-primary" : ""}>

@@ -39,7 +39,7 @@ export default function TestimonialCardProductDetails({ review }) {
                         <p className="text-[14px] text-natural">{review?.customer_city}</p>
                     </div>
 
-                    <p className="text-primarymagenta text-[16px] md:hidden">{review?.created_at}</p>
+                    <p className="text-primaryblack text-[16px] md:hidden">{review?.created_at}</p>
                 </div>
             </div>
 
@@ -54,7 +54,7 @@ export default function TestimonialCardProductDetails({ review }) {
                 <p className="text-[16px] text-button">
                     {review?.rating_title}
                 </p>
-                <p className="text-[14px] text-primarymagenta mt-[8px] leading-[21px]">
+                <p className="text-[14px] text-primaryblack mt-[8px] leading-[21px]">
                     {review?.review}
                 </p>
 
@@ -82,7 +82,7 @@ export default function TestimonialCardProductDetails({ review }) {
                         {renderStars(review?.rating)}
                     </div>
                 </div>
-                <p className="text-primarymagenta text-[16px]">{review?.created_at}</p>
+                <p className="text-primaryblack text-[16px]">{review?.created_at}</p>
             </div>
         </section>
     )

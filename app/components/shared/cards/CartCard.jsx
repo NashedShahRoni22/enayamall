@@ -17,7 +17,7 @@ export default function CartCard({
   return (
     <div>
       {/* regular product info  */}
-      <div className="flex w-full bg-white items-center gap-4 py-4 px-4 border-b border-gray-200 text-primarymagenta">
+      <div className="flex w-full bg-white items-center gap-4 py-4 px-4 border-b border-gray-200 text-primaryblack">
 
         {/* Remove button */}
         <button
@@ -41,7 +41,7 @@ export default function CartCard({
         </div>
 
         {/* Info & Controls */}
-        <div className="flex-1 flex flex-col justify-between h-full text-primarymagenta">
+        <div className="flex-1 flex flex-col justify-between h-full text-primaryblack">
           {/* Name and Price */}
           <div>
             {
@@ -87,7 +87,7 @@ export default function CartCard({
       {
         item?.items?.length > 0 &&
 
-        <div className='py-2 mt-2 rounded-[10px] text-primarymagenta bg-white'>
+        <div className='py-2 mt-2 rounded-[10px] text-primaryblack bg-white'>
           <button onClick={() => setShowCombo(!showCombo)} className='cursor-pointer w-full flex justify-between items-center text-[14px]'>
             Show Items
             {

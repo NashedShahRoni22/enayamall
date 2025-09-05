@@ -18,7 +18,7 @@ export default function HoverCartCard({
   return (
     <div>
       {/* regular product info  */}
-      <div className={`flex flex-col md:flex-row items-center justify-between gap-[20px] text-primarymagenta bg-white p-[20px] ${item?.items?.length > 0 ? "rounded-t-[10px]" : "rounded-[10px]"}`}>
+      <div className={`flex flex-col md:flex-row items-center justify-between gap-[20px] text-primaryblack bg-white p-[20px] ${item?.items?.length > 0 ? "rounded-t-[10px]" : "rounded-[10px]"}`}>
 
         {/* Product Info */}
         <div className="w-full md:w-4/6 flex flex-col md:flex-row gap-[20px] items-center">
@@ -64,7 +64,7 @@ export default function HoverCartCard({
                 : addToCartDBGuest(item?.combo_id ? item?.combo_id : item?.product_variant_id, 1, item?.combo_id && "combo", "decrement")
             }
             disabled={item?.quantity === 1}
-            className="disabled:cursor-not-allowed cursor-pointer text-primarymagenta hover:bg-creamline hover:text-natural rounded-full p-2"
+            className="disabled:cursor-not-allowed cursor-pointer text-primaryblack hover:bg-creamline hover:text-natural rounded-full p-2"
           >
             <AiOutlineMinus />
           </button>
@@ -80,7 +80,7 @@ export default function HoverCartCard({
                 ? addToCartDB(item?.combo_id ? item?.combo_id : item?.product_variant_id, 1, item?.combo_id && "combo")
                 : addToCartDBGuest(item?.combo_id ? item?.combo_id : item?.product_variant_id, 1, item?.combo_id && "combo")
             }
-            className="cursor-pointer text-primarymagenta hover:bg-creamline hover:text-natural rounded-full p-2 text-xl"
+            className="cursor-pointer text-primaryblack hover:bg-creamline hover:text-natural rounded-full p-2 text-xl"
           >
             <GoPlus />
           </button>
@@ -91,7 +91,7 @@ export default function HoverCartCard({
       {
         item?.items?.length > 0 &&
 
-        <div className='px-4 py-2 rounded-b-[10px] text-primarymagenta bg-white border-t-[0.125px] border-creamline'>
+        <div className='px-4 py-2 rounded-b-[10px] text-primaryblack bg-white border-t-[0.125px] border-creamline'>
           <button onClick={() => setShowCombo(!showCombo)} className='cursor-pointer w-full flex justify-between items-center text-[14px]'>
             Show Items
             {

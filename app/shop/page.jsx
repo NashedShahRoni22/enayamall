@@ -36,7 +36,7 @@ export default function page() {
 
     // Price states
     const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(5000);
+    const [maxPrice, setMaxPrice] = useState(10000);
 
     // Handle price filter application
     const handlePriceFilter = () => {
@@ -181,11 +181,11 @@ export default function page() {
                                 </div>
                                 {
                                     productData?.meta?.total > 0 &&
-                                    <p className="hidden lg:block text-primarymagenta text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
+                                    <p className="hidden lg:block text-primaryblack text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
                                 }
                             </div>
                             {/* product sorting options  */}
-                            <div className="text-[16px] text-primarymagenta bg-white min-w-[160px] lg:min-w-[190px] px-[16px] lg:px-[20px] py-[12px] lg:py-[16px] rounded-[5px] relative">
+                            <div className="text-[16px] text-primaryblack bg-white min-w-[160px] lg:min-w-[190px] px-[16px] lg:px-[20px] py-[12px] lg:py-[16px] rounded-[5px] relative">
                                 <button
                                     onClick={() => setShowSortOptions(!showSortOptions)}
                                     className="flex min-w-full justify-between items-center cursor-pointer text-[14px] lg:text-[16px]"
@@ -226,7 +226,7 @@ export default function page() {
                                     setMinPrice={setMinPrice}
                                     setMaxPrice={setMaxPrice}
                                     absoluteMin={0}
-                                    absoluteMax={50000}
+                                    absoluteMax={10000}
                                     onFilter={handlePriceFilter}
                                 />
                                 
@@ -240,11 +240,11 @@ export default function page() {
                                     setChildCategoryId={setChildCategoryId} />
 
                                 {/* brands */}
-                                <Brands
+                                {/* <Brands
                                     lang={lang}
                                     brands={brands}
                                     brandIds={brandIds}
-                                    setBrandIds={setBrandIds} />
+                                    setBrandIds={setBrandIds} /> */}
                             </div>
                         </div>
 
@@ -267,11 +267,11 @@ export default function page() {
                             {
                                 productData?.links?.next !== null &&
                                 <div className="mt-20 flex flex-col gap-5 items-center justify-center">
-                                    <p className="hidden lg:block text-primarymagenta text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
+                                    <p className="hidden lg:block text-primaryblack text-[16px]">Showing {allProducts.length} of {productData?.meta?.total} results</p>
                                     <button
                                         disabled={isLoadingMore}
                                         onClick={handleLoadMore}
-                                        className="px-8 py-3 bg-primary text-white text-sm rounded-[5px] cursor-pointer hover:bg-creamline hover:text-primarymagenta disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="px-8 py-3 bg-primary text-white text-sm rounded-[5px] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {
                                             isLoadingMore ? (
@@ -318,11 +318,11 @@ export default function page() {
                             />
 
                             {/* brands */}
-                            <Brands
+                            {/* <Brands
                                 lang={lang}
                                 brands={brands}
                                 brandIds={brandIds}
-                                setBrandIds={setBrandIds} />
+                                setBrandIds={setBrandIds} /> */}
                         </div>
 
                         {/* Click-outside area to close filter */}

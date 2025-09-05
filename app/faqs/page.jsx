@@ -54,13 +54,13 @@ export default function page() {
                                                     onClick={() => toggleFAQ(uniqueId)}
                                                     className="cursor-pointer flex justify-between items-center gap-[40px] mt-[20px] lg:mt-[40px]"
                                                 >
-                                                    <p className="text-[18px] lg:text-[20px] text-primarymagenta font-[650]">
+                                                    <p className="text-[18px] lg:text-[20px] text-primaryblack font-[650]">
                                                         Q. {faqQuesAns?.question}
                                                     </p>
                                                     {isActive ? (
                                                         <FaChevronUp className="text-primary text-[18px]" />
                                                     ) : (
-                                                        <FaChevronDown className="text-primarymagenta text-[18px]" />
+                                                        <FaChevronDown className="text-primaryblack text-[18px]" />
                                                     )}
                                                 </div>
 

@@ -1,4 +1,4 @@
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaTiktok } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaTiktok, FaTwitter } from "react-icons/fa";
 import PageHeader from '../components/shared/PageHeader';
 import Container from '../components/shared/Container';
 import ContactForm from "../components/forms/ContactForm";
@@ -6,11 +6,12 @@ import Link from "next/link";
 
 export default function Page() {
   const socialLinks = [
-    { name: "Facebook", icon: <FaFacebookF />, link: "https://www.facebook.com/LaminaxOfficial1" },
-    { name: "Tiktok ", icon: <FaTiktok />, link: "https://www.tiktok.com/@laminaxofficial" },
-    { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/laminaxofficial" },
-    { name: "LinkedIn", icon: <FaLinkedinIn />, link: "https://www.linkedin.com/company/laminaxlimited" },
-    { name: "YouTube", icon: <FaYoutube />, link: "https://www.youtube.com/@laminaxofficial" }
+    { name: "Facebook", icon: <FaFacebookF />, link: "https://www.facebook.com/enayamall" },
+    // { name: "Tiktok ", icon: <FaTiktok />, link: "https://www.tiktok.com/@laminaxofficial" },
+    { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/enayamall" },
+    // { name: "LinkedIn", icon: <FaLinkedinIn />, link: "https://www.linkedin.com/company/laminaxlimited" },
+    // { name: "YouTube", icon: <FaYoutube />, link: "https://www.youtube.com/@laminaxofficial" },
+    { name: "Twitter", icon: <FaTwitter />, link: "https://twitter.com/enayamall" },
   ];
 
   return (
@@ -24,34 +25,34 @@ export default function Page() {
           {/* Right side info */}
           <div className='lg:w-1/2'>
             <div>
-              <h5 className='text-[26px] text-primarymagenta'>Address</h5>
+              <h5 className='text-[26px] text-primaryblack'>Address</h5>
               <p className='mt-[15px] sm:mt-[30px] text-ash text-[14px] lg:text-[18px] sm:w-2/3'>
-                Kazi Morning Glory, Level 8, House 15, Road 3, Block A, Mirpur 11, Dhaka 1216
+                P.O.Box 27042, Dubai, United Arab Emirates
               </p>
             </div>
 
             <div className='mt-[20px] sm:mt-[40px]'>
-              <h5 className='text-[20px] lg:text-[26px] text-primarymagenta'>Email</h5>
+              <h5 className='text-[20px] lg:text-[26px] text-primaryblack'>Email</h5>
               <p className='mt-[8px] sm:mt-[16px] text-ash text-[14px] lg:text-[18px]'>
-                <span className='text-primarymagenta'>Customer care:</span> <Link className="hover:text-primary" href="mailto:care@laminax.com.bd">care@laminax.com.bd</Link>
+                <Link className="hover:text-primary" href="mailto:info@enayamall.com">info@enayamall.com</Link>
+              </p>
+              {/* <p className='mt-[8px] sm:mt-[16px] text-ash text-[14px] lg:text-[18px]'>
+                <span className='text-primaryblack'>Office:</span> <Link className="hover:text-primary" href="mailto:hello@laminax.com.bd">hello@laminax.com.bd</Link>
+              </p> */}
+            </div>
+
+            <div className='mt-[20px] sm:mt-[40px]'>
+              <h5 className='text-[20px] lg:text-[26px] text-primaryblack'>Call us</h5>
+              <p className='mt-[8px] sm:mt-[16px] text-ash text-[14px] lg:text-[18px]'>
+                <span className='text-primaryblack'>Phone:</span> <Link href="callto:+971506065857" className="hover:text-primary">+97150 6065857</Link>
               </p>
               <p className='mt-[8px] sm:mt-[16px] text-ash text-[14px] lg:text-[18px]'>
-                <span className='text-primarymagenta'>Office:</span> <Link className="hover:text-primary" href="mailto:hello@laminax.com.bd">hello@laminax.com.bd</Link>
+                <span className='text-primaryblack'>Mobile:</span> <Link href="callto:+971507750309" className="hover:text-primary">+971 50 775 0309</Link>
               </p>
             </div>
 
             <div className='mt-[20px] sm:mt-[40px]'>
-              <h5 className='text-[20px] lg:text-[26px] text-primarymagenta'>Call us</h5>
-              <p className='mt-[8px] sm:mt-[16px] text-ash text-[14px] lg:text-[18px]'>
-                <span className='text-primarymagenta'>Customer care:</span> <Link href="callto:+880 17 1199 6465" className="hover:text-primary">+880 17 1199 6465</Link>
-              </p>
-              <p className='mt-[8px] sm:mt-[16px] text-ash text-[14px] lg:text-[18px]'>
-                <span className='text-primarymagenta'>Office:</span> <Link href="callto:+880 17 1199 6466" className="hover:text-primary">+880 17 1199 6466</Link>
-              </p>
-            </div>
-
-            <div className='mt-[20px] sm:mt-[40px]'>
-              <h5 className='text-[20px] lg:text-[26px] text-primarymagenta'>Social media and more</h5>
+              <h5 className='text-[20px] lg:text-[26px] text-primaryblack'>Social media and more</h5>
               <div className='flex gap-5 mt-[8px] sm:mt-[16px]'>
                 {socialLinks.map((item, index) => (
                   <a
@@ -59,7 +60,7 @@ export default function Page() {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className='text-primarymagenta text-[24px] hover:text-primary transition duration-300 p-2.5 rounded-[5px] bg-[#F5F5F5]'
+                    className='text-primaryblack text-[24px] hover:text-primary transition duration-300 p-2.5 rounded-[5px] bg-[#F5F5F5]'
                     aria-label={item.name}
                   >
                     {item.icon}

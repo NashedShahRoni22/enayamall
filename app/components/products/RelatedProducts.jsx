@@ -15,7 +15,7 @@ export default function RelatedProducts({products}) {
           <p className="text-[18px] 2xl:text-[24px] text-button text-center lg:text-left">
             Popular Choices
           </p>
-          <h5 className="mt-[20px] 2xl:mt-[35px] text-[30px] 2xl:text-[40px] text-primarymagenta text-center lg:text-left">
+          <h5 className="mt-[20px] 2xl:mt-[35px] text-[30px] 2xl:text-[40px] text-primaryblack text-center lg:text-left">
             Related Products
           </h5>
         </div>

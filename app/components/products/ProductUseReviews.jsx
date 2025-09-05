@@ -104,28 +104,28 @@ export default function ProductUseReviews({ product, reviewable, variantId, toke
             <div className={`sticky top-16 lg:top-22 z-10 bg-white border-b border-creamline py-4 ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
                 <div className="flex gap-5 2xl:justify-center 2xl:gap-[80px] text-[18px] 2xl:text-[26px] font-[550]">
                     <button
-                        className={`transition-colors ${activeTab === 'description' ? 'text-primary' : 'text-primarymagenta'
+                        className={`transition-colors ${activeTab === 'description' ? 'text-primary' : 'text-primaryblack'
                             } hover:text-primary cursor-pointer`}
                         onClick={() => scrollToSection(descriptionRef, 'description')}
                     >
                         {getText('description')}
                     </button>
                     {/* <button
-                        className={`transition-colors ${activeTab === 'howtouse' ? 'text-primary' : 'text-primarymagenta'
+                        className={`transition-colors ${activeTab === 'howtouse' ? 'text-primary' : 'text-primaryblack'
                             } hover:text-primary cursor-pointer`}
                         onClick={() => scrollToSection(usageRef, 'howtouse')}
                     >
                         {getText('howtouse')}
                     </button> */}
                     {/* <button
-                        className={`transition-colors ${activeTab === 'benefits' ? 'text-primary' : 'text-primarymagenta'
+                        className={`transition-colors ${activeTab === 'benefits' ? 'text-primary' : 'text-primaryblack'
                             } hover:text-primary cursor-pointer`}
                         onClick={() => scrollToSection(benefitsRef, 'benefits')}
                     >
                         {getText('benefits')}
                     </button> */}
                     <button
-                        className={`transition-colors ${activeTab === 'reviews' ? 'text-primary' : 'text-primarymagenta'
+                        className={`transition-colors ${activeTab === 'reviews' ? 'text-primary' : 'text-primaryblack'
                             } hover:text-primary cursor-pointer`}
                         onClick={() => scrollToSection(reviewsRef, 'reviews')}
                     >

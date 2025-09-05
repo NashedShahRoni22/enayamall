@@ -20,7 +20,7 @@ export default function TrendingPicks() {
         <section className="flex flex-col items-center lg:flex-row lg:justify-between">
           {/* caption here  */}
           <div>
-            <h5 className="text-[24px] 2xl:text-[36px] text-primarymagenta text-center lg:text-left">
+            <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center lg:text-left">
               <span className="font-semibold text-primary">Recommended</span> by Enayamall
             </h5>
           </div>

@@ -247,7 +247,7 @@ const Profile = ({ address }) => {
                         name="fullName"
                         value={formData.fullName}
                         onChange={handleChange}
-                        className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.fullName ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primarymagenta`}
+                        className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.fullName ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack`}
                     />
                 </div>
 
@@ -259,7 +259,7 @@ const Profile = ({ address }) => {
                         type="email"
                         value={user?.email}
                         readOnly
-                        className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primarymagenta bg-gray-50"
+                        className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack bg-gray-50"
                     />
                 </div>
             </div>
@@ -273,7 +273,7 @@ const Profile = ({ address }) => {
                         name="dob"
                         value={formData.dob}
                         onChange={handleChange}
-                        className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primarymagenta"
+                        className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack"
                     />
                 </div>
                 <div>
@@ -288,7 +288,7 @@ const Profile = ({ address }) => {
                         name="mobileNumber"
                         value={formData.mobileNumber}
                         onChange={handleChange}
-                        className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.mobileNumber ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primarymagenta`}
+                        className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.mobileNumber ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack`}
                     />
                 </div>
             </div>
@@ -315,7 +315,7 @@ const Profile = ({ address }) => {
                             name={name}
                             value={formData[name]}
                             onChange={handleChange}
-                            className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors[name] ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primarymagenta`}
+                            className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors[name] ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack`}
                         />
                     </div>
                 ))}
@@ -333,7 +333,7 @@ const Profile = ({ address }) => {
                             value={selectedDistrictId || ""}
                             onChange={handleDistrictChange}
                             disabled={isDistrictsLoading}
-                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.district ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primarymagenta bg-white`}
+                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.district ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack bg-white`}
                         >
                             <option value="">
                                 {isDistrictsLoading ? "Loading districts..." : "Select District"}
@@ -361,7 +361,7 @@ const Profile = ({ address }) => {
                             value={selectedCityId || ""}
                             onChange={handleCityChange}
                             disabled={!selectedDistrictId || isCitiesLoading}
-                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.city ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primarymagenta bg-white`}
+                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.city ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack bg-white`}
                         >
                             <option value="">
                                 {!selectedDistrictId
@@ -392,7 +392,7 @@ const Profile = ({ address }) => {
                     value={formData.additionalAddress}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primarymagenta"
+                    className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack"
                 />
             </div>
 
@@ -401,9 +401,9 @@ const Profile = ({ address }) => {
                 <button
                     type="submit"
                     disabled={loading}
-                    className={`py-[12px] md:py-[24px] text-[18px] ease-linear duration-300 w-full font-medium rounded-md ${loading ? 'bg-creamline cursor-not-allowed' : 'bg-natural hover:bg-creamline hover:text-primarymagenta text-white cursor-pointer'}`}
+                    className={`py-[12px] md:py-[24px] text-[18px] ease-linear duration-300 w-full font-medium rounded-md ${loading ? 'bg-creamline cursor-not-allowed' : 'bg-natural hover:bg-creamline hover:text-primaryblack text-white cursor-pointer'}`}
                 >
-                    {loading ? <LoadingSvg label="Updating profile" color='text-primarymagenta' /> : "Update profile"}
+                    {loading ? <LoadingSvg label="Updating profile" color='text-primaryblack' /> : "Update profile"}
                 </button>
             </div>
         </form>

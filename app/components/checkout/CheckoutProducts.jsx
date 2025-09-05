@@ -193,7 +193,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
     }, [guestToken]);
 
     return (
-        <section className='text-primarymagenta flex flex-col gap-[20px]'>
+        <section className='text-primaryblack flex flex-col gap-[20px]'>
             {/* products informations here  */}
             <div className='bg-[#FCF7EE] rounded-[10px] py-[20px]  px-[20px] sm:px-[40px]'>
                 {/* Header Row */}
@@ -273,7 +273,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                             acceptTerms ?
                                 <MdCheckCircle className="text-[20px] sm:text-[24px] text-customgreen" />
                                 :
-                                <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primarymagenta" />
+                                <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
                         }
                     </span>
                     <p className='text-left'>
@@ -286,11 +286,11 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                     onClick={handleOrderPlace}
                     disabled={loading === true}
                     className={`text-center min-w-full py-[16px] rounded-[5px] ease-linear duration-300 cursor-pointer transition ${loading
-                        ? 'bg-creamline text-primarymagenta cursor-not-allowed'
+                        ? 'bg-creamline text-primaryblack cursor-not-allowed'
                         : 'bg-primary text-white hover:bg-creamline hover:text-primary cursor-pointer'
                         }`}>
                     {loading ? (
-                        <LoadingSvg label={t.placingOrder} color="text-primarymagenta" />
+                        <LoadingSvg label={t.placingOrder} color="text-primaryblack" />
                     ) : (
                         t.placeOrder
                     )}

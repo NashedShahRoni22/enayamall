@@ -114,7 +114,7 @@ export default function ProductPage() {
 
                     {/* customers reviews here  */}
                     <div className="mt-[50px]">
-                        <p className='text-primarymagenta text-[18px] 2xl:text-[20px] font-[650]'>Trusted by Skincare Lovers</p>
+                        <p className='text-primaryblack text-[18px] 2xl:text-[20px] font-[650]'>Trusted by Skincare Lovers</p>
                         <div className="mt-[50px] ">
                             {
                                 product?.reviews?.length > 0 ?

@@ -13,8 +13,8 @@ export default function PageHeader({ title, from, to }) {
             />
 
             <div className="absolute top-0 left-0 h-full w-full flex flex-col items-center justify-center">
-                <h5 className="text-[26px] lg:text-[34px] text-primarymagenta font-[350] capitalize">{title}</h5>
-                <div className="text-[16px] lg:text-[20px] mt-[20px] lg:mt-[30px] text-primarymagenta flex items-center gap-[16px] font-[400]">
+                <h5 className="text-[26px] lg:text-[34px] text-primaryblack font-[350] capitalize">{title}</h5>
+                <div className="text-[16px] lg:text-[20px] mt-[20px] lg:mt-[30px] text-primaryblack flex items-center gap-[16px] font-[400]">
                     <Link href={"/"} className='capitalize hover:text-natural'>{from}</Link>
                     <span> <FaChevronRight className="text-sm" /> </span>
                     <Link href={to} className='capitalize hover:text-natural'>{title}</Link>

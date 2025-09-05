@@ -46,10 +46,10 @@ export default function ShopCategorySlider({ categories, lang }) {
                                                 className="w-full h-full object-cover transform transition-transform duration-300 ease-linear group-hover:scale-105 rounded-full"
                                             />
                                         </div>
-                                        <p className="text-[18px] lg:text-[24px] text-primarymagenta text-center mt-[20px] lg:mt-[32px] group-hover:text-secondary transition-colors duration-300 ease-linear">
+                                        <p className="text-[18px] lg:text-[24px] text-primaryblack text-center mt-[20px] lg:mt-[32px] group-hover:text-secondary transition-colors duration-300 ease-linear">
                                              {lang === "en" ? p?.name : p?.ar_name }
                                         </p>
-                                        <p className="text-[12px] lg:text-[14px] mt-[14px] lg:mt-[16px] text-primarymagenta text-center group-hover:text-secondary transition-colors duration-300 ease-linear">
+                                        <p className="text-[12px] lg:text-[14px] mt-[14px] lg:mt-[16px] text-primaryblack text-center group-hover:text-secondary transition-colors duration-300 ease-linear">
                                             {p?.total_products} {lang === "en" ? "Products" : "مُنتَج" }
                                         </p>
                                     </Link>

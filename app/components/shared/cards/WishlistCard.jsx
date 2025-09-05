@@ -4,7 +4,7 @@ import { CalendarDays, ShoppingCart, Trash2 } from 'lucide-react';
 
 export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB, lang }) {
     return (
-        <div className={`relative flex justify-between items-center gap-4 px-2 sm:px-4 border border-creamline rounded-[10px] text-primarymagenta min-h-[160px] ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+        <div className={`relative flex justify-between items-center gap-4 px-2 sm:px-4 border border-creamline rounded-[10px] text-primaryblack min-h-[160px] ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
 
             {/* Remove Button & Add to Cart - Mobile */}
             <div className={`absolute ${lang === 'en' ? 'right-2' : 'left-2'} flex items-center gap-2 sm:gap-4 sm:hidden`}>
@@ -41,9 +41,9 @@ export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB, lan
                         {/* Name */}
                         {
                             w?.items?.length > 0 ?
-                                <Link href={`/combo/${w?.slug}`} className="text-[16px] font-medium line-clamp-3 hover:text-primarymagenta">{`${lang == 'en' ? w.name : w.ar_name}`} {w?.items?.length > 0 && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>Combo</span>}</Link>
+                                <Link href={`/combo/${w?.slug}`} className="text-[16px] font-medium line-clamp-3 hover:text-primaryblack">{`${lang == 'en' ? w.name : w.ar_name}`} {w?.items?.length > 0 && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>Combo</span>}</Link>
                                 :
-                                <Link href={`/shop/${w?.slug}?variant=${w?.variant}`} className="text-[16px] font-medium line-clamp-3 hover:text-primarymagenta">{`${lang == 'en' ? w.name : w.ar_name}`} {w.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{w.variant}</span>} </Link>
+                                <Link href={`/shop/${w?.slug}?variant=${w?.variant}`} className="text-[16px] font-medium line-clamp-3 hover:text-primaryblack">{`${lang == 'en' ? w.name : w.ar_name}`} {w.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{w.variant}</span>} </Link>
                         }
                         {/* Pricing */}
                         <div className={`my-2 text-[12px] sm:text-[14px] md:text-[16px] ${lang === 'en' ? '' : 'text-right'}`}>
