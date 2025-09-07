@@ -11,244 +11,146 @@ import { MdCheckCircle, MdDeleteOutline, MdEdit, MdOutlineRadioButtonUnchecked }
 import { useDeleteDataWithToken } from "../helpers/useDeleteDataWithToken";
 import LoadingSvg from "../shared/LoadingSvg";
 import { BiChevronDown } from "react-icons/bi";
+import { useGetDataWithToken } from "../helpers/useGetDataWithToken";
+import { usePathname } from "next/navigation";
 
-const BillForm = ({ address, addressId, setAddressId, method, setMethod, selectedDistrictId, setSelectedDistrictId }) => {
-    const { token, lang } = useAppContext();
+const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSelectedDistrictId }) => {
+    const location = usePathname();
+    console.log(location);
+
+    const { token } = useAppContext();
     const [showForm, setShowForm] = useState(false);
     const [editableAddress, setEditableAddress] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [selectedCityId, setSelectedCityId] = useState(null);
+    const [selectedCountryId, setSelectedCountryId] = useState(null);
 
-    // Localization texts
-    const texts = {
-        en: {
-            shippingDetails: "Shipping details",
-            cancel: "Cancel",
-            addNewAddress: "Add new address",
-            fullName: "Full name",
-            mobileNumber: "Mobile number",
-            flatNumber: "Flat number",
-            houseNumber: "House Number",
-            roadNumber: "Road number",
-            block: "Block",
-            area: "Area",
-            postCode: "Post code",
-            district: "District",
-            city: "City",
-            additionalAddress: "Additional Address for better finding",
-            saveAddress: "Save address",
-            updateAddress: "Update address",
-            selectDistrict: "Select District",
-            loadingDistricts: "Loading districts...",
-            selectDistrictFirst: "Select district first",
-            loadingCities: "Loading cities...",
-            selectCity: "Select City",
-            noAddressFound: "No address found",
-            selectPaymentMethod: "Select Payment method",
-            cashOnDelivery: "Cash on delivery",
-            payOnline: "Pay online",
-            nameRequired: "Name is required",
-            mobileRequired: "Mobile number is required",
-            flatRequired: "Flat number is required",
-            houseRequired: "House number is required",
-            areaRequired: "Area is required",
-            districtRequired: "District is required",
-            cityRequired: "City is required",
-            submittingAddress: "Submitting address...",
-            addressSubmitted: "Address submitted successfully!",
-            failedSubmit: "Failed to submit address",
-            updatingAddress: "Updating address...",
-            addressUpdated: "Address updated successfully!",
-            failedUpdate: "Failed to update address",
-            deletingAddress: "Deleting address...",
-            addressDeleted: "Address deleted successfully!",
-            failedDelete: "Failed to delete address",
-            savingAddress: "Saving address",
-            updating: "Updating"
-        },
-        ar: {
-            shippingDetails: "تفاصيل الشحن",
-            cancel: "إلغاء",
-            addNewAddress: "إضافة عنوان جديد",
-            fullName: "الاسم الكامل",
-            mobileNumber: "رقم الهاتف المحمول",
-            flatNumber: "رقم الشقة",
-            houseNumber: "رقم المنزل",
-            roadNumber: "رقم الطريق",
-            block: "المجمع",
-            area: "المنطقة",
-            postCode: "الرمز البريدي",
-            district: "المقاطعة",
-            city: "المدينة",
-            additionalAddress: "عنوان إضافي للعثور بشكل أفضل",
-            saveAddress: "حفظ العنوان",
-            updateAddress: "تحديث العنوان",
-            selectDistrict: "اختر المقاطعة",
-            loadingDistricts: "جاري تحميل المقاطعات...",
-            selectDistrictFirst: "اختر المقاطعة أولاً",
-            loadingCities: "جاري تحميل المدن...",
-            selectCity: "اختر المدينة",
-            noAddressFound: "لم يتم العثور على عنوان",
-            selectPaymentMethod: "اختر طريقة الدفع",
-            cashOnDelivery: "الدفع عند الاستلام",
-            payOnline: "الدفع عبر الإنترنت",
-            nameRequired: "الاسم مطلوب",
-            mobileRequired: "رقم الهاتف المحمول مطلوب",
-            flatRequired: "رقم الشقة مطلوب",
-            houseRequired: "رقم المنزل مطلوب",
-            areaRequired: "المنطقة مطلوبة",
-            districtRequired: "المقاطعة مطلوبة",
-            cityRequired: "المدينة مطلوبة",
-            submittingAddress: "جاري إرسال العنوان...",
-            addressSubmitted: "تم إرسال العنوان بنجاح!",
-            failedSubmit: "فشل في إرسال العنوان",
-            updatingAddress: "جاري تحديث العنوان...",
-            addressUpdated: "تم تحديث العنوان بنجاح!",
-            failedUpdate: "فشل في تحديث العنوان",
-            deletingAddress: "جاري حذف العنوان...",
-            addressDeleted: "تم حذف العنوان بنجاح!",
-            failedDelete: "فشل في حذف العنوان",
-            savingAddress: "حفظ العنوان",
-            updating: "جاري التحديث"
-        }
-    };
-
-    const t = texts[lang] || texts.en;
+    // Fetch countries & districts (cities)
+    const { data: countriesData, isLoading: isCountriesLoading } = useGetDataWithToken('countries', token);
+    const { data: districtsData, isLoading: isDistrictsLoading } = useGetDataWithToken(`districts?country_id=${selectedCountryId}`, token);
 
     // manage address form
     const [formData, setFormData] = useState({
-        fullName: "",
-        mobileNumber: "",
-        flatNumber: "",
-        houseNumber: "",
-        area: "",
+        firstName: "",
+        lastName: "",
+        company: "",
+        address1: "",
+        address2: "",
         city: "",
         district: "",
         postCode: "",
-        roadNumber: "",
-        block: "",
-        additionalAddress: "",
+        additionalInfo: "",
+        isDefault: false,
     });
+
 
     // handle form errors
     const [errors, setErrors] = useState({});
 
-    // Fetch districts & cities
-    const { data: districtsData, isLoading: isDistrictsLoading } = useGetData('get-districts');
-
-    const { data: citiesData, isLoading: isCitiesLoading } = useGetData(`get-cities/${selectedDistrictId}`);
-
-    // Helper function to get district name by ID
-    const getDistrictNameById = (districtId) => {
-        if (!districtsData?.data || !districtId) return '';
-        const district = districtsData.data.find(d => d.id.toString() === districtId.toString());
-        return district ? (lang === 'ar' ? district.ar_name : district.name) || '' : '';
-    };
-
     // Reset form data when starting fresh (add new address)
     const resetFormData = () => {
         setFormData({
-            fullName: "",
-            mobileNumber: "",
-            flatNumber: "",
-            houseNumber: "",
-            area: "",
+            firstName: "",
+            lastName: "",
+            company: "",
+            address1: "",
+            address2: "",
             city: "",
             district: "",
             postCode: "",
-            roadNumber: "",
-            block: "",
-            additionalAddress: "",
+            additionalInfo: "",
+            isDefault: false,
         });
+        setSelectedCountryId(null);
         setSelectedDistrictId(null);
-        setSelectedCityId(null);
         setErrors({});
     };
 
     // Update form data when editableAddress changes
     useEffect(() => {
         if (editableAddress && Object.keys(editableAddress).length > 0) {
-            // Editing existing address
-            const districtId = editableAddress?.district ? Number(editableAddress.district) : null;
-            const cityId = editableAddress?.city ? Number(editableAddress.city) : null;
+            // Editing existing address - use the nested objects from API response
+            const countryId = editableAddress?.country?.id ? Number(editableAddress.country.id) : null;
+            const districtId = editableAddress?.district?.id ? Number(editableAddress.district.id) : null;
 
+            setSelectedCountryId(countryId);
             setSelectedDistrictId(districtId);
-            setSelectedCityId(cityId);
 
-            // Use the name fields from response for display
             setFormData({
-                fullName: editableAddress?.name || "",
-                mobileNumber: editableAddress?.phone || "",
-                flatNumber: editableAddress?.house_name_or_flat_number || "",
-                houseNumber: editableAddress?.house_number || "",
-                area: editableAddress?.area || "",
-                city: lang === 'ar' ? editableAddress?.city_ar_name || editableAddress?.city_name : editableAddress?.city_name || "", 
-                district: lang === 'ar' ? editableAddress?.district_ar_name || editableAddress?.district_name : editableAddress?.district_name || "", 
+                firstName: editableAddress?.first_name || "",
+                lastName: editableAddress?.last_name || "",
+                company: editableAddress?.company || "",
+                address1: editableAddress?.address_1 || "",
+                address2: editableAddress?.address_2 || "",
+                city: editableAddress?.district?.name || "", // district name goes to city field
+                district: editableAddress?.country?.country_name || "", // country name goes to district field
                 postCode: editableAddress?.post_code || "",
-                roadNumber: editableAddress?.road_number || "",
-                block: editableAddress?.block || "",
-                additionalAddress: editableAddress?.additional_info || "",
+                additionalInfo: editableAddress?.additional_info || "",
+                isDefault: editableAddress?.is_default === 1 || false,
             });
         } else if (editableAddress !== null) {
             resetFormData();
         }
-    }, [editableAddress, lang]);
+    }, [editableAddress]);
 
-    // Reset city when district changes (only for new addresses)
+    // Reset district when country changes (only for new addresses)
     useEffect(() => {
-        if (selectedDistrictId && (!editableAddress || Object.keys(editableAddress).length === 0)) {
-            setSelectedCityId(null);
-            setFormData(prev => ({ ...prev, city: "" }));
+        if (selectedCountryId && (!editableAddress || Object.keys(editableAddress).length === 0)) {
+            setSelectedDistrictId(null);
+            setFormData(prev => ({ ...prev, city: "" })); // reset city (district name)
         }
-    }, [selectedDistrictId, editableAddress]);
+    }, [selectedCountryId, editableAddress]);
 
-    // Update form names when user selects new district/city (for new addresses only)
+    // Update form names when user selects new country/district (for new addresses only)
     useEffect(() => {
         if (!editableAddress || Object.keys(editableAddress).length === 0) {
-            if (selectedDistrictId && districtsData?.data) {
-                const districtName = getDistrictNameById(selectedDistrictId);
-                setFormData(prev => ({ ...prev, district: districtName }));
+            if (selectedCountryId && countriesData?.data) {
+                const country = countriesData.data.find(c => c.id.toString() === selectedCountryId.toString());
+                const countryName = country ? country.country_name || "" : "";
+                setFormData(prev => ({ ...prev, district: countryName })); // country name goes to district field
             }
 
-            if (selectedCityId && citiesData?.data) {
-                const city = citiesData.data.find(c => c.id.toString() === selectedCityId.toString());
-                const cityName = city ? (lang === 'ar' ? city.ar_name : city.name) || "" : "";
-                setFormData(prev => ({ ...prev, city: cityName }));
+            if (selectedDistrictId && districtsData?.data) {
+                const district = districtsData.data.find(d => d.id.toString() === selectedDistrictId.toString());
+                const districtName = district ? district.name || "" : "";
+                setFormData(prev => ({ ...prev, city: districtName })); // district name goes to city field
             }
         }
-    }, [selectedDistrictId, selectedCityId, districtsData, citiesData, editableAddress, lang]);
+    }, [selectedCountryId, selectedDistrictId, countriesData, districtsData, editableAddress]);
 
     // Handle input changes
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
         setErrors(prev => ({ ...prev, [name]: "" }));
     };
 
-    // Handle district change
+    // Handle country change (this was previously district change)
+    const handleCountryChange = (e) => {
+        const countryId = e.target.value;
+        const selectedCountry = countriesData?.data?.find(c => c.id.toString() === countryId);
+
+        setSelectedCountryId(countryId ? Number(countryId) : null);
+        setSelectedDistrictId(null);
+        setFormData(prev => ({
+            ...prev,
+            district: selectedCountry ? selectedCountry.country_name || "" : "", // country name
+            city: "" // reset city (district name)
+        }));
+        setErrors(prev => ({ ...prev, district: "", city: "" }));
+    };
+
+    // Handle district change (this was previously city change)
     const handleDistrictChange = (e) => {
         const districtId = e.target.value;
         const selectedDistrict = districtsData?.data?.find(d => d.id.toString() === districtId);
 
         setSelectedDistrictId(districtId ? Number(districtId) : null);
-        setSelectedCityId(null); // Reset city when district changes
         setFormData(prev => ({
             ...prev,
-            district: selectedDistrict ? (lang === 'ar' ? selectedDistrict.ar_name : selectedDistrict.name) || "" : "",
-            city: "" // Reset city name
-        }));
-        setErrors(prev => ({ ...prev, district: "", city: "" }));
-    };
-
-    // Handle city change
-    const handleCityChange = (e) => {
-        const cityId = e.target.value;
-        const selectedCity = citiesData?.data?.find(c => c.id.toString() === cityId);
-
-        setSelectedCityId(cityId ? Number(cityId) : null);
-        setFormData(prev => ({
-            ...prev,
-            city: selectedCity ? (lang === 'ar' ? selectedCity.ar_name : selectedCity.name) || "" : ""
+            city: selectedDistrict ? selectedDistrict.name || "" : "" // district name goes to city field
         }));
         setErrors(prev => ({ ...prev, city: "" }));
     };
@@ -257,20 +159,18 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
     const validate = () => {
         const newErrors = {};
 
-        if (!formData.fullName.trim()) newErrors.fullName = t.nameRequired;
-        if (!formData.mobileNumber.trim()) newErrors.mobileNumber = t.mobileRequired;
-        if (!formData.flatNumber.trim()) newErrors.flatNumber = t.flatRequired;
-        if (!formData.houseNumber.trim()) newErrors.houseNumber = t.houseRequired;
-        if (!formData.area.trim()) newErrors.area = t.areaRequired;
-        if (!selectedDistrictId) newErrors.district = t.districtRequired;
-        if (!selectedCityId) newErrors.city = t.cityRequired;
+        if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+        if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+        if (!formData.address1.trim()) newErrors.address1 = "Address 1 is required";
+        if (!selectedCountryId) newErrors.district = "Country is required";
+        if (!selectedDistrictId) newErrors.city = "City is required";
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
     // add new address
-    const postAddress = usePostDataWithToken('address');
+    const postAddress = usePostDataWithToken('add-address');
     const updateAddress = usePostDataWithToken('update-address');
     const queryClient = useQueryClient();
 
@@ -282,25 +182,25 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
         setLoading(true);
 
         const form = new FormData();
-        form.append('name', formData.fullName.trim());
-        form.append('phone', formData.mobileNumber.trim());
-        form.append('house_name_or_flat_number', formData.flatNumber.trim());
-        form.append('house_number', formData.houseNumber.trim());
-        form.append('road_number', formData.roadNumber.trim() || '');
-        form.append('block', formData.block.trim() || '');
-        form.append('area', formData.area.trim());
-        form.append('city', selectedCityId.toString()); 
-        form.append('district', selectedDistrictId.toString()); 
+        form.append('first_name', formData.firstName.trim());
+        form.append('last_name', formData.lastName.trim());
+        form.append('company', formData.company.trim());
+        form.append('address_1', formData.address1.trim());
+        form.append('address_2', formData.address2.trim());
+        form.append('city', selectedDistrictId.toString()); // district ID goes to city field
+        form.append('country_id', selectedCountryId.toString()); // country ID
+        form.append('district_id', selectedDistrictId.toString()); // district ID
         form.append('post_code', formData.postCode.trim());
-        form.append('additional_info', formData.additionalAddress.trim() || '');
+        form.append('additional_info', formData.additionalInfo.trim());
+        form.append('is_default', formData.isDefault ? '1' : '0');
 
         try {
             await toast.promise(
                 postAddress.mutateAsync({ formData: form, token }),
                 {
-                    loading: t.submittingAddress,
-                    success: t.addressSubmitted,
-                    error: (err) => err.message || t.failedSubmit,
+                    loading: "Submitting address...",
+                    success: "Address submitted successfully!",
+                    error: (err) => err.message || "Failed to submit address",
                 }
             );
             setShowForm(false);
@@ -321,18 +221,17 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
         try {
             const updateData = new FormData();
 
-            // Add all required fields 
-            updateData.append('house_name_or_flat_number', formData.flatNumber.trim());
-            updateData.append('house_number', formData.houseNumber.trim());
-            updateData.append('road_number', formData.roadNumber.trim() || '');
-            updateData.append('block', formData.block.trim() || '');
-            updateData.append('area', formData.area.trim());
-            updateData.append('city', selectedCityId.toString()); // Send city ID
-            updateData.append('district', selectedDistrictId.toString()); // Send district ID
+            updateData.append('first_name', formData.firstName.trim());
+            updateData.append('last_name', formData.lastName.trim());
+            updateData.append('company', formData.company.trim());
+            updateData.append('address_1', formData.address1.trim());
+            updateData.append('address_2', formData.address2.trim());
+            updateData.append('city', selectedDistrictId.toString()); // district ID goes to city field
+            updateData.append('country_id', selectedCountryId.toString()); // country ID
+            updateData.append('district_id', selectedDistrictId.toString()); // district ID
             updateData.append('post_code', formData.postCode.trim());
-            updateData.append('additional_info', formData.additionalAddress.trim() || '');
-            updateData.append('name', formData.fullName.trim());
-            updateData.append('phone', formData.mobileNumber.trim());
+            updateData.append('additional_info', formData.additionalInfo.trim());
+            updateData.append('is_default', formData.isDefault ? '1' : '0');
             updateData.append('address_id', addressId.toString());
 
             await toast.promise(
@@ -342,9 +241,9 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     formData: updateData
                 }),
                 {
-                    loading: t.updatingAddress,
-                    success: t.addressUpdated,
-                    error: (err) => err.message || t.failedUpdate,
+                    loading: "Updating address...",
+                    success: "Address updated successfully!",
+                    error: (err) => err.message || "Failed to update address",
                 }
             );
 
@@ -370,9 +269,9 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     token,
                 }),
                 {
-                    loading: t.deletingAddress,
-                    success: t.addressDeleted,
-                    error: (err) => err.message || t.failedDelete,
+                    loading: "Deleting address...",
+                    success: "Address deleted successfully!",
+                    error: (err) => err.message || "Failed to delete address",
                 }
             );
             queryClient.invalidateQueries({ queryKey: ['address'] });
@@ -395,105 +294,121 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                     {/* address form  */}
                     <div>
                         <div className="flex justify-between items-center">
-                            <p className="text-[18px] md:text-[20px] font-[650] text-primaryblack">{t.shippingDetails}</p>
+                            <p className="text-[18px] md:text-[20px] font-[650] text-primaryblack">Shipping Details</p>
                             <button
                                 onClick={handleCancelForm}
                                 className="px-[16px] py-[8px] bg-button text-white rounded-[10px] cursor-pointer"
                             >
-                                {t.cancel}
+                                Cancel
                             </button>
                         </div>
                         <div className="bg-creamline h-[1px] w-full mt-[10px] sm:mt-[30px] mb-[10px]"></div>
                         <div className="">
                             {/* Personal Information Section */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
-                                {/* Full Name */}
+                                {/* First Name */}
                                 <div>
                                     <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                        <p>{t.fullName} <span className="text-button">*</span></p>
-                                        {errors.fullName && (
-                                            <span className="text-button ml-2">{errors.fullName}</span>
+                                        <p>First name <span className="text-button">*</span></p>
+                                        {errors.firstName && (
+                                            <span className="text-button ml-2">{errors.firstName}</span>
                                         )}
                                     </label>
                                     <input
                                         type="text"
-                                        name="fullName"
-                                        value={formData.fullName}
+                                        name="firstName"
+                                        value={formData.firstName}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.fullName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
+                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.firstName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
                                     />
                                 </div>
 
-                                {/* Mobile Number */}
+                                {/* Last Name */}
                                 <div>
                                     <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                        <p>{t.mobileNumber} <span className="text-button">*</span></p>
-                                        {errors.mobileNumber && (
-                                            <span className="text-button ml-2">{errors.mobileNumber}</span>
+                                        <p>Last name <span className="text-button">*</span></p>
+                                        {errors.lastName && (
+                                            <span className="text-button ml-2">{errors.lastName}</span>
                                         )}
                                     </label>
                                     <input
-                                        type="tel"
-                                        name="mobileNumber"
-                                        value={formData.mobileNumber}
+                                        type="text"
+                                        name="lastName"
+                                        value={formData.lastName}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.mobileNumber ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
+                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.lastName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
+                                    />
+                                </div>
+
+                                {/* Company */}
+                                <div>
+                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                        <p>Company</p>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="company"
+                                        value={formData.company}
+                                        onChange={handleChange}
+                                        className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
                                     />
                                 </div>
                             </div>
 
                             {/* Address Section */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
-                                {[
-                                    { label: t.flatNumber, name: "flatNumber" },
-                                    { label: t.houseNumber, name: "houseNumber" },
-                                    { label: t.roadNumber, name: "roadNumber" },
-                                    { label: t.block, name: "block" },
-                                    { label: t.area, name: "area" },
-                                    { label: t.postCode, name: "postCode" },
-                                ].map((field) => (
-                                    <div key={field.name}>
-                                        <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                            <p>{field.label}
-                                                {["flatNumber", "houseNumber", "area"].includes(field.name) && (
-                                                    <span className="text-button"> *</span>
-                                                )}
-                                            </p>
-                                            {errors[field.name] && (
-                                                <span className="text-button ml-2">{errors[field.name]}</span>
-                                            )}
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name={field.name}
-                                            value={formData[field.name]}
-                                            onChange={handleChange}
-                                            className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors[field.name] ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
-                                        />
-                                    </div>
-                                ))}
-
-                                {/* District Select */}
+                                {/* Address 1 */}
                                 <div>
                                     <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                        <p>{t.district} <span className="text-button">*</span></p>
+                                        <p>Address 1 <span className="text-button">*</span></p>
+                                        {errors.address1 && (
+                                            <span className="text-button ml-2">{errors.address1}</span>
+                                        )}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="address1"
+                                        value={formData.address1}
+                                        onChange={handleChange}
+                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.address1 ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
+                                    />
+                                </div>
+
+                                {/* Address 2 */}
+                                <div>
+                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                        <p>Address 2</p>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="address2"
+                                        value={formData.address2}
+                                        onChange={handleChange}
+                                        className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
+                                    />
+                                </div>
+
+                                {/* Country Select (was District) */}
+                                <div>
+                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                        <p>Country <span className="text-button">*</span></p>
                                         {errors.district && (
                                             <span className="text-button ml-2">{errors.district}</span>
                                         )}
                                     </label>
                                     <div className="relative">
                                         <select
-                                            value={selectedDistrictId || ""}
-                                            onChange={handleDistrictChange}
-                                            disabled={isDistrictsLoading}
+                                            value={selectedCountryId || ""}
+                                            onChange={handleCountryChange}
+                                            disabled={isCountriesLoading}
                                             className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.district ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack bg-white`}
                                         >
                                             <option value="">
-                                                {isDistrictsLoading ? t.loadingDistricts : t.selectDistrict}
+                                                {isCountriesLoading ? "Loading countries..." : "Select Country"}
                                             </option>
-                                            {districtsData?.data?.map((district) => (
-                                                <option key={district.id} value={district.id}>
-                                                    {lang === 'ar' ? district.ar_name : district.name}
+                                            {countriesData?.data?.map((country) => (
+                                                <option key={country.id} value={country.id}>
+                                                    {country.country_name}
                                                 </option>
                                             ))}
                                         </select>
@@ -501,52 +416,80 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                     </div>
                                 </div>
 
-                                {/* City Select */}
+                                {/* District Select (was City) - Now labeled as City */}
                                 <div className="relative">
                                     <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                        <p>{t.city} <span className="text-button">*</span></p>
+                                        <p>City <span className="text-button">*</span></p>
                                         {errors.city && (
                                             <span className="text-button ml-2">{errors.city}</span>
                                         )}
                                     </label>
                                     <div className="relative">
                                         <select
-                                            value={selectedCityId || ""}
-                                            onChange={handleCityChange}
-                                            disabled={!selectedDistrictId || isCitiesLoading}
+                                            value={selectedDistrictId || ""}
+                                            onChange={handleDistrictChange}
+                                            disabled={!selectedCountryId || isDistrictsLoading}
                                             className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.city ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack bg-white`}
                                         >
                                             <option value="">
-                                                {!selectedDistrictId
-                                                    ? t.selectDistrictFirst
-                                                    : isCitiesLoading
-                                                        ? t.loadingCities
-                                                        : t.selectCity
+                                                {!selectedCountryId
+                                                    ? "Select country first"
+                                                    : isDistrictsLoading
+                                                        ? "Loading cities..."
+                                                        : "Select City"
                                                 }
                                             </option>
-                                            {citiesData?.data?.map((city) => (
-                                                <option key={city.id} value={city.id}>
-                                                    {lang === 'ar' ? city.ar_name : city.name}
+                                            {districtsData?.data?.map((district) => (
+                                                <option key={district.id} value={district.id}>
+                                                    {district.name}
                                                 </option>
                                             ))}
                                         </select>
                                         <BiChevronDown className="absolute top-42/100 right-5 text-xl text-gray-300" />
                                     </div>
                                 </div>
+
+                                {/* Post Code */}
+                                <div>
+                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                        <p>Post Code</p>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="postCode"
+                                        value={formData.postCode}
+                                        onChange={handleChange}
+                                        className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
+                                    />
+                                </div>
                             </div>
 
                             {/* Additional Address */}
                             <div>
                                 <label className="block font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                    {t.additionalAddress}
+                                    Additional Address
                                 </label>
                                 <textarea
-                                    name="additionalAddress"
-                                    value={formData.additionalAddress}
+                                    name="additionalInfo"
+                                    value={formData.additionalInfo}
                                     onChange={handleChange}
                                     className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
                                     rows={3}
                                 />
+                            </div>
+
+                            {/* Default Address Checkbox */}
+                            <div className="mt-[15px] sm:mt-[30px]">
+                                <label className="flex items-center gap-[10px] cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        name="isDefault"
+                                        checked={formData.isDefault}
+                                        onChange={handleChange}
+                                        className="w-[18px] h-[18px] text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary"
+                                    />
+                                    <span className="text-[16px] text-primaryblack">Set as default address</span>
+                                </label>
                             </div>
 
                             {/* Submit Button */}
@@ -561,7 +504,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             }`}
                                     >
                                         {
-                                            loading ? <LoadingSvg label={t.savingAddress} color="text-primaryblack" /> : t.saveAddress
+                                            loading ? <LoadingSvg label="Saving address..." color="text-primaryblack" /> : "Save address"
                                         }
                                     </button>
                                 ) : (
@@ -574,7 +517,7 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                             }`}
                                     >
                                         {
-                                            loading ? <LoadingSvg label={t.updating} color="text-primaryblack" /> : t.updateAddress
+                                            loading ? <LoadingSvg label="Updating..." color="text-primaryblack" /> : "Update address"
                                         }
                                     </button>
                                 )}
@@ -585,10 +528,10 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
             ) : (
                 <>
                     {/* shipping details management  */}
-                    <div className="bg-creamline  p-[20px] rounded-[10px]">
+                    <div className="bg-creamline p-[20px] rounded-[10px]">
                         {/* add new address button  */}
                         <div className="flex justify-between items-center">
-                            <p className="text-[18px] md:text-[20px] text-primaryblack font-[650]">{t.shippingDetails}</p>
+                            <p className="text-[18px] md:text-[20px] text-primaryblack font-[650]">Shipping Details</p>
                             <button
                                 onClick={() => {
                                     setEditableAddress({});
@@ -597,38 +540,58 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                                 className="flex items-center gap-[6px] sm:gap-[12px] px-[12px] sm:px-[24px] py-[6px] sm:py-[12px] text-[14px] sm:text-[14px] bg-primary rounded-xl text-white cursor-pointer"
                             >
                                 <FaPlus />
-                                <span>{t.addNewAddress}</span>
+                                <span>Add new address</span>
                             </button>
                         </div>
 
                         {/* shipping address  */}
-                        {address?.is_completed ? (
+                        {address?.data?.length > 0 ? (
                             <div className="mt-[10px] sm:mt-[40px] flex flex-col gap-[15px] sm:gap-[30px]">
                                 {address?.data?.map((a) => (
                                     <div className="flex justify-between items-center" key={a?.id}>
-                                        <button onClick={() => setAddressId(a?.id)} className="flex gap-[18px] w-4/6 cursor-pointer">
-                                            <span>
-                                                {
-                                                    addressId === a?.id ?
-                                                        <MdCheckCircle className="text-[20px] sm:text-[24px] text-natural" />
-                                                        :
-                                                        <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
-                                                }
-                                            </span>
-                                            <p className="text-[16px] text-ash text-left">
-                                                {[
-                                                    a?.name,
-                                                    a?.phone,
-                                                    a?.house_name_or_flat_number,
-                                                    a?.house_number,
-                                                    // Use the appropriate language version for display
-                                                    lang === 'ar' ? a?.city_ar_name || a?.city_name : a?.city_name,
-                                                    lang === 'ar' ? a?.district_ar_name || a?.district_name : a?.district_name
-                                                ]
-                                                    .filter(Boolean)
-                                                    .join(', ')}
-                                            </p>
-                                        </button>
+                                        {
+                                            location === "/account" ?
+                                                <p className="flex gap-[18px] w-4/6 cursor-pointer">
+                                                    <p className="text-[16px] text-ash text-left">
+                                                        {[
+                                                            a?.first_name,
+                                                            a?.last_name,
+                                                            a?.company,
+                                                            a?.address_1,
+                                                            a?.address_2,
+                                                            a?.district?.name,
+                                                            a?.country?.country_name
+                                                        ]
+                                                            .filter(Boolean)
+                                                            .join(', ')}
+                                                    </p>
+                                                </p>
+                                                :
+                                                <button onClick={() => setAddressId(a?.id)} className="flex gap-[18px] w-4/6 cursor-pointer">
+                                                    <span>
+                                                        {
+                                                            addressId === a?.id ?
+                                                                <MdCheckCircle className="text-[20px] sm:text-[24px] text-primary" />
+                                                                :
+                                                                <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
+                                                        }
+                                                    </span>
+                                                    <p className="text-[16px] text-ash text-left">
+                                                        {[
+                                                            a?.first_name,
+                                                            a?.last_name,
+                                                            a?.company,
+                                                            a?.address_1,
+                                                            a?.address_2,
+                                                            a?.district?.name,
+                                                            a?.country?.country_name
+                                                        ]
+                                                            .filter(Boolean)
+                                                            .join(', ')}
+                                                    </p>
+                                                </button>
+                                        }
+
                                         <div className="flex gap-[16px]">
                                             <button
                                                 onClick={() => {
@@ -651,44 +614,12 @@ const BillForm = ({ address, addressId, setAddressId, method, setMethod, selecte
                             </div>
                         ) : (
                             <div className="py-[40px] flex items-center justify-center">
-                                <p className="text-[14px] text-button">{t.noAddressFound}</p>
+                                <p className="text-[14px] text-button">No address found</p>
                             </div>
                         )}
                     </div>
                 </>
             )}
-
-            {/* choose options  */}
-            <div className="bg-creamline p-[20px] rounded-xl mt-[30px]">
-                <p className='text-[18px] text-primaryblack font-[650]'>
-                    {t.selectPaymentMethod}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-[20px] sm:gap-[40px] mt-[15px]">
-                    <button onClick={() => setMethod("cod")} className="flex items-center gap-[6px] sm:gap-[12px] cursor-pointer">
-                        <span>
-                            {
-                                method === "cod" ?
-                                    <MdCheckCircle className="text-[20px] sm:text-[24px] text-customgreen" />
-                                    :
-                                    <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
-                            }
-                        </span>
-                        <span className={`text-[16px] sm:text-[18px] ${method === "cod" ? "text-customgreen font-[650]" : "text-ash"}`}>{t.cashOnDelivery}</span>
-                    </button>
-
-                    <button onClick={() => setMethod("online")} className="flex items-center gap-[6px] sm:gap-[12px] cursor-pointer">
-                        <span>
-                            {
-                                method === "online" ?
-                                    <MdCheckCircle className="text-[20px] sm:text-[24px] text-customgreen" />
-                                    :
-                                    <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
-                            }
-                        </span>
-                        <span className={`text-[16px] sm:text-[18px] ${method === "online" ? "text-customgreen font-[650]" : "text-ash"}`}>{t.payOnline}</span>
-                    </button>
-                </div>
-            </div>
         </section>
     );
 };

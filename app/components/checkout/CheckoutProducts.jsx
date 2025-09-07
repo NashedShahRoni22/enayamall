@@ -15,9 +15,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
     const [loading, setLoading] = useState(false);
     const [appliedCoupon, setAppliedCoupon] = useState(false);
     const [couponData, setCouponData] = useState(null);
-    console.log(currentCart);
     
-
     // Localization texts
     const texts = {
         en: {

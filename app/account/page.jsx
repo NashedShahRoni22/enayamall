@@ -16,15 +16,21 @@ import { FiShoppingBag, FiHeart, FiShoppingCart, FiLogOut, FiUser } from 'react-
 import { BiUser } from "react-icons/bi";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { useRouter } from 'next/navigation';
+import { HandshakeIcon, User2 } from 'lucide-react';
+import Affiliate from '../components/account/Affiliate';
+import BillForm from '../components/checkout/BillForm';
 
 export default function Page() {
     const { token, handleLogout } = useAppContext();
     const router = useRouter();
+    const [addressId, setAddressId] = useState(null);
+    const [method, setMethod] = useState(null);
+    const [selectedDistrictId, setSelectedDistrictId] = useState(null);
+    
     // manage bar 
     const [show, setShow] = useState(false);
     // get address 
-    const { data: addressData } = useGetDataWithToken(`profile-address`, token);
-    const address = addressData?.data;
+    const { data: address } = useGetDataWithToken(`address`, token);
 
     // get orders
     const { data: ordersData, isLoading, error } = useGetDataWithToken(`orders`, token);
@@ -36,17 +42,29 @@ export default function Page() {
     const mobileTabButtons = [
         { icon: FiUser, title: "Profile" },
         { icon: FiShoppingBag, title: "Orders" },
+        { icon: HandshakeIcon, title: "Affiliate Account" },
     ];
 
     const tabButtons = [
+        { icon: User2, title: "Profile" },
         { icon: FiShoppingBag, title: "Orders" },
         { icon: FiHeart, title: "Wishlist" },
         { icon: FiShoppingCart, title: "Cart" },
+        { icon: HandshakeIcon, title: "Affiliate Account" },
     ];
 
 
-    const profileTab = useMemo(() => <Profile address={address} />, );
+    const profileTab = useMemo(() => <BillForm
+        address={address}
+        addressId={addressId}
+        setAddressId={setAddressId}
+        method={method}
+        setMethod={setMethod}
+        selectedDistrictId={selectedDistrictId}
+        setSelectedDistrictId={setSelectedDistrictId}
+    />,);
     const ordersTab = useMemo(() => <Orders orders={orders} />,);
+    const affiliateTab = useMemo(() => <Affiliate />,);
 
     const renderActiveTab = () => {
         switch (activeTab) {
@@ -56,6 +74,8 @@ export default function Page() {
             case "Wishlist":
             case "Cart":
                 return ordersTab;
+            case "Affiliate Account":
+                return affiliateTab;
             default:
                 return profileTab;
         }
@@ -71,50 +91,42 @@ export default function Page() {
                 <section className='pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[120px] flex flex-col lg:flex-row gap-[24px]'>
                     {/* Mobilebar  */}
                     <div className='relative lg:hidden'>
-                        <div className='flex justify-end'>
-                            <button className='p-1.5 bg-primary text-white rounded-[5px] cursor-pointer' onClick={() => setShow(!show)}>
-                                <HiDotsHorizontal className='text-xl' />
-                            </button>
+                        <div className='flex justify-between right-0 gap-4'>
+                            {mobileTabButtons.map((tb, index) => {
+                                const IconComponent = tb.icon;
+                                const isActive = activeTab === tb.title;
+
+                                return (
+                                    <button
+                                        onClick={() => {
+                                            setActiveTab(tb.title);
+                                            setShow(false)
+                                        }}
+                                        key={index}
+                                        className={`${isActive && "bg-blue-50"} cursor-pointer rounded-xl w-full flex flex-col items-center gap-[10px] px-[16px] py-[16px] border-t-2 border-white transition-colors duration-200 ${isActive
+                                            ? "text-primary"
+                                            : "text-primaryblack hover:text-primary"
+                                            }`}
+                                    >
+                                        <IconComponent
+                                            size={20}
+                                        />
+                                        <span >
+                                            {tb.title}
+                                        </span>
+                                    </button>
+                                );
+                            })}
+
+                            {/* Logout Button */}
+                            {/* <button
+                                onClick={handleLogout}
+                                className='cursor-pointer w-full flex items-center text-primary gap-[10px] px-[16px] py-[8px] border-t-2 border-white'
+                            >
+                                <FiLogOut className='size-[20px]' />
+                                Logout
+                            </button> */}
                         </div>
-                        {
-                            show &&
-                            <div className='absolute bg-creamline rounded-[5px] right-0 z-50 min-w-[150px]'>
-                                {mobileTabButtons.map((tb, index) => {
-                                    const IconComponent = tb.icon;
-                                    const isActive = activeTab === tb.title;
-
-                                    return (
-                                        <button
-                                            onClick={() => {
-                                                setActiveTab(tb.title);
-                                                setShow(false)
-                                            }}
-                                            key={index}
-                                            className={`cursor-pointer w-full flex items-center gap-[10px] px-[16px] py-[8px] border-t-2 border-white transition-colors duration-200 ${isActive
-                                                ? "text-primary"
-                                                : "text-primaryblack hover:text-primary"
-                                                }`}
-                                        >
-                                            <IconComponent
-                                                size={20}
-                                            />
-                                            <span >
-                                                {tb.title}
-                                            </span>
-                                        </button>
-                                    );
-                                })}
-
-                                {/* Logout Button */}
-                                <button
-                                    onClick={handleLogout}
-                                    className='cursor-pointer w-full flex items-center text-primary gap-[10px] px-[16px] py-[8px] border-t-2 border-white'
-                                >
-                                    <FiLogOut className='size-[20px]' />
-                                    Logout
-                                </button>
-                            </div>
-                        }
                     </div>
                     {/* Sidebar for desktop */}
                     <div className='hidden lg:block bg-light py-[20px] px-[30px] rounded-[10px] lg:w-[300px] h-fit lg:sticky lg:top-26'>
@@ -136,9 +148,9 @@ export default function Page() {
 
                             <div className='flex flex-col items-start gap-[20px]'>
                                 <p className='text-[20px] text-primaryblack'>{address?.name}</p>
-                                <button onClick={() => setActiveTab("Profile")} className='text-[14px] text-primary cursor-pointer'>
+                                {/* <button onClick={() => setActiveTab("Profile")} className='text-[14px] text-primary cursor-pointer'>
                                     Edit profile
-                                </button>
+                                </button> */}
                             </div>
                         </div>
 

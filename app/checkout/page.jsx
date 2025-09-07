@@ -9,6 +9,7 @@ import { useAppContext } from '../context/AppContext'
 import { useState } from 'react'
 import ScreenLoader from '../components/loaders/ScreenLoader'
 import { useEffect, useState as useStateForShipping } from 'react'
+import ChoosePayment from '../components/checkout/ChoosePayment'
 
 export default function page() {
     const { token, lang } = useAppContext();
@@ -76,6 +77,7 @@ export default function page() {
                             selectedDistrictId={selectedDistrictId} 
                             setSelectedDistrictId={setSelectedDistrictId} 
                         />
+                        <ChoosePayment method={method} setMethod={setMethod}/>
                     </div>
                     {/* right side details  */}
                     <div className='xl:w-1/2'>

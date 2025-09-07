@@ -18,15 +18,15 @@ export const useGetDataWithToken = (endpoint, token, enabled = true) => {
       });
 
       // Handle 401 Unauthorized - redirect to login
-      if (res.status === 401) {
-        localStorage.removeItem('EnayamallUser');
-        localStorage.removeItem('EnayamallAuthToken');
+      // if (res.status === 401) {
+      //   localStorage.removeItem('EnayamallUser');
+      //   localStorage.removeItem('EnayamallAuthToken');
         
-        // Redirect to login page
-        window.location.href = '/login';
+      //   // Redirect to login page
+      //   window.location.href = '/login';
         
-        throw new Error('Session Expired. Redirecting to login...');
-      }
+      //   throw new Error('Session Expired. Redirecting to login...');
+      // }
       
       if (!res.ok) {
         throw new Error("Failed to fetch data");
