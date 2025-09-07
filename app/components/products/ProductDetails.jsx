@@ -89,12 +89,12 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
             if (i <= filledStars) {
                 // Filled star
                 stars.push(
-                    <TiStarFullOutline key={i} className="text-orange text-[20px] lg:text-[24px]" />
+                    <TiStarFullOutline key={i} className="text-orange text-[18px]" />
                 );
             } else {
                 // Empty star
                 stars.push(
-                    <TiStarFullOutline key={i} className="text-gray-300 text-[20px] lg:text-[24px]" />
+                    <TiStarFullOutline key={i} className="text-gray-300 text-[18px]" />
                 );
             }
         }
@@ -180,17 +180,17 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
     return (
         <div>
             {/* brand logo here  */}
-            <Link href={`/brand/${product?.brand?.slug}`} className="inline-block">
+            {/* <Link href={`/brand/${product?.brand?.slug}`} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center`}>
                 <Image
                     src={product?.brand?.image}
                     alt={lang === 'en' ? product?.brand?.name : product?.brand?.ar_name || product?.brand?.name}
                     height={500}
                     width={500}
                     sizes=""
-                    className="h-[120px] w-[160px]"
+                    className="w-[100px] border border-creamline p-2 rounded-[10px] mb-[20px] object-contain"
                 />
-            </Link>
-            <h1 className="text-primaryblack text-[20px] 2xl:text-[26px] font-[550]">
+            </Link> */}
+            <h1 className="text-primaryblack text-[20px] 2xl:text-[24px] font-[500]">
                 {lang === 'en' ? product?.name : product?.ar_name || product?.name}
             </h1>
 
@@ -203,24 +203,44 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
 
             {/* ratings */}
             {
-                ratingCount > 0 &&
-                <div className="flex gap-[30px]">
-                    <div className="flex gap-[6px] items-center">
+                ratingCount == 0 &&
+                <div className="flex gap-[20px] align-center mt-2">
+                    <div className="flex gap-[4px] items-center">
                         {renderStars()}
-                        <p className="text-[18px] 2xl:text-[20px] font-[550] text-primaryblack ml-2">
+                        <p className="text-[14px] 2xl:text-[16px] font-[550] text-primaryblack ml-2">
                             ( {product?.ratings?.rating || 0} )
                         </p>
                     </div>
-                    <p className="text-[16px] 2xl:text-[18px] text-[#4CA9DF]">
+                    <p className="text-[14px] 2xl:text-[16px] text-[#4CA9DF]">
                         {getText('basedOnRatings')} {product?.ratings?.total_rating || 0} {getText('ratings')}
                     </p>
                 </div>
             }
 
-            <div className="my-[20px] 2xl:my-[30px] h-[1px] bg-creamline w-full"></div>
+            <div className="my-[15px] h-[1px] bg-creamline w-full"></div>
+
+            {/* {product?.is_express && (
+                <div className={`relative flex mb-[20px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
+                  <img
+                    src='/express.png'
+                    alt="Express"
+                    className="cursor-pointer peer"
+                    width={80}
+                  />
+                  <span
+                    className={`absolute bottom-full mb-2 ${
+                      lang === "ar" ? "right-0" : "left-0"
+                    }
+                   hidden peer-hover:block bg-primary text-white text-xs 
+                   px-2 py-1 rounded whitespace-nowrap pointer-events-none`}
+                  >
+                    ${lang === "en" ? "This product offers Express Delivery" : "هذا المنتج يقدم توصيل سريع"}
+                  </span>
+                </div>
+            )} */}
 
             {/* pricing */}
-            <div className="text-[20px] 2xl:text-[34px] text-secondary flex items-center gap-[30px] mb-[20px] 2xl:mb-[40px]">
+            <div className="text-[20px] 2xl:text-[26px] text-secondary flex items-center gap-[10px] mb-[20px] 2xl:mb-[40px]">
                 {
                     (() => {
                         const selectedVariant = product?.variants?.find(v => v?.variant === defaultVarient);
@@ -231,11 +251,11 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
 
                         if (hasDiscount) {
                             return (
-                                <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-[20px]">
-                                    <div className="flex gap-[20px]">
-                                        <p><span className="dirham-symbol">ê</span> {selectedVariant?.discount?.discount_price}</p>
-                                        <p className="text-ash line-through">
-                                            <span className="dirham-symbol">ê</span> {selectedVariant?.price}
+                                <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-[10px]">
+                                    <div className="flex gap-[10px] items-center font-semibold">
+                                        <p className="flex items-center"><span className="dirham-symbol mr-1">ê</span> {selectedVariant?.discount?.discount_price}</p>
+                                        <p className="flex items-center text-ash line-through font-[300] text-[16px] 2xl:text-[18px]">
+                                            <span className="dirham-symbol text-[16px]">ê</span> {selectedVariant?.price}
                                         </p>
                                     </div>
                                     <p className="text-[12px] 2xl:text-[18px] text-customgreen">
@@ -245,7 +265,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                             );
                         }
 
-                        return <><span className="dirham-symbol">ê</span> {selectedVariant?.price}</>;
+                        return <div className="font-semibold flex align-center"><span className="dirham-symbol mr-1">ê</span> {selectedVariant?.price}</div>;
                     })()
                 }
             </div>
