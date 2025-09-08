@@ -26,9 +26,6 @@ export default function Page() {
     const [addressId, setAddressId] = useState(null);
     const [method, setMethod] = useState(null);
     const [selectedDistrictId, setSelectedDistrictId] = useState(null);
-    
-    // manage bar 
-    const [show, setShow] = useState(false);
     // get address 
     const { data: address } = useGetDataWithToken(`address`, token);
 
@@ -42,27 +39,29 @@ export default function Page() {
     const mobileTabButtons = [
         { icon: Map, title: "Address" },
         { icon: FiShoppingBag, title: "Orders" },
-        { icon: HandshakeIcon, title: "Affiliate Account" },
+        { icon: HandshakeIcon, title: "Affiliate" },
     ];
 
     const tabButtons = [
-        { icon: Map, title: "Address" },
         { icon: FiShoppingBag, title: "Orders" },
+        { icon: Map, title: "Address" },
         { icon: FiHeart, title: "Wishlist" },
         { icon: FiShoppingCart, title: "Cart" },
-        { icon: HandshakeIcon, title: "Affiliate Account" },
+        { icon: HandshakeIcon, title: "Affiliate" },
     ];
 
 
-    const profileTab = useMemo(() => <BillForm
-        address={address}
-        addressId={addressId}
-        setAddressId={setAddressId}
-        method={method}
-        setMethod={setMethod}
-        selectedDistrictId={selectedDistrictId}
-        setSelectedDistrictId={setSelectedDistrictId}
-    />,);
+    const profileTab = useMemo(() =>
+        <BillForm
+            address={address}
+            addressId={addressId}
+            setAddressId={setAddressId}
+            method={method}
+            setMethod={setMethod}
+            selectedDistrictId={selectedDistrictId}
+            setSelectedDistrictId={setSelectedDistrictId}
+        />
+    );
     const ordersTab = useMemo(() => <Orders orders={orders} />,);
     const affiliateTab = useMemo(() => <Affiliate />,);
 
@@ -74,7 +73,7 @@ export default function Page() {
             case "Wishlist":
             case "Cart":
                 return ordersTab;
-            case "Affiliate Account":
+            case "Affiliate":
                 return affiliateTab;
             default:
                 return profileTab;
@@ -100,7 +99,6 @@ export default function Page() {
                                     <button
                                         onClick={() => {
                                             setActiveTab(tb.title);
-                                            setShow(false)
                                         }}
                                         key={index}
                                         className={`${isActive && "bg-blue-50"} cursor-pointer rounded-xl w-full flex flex-col items-center gap-[10px] px-[16px] py-[16px] border-t-2 border-white transition-colors duration-200 ${isActive
@@ -130,8 +128,8 @@ export default function Page() {
                     </div>
                     {/* Sidebar for desktop */}
                     <div className='hidden lg:block bg-light py-[20px] px-[30px] rounded-[10px] lg:w-[300px] h-fit lg:sticky lg:top-26'>
-                        <div className='flex items-center gap-[20px]'>
-                            {/* user image here */}
+                        {/* user image & info here */}
+                        {/* <div className='flex items-center gap-[20px]'>
                             {address?.photo ? (
                                 <Image
                                     src={address?.photo}
@@ -152,10 +150,10 @@ export default function Page() {
                                     Edit profile
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Navigation Buttons */}
-                        <div className='mt-[20px]'>
+                        <div>
                             {tabButtons.map((tb, index) => {
                                 const IconComponent = tb.icon;
                                 const isActive = activeTab === tb.title;
@@ -172,7 +170,7 @@ export default function Page() {
                                             }
                                         }}
                                         key={index}
-                                        className={`cursor-pointer w-full flex items-center gap-[20px] py-[20px] border-t-2 border-white transition-colors duration-200 ${isActive ? "text-primary" : "text-primaryblack hover:text-primary"
+                                        className={`cursor-pointer w-full flex items-center gap-[20px] py-[20px] transition-colors duration-200 ${isActive ? "text-primary" : "text-primaryblack hover:text-primary"
                                             }`}
                                     >
                                         <IconComponent size={20} />
@@ -184,7 +182,7 @@ export default function Page() {
                             {/* Logout Button */}
                             <button
                                 onClick={handleLogout}
-                                className='cursor-pointer w-full flex items-center text-secondary gap-[20px] py-[20px] border-t-2 border-white'
+                                className='cursor-pointer w-full flex items-center text-secondary gap-[20px] py-[20px]'
                             >
                                 <FiLogOut className='size-[20px]' />
                                 Logout

@@ -16,8 +16,6 @@ import { usePathname } from "next/navigation";
 
 const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSelectedDistrictId }) => {
     const location = usePathname();
-    console.log(location);
-
     const { token } = useAppContext();
     const [showForm, setShowForm] = useState(false);
     const [editableAddress, setEditableAddress] = useState(null);
