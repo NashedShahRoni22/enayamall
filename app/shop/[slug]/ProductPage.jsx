@@ -76,7 +76,7 @@ export default function ProductPage() {
                     {/* product information here  */}
                     <div className={`flex flex-col gap-[20px] md:flex-row md:gap-[40px] ${lang === 'ar' ? 'md:flex-row-reverse' : ''}`}>
                         {/* product image */}
-                        <div className="w-full md:w-1/2 md:sticky md:top-26">
+                        <div className="w-full md:w-6/10 md:sticky md:top-26">
                             <ProductImageGallery
                                 product={product}
                                 defaultImage={defaultImage}
@@ -87,7 +87,7 @@ export default function ProductPage() {
                         </div>
 
                         {/* product description */}
-                        <div className="md:w-1/2">
+                        <div className="md:w-4/10">
                             <ProductDetails
                                 token={token}
                                 slug={slug}

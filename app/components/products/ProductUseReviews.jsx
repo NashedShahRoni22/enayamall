@@ -70,8 +70,8 @@ export default function ProductUseReviews({
       // Check which section is currently in view (closest to top within threshold)
       const sections = [
         { name: "description", top: descTop, ref: descriptionRef.current },
-        { name: "howtouse", top: usageTop, ref: usageRef.current },
-        { name: "benefits", top: benefitsTop, ref: benefitsRef.current },
+        // { name: "howtouse", top: usageTop, ref: usageRef.current },
+        // { name: "benefits", top: benefitsTop, ref: benefitsRef.current },
         { name: "reviews", top: reviewTop, ref: reviewsRef.current },
       ].filter((section) => section.ref); // Only include sections that exist
 
@@ -122,7 +122,11 @@ export default function ProductUseReviews({
           lang === "ar" ? "rtl" : "ltr"
         }`}
       >
-        <div className={`flex gap-5 2xl:justify-center 2xl:gap-[80px] text-[18px] 2xl:text-[26px] font-[550] ${lang === "ar" ? "flex-row-reverse" : ""}`}>
+        <div
+          className={`flex gap-5 2xl:justify-center 2xl:gap-[80px] text-[18px] 2xl:text-[26px] font-[550] ${
+            lang === "ar" ? "flex-row-reverse" : ""
+          }`}
+        >
           <button
             className={`transition-colors ${
               activeTab === "description" ? "text-primary" : "text-primaryblack"
@@ -202,15 +206,15 @@ export default function ProductUseReviews({
       </div>
 
       {/* Review section for regular product */}
-      {reviewable && (
-        <div ref={reviewsRef}>
+      <div ref={reviewsRef}>
+        {reviewable && (
           <ReviewForm
             variantId={variantId}
             token={token}
             productType={productType}
           />
-        </div>
-      )}
+        )}
+      </div>
     </section>
   );
 }

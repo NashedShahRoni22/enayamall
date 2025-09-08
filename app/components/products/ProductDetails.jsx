@@ -331,7 +331,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                     <button
                         disabled={stock === 0}
                         onClick={() => handleAddToCart(product, "now")}
-                        className={`cursor-pointer disabled:cursor-not-allowed flex-1 w-full h-[50px] 2xl:h-[60px] rounded-[10px] bg-primary disabled:bg-button hover:bg-creamline text-white disabled:text-white hover:text-primaryblack ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
+                        className={`cursor-pointer disabled:cursor-not-allowed flex-1 w-full h-[50px] 2xl:h-[60px] rounded-[10px] bg-primary disabled:bg-button  text-white disabled:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
                         {stock > 0 ? getText('buyItNow') : getText('outOfStock')}
                     </button>
                 </div>
@@ -354,17 +354,17 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                     <p className="text-[16px] 2xl:text-[18px]">{getText('socialShare')}</p>
                 </button>
 
-                <Link href="tel:+971506065857" className="flex gap-[12px] items-center text-ash">
+                {/* <Link href="tel:+971506065857" className="flex gap-[12px] items-center text-ash">
                     <Phone className="text-[24px]" />
                     <p className="text-[16px] 2xl:text-[18px]">
                         {getText('callForOrder')}
                     </p>
-                </Link>
+                </Link> */}
             </div>
 
             {/* product other informations  */}
             <div className="mt-[20px] 2xl:mt-[40px] text-[16px] 2xl:text-[18px]">
-                <p><span className="text-primaryblack font-[550]">{getText('productCode')}</span> <span className="text-ash">{product?.product_code}</span> </p>
+                {/* <p><span className="text-primaryblack font-[550]">{getText('productCode')}</span> <span className="text-ash">{product?.product_code}</span> </p>
                 {
                     stock > 0 && <p className="mt-[20px]"><span className="text-primaryblack font-[550]">{getText('availableStock')}</span> <span className="text-ash">{stock} {getText('items')}</span> </p>
                 }
@@ -378,7 +378,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                             {" "}
                         </Link>
                     ))}
-                </p>
+                </p> */}
 
                 <p className="mt-[20px]">
                     <span className="text-primaryblack font-[550]">{getText('tags')}</span>{" "}
