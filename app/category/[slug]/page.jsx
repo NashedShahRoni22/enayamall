@@ -75,7 +75,7 @@ export default function page() {
 
   // category options
   const sortOptions = [
-    "Default Sorting",
+    "Default",
     "Price low to high",
     "Price high to low",
   ];
@@ -192,7 +192,7 @@ export default function page() {
       {/* filters & products here  */}
       <Container>
         <div className="py-[20px] lg:py-[20px]">
-          <div className="lg:flex lg:gap-[24px] mt-[30px]">
+          <div className={`lg:flex lg:gap-[24px] mt-[30px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
             {/* filters options here for large device  */}
             <div className="hidden lg:block lg:w-22/100 border border-gray-100 p-[20px] rounded-[10px] h-fit sticky top-[100px] self-start">
               {/* filetrs actions  */}
@@ -254,10 +254,10 @@ export default function page() {
                   />
                 )}
 
-                <div className="bg-light p-[8px] rounded-[10px] flex justify-between items-center">
+                <div className={`bg-light p-[8px] rounded-[10px] flex justify-between items-center ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
                   {/* product layouts buttons  */}
-                  <div className="flex gap-[20px] items-center">
-                    <div className="flex gap-[8px]">
+                  <div className={`flex gap-[20px] items-center ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
+                    <div className={`flex gap-[8px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
                       <button
                         onClick={() => setViewStyle(0)}
                         className={`cursor-pointer p-[16px] rounded-[10px] ${

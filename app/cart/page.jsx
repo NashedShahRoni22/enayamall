@@ -159,7 +159,7 @@ export default function CartPage() {
                         <p className="font-[400]">
                           {lang === 'en' ? 'Discount' : 'الخصم'}
                         </p>
-                        <p className="font-bold inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">
+                        <p className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">
                           {couponData.coupon_code}
                           {" "}
                           {couponData.discount_type === 'fixed' ? (

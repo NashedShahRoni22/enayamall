@@ -205,7 +205,8 @@ export default function GlobalSearch({
                             <div className={`grid gap-4 ${isMobile ?
                                     'grid-cols-1 xs:grid-cols-2' :
                                     'grid-cols-2 sm:grid-cols-3'
-                                } ${isArabic ? 'rtl' : 'ltr'}`}>
+                                }`}
+                                dir={isArabic ? "rtl" : "ltr"}>
                                 {searchProducts.map((product, index) => (
                                     <div key={index} onClick={handleProductClick}>
                                         <SearchProductCard

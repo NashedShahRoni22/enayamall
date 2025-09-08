@@ -78,7 +78,7 @@ export default function HorizontalProductCard({ p }) {
     <div className={lang === 'ar' ? 'rtl' : 'ltr'}>
       <Link
         href={`/shop/${p?.slug}?variant=${p?.variant}`}
-        className={`group flex items-center gap-[16px] bg-white rounded-[10px] py-[16px] text-primaryblack border border-creamline ${lang === 'ar' ? 'pr-[8px] pl-[32px]' : 'pl-[8px] pr-[32px]'
+        className={`group flex items-center gap-[16px] bg-white rounded-[10px] py-[16px] text-primaryblack border border-creamline ${lang === 'ar' ? 'px-[16px] flex-row-reverse' : 'px-[16px] flex-row'
           }`}
       >
         <div className="flex justify-center items-center rounded-[10px] relative w-1/3 h-[120px] lg:h-[160px] overflow-hidden">
@@ -98,7 +98,7 @@ export default function HorizontalProductCard({ p }) {
 
         <div className="w-2/3">
           {/* <p className="text-[12px] lg:text-[14px] text-secondary">{categoryName}</p> */}
-          <p className="text-[14px] lg:text-[18px] mt-[10px] line-clamp-2">
+          <p className={`text-[14px] lg:text-[18px] mt-[10px] line-clamp-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
             {productName}
             {variantName && (
               <span>

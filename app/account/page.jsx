@@ -16,7 +16,7 @@ import { FiShoppingBag, FiHeart, FiShoppingCart, FiLogOut, FiUser } from 'react-
 import { BiUser } from "react-icons/bi";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { useRouter } from 'next/navigation';
-import { HandshakeIcon, User2 } from 'lucide-react';
+import { HandshakeIcon, LocateIcon, Map, User2 } from 'lucide-react';
 import Affiliate from '../components/account/Affiliate';
 import BillForm from '../components/checkout/BillForm';
 
@@ -40,13 +40,13 @@ export default function Page() {
     const [activeTab, setActiveTab] = useState("Orders");
 
     const mobileTabButtons = [
-        { icon: FiUser, title: "Profile" },
+        { icon: Map, title: "Address" },
         { icon: FiShoppingBag, title: "Orders" },
         { icon: HandshakeIcon, title: "Affiliate Account" },
     ];
 
     const tabButtons = [
-        { icon: User2, title: "Profile" },
+        { icon: Map, title: "Address" },
         { icon: FiShoppingBag, title: "Orders" },
         { icon: FiHeart, title: "Wishlist" },
         { icon: FiShoppingCart, title: "Cart" },
@@ -68,7 +68,7 @@ export default function Page() {
 
     const renderActiveTab = () => {
         switch (activeTab) {
-            case "Profile":
+            case "Address":
                 return profileTab;
             case "Orders":
             case "Wishlist":
@@ -135,22 +135,22 @@ export default function Page() {
                             {address?.photo ? (
                                 <Image
                                     src={address?.photo}
-                                    height={100}
-                                    width={100}
-                                    className="size-[100px] rounded-full object-cover"
+                                    height={60}
+                                    width={60}
+                                    className="size-[60px] rounded-full object-cover"
                                     alt="user profile image"
                                 />
                             ) : (
-                                <div className='size-[100px] flex justify-center items-center bg-white rounded-full'>
-                                    <BiUser className='text-[50px] text-primaryblack' />
+                                <div className='size-[60px] flex justify-center items-center bg-white rounded-full'>
+                                    <BiUser className='text-[30px] text-primaryblack' />
                                 </div>
                             )}
 
                             <div className='flex flex-col items-start gap-[20px]'>
                                 <p className='text-[20px] text-primaryblack'>{address?.name}</p>
-                                {/* <button onClick={() => setActiveTab("Profile")} className='text-[14px] text-primary cursor-pointer'>
+                                <button onClick={() => setActiveTab("Address")} className='text-[14px] text-primary cursor-pointer'>
                                     Edit profile
-                                </button> */}
+                                </button>
                             </div>
                         </div>
 
