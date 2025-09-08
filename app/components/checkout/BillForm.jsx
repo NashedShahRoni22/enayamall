@@ -305,10 +305,10 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                         <div className="bg-creamline h-[1px] w-full mt-[10px] sm:mt-[30px] mb-[10px]"></div>
                         <div className="">
                             {/* Personal Information Section */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px] mb-5">
                                 {/* First Name */}
                                 <div>
-                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                    <label className="flex justify-between font-medium text-gray-700">
                                         <p>First name <span className="text-button">*</span></p>
                                         {errors.firstName && (
                                             <span className="text-button ml-2">{errors.firstName}</span>
@@ -325,7 +325,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
 
                                 {/* Last Name */}
                                 <div>
-                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                    <label className="flex justify-between font-medium text-gray-700">
                                         <p>Last name <span className="text-button">*</span></p>
                                         {errors.lastName && (
                                             <span className="text-button ml-2">{errors.lastName}</span>
@@ -342,7 +342,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
 
                                 {/* Company */}
                                 <div>
-                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                    <label className="flex justify-between font-medium text-gray-700">
                                         <p>Company</p>
                                     </label>
                                     <input
@@ -359,7 +359,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
                                 {/* Address 1 */}
                                 <div>
-                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                    <label className="flex justify-between font-medium text-gray-700">
                                         <p>Address 1 <span className="text-button">*</span></p>
                                         {errors.address1 && (
                                             <span className="text-button ml-2">{errors.address1}</span>
@@ -376,7 +376,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
 
                                 {/* Address 2 */}
                                 <div>
-                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                    <label className="flex justify-between font-medium text-gray-700">
                                         <p>Address 2</p>
                                     </label>
                                     <input
@@ -390,7 +390,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
 
                                 {/* Country Select (was District) */}
                                 <div>
-                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                    <label className="flex justify-between font-medium text-gray-700">
                                         <p>Country <span className="text-button">*</span></p>
                                         {errors.district && (
                                             <span className="text-button ml-2">{errors.district}</span>
@@ -418,7 +418,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
 
                                 {/* District Select (was City) - Now labeled as City */}
                                 <div className="relative">
-                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                    <label className="flex justify-between font-medium text-gray-700">
                                         <p>City <span className="text-button">*</span></p>
                                         {errors.city && (
                                             <span className="text-button ml-2">{errors.city}</span>
@@ -451,7 +451,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
 
                                 {/* Post Code */}
                                 <div>
-                                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                                    <label className="flex justify-between font-medium text-gray-700">
                                         <p>Post Code</p>
                                     </label>
                                     <input

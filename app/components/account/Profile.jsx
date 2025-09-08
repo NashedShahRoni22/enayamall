@@ -236,7 +236,7 @@ const Profile = ({ address }) => {
             {/* Basic Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
                 <div>
-                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                    <label className="flex justify-between font-medium text-gray-700">
                         <p>Full name <span className="text-red-500">*</span></p>
                         {errors.fullName && (
                             <span className="text-red-500 ml-2">{errors.fullName}</span>
@@ -277,7 +277,7 @@ const Profile = ({ address }) => {
                     />
                 </div>
                 <div>
-                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                    <label className="flex justify-between font-medium text-gray-700">
                         <p>Mobile number <span className="text-red-500">*</span></p>
                         {errors.mobileNumber && (
                             <span className="text-red-500 ml-2">{errors.mobileNumber}</span>
@@ -304,7 +304,7 @@ const Profile = ({ address }) => {
                     { label: "Post code", name: "postCode" },
                 ].map(({ label, name, required }) => (
                     <div key={name}>
-                        <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                        <label className="flex justify-between font-medium text-gray-700">
                             <p>{label} {required && <span className="text-red-500">*</span>}</p>
                             {errors[name] && (
                                 <span className="text-red-500 ml-2">{errors[name]}</span>
@@ -322,7 +322,7 @@ const Profile = ({ address }) => {
 
                 {/* District Select */}
                 <div>
-                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                    <label className="flex justify-between font-medium text-gray-700">
                         <p>District <span className="text-red-500">*</span></p>
                         {errors.district && (
                             <span className="text-red-500 ml-2">{errors.district}</span>
@@ -350,7 +350,7 @@ const Profile = ({ address }) => {
 
                 {/* City Select */}
                 <div>
-                    <label className="flex justify-between font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
+                    <label className="flex justify-between font-medium text-gray-700">
                         <p>City <span className="text-red-500">*</span></p>
                         {errors.city && (
                             <span className="text-red-500 ml-2">{errors.city}</span>
