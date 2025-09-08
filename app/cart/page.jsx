@@ -24,6 +24,19 @@ export default function CartPage() {
   // Initialize the coupon hooks
   const applyCoupon = useApplyCoupon();
 
+  // Helper function to safely get total as number
+  const getCurrentTotal = () => {
+    const total = token ? totalDB : totalDBGuest;
+    if (!total) return 0;
+    return Number(total.toString().replace(/,/g, ""));
+  };
+
+  // Helper function to format total for display
+  const getFormattedTotal = () => {
+    const total = token ? totalDB : totalDBGuest;
+    return total || "0";
+  };
+
   // Function to check if coupon is applied
   const checkCouponApplied = async (guestToken) => {
     try {
@@ -92,12 +105,31 @@ export default function CartPage() {
     }
   }, [guestToken]);
 
+  // Calculate discount amount
+  const getDiscountAmount = () => {
+    if (!couponData) return 0;
+    const currentTotal = getCurrentTotal();
+    
+    if (couponData.discount_type === 'fixed') {
+      return couponData.discount;
+    } else {
+      return Math.round((currentTotal * couponData.discount) / 100);
+    }
+  };
+
+  // Calculate final total after discount
+  const getFinalTotal = () => {
+    const currentTotal = getCurrentTotal();
+    const discountAmount = getDiscountAmount();
+    return Math.max(0, currentTotal - discountAmount);
+  };
+
   return (
     <section>
       {/* start banner  */}
       {/* <PageHeader title={"Cart"} from={"Home"} to={"cart"} /> */}
       {
-        currentCart?.length === 0 ?
+        (!currentCart || currentCart.length === 0) ?
           <div className="p-8 text-center text-xl min-h-[80vh] flex flex-col justify-center items-center">
             <PiSmileySadLight className="text-9xl text-secondary" />
             <p className="text-[24px] text-primaryblack mt-[48px] mb-[24px]">Your cart is empty 🛒</p>
@@ -150,7 +182,7 @@ export default function CartPage() {
                     <span className="font-[400]">
                       {lang === 'en' ? 'Item subtotal' : 'المجموع الفرعي'}
                     </span>
-                    <span><span className="dirham-symbol text-[12px] md:text-[16px]">ê</span> {token ? totalDB : totalDBGuest}</span>
+                    <span><span className="dirham-symbol text-[12px] md:text-[16px]">ê</span> {getFormattedTotal()}</span>
                   </p>
 
                   {appliedCoupon && couponData && (
@@ -172,37 +204,17 @@ export default function CartPage() {
                       </div>
 
                       <div className="flex flex-col gap-[24px]">
-                        {couponData.discount_type === 'fixed' ? (
-                          <p><span className="dirham-symbol">ê</span> {couponData.discount}</p>
-                        ) : (
-                          <p><span className="dirham-symbol">ê</span> {Math.round((Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, "")) * couponData.discount) / 100)}</p>
-                        )}
+                        <p><span className="dirham-symbol">ê</span> {getDiscountAmount()}</p>
                       </div>
                     </div>
                   )}
 
                   <p className={`text-[16px] md:text-[18px] py-[10px] font-[550] text-primaryblack flex justify-between items-center ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                     <span>{lang === 'en' ? 'Total' : 'الإجمالي'}</span>
-                    {couponData ? (
-                      <span>
-                        {couponData.discount_type === "fixed" ? (
-                          <span className="flex items-center gap-1">
-                            <span className="dirham-symbol">ê</span>
-                            {(Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, "")) - couponData.discount)}
-                          </span>
-                        ) : (
-                          <span className="flex items-center gap-1">
-                            <span className="dirham-symbol">ê</span>
-                            {Math.round(Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, "")) - ((Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, "")) * couponData.discount) / 100))}
-                          </span>
-                        )}
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-1">
-                        <span className="dirham-symbol">ê</span>
-                        {Number((token ? totalDB : totalDBGuest).toString().replace(/,/g, ""))}
-                      </span>
-                    )}
+                    <span className="flex items-center gap-1">
+                      <span className="dirham-symbol">ê</span>
+                      {couponData ? getFinalTotal() : getCurrentTotal()}
+                    </span>
                   </p>
 
                   <Link
