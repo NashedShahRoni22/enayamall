@@ -1,5 +1,6 @@
 import { useAppContext } from "@/app/context/AppContext";
 import { useEffect, useState } from "react";
+import AffiliateScreen from "./AffiliateScreen";
 
 export default function Affiliate() {
     const { token } = useAppContext();
@@ -9,6 +10,7 @@ export default function Affiliate() {
     const [referralCode, setReferralCode] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitMessage, setSubmitMessage] = useState("");
+    const [affiliatedUserData, setAffiliatedUserData] = useState("");
 
     // Function to check if customer is affiliated
     const checkAffiliateStatus = async (authToken) => {
@@ -31,6 +33,7 @@ export default function Affiliate() {
             console.log('Affiliate API Response:', data);
 
             if (data.status === "success") {
+                setAffiliatedUserData(data?.data)
                 const { is_affiliated, requested } = data.data;
                 setIsAffiliated(is_affiliated);
                 setHasRequested(requested);
@@ -74,7 +77,6 @@ export default function Affiliate() {
             }
 
             const data = await response.json();
-            console.log('Affiliate Request Response:', data);
 
             if (data.status === "success") {
                 setSubmitMessage("Affiliate request submitted successfully!");
@@ -111,7 +113,7 @@ export default function Affiliate() {
             <div className="bg-white border border-gray-200 rounded-lg p-6">
                 <div className="flex items-center justify-center py-8">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                    <span className="ml-3 text-gray-600">Loading affiliate status...</span>
+                    <span className="ml-3 text-gray-600">Checking affiliate status...</span>
                 </div>
             </div>
         );
@@ -120,17 +122,14 @@ export default function Affiliate() {
     // If user is affiliated - show success message
     if (isAffiliated) {
         return (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-                <h3 className="font-semibold">🎉 You are now an affiliate member!</h3>
-                <p className="mt-2">Congratulations! Your affiliate request has been approved. You can now start earning commissions.</p>
-            </div>
+            <AffiliateScreen affiliatedUserData={affiliatedUserData}/>
         );
     }
 
     // If user has requested but not approved yet - show waiting message
     if (hasRequested && !isAffiliated) {
         return (
-            <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg">
+            <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg text-center">
                 <h3 className="font-semibold">⏳ Request Pending</h3>
                 <p className="mt-2">Your affiliate request has been submitted and is pending admin approval. Please wait for confirmation.</p>
             </div>
@@ -145,7 +144,7 @@ export default function Affiliate() {
     // Only show form if user is not affiliated and has not requested yet
     return (
         <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <h3 className="text-lg font-semibold mb-4">Request Affiliate Status</h3>
+            <h3 className="text-lg font-semibold mb-4">Become Affiliate User</h3>
             <p className="text-gray-600 mb-4">
                 Join our affiliate program and start earning commissions on referrals!
             </p>
@@ -161,7 +160,7 @@ export default function Affiliate() {
                         value={referralCode}
                         onChange={(e) => setReferralCode(e.target.value)}
                         placeholder="Enter referral code if you have one"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                     <p className="text-xs text-gray-500 mt-1">
                         If you were referred by someone, enter their referral code here
@@ -174,17 +173,11 @@ export default function Affiliate() {
                     className={`w-full py-2 px-4 rounded-md font-medium ${
                         isSubmitting || !token
                             ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-blue-600 hover:bg-blue-700'
+                            : 'bg-primary'
                     } text-white transition duration-200`}
                 >
-                    {isSubmitting ? 'Submitting...' : 'Request Affiliate Status'}
+                    {isSubmitting ? 'Joining...' : 'Join Now'}
                 </button>
-
-                {!token && (
-                    <p className="text-red-500 text-sm text-center">
-                        Please login to request affiliate status
-                    </p>
-                )}
 
                 {submitMessage && (
                     <div className={`p-3 rounded-md text-sm ${
