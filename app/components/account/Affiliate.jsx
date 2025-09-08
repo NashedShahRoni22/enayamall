@@ -1,6 +1,7 @@
 import { useAppContext } from "@/app/context/AppContext";
 import { useEffect, useState } from "react";
 import AffiliateScreen from "./AffiliateScreen";
+import { useGetDataWithToken } from "../helpers/useGetDataWithToken";
 
 export default function Affiliate() {
     const { token } = useAppContext();
@@ -11,6 +12,9 @@ export default function Affiliate() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitMessage, setSubmitMessage] = useState("");
     const [affiliatedUserData, setAffiliatedUserData] = useState("");
+
+    const { data } = useGetDataWithToken("get-affiliate-info", token);
+    const affiliatedUserDetails = data?.data;
 
     // Function to check if customer is affiliated
     const checkAffiliateStatus = async (authToken) => {
@@ -30,7 +34,6 @@ export default function Affiliate() {
             }
 
             const data = await response.json();
-            console.log('Affiliate API Response:', data);
 
             if (data.status === "success") {
                 setAffiliatedUserData(data?.data)
@@ -122,7 +125,7 @@ export default function Affiliate() {
     // If user is affiliated - show success message
     if (isAffiliated) {
         return (
-            <AffiliateScreen affiliatedUserData={affiliatedUserData}/>
+            <AffiliateScreen affiliatedUserData={affiliatedUserData} affiliatedUserDetails={affiliatedUserDetails} />
         );
     }
 
@@ -170,21 +173,19 @@ export default function Affiliate() {
                 <button
                     type="submit"
                     disabled={isSubmitting || !token}
-                    className={`w-full py-2 px-4 rounded-md font-medium ${
-                        isSubmitting || !token
-                            ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-primary'
-                    } text-white transition duration-200`}
+                    className={`w-full py-2 px-4 rounded-md font-medium ${isSubmitting || !token
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-primary'
+                        } text-white transition duration-200`}
                 >
                     {isSubmitting ? 'Joining...' : 'Join Now'}
                 </button>
 
                 {submitMessage && (
-                    <div className={`p-3 rounded-md text-sm ${
-                        submitMessage.toLowerCase().includes('successfully')
-                            ? 'bg-green-100 text-green-700 border border-green-400'
-                            : 'bg-red-100 text-red-700 border border-red-400'
-                    }`}>
+                    <div className={`p-3 rounded-md text-sm ${submitMessage.toLowerCase().includes('successfully')
+                        ? 'bg-green-100 text-green-700 border border-green-400'
+                        : 'bg-red-100 text-red-700 border border-red-400'
+                        }`}>
                         {submitMessage}
                     </div>
                 )}

@@ -162,7 +162,7 @@ export default function CartTableRow({
             </span>{" "}
             <div className="flex items-center">
               <span className="dirham-symbol text-[14px] mr-1">ê</span>{" "}
-              {Number((item?.price * item?.quantity).toFixed(0))}
+              {item?.sub_total}
             </div>
           </div>
         </div>
