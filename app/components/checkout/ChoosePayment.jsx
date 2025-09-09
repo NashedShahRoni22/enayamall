@@ -1,4 +1,3 @@
-import React from 'react'
 import { MdCheckCircle, MdOutlineRadioButtonUnchecked } from 'react-icons/md'
 
 export default function ChoosePayment({method, setMethod}) {
