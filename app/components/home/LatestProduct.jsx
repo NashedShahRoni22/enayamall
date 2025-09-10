@@ -18,7 +18,7 @@ export default function LatestProduct() {
   const products = data?.data;
 
   return (
-    <section className={`${location === "/" && "bg-light py-[30px]"}`}>
+    <section className={`${location === "/" && "py-[30px]"}`}>
       <Container>
         {/* starting section  */}
         {

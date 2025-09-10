@@ -1,20 +1,40 @@
-import VerticalProductCard from "../shared/cards/VerticalProductCard";
+"use client";
+import "swiper/swiper-bundle.css";
 import Container from "../shared/Container";
+import ShopNowButton from "../shared/ShopNowButton";
+import { useGetData } from "../helpers/useGetData";
+import VerticalCardLoadingScreen from "../loaders/VerticalCardLoadingScreen";
+import ProductsSlider from "../sliders/ProductsSlider";
 
 export default function Recommended() {
-    return (
-        <Container>
-            <div className="py-10 md:py-20">
-                <h5 className="text-xl md:text-3xl font-semibold text-primary text-center mb-8 md:mb-16">
-                    Recommended by Enayamall
-                </h5>
+  // fetch products
+  const { data, isLoading, error } = useGetData(`popular-choices`);
+  if (isLoading) return <VerticalCardLoadingScreen value={6} />;
+  if (error) return <div>Error: {error.message}</div>;
+  const products = data?.data;
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-                    {
-                        Array(4).fill(0).map((_, index) => <VerticalProductCard key={index}/> )
-                    }
-                </div>
-            </div>
-        </Container>
-    )
+  return (
+    <section className="py-[30px]">
+      <Container>
+        {/* starting section  */}
+        <section className="flex flex-col items-center lg:flex-row lg:justify-between">
+          {/* caption here  */}
+          <div>
+            <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center lg:text-left">
+              <span className="font-semibold text-primary">Recommended</span> by Enayamall
+            </h5>
+          </div>
+
+          <div>
+            <ShopNowButton />
+          </div>
+        </section>
+
+        {/* products section*/}
+        <div>
+          <ProductsSlider products={products} />
+        </div>
+      </Container>
+    </section>
+  );
 }

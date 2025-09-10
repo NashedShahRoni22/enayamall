@@ -18,7 +18,7 @@ export default function FlashDeals() {
   const products = data?.data?.products;
 
   return (
-    <section className={`${location === "/" && "bg-light py-[30px]"}`}>
+    <section className={`${location === "/" && "py-[30px]"}`}>
       <Container>
         {/* starting section  */}
         {
