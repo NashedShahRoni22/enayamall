@@ -117,7 +117,7 @@
 }
 
 .category-swiper .swiper-pagination-bullet-active {
-  width: 12px;               /* active bigger */
-  height: 12px;
+  width: 10px;               /* active bigger */
+  height: 10px;
   background-color: #F5589F; /* active color */
 }

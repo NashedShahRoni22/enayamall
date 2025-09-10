@@ -8,16 +8,20 @@ export default function TwoAdsBanner() {
         <Container>
             <div className='flex flex-col lg:flex-row justify-center items-center gap-5 mt-5 mb-8'>
                 <Image
-                    src={imageLeft}
+                    src="https://enayamall.fahimsultan.com/storage/uploads/image1.png"
                     alt="Left Banner"
                     loading="eager"
                     priority
+                    height={215}
+                    width={600}
                     className="lg:w-1/2 h-full" />
                 <Image
-                    src={imageRight}
+                    src="https://enayamall.fahimsultan.com/storage/uploads/image2.png"
                     alt="Right Bannger"
                     loading="eager"
                     priority
+                    height={215}
+                    width={600}
                     className="lg:w-1/2 h-full" />
             </div>
         </Container>

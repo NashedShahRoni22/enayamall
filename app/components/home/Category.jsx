@@ -31,7 +31,7 @@ export default function Category() {
 
         {/* Swiper for categories */}
 
-        <div className="relative">
+        <div className="relative py-2">
           <Swiper
             modules={[Autoplay, Pagination]}
             spaceBetween={8}
