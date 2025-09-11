@@ -137,7 +137,7 @@ export default function VerticalProductCard({ p }) {
             >
               {/* Discount Badge */}
               {p?.discount && (
-                <div className="bg-red-500 text-white px-3 py-1 rounded text-xs font-semibold shadow-lg animate-pulse">
+                <div className="bg-primary text-white px-3 py-1 rounded text-xs font-semibold shadow-lg animate-pulse">
                   {lang === "ar"
                     ? `${discountPercentage}% ${t.off}`
                     : `${discountPercentage}% ${t.off}`}
@@ -146,7 +146,7 @@ export default function VerticalProductCard({ p }) {
 
               {/* Stock Badge */}
               {p?.stock === 0 && (
-                <div className="bg-red-500 text-white px-3 py-1 rounded text-xs font-medium">
+                <div className="bg-primary text-white px-3 py-1 rounded text-xs font-medium">
                   {t.outOfStock}
                 </div>
               )}

@@ -509,13 +509,13 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                     <button
                                         onClick={() => handleUpdateAddress(editableAddress.id)}
                                         disabled={loading}
-                                        className={`py-[12px] text-[18px] w-full ease-linear duration-300 font-medium rounded-md cursor-pointer transition ${loading
+                                        className={`py-[12px] text-[18px] w-full ease-linear duration-300 font-medium rounded-xl cursor-pointer transition ${loading
                                             ? 'bg-creamline text-primaryblack cursor-not-allowed'
                                             : 'bg-primary text-white cursor-pointer'
                                             }`}
                                     >
                                         {
-                                            loading ? <LoadingSvg label="Updating..." color="text-primaryblack" /> : "Update address"
+                                            loading ? <LoadingSvg label="Updating..." color="text-primaryblack" /> : "Update Address"
                                         }
                                     </button>
                                 )}

@@ -213,19 +213,21 @@ export default function CartPage() {
 
                   {appliedCoupon && couponData && (
                     <div className="text-[12px] md:text-[16px] text-primaryblack flex justify-between">
-                      <div className={`flex flex-col 2xl:flex-row 2xl:items-center gap-2 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
-                        <p className="font-[400]">
-                          {lang === 'en' ? 'Discount' : 'الخصم'}
-                        </p>
-                        <p className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">
-                          {couponData.coupon_code}
-                          {" "}
-                          {couponData.discount_type === 'fixed' ? (
-                            <>( <span className="dirham-symbol mr-[2px]">ê</span> {couponData.discount})</>
-                          ) : (
-                            <>( {couponData.discount} %)</>
-                          )}
-                        </p>
+                      <div className="flex flex-col gap-1 items-start">
+                        <div className={`flex flex-col 2xl:flex-row 2xl:items-center gap-2 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+                          <p className="font-[400]">
+                            {lang === 'en' ? 'Discount' : 'الخصم'}
+                          </p>
+                          <p className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">
+                            {couponData.coupon_code}
+                            {" "}
+                            {couponData.discount_type === 'fixed' ? (
+                              <>( <span className="dirham-symbol mr-[2px]">ê</span> {couponData.discount})</>
+                            ) : (
+                              <>( {couponData.discount} %)</>
+                            )}
+                          </p>
+                        </div>
                         <button onClick={()=>handleRemoveCoupon(couponData.coupon_code)} className="text-[12px] text-secondary cursor-pointer">Remove coupon</button>
                       </div>
 

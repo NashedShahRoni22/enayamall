@@ -127,7 +127,7 @@ export default function Page() {
                         </div>
                     </div>
                     {/* Sidebar for desktop */}
-                    <div className='hidden lg:block bg-light py-[20px] px-[30px] rounded-[10px] lg:w-[300px] h-fit lg:sticky lg:top-26'>
+                    <div className='hidden lg:block rounded-[10px] lg:w-[300px] h-fit lg:sticky lg:top-26'>
                         {/* user image & info here */}
                         {/* <div className='flex items-center gap-[20px]'>
                             {address?.photo ? (
@@ -159,34 +159,38 @@ export default function Page() {
                                 const isActive = activeTab === tb.title;
 
                                 return (
-                                    <button
-                                        onClick={() => {
-                                            if (tb.title === "Wishlist") {
-                                                router.push("/wishlist");
-                                            } else if (tb.title === "Cart") {
-                                                router.push("/cart");
-                                            } else {
-                                                setActiveTab(tb.title);
-                                            }
-                                        }}
-                                        key={index}
-                                        className={`cursor-pointer w-full flex items-center gap-[20px] py-[20px] transition-colors duration-200 ${isActive ? "text-primary" : "text-primaryblack hover:text-primary"
-                                            }`}
-                                    >
-                                        <IconComponent size={20} />
-                                        <span>{tb.title}</span>
-                                    </button>
+                                    <div className='border border-creamline rounded-xl pl-3 not-last:mb-3' key={index}>
+                                        <button
+                                            onClick={() => {
+                                                if (tb.title === "Wishlist") {
+                                                    router.push("/wishlist");
+                                                } else if (tb.title === "Cart") {
+                                                    router.push("/cart");
+                                                } else {
+                                                    setActiveTab(tb.title);
+                                                }
+                                            }}
+                                            key={index}
+                                            className={`cursor-pointer w-full flex items-center gap-[20px] py-[10px] transition-colors duration-200 ${isActive ? "text-primary" : "text-primaryblack hover:text-primary"
+                                                }`}
+                                        >
+                                            <IconComponent size={20} />
+                                            <span>{tb.title}</span>
+                                        </button>
+                                    </div>
                                 );
                             })}
 
                             {/* Logout Button */}
-                            <button
-                                onClick={handleLogout}
-                                className='cursor-pointer w-full flex items-center text-secondary gap-[20px] py-[20px]'
-                            >
-                                <FiLogOut className='size-[20px]' />
-                                Logout
-                            </button>
+                            <div className='border bg-primary border-primary rounded-xl pl-3'>
+                                <button
+                                    onClick={handleLogout}
+                                    className='cursor-pointer w-full flex items-center text-white gap-[20px] py-[10px]'
+                                >
+                                    <FiLogOut className='size-[20px]' />
+                                    Logout
+                                </button>
+                            </div>
                         </div>
                     </div>
 

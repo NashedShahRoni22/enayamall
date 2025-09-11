@@ -205,7 +205,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                 </Container>
 
                 {/* Menu Section */}
-                <div className="bg-primary text-white py-5">
+                <div className="bg-primary text-white py-4">
                     <Container>
                         <div className={`flex justify-between items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                             {/* Left/Right side based on language */}

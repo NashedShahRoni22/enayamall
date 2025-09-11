@@ -22,9 +22,8 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
             product: "Product",
             subTotal: "Sub total",
             subtotal: "Subtotal",
-            yourSaving: "Your are saving",
-            youSaving: "You are saving",
-            inThisOrder: "in this order.",
+            yourSaving: "Via Product Discount",
+            youSaving: "Via Coupon",
             deliveryCharge: "Your Delivery charge",
             amountPayable: "Amount Payable",
             byContinuing: "By continuing you agree to",
@@ -46,7 +45,6 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
             subtotal: "المجموع الفرعي",
             yourSaving: "أنت توفر",
             youSaving: "أنت توفر",
-            inThisOrder: "في هذا الطلب.",
             deliveryCharge: "رسوم التوصيل",
             amountPayable: "المبلغ المستحق",
             byContinuing: "بالمتابعة فإنك توافق على",
@@ -193,17 +191,14 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
     return (
         <section className='text-primaryblack flex flex-col gap-[20px]'>
             {/* products informations here  */}
-            <div className='bg-[#FCF7EE] rounded-[10px] py-[20px]  px-[20px] sm:px-[40px]'>
-                {/* Header Row */}
+            {/* <div className='bg-[#FCF7EE] rounded-[10px] py-[20px]  px-[20px] sm:px-[40px]'>
                 <div className='flex justify-between items-center'>
                     <p className='text-[16px] sm:text-[18px] font-[650] w-[70%]'>{t.product}</p>
                     <p className='text-[16px] sm:text-[18px] font-[650] w-[30%] text-right'>{t.subTotal}</p>
                 </div>
 
-                {/* Divider */}
                 <div className="bg-primary h-[1px] w-full my-[20px] sm:my-[30px]"></div>
 
-                {/* Product List */}
                 <div className='flex flex-col gap-[20px]'>
                     {currentCart?.map((c, index) => (
                         <div key={index} className='flex justify-between items-center'>
@@ -216,20 +211,19 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                     ))}
                 </div>
 
-                {/* Divider */}
                 <div className="bg-primary h-[1px] w-full my-[20px] sm:my-[30px]"></div>
 
-                {/* Subtotal Row */}
                 <div className='flex justify-between items-center'>
                     <p className='text-[16px] sm:text-[18px] w-[70%]'>{t.subtotal}</p>
                     <p className='text-[16px] sm:text-[18px] w-[30%] text-right'><span className="dirham-symbol">ê</span> {(token ? totalDB : total)}</p>
                 </div>
-            </div>
+            </div> */}
 
             {/* payable informations here  */}
-            <div className='bg-successbg rounded-[10px] py-[20px] px-[20px] sm:px-[40px] border border-customgreen'>
+            <div className='bg-creamline rounded-[10px] py-[20px] px-[20px] border border-primary'>
                 <div>
-                    <p className='text-[16px] text-customgreen flex gap-[5px] mt-[14px]'>
+                    <p className='text-xl font-bold text-primary'>Saving</p>
+                    <p className='text-[16px] text-primary flex gap-[5px] mt-[10px]'>
                         {/* <span className='dirham-symbol size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>
                             ê
                         </span> */}
@@ -237,39 +231,39 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                     </p>
 
                     {appliedCoupon && couponData && (
-                        <p className='text-[16px] text-customgreen flex gap-[5px]'>
-                            <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>D</span>
-                            {t.youSaving} <span className="dirham-symbol">ê</span> {discountAmount} {t.inThisOrder}
+                        <p className='text-[16px] text-primary flex gap-[5px]'>
+                            {/* <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-primary'>D</span> */}
+                            {t.youSaving} <span className="dirham-symbol">ê</span> {discountAmount}
                         </p>
                     )}
 
                     {
                         shippingCost &&
-                        <p className='text-[16px] text-customgreen flex gap-[5px] mt-[14px]'>
-                            <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-customgreen'>D</span>
+                        <p className='text-[16px] text-primary flex gap-[5px] mt-[14px]'>
+                            <span className='size-[22px] flex justify-center items-center rounded-full text-white bg-primary'>D</span>
                             {t.deliveryCharge} <span className="dirham-symbol">ê</span> {shippingCost}
                         </p>
                     }
 
                 </div>
 
-                <div className="bg-customgreen h-[1px] w-full my-[20px] sm:my-[30px]"></div>
+                <div className="bg-primary h-[1px] w-full my-[20px] sm:my-[30px]"></div>
 
                 <div className='flex justify-between'>
-                    <p className='text-[20px] sm:text-[24px] font-[650]'>{t.amountPayable}</p>
-                    <p className='text-[20px] sm:text-[24px] font-[650]'>
-                        <span className="dirham-symbol">ê</span> {(token ? totalDB : total) - discountAmount + shippingCost}
+                    <p className='text-[18px] sm:text-[20px] font-[650]'>{t.amountPayable}</p>
+                    <p className='text-[18px] sm:text-[20px] font-[650]'>
+                        <span className="dirham-symbol">ê</span> {Math.max(0, (token ? totalDB : total) - discountAmount + (shippingCost || 0)).toFixed(2)}
                     </p>
                 </div>
 
-                <div className="bg-customgreen h-[1px] w-full my-[20px] sm:my-[30px]"></div>
+                {/* <div className="bg-primary h-[1px] w-full my-[20px] sm:my-[30px]"></div> */}
 
                 {/* accept agreement  */}
                 <button onClick={() => setAcceptTerms(!acceptTerms)} className='mt-[34px] mb-[50px] flex lg:items-center gap-[6px] sm:gap-[12px]'>
                     <span>
                         {
                             acceptTerms ?
-                                <MdCheckCircle className="text-[20px] sm:text-[24px] text-customgreen" />
+                                <MdCheckCircle className="text-[20px] sm:text-[24px] text-primary" />
                                 :
                                 <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
                         }
@@ -283,9 +277,9 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                 <button
                     onClick={handleOrderPlace}
                     disabled={loading === true}
-                    className={`text-center min-w-full py-[16px] rounded-[5px] ease-linear duration-300 cursor-pointer transition ${loading
+                    className={`text-center min-w-full rounded-lg py-[16px] ease-linear duration-300 cursor-pointer transition ${loading
                         ? 'bg-creamline text-primaryblack cursor-not-allowed'
-                        : 'bg-primary text-white hover:bg-creamline hover:text-primary cursor-pointer'
+                        : 'bg-primary text-white cursor-pointer'
                         }`}>
                     {loading ? (
                         <LoadingSvg label={t.placingOrder} color="text-primaryblack" />

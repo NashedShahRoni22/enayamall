@@ -29,7 +29,7 @@ export default function FlashDeals() {
             {/* caption here  */}
             <div>
               <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-                <span className="font-bold text-[#c4467f]">
+                <span className="font-bold text-sectionTitle">
                   {lang === 'en' ? 'Clearance' : 'تخفيضات'}
                 </span>{' '}
                 {lang === 'en' ? 'Sale' : 'التصفية'}

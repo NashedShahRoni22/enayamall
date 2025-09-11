@@ -6,6 +6,8 @@
   --color-primaryblack: #333333;
   --color-primarycream: #FCDEE0;
   --color-secondary: #F859A2;
+  --color-sectionTitle: #ab3d6f;
+  /* --color-sectionTitle: #c4467f; */
   --color-natural: #CE967E;
   --color-accent: #95A996;
   --color-typograhy: #41393D;
@@ -120,5 +122,5 @@
 .category-swiper .swiper-pagination-bullet-active {
   width: 10px;               /* active bigger */
   height: 10px;
-  background-color: #F5589F; /* active color */
+  background-color: var(--color-primary); /* active color */
 }

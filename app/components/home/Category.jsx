@@ -23,7 +23,7 @@ export default function Category() {
     <Container>
       <div className="pt-8 pb-1">
         <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center mb-4">
-          <span className="font-bold text-[#c4467f]">
+          <span className="font-bold text-sectionTitle]">
             {lang === 'en' ? 'Most Popular' : 'الأكثر شهرة'}
           </span>{' '}
           {lang === 'en' ? 'Categories' : 'التصنيفات'}

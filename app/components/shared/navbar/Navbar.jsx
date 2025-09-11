@@ -55,7 +55,7 @@ export default function Navbar() {
     
 
     return (
-        <nav className="sticky top-0 z-50 bg-white shadow-sm">
+        <nav className="bg-white shadow-sm">
             <DesktopNavbar 
                 logo={logo} 
                 menuItems={menuItems}
