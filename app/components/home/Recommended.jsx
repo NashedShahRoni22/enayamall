@@ -17,11 +17,11 @@ export default function Recommended() {
     <section className="py-[30px]">
       <Container>
         {/* starting section  */}
-        <section className="flex flex-col items-center lg:flex-row lg:justify-between">
+        <section className="flex flex-row justify-between">
           {/* caption here  */}
           <div>
             <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-              <span className="font-bold text-sectionTitle">Recommended</span> by Enayamall
+              <span className="font-bold text-sectionTitle">Recommended</span>
             </h5>
           </div>
 

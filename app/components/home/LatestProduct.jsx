@@ -25,7 +25,7 @@ export default function LatestProduct() {
         {/* starting section  */}
         {
           location === "/" &&
-          <section className="flex flex-col items-center lg:flex-row lg:justify-between">
+          <section className="flex flex-row justify-between">
             {/* caption here  */}
             <div>
               <h5 className="text-xl md:text-3xl font-semibold text-gray-800">

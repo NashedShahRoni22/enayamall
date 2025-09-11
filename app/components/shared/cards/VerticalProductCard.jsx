@@ -280,7 +280,7 @@ export default function VerticalProductCard({ p }) {
             <button
               disabled={p?.stock === 0}
               onClick={(e) => handleAddToCart(e, p)}
-              className="md:hidden w-full bg-creamline text-primaryblack py-2 px-4 rounded font-medium hover:bg-secondary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="md:hidden text-[12px] sm:text-sm mt-2 w-full bg-creamline text-primaryblack py-2 px-2 rounded-lg font-medium hover:bg-primary hover:text-white transition-all duration-200 disabled:bg-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <ShoppingBag size={16} />
               {p?.stock > 0 ? t.addToCart : t.outOfStock}
