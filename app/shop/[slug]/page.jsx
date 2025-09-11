@@ -23,7 +23,7 @@ async function getProductData(slug, variant, token = null) {
 
 // Server-side metadata generator
 export async function generateMetadata({ params, searchParams }) {
-    const slug = params.slug;
+    const slug = params?.slug;
     const variant = searchParams?.variant || '';
 
     const token = null;

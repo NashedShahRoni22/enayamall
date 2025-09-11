@@ -102,7 +102,7 @@ export const AppProvider = ({ children }) => {
   // ✅ Add product to cart DB 
   const postCart = usePostDataWithToken('add-to-cart');
 
-  const addToCartDB = async (productVariantId, quantity, product_type, type) => {
+  const addToCartDB = async (productVariantId, quantity, product_type, type, affiliateCode) => {
     const formData = new FormData();
     if (product_type === "combo") {
       formData.append('combo_id', productVariantId);
@@ -112,6 +112,7 @@ export const AppProvider = ({ children }) => {
     }
     formData.append('quantity', quantity);
     formData.append('type', type);
+    formData.append('affiliate_code', affiliateCode);
 
     try {
       await toast.promise(
@@ -144,7 +145,7 @@ export const AppProvider = ({ children }) => {
   // ✅ Add product to cart DB guest 
   const postCartGuest = usePostData('add-to-cart-guest');
 
-  const addToCartDBGuest = async (productVariantId, quantity, product_type, type) => {
+  const addToCartDBGuest = async (productVariantId, quantity, product_type, type, affiliateCode) => {
     const formData = new FormData();
     if (product_type === "combo") {
       formData.append('combo_id', productVariantId);
@@ -155,6 +156,7 @@ export const AppProvider = ({ children }) => {
     formData.append('quantity', quantity);
     formData.append('type', type);
     formData.append('guest_token', guestToken);
+    formData.append('affiliate_code', affiliateCode);
 
     try {
       await toast.promise(

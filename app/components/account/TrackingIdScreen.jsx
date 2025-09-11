@@ -43,18 +43,20 @@ export default function TrackingIdScreen({ affiliateCode }) {
   const searchProducts = searchData?.data || []
 
   // Generate tracking URL
-  const generateTrackingUrl = (productSlug) => {
+  const generateTrackingUrl = (productSlug, variant) => {
     if (!affiliateCode || !productSlug) return ''
-    return `https://enayamall.com/${productSlug}?tracking=${affiliateCode}`
+    // return `${process.env.NEXT_PUBLIC_WEB_SHOP_BASE_URL}${productSlug}?tracking=${affiliateCode}`
+    return `http://localhost:3000/shop/${productSlug}?variant=${variant}?tracking=${affiliateCode}`
   }
 
   // Add single product to tracked list
   const addSingleProductToTracking = (product) => {
-    const trackingUrl = generateTrackingUrl(product.slug)
+    const trackingUrl = generateTrackingUrl(product.slug, product.variant)
     const newTrackedProduct = {
       id: product.id,
       name: product.name,
       slug: product.slug,
+      variant: product.variant,
       image: product.thumbnail_image,
       price: product.price,
       trackingUrl: trackingUrl

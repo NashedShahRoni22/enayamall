@@ -19,6 +19,7 @@ export default function ProductPage() {
     const slug = params?.slug;
     const searchParams = useSearchParams();
     const variant = searchParams?.get('variant');
+    const tracking = searchParams?.get('tracking');
     const [defaultImage, setDefaultImage] = useState(null);
     const [reviewable, setReviewable] = useState(false);
     const [isWishlisted, setIsWishlisted] = useState(false);
@@ -92,6 +93,7 @@ export default function ProductPage() {
                                 token={token}
                                 slug={slug}
                                 variant={variant}
+                                tracking={tracking}
                                 product={product}
                                 setReviewable={setReviewable}
                                 setVariantId={setVariantId}

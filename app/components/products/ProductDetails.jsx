@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { handleShare } from "./handleShare";
 
-export default function ProductDetails({ token, slug, variant, product, setReviewable, setVariantId, setIsWishlisted, isWishlisted }) {
+export default function ProductDetails({ token, slug, variant, product, setReviewable, setVariantId, setIsWishlisted, isWishlisted, tracking }) {
     const { addToWishlist, addToCartDB, addToCartDBGuest, lang } = useAppContext();
     const router = useRouter();
     const [defaultVarient, setDefaultVarient] = useState(variant);
@@ -136,9 +136,9 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
         }
 
         if (token === null) {
-            addToCartDBGuest(selectedVariant?.product_variant_id, defaultQuantity, defaultVarient);
+            addToCartDBGuest(selectedVariant?.product_variant_id, defaultQuantity, defaultVarient, "regular", tracking);
         } else {
-            addToCartDB(selectedVariant?.product_variant_id, defaultQuantity, defaultVarient);
+            addToCartDB(selectedVariant?.product_variant_id, defaultQuantity, defaultVarient, "regular", tracking);
         }
         if(type === "now"){
             router.push("/checkout");
