@@ -8,7 +8,6 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    domains: ["enayamall.com"],
   },
 };
 
