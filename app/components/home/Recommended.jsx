@@ -20,8 +20,8 @@ export default function Recommended() {
         <section className="flex flex-col items-center lg:flex-row lg:justify-between">
           {/* caption here  */}
           <div>
-            <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center lg:text-left">
-              <span className="font-semibold text-primary">Recommended</span> by Enayamall
+            <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
+              <span className="font-bold text-[#c4467f]">Recommended</span> by Enayamall
             </h5>
           </div>
 

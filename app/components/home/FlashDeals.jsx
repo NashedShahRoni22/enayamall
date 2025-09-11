@@ -20,7 +20,7 @@ export default function FlashDeals() {
   const products = data?.data?.products;
 
   return (
-    <section className={`${location === "/" && "py-[30px]"}`}>
+    <section className={`${location === "/" && "py-[10px]"}`}>
       <Container>
         {/* starting section  */}
         {
@@ -28,8 +28,8 @@ export default function FlashDeals() {
           <section className="flex flex-col items-center lg:flex-row lg:justify-between">
             {/* caption here  */}
             <div>
-              <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center lg:text-left">
-                <span className="font-semibold text-primary">
+              <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
+                <span className="font-bold text-[#c4467f]">
                   {lang === 'en' ? 'Clearance' : 'تخفيضات'}
                 </span>{' '}
                 {lang === 'en' ? 'Sale' : 'التصفية'}

@@ -8,7 +8,7 @@ export default function ShopNowButton() {
   return (
     <Link
       href={"/"}
-      className='group text-[16px] 2xl:text-[18px] text-button hover:text-primary flex gap-[4px] items-center transition-all duration-300 ease-in-out'
+      className='group text-[16px] 2xl:text-[18px] flex gap-[4px] items-center transition-all duration-300 ease-in-out border border-primary px-3 py-1 rounded-lg hover:bg-primary hover:text-white w-max mx-auto lg:mx-0'
     >
       {/* <ChevronLeft className='text-primary transition-colors duration-300 ease-in-out' size={20} /> */}
       {/* <div className='relative h-6 w-6 justify-center items-center flex'>
@@ -27,7 +27,7 @@ export default function ShopNowButton() {
           width={16}
         />
       </div> */}
-      <span className='text-primary transition-colors duration-300 ease-in-out'>View all</span>
+      <span className='text-primary group-hover:text-white transition-colors duration-300 ease-in-out'>View all</span>
     </Link>
   )
 }

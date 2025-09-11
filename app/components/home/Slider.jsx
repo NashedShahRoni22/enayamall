@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay, Navigation } from "swiper/modules";
+import { Pagination, Autoplay, Navigation, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -65,16 +65,19 @@ export default function Slider() {
       <section className="group relative">
         <Swiper
           loop={true}
-          pagination={{ 
-            clickable: true,
-            dynamicBullets: false 
-          }}
+          effect="fade"
+          fadeEffect={{ crossFade: true }}
+          speed={1500}
+          // pagination={{ 
+          //   clickable: true,
+          //   dynamicBullets: false 
+          // }}
           navigation={true}
           autoplay={{
-            delay: 3500,
+            delay: 3000,
             disableOnInteraction: false,
           }}
-          modules={[Pagination, Autoplay, Navigation]}
+          modules={[Pagination, Autoplay, Navigation, EffectFade]}
           className="mySwiper custom-swiper"
         >
         {banners?.map((banner, index) => (

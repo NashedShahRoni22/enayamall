@@ -12,7 +12,7 @@ export default function page() {
 
     return (
         <Container>
-            <h5 className="mt-[20px] lg:mt-[35px] text-[30px] 2xl:text-[40px] text-primaryblack text-center">
+            <h5 className="mt-[20px] lg:mt-[35px] text-[22px] 2xl:text-[30px] text-primaryblack text-center">
                 <span className="font-[550] text-primary">Authentic Brands</span> for You
             </h5>
 

@@ -224,7 +224,7 @@ export default function Footer() {
   );
 
   return (
-    <footer className={lang === "ar" ? "rtl" : "ltr"}>
+    <footer className={`{lang === "ar" ? "rtl" : "ltr"} mt-10`}>
       {/* Top benefits bar */}
       <div className="bg-primary text-white py-4">
         <Container>

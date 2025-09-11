@@ -160,7 +160,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                 {isLoggedIn && showAccountPopover && (
                                     <div className={`absolute top-9 ${lang === 'ar' ? '-left-9' : '-right-9'} mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[180px] z-50`}>
                                         <Link href="/account">
-                                            <button className={`w-full px-4 py-3 text-sm hover:bg-gray-100 transition-colors flex items-center gap-3 text-gray-700 ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
+                                            <button className={`w-full px-4 py-3 text-sm hover:bg-gray-100 transition-colors flex items-center gap-3 text-gray-700 cursor-pointer ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
                                                 <UserCircle className="size-4" />
                                                 <span>{t.myProfile}</span>
                                             </button>

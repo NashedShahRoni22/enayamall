@@ -35,9 +35,9 @@ export default function Products({
                         }
                     </div>
                 ) : (
-                    <div className="w-full h-[50vh] flex justify-center items-center flex-1">
+                    <div className="w-full h-[50vh] flex justify-center items-center">
                         <p className="text-3xl text-secondary">No products found</p>
-                    </div>
+                    </div>  
                 )
             }
         </>

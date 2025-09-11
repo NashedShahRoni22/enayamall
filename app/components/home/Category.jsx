@@ -22,8 +22,8 @@ export default function Category() {
   return (
     <Container>
       <div className="pt-8 pb-1">
-        <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center mb-4">
-          <span className="font-semibold text-primary">
+        <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center mb-4">
+          <span className="font-bold text-[#c4467f]">
             {lang === 'en' ? 'Most Popular' : 'الأكثر شهرة'}
           </span>{' '}
           {lang === 'en' ? 'Categories' : 'التصنيفات'}
@@ -53,7 +53,7 @@ export default function Category() {
               <SwiperSlide key={index}>
                 <Link href={`/category/${category?.slug}`}>
                   <div className="flex flex-col justify-center items-center">
-                    <div className="p-4 flex items-center justify-center bg-[#f6f6f6] rounded-full overflow-hidden">
+                    <div className="p-4 flex items-center justify-center bg-[#FDDDEB] rounded-full overflow-hidden">
                       <Image
                         src={category?.icon}
                         alt={category?.name}
@@ -72,7 +72,7 @@ export default function Category() {
           </Swiper>
 
           {/* Dots go here */}
-          <div className="swiper-pagination-custom mt-4 flex justify-center" />
+          <div className="swiper-pagination-custom flex justify-center" />
         </div>
 
         {/* add banners here  */}
