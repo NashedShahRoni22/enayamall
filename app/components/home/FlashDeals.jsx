@@ -7,8 +7,10 @@ import { useGetData } from "../helpers/useGetData";
 import VerticalCardLoadingScreen from "../loaders/VerticalCardLoadingScreen";
 import ProductsSlider from "../sliders/ProductsSlider";
 import { usePathname } from "next/navigation";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function FlashDeals() {
+  const {lang} = useAppContext();
   // fetch products
   const { data, isLoading, error } = useGetData(`flash-deal`);
   const location = usePathname();
@@ -27,8 +29,10 @@ export default function FlashDeals() {
             {/* caption here  */}
             <div>
               <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center lg:text-left">
-                {/* Flash Deals You'll Love */}
-                <span className="font-semibold text-primary">Clearance</span> Sale
+                <span className="font-semibold text-primary">
+                  {lang === 'en' ? 'Clearance' : 'تخفيضات'}
+                </span>{' '}
+                {lang === 'en' ? 'Sale' : 'التصفية'}
               </h5>
             </div>
 

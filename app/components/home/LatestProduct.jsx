@@ -7,8 +7,10 @@ import { useGetData } from "../helpers/useGetData";
 import VerticalCardLoadingScreen from "../loaders/VerticalCardLoadingScreen";
 import ProductsSlider from "../sliders/ProductsSlider";
 import { usePathname } from "next/navigation";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function LatestProduct() {
+  const { lang } = useAppContext();
   // fetch products
   const { data, isLoading, error } = useGetData(`products`);
   const location = usePathname();
@@ -26,9 +28,11 @@ export default function LatestProduct() {
           <section className="flex flex-col items-center lg:flex-row lg:justify-between">
             {/* caption here  */}
             <div>
-              <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center lg:text-left">
-                {/* Flash Deals You'll Love */}
-                <span className="font-semibold text-primary">New</span> Arrival
+              <h5 className="text-xl md:text-3xl font-semibold text-gray-800">
+                <span className="text-primary">
+                  {lang === 'en' ? 'New' : 'وصل حديثًا'}
+                </span>{' '}
+                {lang === 'en' ? 'Arrival' : ''}
               </h5>
             </div>
 

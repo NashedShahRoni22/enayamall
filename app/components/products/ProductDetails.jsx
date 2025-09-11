@@ -383,11 +383,11 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                 <p className="mt-[20px]">
                     <span className="text-primaryblack font-[550]">{getText('tags')}</span>{" "}
                     {product?.tags?.map((pt, index, array) => (
-                        <span className="text-ash capitalize" key={index}>
+                        <Link href={`/tag/${pt}`} className="text-ash capitalize" key={index}>
                             {lang === 'en' ? pt : (product?.ar_tags && product?.ar_tags[index]) || pt}
                             {index === array.length - 1 ? "." : ","}
                             {" "}
-                        </span>
+                        </Link>
                     ))}
                 </p>
             </div>

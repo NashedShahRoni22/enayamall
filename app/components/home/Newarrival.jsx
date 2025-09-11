@@ -5,6 +5,7 @@ import VerticalProductCard from '../shared/cards/VerticalProductCard'
 import { useAppContext } from '@/app/context/AppContext';
 
 export default function Newarrival() {
+    const {lang} = useAppContext()
     const { categories } = useAppContext();
     const [activeCategory, setActiveCategory] = useState('featured');
 
@@ -14,7 +15,10 @@ export default function Newarrival() {
                 {/* Header with View All */}
                 <div className="flex justify-between items-center mb-8 md:mb-12">
                     <h5 className="text-xl md:text-3xl font-semibold text-gray-800">
-                        <span className="text-primary">New</span> Arrival
+                        <span className="text-primary">
+                            {lang === 'en' ? 'New' : 'وصل حديثًا'}
+                        </span>{' '}
+                        {lang === 'en' ? 'Arrival' : ''}
                     </h5>
                     <button className="text-gray-600 hover:text-primary text-sm font-medium">
                         View All
@@ -45,8 +49,8 @@ export default function Newarrival() {
                                 key={category.id}
                                 onClick={() => setActiveCategory(category.id)}
                                 className={`px-4 lg:px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${activeCategory === category.id
-                                        ? 'bg-primary text-white'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    ? 'bg-primary text-white'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                     }`}
                             >
                                 {category.name}

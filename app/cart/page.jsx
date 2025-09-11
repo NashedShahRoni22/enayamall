@@ -11,6 +11,7 @@ import CartTableRow from "../components/shared/cards/CartTableRow";
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useApplyCoupon } from "../components/helpers/useApplyCoupon";
+import { useRemoveCoupon } from "../components/helpers/useRemoveCoupon";
 
 export default function CartPage() {
   const { token, lang, guestToken, cartDB, totalDB, removeFromCartDB, addToCartDB, addToCartDBGuest, cartDBGuest, totalDBGuest, removeFromCartDBGuest } = useAppContext();
@@ -23,6 +24,7 @@ export default function CartPage() {
 
   // Initialize the coupon hooks
   const applyCoupon = useApplyCoupon();
+  const removeCoupon = useRemoveCoupon();
 
   // Helper function to safely get total as number
   const getCurrentTotal = () => {
@@ -93,6 +95,30 @@ export default function CartPage() {
         error: (err) => {
           console.error('Coupon application failed:', err);
           return err.message || 'Failed to apply coupon';
+        }
+      }
+    );
+  };
+
+  // Function to remove coupon application
+  const handleRemoveCoupon = async (couponInput) => {
+    toast.promise(
+      removeCoupon.mutateAsync({
+        // couponCode: couponInput,
+        token: token,
+        guestToken: guestToken
+      }),
+      {
+        loading: 'Removing coupon...',
+        success: (data) => {
+          setAppliedCoupon(false);
+          setCouponData(data?.data);
+          setCouponInput('');
+          return 'Coupon removed!';
+        },
+        error: (err) => {
+          console.error('Coupon removing failed:', err);
+          return err.message || 'Failed to remove coupon';
         }
       }
     );
@@ -187,7 +213,7 @@ export default function CartPage() {
 
                   {appliedCoupon && couponData && (
                     <div className="text-[12px] md:text-[16px] text-primaryblack flex justify-between">
-                      <div className={`flex flex-col 2xl:flex-row gap-1 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+                      <div className={`flex flex-col 2xl:flex-row 2xl:items-center gap-2 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                         <p className="font-[400]">
                           {lang === 'en' ? 'Discount' : 'الخصم'}
                         </p>
@@ -200,7 +226,7 @@ export default function CartPage() {
                             <>( {couponData.discount} %)</>
                           )}
                         </p>
-                        {/* <p className="text-[12px] text-secondary cursor-pointer">Remove coupon</p> */}
+                        <button onClick={()=>handleRemoveCoupon(couponData.coupon_code)} className="text-[12px] text-secondary cursor-pointer">Remove coupon</button>
                       </div>
 
                       <div className="flex flex-col gap-[24px]">

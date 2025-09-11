@@ -18,15 +18,15 @@ export default function Category() {
   const { lang } = useAppContext();
   const { data } = useGetData("categories?featured=1");
   const categories = data?.data;
-  console.log(categories);
 
   return (
     <Container>
       <div className="pt-8 pb-1">
         <h5 className="text-[24px] 2xl:text-[36px] text-primaryblack text-center mb-4">
-          {/* Flash Deals You'll Love */}
-          <span className="font-semibold text-primary">Most Popular</span>{" "}
-          Categories
+          <span className="font-semibold text-primary">
+            {lang === 'en' ? 'Most Popular' : 'الأكثر شهرة'}
+          </span>{' '}
+          {lang === 'en' ? 'Categories' : 'التصنيفات'}
         </h5>
 
         {/* Swiper for categories */}
@@ -79,7 +79,7 @@ export default function Category() {
         {/* <div className='flex flex-col md:flex-row md:justify-between gap-5 mt-8 md:mt-16'>
                     <Image src={bannerLeft} alt='Category Add Image' />
                     <Image src={bannerRight} alt='Category Add Image' />
-                </div> */}
+        </div> */}
       </div>
     </Container>
   );
