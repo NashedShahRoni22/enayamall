@@ -77,7 +77,7 @@ export default function ProductPage() {
                     {/* product information here  */}
                     <div className={`flex flex-col gap-[20px] md:flex-row md:gap-[40px] ${lang === 'ar' ? 'md:flex-row-reverse' : ''}`}>
                         {/* product image */}
-                        <div className="w-full md:w-6/10 md:sticky md:top-26">
+                        <div className="w-full md:w-5/10 md:sticky md:top-26">
                             <ProductImageGallery
                                 product={product}
                                 defaultImage={defaultImage}
@@ -88,7 +88,7 @@ export default function ProductPage() {
                         </div>
 
                         {/* product description */}
-                        <div className="md:w-4/10">
+                        <div className="md:w-5/10">
                             <ProductDetails
                                 token={token}
                                 slug={slug}
@@ -104,7 +104,7 @@ export default function ProductPage() {
                     </div>
 
                     {/* details, how to use, reviews here  */}
-                    <div className="mt-[60px] 2xl:mt-[120px]">
+                    <div className="mt-[60px]">
                         <ProductUseReviews
                             product={product}
                             reviewable={reviewable}

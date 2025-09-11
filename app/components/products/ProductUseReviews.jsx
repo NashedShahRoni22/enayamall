@@ -115,10 +115,10 @@ export default function ProductUseReviews({
   );
 
   return (
-    <section className="mt-[60px] 2xl:mt-[120px] relative">
+    <section className="mt-[60px] relative">
       {/* Sticky Nav Buttons */}
       <div
-        className={`sticky top-16 lg:top-22 z-10 bg-white border-b border-creamline py-4 ${
+        className={`bg-white border-b border-creamline py-4 ${
           lang === "ar" ? "rtl" : "ltr"
         }`}
       >

@@ -8,7 +8,7 @@ import { IoCloseOutline, IoGridOutline } from "react-icons/io5";
 import Categories from "@/app/components/filters/Categories";
 import Brands from "@/app/components/filters/Brands";
 import SkinTypes from "@/app/components/filters/SkinTypes";
-import Products from "@/app/components/products/Products";
+import ProductsPage from "@/app/components/products/ProductsPage";
 import Container from "@/app/components/shared/Container";
 import PageHeader from "@/app/components/shared/PageHeader";
 import { useAppContext } from "@/app/context/AppContext";
@@ -61,7 +61,7 @@ export default function page() {
 
   // category options
   const sortOptions = [
-    'Default Sorting',
+    'Recommended',
     'Price low to high',
     'Price high to low'
   ];
@@ -268,7 +268,7 @@ export default function page() {
 
             {/* products here  */}
             <div className=''>
-              <Products
+              <ProductsPage
                 viewStyle={viewStyle}
                 parentCategorytIds={parentCategorytIds}
                 childCategoryId={childCategoryId}

@@ -14,7 +14,7 @@ export default function FlashDeals() {
   // fetch products
   const { data, isLoading, error } = useGetData(`flash-deal`);
   const location = usePathname();
-  if (isLoading) return <VerticalCardLoadingScreen value={6} />;
+  if (isLoading) return <VerticalCardLoadingScreen value={6} lgColumns={5}/>;
   if (error) return <div>Error: {error.message}</div>;
 
   const products = data?.data?.products;

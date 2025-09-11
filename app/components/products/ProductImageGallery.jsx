@@ -123,7 +123,7 @@ export default function ProductImageGallery({
                                     <SwiperSlide key={index} className="!h-auto">
                                         <button
                                             onClick={() => handleImageSelect(image, index)}
-                                            className={`w-full aspect-square border-2 rounded-[10px] cursor-pointer transition-all duration-300 overflow-hidden hover:border-primary/60 flex items-center justify-center ${activeIndex === index
+                                            className={`w-full aspect-square border-2 rounded-[5px] cursor-pointer transition-all duration-300 overflow-hidden hover:border-primary/60 flex items-center justify-center ${activeIndex === index
                                                     ? "border-primary"
                                                     : "border-creamline"
                                                 }`}
@@ -151,7 +151,7 @@ export default function ProductImageGallery({
                         
                         {/* Main Image Swiper - Right side */}
                         <div className="w-full md:w-4/5 order-1 md:order-2">
-                            <div className="border border-creamline rounded-[10px] overflow-hidden h-[400px] md:h-[500px] lg:h-[600px] relative">
+                            <div className="border border-creamline rounded-[10px] overflow-hidden h-[400px] md:h-[500px] lg:h-[500px] relative">
                                 <Swiper
                                     modules={[Navigation, Pagination, Thumbs, Autoplay]}
                                     spaceBetween={10}
@@ -213,7 +213,7 @@ export default function ProductImageGallery({
                         </div>
                     </>
                     :
-                    <div className="w-full border border-creamline rounded-[10px] overflow-hidden h-[400px] md:h-[500px] lg:h-[600px] relative">
+                    <div className="w-full border border-creamline rounded-[10px] overflow-hidden h-[400px] md:h-[500px] lg:h-[500px] relative">
                         <Image
                             src={defaultImage}
                             alt={`${product?.name || 'Product Image'}`}

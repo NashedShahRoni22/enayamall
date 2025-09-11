@@ -51,31 +51,33 @@ export default function page() {
   };
 
   // Match slug to brand and set brandIds
-  useEffect(() => {
-    if (categories && Array.isArray(categories) && slug) {
-      const matchedParentCategory = categories.find(
-        (category) => category.slug === slug
-      );
+ useEffect(() => {
+  if (!categories || !slug) return;
 
-      if (matchedParentCategory) {
-        setParentCategorytIds([matchedParentCategory.id]);
+  const matchedParentCategory = categories.find(
+    (category) => category.slug === slug
+  );
+  console.log("Matched Parent Category:", matchedParentCategory);
 
-        if (childreen && Array.isArray(matchedParentCategory.child)) {
-          const matchedChild = matchedParentCategory.child.find(
-            (child) => child.slug === childreen
-          );
+  if (!matchedParentCategory) return;
 
-          if (matchedChild) {
-            setChildCategoryId(matchedChild.id);
-          }
-        }
-      }
-    }
-  }, [categories, slug, childreen]);
+  setParentCategorytIds([matchedParentCategory.id]);
+
+  if (childreen && Array.isArray(matchedParentCategory.child)) {
+    const matchedChild = matchedParentCategory.child.find(
+      (child) => child.slug === childreen
+    );
+    console.log("Matched Child Category:", matchedChild);
+    if (matchedChild) setChildCategoryId(matchedChild.id);
+  }
+}, [categories, slug, childreen]);
+
+
+  
 
   // category options
   const sortOptions = [
-    "Default",
+    "Recommended",
     "Price low to high",
     "Price high to low",
   ];
@@ -186,6 +188,10 @@ export default function page() {
       document.body.style.overflow = "unset";
     };
   }, [showFilters]);
+
+  useEffect(() => {
+  console.log({ parentCategorytIds, childCategoryId, queryParams });
+}, [parentCategorytIds, childCategoryId, queryParams]);
 
   return (
     <section className="relative">

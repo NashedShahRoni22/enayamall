@@ -1,10 +1,10 @@
 import VerticalCardSkleton from './VerticalCardSkleton'
 import Container from '../shared/Container'
 
-export default function VerticalCardLoadingScreen({value}) {
+export default function VerticalCardLoadingScreen({value, lgColumns}) {
     return (
         <Container>
-            <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 2xl:grid-cols-4 gap-[20px] mt-[60px] mb-[50px] lg:mb-[120px]`}>
+            <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-${lgColumns} gap-[20px] mt-[60px] mb-[50px] lg:mb-[120px]`}>
                 {[...Array(value)].map((_, i) => (
                     <VerticalCardSkleton key={i} />
                 ))}

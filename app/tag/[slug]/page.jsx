@@ -8,7 +8,7 @@ import { IoCloseOutline, IoGridOutline } from "react-icons/io5";
 import Categories from "@/app/components/filters/Categories";
 import Brands from "@/app/components/filters/Brands";
 import SkinTypes from "@/app/components/filters/SkinTypes";
-import Products from "@/app/components/products/Products";
+import ProductsPage from "@/app/components/products/ProductsPage";
 import Container from "@/app/components/shared/Container";
 import PageHeader from "@/app/components/shared/PageHeader";
 import { useAppContext } from "@/app/context/AppContext";
@@ -23,7 +23,8 @@ import BrandBannerDisplay from "@/app/components/filters/BrandBannerDisplay";
 export default function page() {
   const { categories, brands, lang } = useAppContext();
   const params = useParams();
-  const slug = params?.slug ?? null;
+  const slug = params?.slug ? decodeURIComponent(params.slug) : null;
+  // const slug = params?.slug ?? null;
 
   const [brandIds, setBrandIds] = useState([]);
   const [parentCategorytIds, setParentCategorytIds] = useState([]);
@@ -61,7 +62,7 @@ export default function page() {
 
   // category options
   const sortOptions = [
-    'Default Sorting',
+    'Recommended',
     'Price low to high',
     'Price high to low'
   ];
@@ -90,7 +91,7 @@ export default function page() {
     if (parentCategorytIds?.length > 0) params.category_ids = parentCategorytIds;
     if (brandIds?.length > 0) params.brand_id = brandIds;
     if (skinTypeIds?.length > 0) params.skin_type_id = skinTypeIds;
-    if(slug) params.tag = slug;
+    // if(slug) params.tag = slug;
 
     // Add debounced price range filters
     if (debouncedMinPrice !== undefined && debouncedMinPrice !== null) params.lowest_price = debouncedMinPrice;
@@ -100,11 +101,14 @@ export default function page() {
   }, [parentCategorytIds, childCategoryId, brandIds, skinTypeIds, sortOption, debouncedMinPrice, debouncedMaxPrice, page]);
 
   // Fetch products with filters
-  const { data: productData, isLoading, error } = useGetData('products', queryParams);
+  const endpoint = slug ? `products/tags/${encodeURIComponent(slug)}` : 'products';
+  const { data: productData, isLoading, error } = useGetData(endpoint, queryParams);
+  // const { data: productData, isLoading, error } = useGetData('products', queryParams);
   const products = productData?.data;
 
   // Track filter changes and reset when needed
-  const currentFilters = JSON.stringify({ parentCategorytIds, childCategoryId, brandIds, skinTypeIds, sortOption, debouncedMinPrice, debouncedMaxPrice });
+  const currentFilters = JSON.stringify({ parentCategorytIds, childCategoryId, brandIds, skinTypeIds, sortOption, debouncedMinPrice, debouncedMaxPrice, slug });
+  // const currentFilters = JSON.stringify({ parentCategorytIds, childCategoryId, brandIds, skinTypeIds, sortOption, debouncedMinPrice, debouncedMaxPrice });
 
   useEffect(() => {
     // Check if filters have changed
@@ -157,7 +161,8 @@ export default function page() {
       </div> */}
       {/* filters & products here  */}
       <Container>
-        <div className='py-[20px]'>
+        <h3 className="text-[28px] mt-5 font-semibold text-primary">Tags: {slug}</h3>
+        <div className='pb-[20px]'>
           {/* filetrs actions  */}
           <div className="sticky top-18 lg:static lg:flex lg:gap-[24px] bg-white z-10">
             {/* for large device  */}
@@ -269,7 +274,7 @@ export default function page() {
 
             {/* products here  */}
             <div className=''>
-              <Products
+              <ProductsPage
                 viewStyle={viewStyle}
                 parentCategorytIds={parentCategorytIds}
                 childCategoryId={childCategoryId}

@@ -9,7 +9,7 @@ import ProductsSlider from "../sliders/ProductsSlider";
 export default function Recommended() {
   // fetch products
   const { data, isLoading, error } = useGetData(`popular-choices`);
-  if (isLoading) return <VerticalCardLoadingScreen value={6} />;
+  if (isLoading) return <VerticalCardLoadingScreen value={6} lgColumns={5}/>;
   if (error) return <div>Error: {error.message}</div>;
   const products = data?.data;
 

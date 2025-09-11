@@ -6,7 +6,7 @@ import Image from "next/image";
 import Container from "../components/shared/Container";
 import Brands from "../components/filters/Brands";
 import Categories from "../components/filters/Categories";
-import Products from "../components/products/Products";
+import ProductsPage from "../components/products/ProductsPage";
 import SkinTypes from "../components/filters/SkinTypes";
 import ShopHeader from "../components/shared/ShopHeader";
 import { IoCloseOutline, IoGridOutline } from "react-icons/io5";
@@ -45,7 +45,7 @@ export default function page() {
 
     // category options
     const sortOptions = [
-        'Default Sorting',
+        'Recommended',
         'Price low to high',
         'Price high to low'
     ];
@@ -250,7 +250,7 @@ export default function page() {
 
                         {/* products here  */}
                         <div className='lg:w-3/4 2xl:w-4/5'>
-                            <Products
+                            <ProductsPage
                                 viewStyle={viewStyle}
                                 parentCategorytIds={parentCategorytIds}
                                 childCategoryId={childCategoryId}

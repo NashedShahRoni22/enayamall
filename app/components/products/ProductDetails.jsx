@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { GoPlus } from "react-icons/go";
 import { AiOutlineMinus } from "react-icons/ai";
-import { FaStar } from "react-icons/fa";
 import { TiStarFullOutline } from "react-icons/ti";
-import { MessageCircleQuestion, Phone, Share2 } from "lucide-react";
+import { Heart, MessageCircleQuestion, Phone, Share2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAppContext } from "@/app/context/AppContext";
 import policyIco from "../../resources/icons/trust.svg";
@@ -217,30 +216,30 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                 </div>
             }
 
-            <div className="my-[15px] h-[1px] bg-creamline w-full"></div>
+            <div className="my-[15px] h-[.5px] bg-creamline w-full"></div>
 
-            {/* {product?.is_express && (
+            {product?.is_express && (
                 <div className={`relative flex mb-[20px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
                   <img
                     src='/express.png'
                     alt="Express"
-                    className="cursor-pointer peer"
+                    className="peer"
                     width={80}
                   />
                   <span
                     className={`absolute bottom-full mb-2 ${
                       lang === "ar" ? "right-0" : "left-0"
                     }
-                   hidden peer-hover:block bg-primary text-white text-xs 
+                   hidden peer-hover:block bg-white border border-primary text-primary text-xs 
                    px-2 py-1 rounded whitespace-nowrap pointer-events-none`}
                   >
-                    ${lang === "en" ? "This product offers Express Delivery" : "هذا المنتج يقدم توصيل سريع"}
+                    {lang === "en" ? "This product offers Express Delivery" : "هذا المنتج يقدم توصيل سريع"}
                   </span>
                 </div>
-            )} */}
+            )}
 
             {/* pricing */}
-            <div className="text-[20px] 2xl:text-[26px] text-secondary flex items-center gap-[10px] mb-[20px] 2xl:mb-[40px]">
+            <div className="text-[20px] 2xl:text-[26px] text-secondary flex items-center gap-[10px] mb-[20px]">
                 {
                     (() => {
                         const selectedVariant = product?.variants?.find(v => v?.variant === defaultVarient);
@@ -254,13 +253,13 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                                 <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-[10px]">
                                     <div className="flex gap-[10px] items-center font-semibold">
                                         <p className="flex items-center"><span className="dirham-symbol mr-1">ê</span> {selectedVariant?.discount?.discount_price}</p>
-                                        <p className="flex items-center text-ash line-through font-[300] text-[16px] 2xl:text-[18px]">
-                                            <span className="dirham-symbol text-[16px]">ê</span> {selectedVariant?.price}
+                                        <p className="flex items-center text-ash line-through font-[300]">
+                                            {selectedVariant?.price}
                                         </p>
                                     </div>
-                                    <p className="text-[12px] 2xl:text-[18px] text-customgreen">
+                                    {/* <p className="text-[12px] 2xl:text-[18px] text-customgreen">
                                         {getText('save')} {selectedVariant?.price - selectedVariant?.discount?.discount_price}
-                                    </p>
+                                    </p> */}
                                 </div>
                             );
                         }
@@ -292,8 +291,8 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
             {/* user actions */}
             <div className="flex gap-[10px] 2xl:gap-[20px] items-center">
                 {/* quantity selector */}
-                <div className="flex items-center gap-[20px] 2xl:gap-[30px] px-[20px] rounded-[10px] text-[18px] 2xl:text-[22px] justify-center bg-white border border-creamline h-[50px] 2xl:h-[60px] w-2/5">
-                    <button disabled={defaultQuantity === 1} className="cursor-pointer text-primaryblack hover:bg-creamline hover:text-primary rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity - 1)}>
+                <div className="flex items-center gap-[10px] rounded-[10px] text-[18px] 2xl:text-[22px] justify-center bg-white border border-creamline h-[50px]">
+                    <button disabled={defaultQuantity === 1} className="cursor-pointer text-primaryblack hover:text-primary rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity - 1)}>
                         <AiOutlineMinus />
                     </button>
                     <input
@@ -302,7 +301,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                         readOnly
                         className="w-8 text-center bg-transparent focus:outline-none text-primaryblack"
                     />
-                    <button className="cursor-pointer text-primaryblack hover:bg-creamline hover:text-primary rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity + 1)}>
+                    <button className="cursor-pointer text-primaryblack hover:text-primary rounded-full p-2" onClick={() => setDefaultQuantity(defaultQuantity + 1)}>
                         <GoPlus />
                     </button>
                 </div>
@@ -311,16 +310,23 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                 <button
                     disabled={stock === 0}
                     onClick={() => handleAddToCart(product)}
-                    className={`cursor-pointer disabled:cursor-not-allowed flex-1 h-[50px] 2xl:h-[60px] rounded-[10px] bg-light disabled:bg-button hover:bg-primary text-primaryblack disabled:text-white hover:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
+                    className={`cursor-pointer disabled:cursor-not-allowed flex-1 h-[50px] rounded-[10px] bg-primary  text-white disabled:text-white hover:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
                     {stock > 0 ? getText('addToCart') : getText('outOfStock')}
                 </button>
+
+                {/* <button
+                        disabled={stock === 0}
+                        onClick={() => handleAddToCart(product, "now")}
+                        className={`cursor-pointer disabled:cursor-not-allowed flex-1 w-full h-[50px] 2xl:h-[60px] rounded-[10px] bg-primary disabled:bg-button  text-white disabled:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
+                        {stock > 0 ? getText('buyItNow') : getText('outOfStock')}
+                    </button> */}
 
                 {/* add to wishlist  */}
                 <button
                     disabled={isWishlisted}
                     onClick={() => handleAddToWishlist(product)}
-                    className={`cursor-pointer w-[50px] h-[50px] 2xl:w-[60px] 2xl:h-[60px] rounded-full border border-creamline flex justify-center items-center text-[#D0D0D0] hover:bg-primary hover:text-white ease-linear duration-300 text-[24px] ${isWishlisted && " bg-secondary text-white"}`}>
-                    <FaStar />
+                    className={`cursor-pointer w-[50px] h-[50px] rounded-full border border-creamline flex justify-center items-center text-[#D0D0D0] hover:bg-primary hover:text-white ease-linear duration-300 text-[24px] ${isWishlisted && " bg-secondary text-white"}`}>
+                    <Heart />
                 </button>
             </div>
 
@@ -328,17 +334,12 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
             {
                 stock > 0 &&
                 <div className="mt-[30px]">
-                    <button
-                        disabled={stock === 0}
-                        onClick={() => handleAddToCart(product, "now")}
-                        className={`cursor-pointer disabled:cursor-not-allowed flex-1 w-full h-[50px] 2xl:h-[60px] rounded-[10px] bg-primary disabled:bg-button  text-white disabled:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
-                        {stock > 0 ? getText('buyItNow') : getText('outOfStock')}
-                    </button>
+                    
                 </div>
             }
 
             {/* ask que, share or call from here  */}
-            <div className="mt-[30px] 2xl:mt-[50px] flex flex-col 2xl:flex-row gap-[20px] 2xl:gap-[40px]">
+            <div className="mt-[30px] flex flex-col 2xl:flex-row gap-[20px] 2xl:gap-[40px]">
                 <Link
                     href="https://wa.me/+971506065857"
                     target="_blank"
@@ -363,7 +364,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
             </div>
 
             {/* product other informations  */}
-            <div className="mt-[20px] 2xl:mt-[40px] text-[16px] 2xl:text-[18px]">
+            <div className="mt-[30px] text-[16px]">
                 {/* <p><span className="text-primaryblack font-[550]">{getText('productCode')}</span> <span className="text-ash">{product?.product_code}</span> </p>
                 {
                     stock > 0 && <p className="mt-[20px]"><span className="text-primaryblack font-[550]">{getText('availableStock')}</span> <span className="text-ash">{stock} {getText('items')}</span> </p>
@@ -383,7 +384,7 @@ export default function ProductDetails({ token, slug, variant, product, setRevie
                 <p className="mt-[20px]">
                     <span className="text-primaryblack font-[550]">{getText('tags')}</span>{" "}
                     {product?.tags?.map((pt, index, array) => (
-                        <Link href={`/tag/${pt}`} className="text-ash capitalize" key={index}>
+                        <Link href={`/tag/${pt}`} className="text-ash capitalize hover:text-primary" key={index}>
                             {lang === 'en' ? pt : (product?.ar_tags && product?.ar_tags[index]) || pt}
                             {index === array.length - 1 ? "." : ","}
                             {" "}

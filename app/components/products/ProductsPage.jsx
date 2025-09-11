@@ -2,17 +2,17 @@ import VerticalCardLoadingScreen from '../loaders/VerticalCardLoadingScreen';
 import HorizontalProductCard from '../shared/cards/HorizontalProductCard';
 import VerticalProductCard from '../shared/cards/VerticalProductCard'
 
-export default function Products({
+export default function ProductsPage({
     viewStyle,
     isLoading,
     products,
     error,
     gridCount
 }) {
-    if (isLoading) return <VerticalCardLoadingScreen value={8} lgColumns={4}/>;
+    if (isLoading) return <VerticalCardLoadingScreen value={5} lgColumns={5} />;
     if (error) return <div>Error: {error.message}</div>;
 
-    const verticalGridClasses = `grid grid-cols-2 md:grid-cols-4 gap-x-[16px] gap-y-[16px]`;
+    const verticalGridClasses = `grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-[16px] gap-y-[16px]`;
     return (
         <>
             {
