@@ -33,10 +33,11 @@ export default function ProductPage() {
         productName: ''
     });
 
+    const query = variant ? `?variant=${variant}` : ''
     // Simple conditional at the top level
     const { data, isLoading, error } = token
-        ? useGetDataWithToken(`product/${slug}?variant=${variant}`, token)
-        : useGetData(`product/${slug}?variant=${variant}`);
+        ? useGetDataWithToken(`product/${slug}${query}`, token)
+        : useGetData(`product/${slug}${query}`);
 
     const product = data?.data;
 
@@ -126,7 +127,7 @@ export default function ProductPage() {
                                         ))}
                                     </div>
                                     :
-                                    <p className="text-xl text-primaryblack">No reviews yet</p>
+                                    ''
                             }
                         </div>
                     </div>

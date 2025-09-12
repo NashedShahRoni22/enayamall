@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import ReviewForm from "../forms/ReviewForm";
 import { useAppContext } from "@/app/context/AppContext";
 import he from "he";
+import Link from "next/link";
 
 export default function ProductUseReviews({
   product,
@@ -108,12 +109,6 @@ export default function ProductUseReviews({
     return () => window.removeEventListener("scroll", throttledHandleScroll);
   }, [reviewable]);
 
-  console.log(
-    "AR description:",
-    product?.ar_long_description,
-    typeof product?.ar_long_description
-  );
-
   return (
     <section className="mt-[60px] relative">
       {/* Sticky Nav Buttons */}
@@ -215,6 +210,17 @@ export default function ProductUseReviews({
           />
         )}
       </div>
+
+      <p className="mt-[40px]">
+          <span className="text-primaryblack font-[550]">{lang === 'en' ? 'Tags:' : 'العلامات:'}</span>{" "}
+          {product?.tags?.map((pt, index, array) => (
+              <Link href={`/tag/${pt}`} className="capitalize hover:text-white mr-1 last:mr-0 hover:bg-primary inline-flex items-center rounded-md bg-pink-50 px-2 py-1 text-xs font-medium text-primary inset-ring inset-ring-primary" key={index}>
+                  {lang === 'en' ? pt : (product?.ar_tags && product?.ar_tags[index]) || pt}
+                  {/* {index === array.length - 1 ? "." : ","} */}
+                  {" "}
+              </Link>
+          ))}
+      </p>
     </section>
   );
 }

@@ -14,7 +14,7 @@ export default function LatestProduct() {
   // fetch products
   const { data, isLoading, error } = useGetData(`products`);
   const location = usePathname();
-  if (isLoading) return <VerticalCardLoadingScreen value={6} lgColumns={5}/>;
+  if (isLoading) return <VerticalCardLoadingScreen value={5} lgColumns={5}/>;
   if (error) return <div>Error: {error.message}</div>;
 
   const products = data?.data;

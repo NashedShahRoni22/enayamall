@@ -107,14 +107,14 @@ export default function VerticalProductCard({ p }) {
   const discountPercentage = p?.discount
     ? Math.round(((p?.price - p?.discount?.discount_price) / p?.price) * 100)
     : 0;
-
+  const query = p?.variant ? `?variant=${p?.variant}` : ''
   // Get localized product data
   const productName = getLocalizedField(p, "name");
   const categoryName = getLocalizedField(p?.main_category, "name");
   const variantName = getLocalizedField(p, "variant");
   return (
     <div className={`group relative ${lang === "ar" ? "rtl" : "ltr"}`}>
-      <Link href={`/shop/${p?.slug}?variant=${p?.variant}`} className="block">
+      <Link href={`/shop/${p?.slug}${query}`} className="block">
         <div className="bg-white rounded-xl overflow-hidden border border-creamline group-hover:border-gray-200">
           {/* Product Image Container with Enhanced Hover Effects */}
           <div className="relative overflow-hidden aspect-square">

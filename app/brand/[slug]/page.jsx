@@ -158,7 +158,7 @@ export default function page() {
       <Container>
         <div className='py-[20px]'>
           {/* filetrs actions  */}
-          <div className="sticky top-18 lg:static lg:flex lg:gap-[24px] bg-white z-10">
+          <div className="lg:flex lg:gap-[24px] bg-white z-10">
             {/* for large device  */}
             <div className="hidden text-primary lg:w-2/6 2xl:w-1/4">
               <FilterIcon />
@@ -243,28 +243,9 @@ export default function page() {
 
           </div>
 
-          <div className="lg:flex lg:gap-[24px] mt-[30px]">
+          <div className="mt-[30px]">
             {/* filters options here for large device  */}
-            <div className='hidden lg:w-2/6 2xl:w-1/4'>
-              <div className='flex flex-col gap-[20px] lg:gap-[30px]'>
-                {/* Price Range Filter */}
-                <PriceRangeFilter
-                  minPrice={minPrice}
-                  maxPrice={maxPrice}
-                  setMinPrice={setMinPrice}
-                  setMaxPrice={setMaxPrice}
-                  absoluteMin={0}
-                  absoluteMax={maxPrice}
-                  onFilter={handlePriceFilter}
-                />
 
-                {/* category */}
-                <Categories lang={lang} categories={categories} parentCategorytIds={parentCategorytIds} setParentCategorytIds={setParentCategorytIds} childCategoryId={childCategoryId} setChildCategoryId={setChildCategoryId} />
-
-                {/* brands */}
-                {/* <Brands lang={lang} brands={brands} brandIds={brandIds} setBrandIds={setBrandIds} /> */}
-              </div>
-            </div>
 
             {/* products here  */}
             <div className=''>

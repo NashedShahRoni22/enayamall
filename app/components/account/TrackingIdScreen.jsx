@@ -41,12 +41,13 @@ export default function TrackingIdScreen({ affiliateCode }) {
   })
 
   const searchProducts = searchData?.data || []
+  const query = variant ? `?variant=${variant}` : ''
 
   // Generate tracking URL
   const generateTrackingUrl = (productSlug, variant) => {
     if (!affiliateCode || !productSlug) return ''
     // return `${process.env.NEXT_PUBLIC_WEB_SHOP_BASE_URL}${productSlug}?tracking=${affiliateCode}`
-    return `http://localhost:3000/shop/${productSlug}?variant=${variant}?tracking=${affiliateCode}`
+    return `http://localhost:3000/shop/${productSlug}${query}?tracking=${affiliateCode}`
   }
 
   // Add single product to tracked list
