@@ -41,7 +41,7 @@ export default function TrackingIdScreen({ affiliateCode }) {
   })
 
   const searchProducts = searchData?.data || []
-  const query = variant ? `?variant=${variant}` : ''
+  const query = variant ? `?variant=${variant}` : `?variant=${variant}`
 
   // Generate tracking URL
   const generateTrackingUrl = (productSlug, variant) => {

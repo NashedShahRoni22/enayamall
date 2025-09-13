@@ -21,6 +21,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
     const [editableAddress, setEditableAddress] = useState(null);
     const [loading, setLoading] = useState(false);
     const [selectedCountryId, setSelectedCountryId] = useState(null);
+    
 
     // Fetch countries & districts (cities)
     const { data: countriesData, isLoading: isCountriesLoading } = useGetDataWithToken('countries', token);
@@ -285,6 +286,16 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
         resetFormData();
     };
 
+    useEffect(() => {
+        if (address?.data?.length > 0) {
+            const defaultAddress = address.data.find(a => Number(a?.is_default) === 1);
+            if (defaultAddress) {
+            setAddressId(defaultAddress.id);
+            }
+        }
+    }, [address]);
+    
+
     return (
         <section>
             {showForm ? (
@@ -317,7 +328,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                         name="firstName"
                                         value={formData.firstName}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.firstName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
+                                        className={`w-full px-[10px] py-[8px] border ${errors.firstName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
                                     />
                                 </div>
 
@@ -334,12 +345,12 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                         name="lastName"
                                         value={formData.lastName}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.lastName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
+                                        className={`w-full px-[10px] py-[8px] border ${errors.lastName ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
                                     />
                                 </div>
 
                                 {/* Company */}
-                                <div>
+                                {/* <div>
                                     <label className="flex justify-between font-medium text-gray-700">
                                         <p>Company</p>
                                     </label>
@@ -348,9 +359,9 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                         name="company"
                                         value={formData.company}
                                         onChange={handleChange}
-                                        className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
+                                        className="w-full px-[10px] py-[8px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
                                     />
-                                </div>
+                                </div> */}
                             </div>
 
                             {/* Address Section */}
@@ -368,7 +379,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                         name="address1"
                                         value={formData.address1}
                                         onChange={handleChange}
-                                        className={`w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.address1 ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
+                                        className={`w-full px-[10px] py-[8px] border ${errors.address1 ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack`}
                                     />
                                 </div>
 
@@ -382,7 +393,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                         name="address2"
                                         value={formData.address2}
                                         onChange={handleChange}
-                                        className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
+                                        className="w-full px-[10px] py-[8px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
                                     />
                                 </div>
 
@@ -399,7 +410,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                             value={selectedCountryId || ""}
                                             onChange={handleCountryChange}
                                             disabled={isCountriesLoading}
-                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.district ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack bg-white`}
+                                            className={`cursor-pointer appearance-none w-full px-[10px] py-[8px] border ${errors.district ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack bg-white`}
                                         >
                                             <option value="">
                                                 {isCountriesLoading ? "Loading countries..." : "Select Country"}
@@ -410,14 +421,14 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                                 </option>
                                             ))}
                                         </select>
-                                        <BiChevronDown className="absolute top-42/100 right-5 text-xl text-gray-300" />
+                                        <BiChevronDown className="absolute top-42/100 right-1 text-xl text-gray-300" />
                                     </div>
                                 </div>
 
                                 {/* District Select (was City) - Now labeled as City */}
                                 <div className="relative">
                                     <label className="flex justify-between font-medium text-gray-700">
-                                        <p>City <span className="text-button">*</span></p>
+                                        <p>State <span className="text-button">*</span></p>
                                         {errors.city && (
                                             <span className="text-button ml-2">{errors.city}</span>
                                         )}
@@ -427,7 +438,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                             value={selectedDistrictId || ""}
                                             onChange={handleDistrictChange}
                                             disabled={!selectedCountryId || isDistrictsLoading}
-                                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] border ${errors.city ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack bg-white`}
+                                            className={`cursor-pointer appearance-none w-full px-[10px] py-[8px] border ${errors.city ? "border-button" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack bg-white`}
                                         >
                                             <option value="">
                                                 {!selectedCountryId
@@ -443,12 +454,12 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                                 </option>
                                             ))}
                                         </select>
-                                        <BiChevronDown className="absolute top-42/100 right-5 text-xl text-gray-300" />
+                                        <BiChevronDown className="absolute top-42/100 right-1 text-xl text-gray-300" />
                                     </div>
                                 </div>
 
                                 {/* Post Code */}
-                                <div>
+                                {/* <div>
                                     <label className="flex justify-between font-medium text-gray-700">
                                         <p>Post Code</p>
                                     </label>
@@ -457,15 +468,15 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                         name="postCode"
                                         value={formData.postCode}
                                         onChange={handleChange}
-                                        className="w-full px-[10px] sm:px-[20px] py-[12px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
+                                        className="w-full px-[10px] py-[8px] border border-gray-300 rounded-md focus:outline-none mt-[10px] text-[16px] text-primaryblack"
                                     />
-                                </div>
+                                </div> */}
                             </div>
 
                             {/* Additional Address */}
                             <div>
-                                <label className="block font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                                    Additional Address
+                                <label className="block font-medium text-gray-700 mt-[10px] sm:mt-[20px]">
+                                    Additional Info
                                 </label>
                                 <textarea
                                     name="additionalInfo"
@@ -477,7 +488,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                             </div>
 
                             {/* Default Address Checkbox */}
-                            <div className="mt-[15px] sm:mt-[30px]">
+                            <div className="mt-[10px] sm:mt-[20px]">
                                 <label className="flex items-center gap-[10px] cursor-pointer">
                                     <input
                                         type="checkbox"
@@ -491,7 +502,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                             </div>
 
                             {/* Submit Button */}
-                            <div className="mt-[15px] sm:mt-[30px]">
+                            <div className="mt-[10px] sm:mt-[20px]">
                                 {editableAddress === null || Object.keys(editableAddress).length === 0 ? (
                                     <button
                                         onClick={handleAddAddress}
@@ -542,79 +553,69 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                             </button>
                         </div>
 
-                        {/* shipping address  */}
+                        {/* shipping address */}
                         {address?.data?.length > 0 ? (
                             <div className="mt-[10px] sm:mt-[40px] flex flex-col gap-[15px] sm:gap-[30px]">
-                                {address?.data?.map((a) => (
-                                    <div className="flex justify-between items-center" key={a?.id}>
-                                        {
-                                            location === "/account" ?
-                                                <p className="flex gap-[18px] w-4/6 cursor-pointer">
-                                                    <p className="text-[16px] text-ash text-left">
-                                                        {[
-                                                            a?.first_name,
-                                                            a?.last_name,
-                                                            a?.company,
-                                                            a?.address_1,
-                                                            a?.address_2,
-                                                            a?.district?.name,
-                                                            a?.country?.country_name
-                                                        ]
-                                                            .filter(Boolean)
-                                                            .join(', ')}
-                                                    </p>
-                                                </p>
-                                                :
-                                                <button onClick={() => setAddressId(a?.id)} className="flex gap-[18px] w-4/6 cursor-pointer">
-                                                    <span>
-                                                        {
-                                                            addressId === a?.id ?
-                                                                <MdCheckCircle className="text-[20px] sm:text-[24px] text-primary" />
-                                                                :
-                                                                <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
-                                                        }
-                                                    </span>
-                                                    <p className="text-[16px] text-ash text-left">
-                                                        {[
-                                                            a?.first_name,
-                                                            a?.last_name,
-                                                            a?.company,
-                                                            a?.address_1,
-                                                            a?.address_2,
-                                                            a?.district?.name,
-                                                            a?.country?.country_name
-                                                        ]
-                                                            .filter(Boolean)
-                                                            .join(', ')}
-                                                    </p>
-                                                </button>
-                                        }
+                                {address.data.map((a) => {
+                                    // Determine if this address is selected
+                                    const isSelected = addressId !== null
+                                        ? addressId === a.id
+                                        : Number(a.is_default) === 1;
 
-                                        <div className="flex gap-[16px]">
+                                    return (
+                                        <div className="flex justify-between items-center" key={a.id}>
+                                            {/* Select address button */}
                                             <button
-                                                onClick={() => {
-                                                    setEditableAddress(a);
-                                                    setShowForm(true);
-                                                }}
-                                                className="p-[10px] rounded-full bg-orange-100 hover:bg-orange-200 cursor-pointer"
+                                                onClick={() => setAddressId(a.id)}
+                                                className="flex gap-[18px] w-4/6 cursor-pointer items-center"
                                             >
-                                                <MdEdit className="text-[16px] text-orange-500" />
+                                                <span>
+                                                    {isSelected ? (
+                                                        <MdCheckCircle className="text-[20px] sm:text-[24px] text-primary" />
+                                                    ) : (
+                                                        <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
+                                                    )}
+                                                </span>
+                                                <p className="text-[16px] text-ash text-left">
+                                                    {[
+                                                        a.first_name + ' ' + a.last_name,
+                                                        a.company,
+                                                        a.address_1,
+                                                        a.address_2,
+                                                        a.district?.name,
+                                                        a.country?.country_name
+                                                    ].filter(Boolean).join(', ')}
+                                                </p>
                                             </button>
-                                            <button
-                                                onClick={() => removeAddress(a.id)}
-                                                className="p-[10px] rounded-full bg-red-100 hover:bg-red-200 cursor-pointer"
-                                            >
-                                                <MdDeleteOutline className="text-[16px] text-red-500" />
-                                            </button>
+
+                                            {/* Edit/Delete buttons */}
+                                            <div className="flex gap-[16px]">
+                                                <button
+                                                    onClick={() => {
+                                                        setEditableAddress(a);
+                                                        setShowForm(true);
+                                                    }}
+                                                    className="p-[10px] rounded-full bg-orange-100 hover:bg-orange-200 cursor-pointer"
+                                                >
+                                                    <MdEdit className="text-[16px] text-orange-500" />
+                                                </button>
+                                                <button
+                                                    onClick={() => removeAddress(a.id)}
+                                                    className="p-[10px] rounded-full bg-red-100 hover:bg-red-200 cursor-pointer"
+                                                >
+                                                    <MdDeleteOutline className="text-[16px] text-red-500" />
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         ) : (
                             <div className="py-[40px] flex items-center justify-center">
                                 <p className="text-[14px] text-button">No address found</p>
                             </div>
                         )}
+
                     </div>
                 </>
             )}

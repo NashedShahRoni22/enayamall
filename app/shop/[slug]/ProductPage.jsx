@@ -33,7 +33,7 @@ export default function ProductPage() {
         productName: ''
     });
 
-    const query = variant ? `?variant=${variant}` : ''
+    const query = variant ? `?variant=${variant}` : `?variant=${variant}`
     // Simple conditional at the top level
     const { data, isLoading, error } = token
         ? useGetDataWithToken(`product/${slug}${query}`, token)
@@ -70,6 +70,7 @@ export default function ProductPage() {
 
     if (isLoading) return <ScreenLoader />;
     if (error) return <div>Error: {error.message}</div>;
+
 
     return (
         <>

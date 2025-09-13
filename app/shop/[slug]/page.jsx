@@ -2,7 +2,7 @@ import ProductPage from './ProductPage';
 
 // Server-side meta data fetching
 async function getProductData(slug, variant, token = null) {
-    const query = variant ? `?variant=${variant}` : '';
+    const query = variant ? `?variant=${variant}` : `?variant=${variant}`;
     const url = `${process.env.NEXT_PUBLIC_WEB_API_BASE_URL}product/${slug}${query}`;
 
     const headers = token

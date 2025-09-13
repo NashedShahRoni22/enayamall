@@ -50,10 +50,10 @@ export default function Register() {
     setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
-  // Format phone number - only allow 11 digits
+  // Format phone number - only allow 9 digits
   const formatPhoneNumber = (value) => {
     const numbers = value.replace(/\D/g, '');
-    return numbers.slice(0, 11);
+    return numbers.slice(0, 9);
   };
 
   const handlePhoneChange = (e) => {
@@ -83,8 +83,8 @@ export default function Register() {
 
     if (!signUpForm.phone.trim()) {
       newErrors.phone = "Phone number is required";
-    } else if (signUpForm.phone.length !== 11) {
-      newErrors.phone = "Please enter a valid 11-digit phone number";
+    } else if (signUpForm.phone.length !== 9) {
+      newErrors.phone = "Please enter a valid 9-digit phone number";
     }
 
     if (!signUpForm.password.trim()) {
@@ -261,10 +261,10 @@ export default function Register() {
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="Enter 11-digit phone number"
+                  placeholder="Enter 9-digit phone number"
                   value={signUpForm.phone}
                   onChange={handlePhoneChange}
-                  maxLength="11"
+                  maxLength="9"
                   className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
                 />
 

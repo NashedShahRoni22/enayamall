@@ -57,7 +57,6 @@ export default function page() {
   const matchedParentCategory = categories.find(
     (category) => category.slug === slug
   );
-  console.log("Matched Parent Category:", matchedParentCategory);
 
   if (!matchedParentCategory) return;
 
@@ -67,7 +66,6 @@ export default function page() {
     const matchedChild = matchedParentCategory.child.find(
       (child) => child.slug === childreen
     );
-    console.log("Matched Child Category:", matchedChild);
     if (matchedChild) setChildCategoryId(matchedChild.id);
   }
 }, [categories, slug, childreen]);
@@ -133,6 +131,7 @@ export default function page() {
     error,
   } = useGetData("products", queryParams);
   const products = productData?.data;
+  const name = productData?.meta?.name || (categories?.find(cat => cat.id === parentCategorytIds[0])?.name) || 'Category';
 
   // Track filter changes and reset when needed
   const currentFilters = JSON.stringify({
@@ -190,14 +189,14 @@ export default function page() {
   }, [showFilters]);
 
   useEffect(() => {
-  console.log({ parentCategorytIds, childCategoryId, queryParams });
 }, [parentCategorytIds, childCategoryId, queryParams]);
 
   return (
     <section className="relative">
       {/* filters & products here  */}
       <Container>
-        <div className="py-[20px] lg:py-[20px]">
+        <h3 className="text-[28px] mt-5 font-semibold text-primary">Category: {name}</h3>
+        <div className="pb-[20px]">
           <div className={`lg:flex lg:gap-[24px] mt-[30px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
             {/* filters options here for large device  */}
             <div className="hidden lg:block lg:w-22/100 border border-gray-100 p-[20px] rounded-[10px] h-fit sticky top-[100px] self-start">

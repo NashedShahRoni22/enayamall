@@ -6,6 +6,7 @@ import { useAppContext } from "@/app/context/AppContext";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function VerticalProductCard({ p }) {
   const router = useRouter();
@@ -107,11 +108,29 @@ export default function VerticalProductCard({ p }) {
   const discountPercentage = p?.discount
     ? Math.round(((p?.price - p?.discount?.discount_price) / p?.price) * 100)
     : 0;
-  const query = p?.variant ? `?variant=${p?.variant}` : ''
+  const query = p?.variant ? `?variant=${p?.variant}` : `?variant=${p?.variant}`
   // Get localized product data
   const productName = getLocalizedField(p, "name");
   const categoryName = getLocalizedField(p?.main_category, "name");
   const variantName = getLocalizedField(p, "variant");
+
+  const [freeShippingAmount, setFreeShippingAmount] = useState(null);
+
+  useEffect(() => {
+    async function fetchFreeShipping() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/amount-to-reach-for-free-shipping`);
+        const json = await res.json();
+        if (json?.status === "success") {
+          setFreeShippingAmount(json.data); // 20 or null
+        }
+      } catch (error) {
+        console.error("Error fetching free shipping:", error);
+      }
+    }
+    fetchFreeShipping();
+  }, []);
+
   return (
     <div className={`group relative ${lang === "ar" ? "rtl" : "ltr"}`}>
       <Link href={`/shop/${p?.slug}${query}`} className="block">
@@ -150,6 +169,15 @@ export default function VerticalProductCard({ p }) {
                   {t.outOfStock}
                 </div>
               )}
+
+              {/* Free Shipping */}
+              {/* {p?.price > freeShippingAmount && (
+                <div className="relative inline-block">
+                  <div className="bg-primary text-white px-3 py-1 rounded text-xs font-medium">
+                    Free Shipping
+                  </div>
+                </div>
+              )} */}
             </div>
 
             {/* Wishlist Button */}
@@ -274,6 +302,8 @@ export default function VerticalProductCard({ p }) {
                   </span>
                 </div>
               )}
+
+              
             </div>
 
             {/* Mobile Add to Cart Button */}

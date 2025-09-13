@@ -69,10 +69,10 @@ export default function SignInWithPhone({ option }) {
         return null;
     };
 
-    // Format phone number - only allow 11 digits
+    // Format phone number - only allow 9 digits
     const formatPhoneNumber = (value) => {
         const numbers = value.replace(/\D/g, '');
-        return numbers.slice(0, 11);
+        return numbers.slice(0, 9);
     };
 
     // OTP form state
@@ -101,8 +101,8 @@ export default function SignInWithPhone({ option }) {
 
         if (!otpForm.phone.trim()) {
             newErrors.phone = "Phone number is required";
-        } else if (otpForm.phone.length !== 11) {
-            newErrors.phone = "Please enter a valid 11-digit phone number";
+        } else if (otpForm.phone.length !== 9) {
+            newErrors.phone = "Please enter a valid 9-digit phone number";
         }
 
         if (otpSent && (!otpForm.otp || otpForm.otp.length < 4)) {
@@ -236,7 +236,7 @@ export default function SignInWithPhone({ option }) {
             
             <div className='relative mt-[20px]'>
                 <div className='absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2 z-10'>
-                    <span className='text-[14px] sm:text-[16px] text-ash font-medium'>+88</span>
+                    <span className='text-[14px] sm:text-[16px] text-ash font-medium'>+971</span>
                     {operatorInfo && (
                         <div className='w-5 h-5 sm:w-6 sm:h-6 relative flex-shrink-0'>
                             <Image
@@ -253,9 +253,9 @@ export default function SignInWithPhone({ option }) {
                     name="phone"
                     value={otpForm.phone}
                     onChange={handleOtpChange}
-                    placeholder='Enter 11-digit phone number'
+                    placeholder='Enter 9-digit phone number'
                     className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] pl-[70px] sm:pl-[85px] pr-[15px] sm:pr-[20px] focus:outline-none border ${errors.phone ? "border-button" : "border-creamline"} rounded-[5px] w-full`}
-                    maxLength="11"
+                    maxLength="9"
                     disabled={otpSent}
                 />
             </div>

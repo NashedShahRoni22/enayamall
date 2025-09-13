@@ -21,7 +21,7 @@ export default function page() {
           {
             token == null ?
               <div>
-                <div className="mt-[10px] h-[60px] py-[20px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
+                <div className="my-[150px] h-[60px] py-[20px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
                   <Image alt="Error Icon" src={errorIcon} />
                   <p className="text-[18px] text-button">Please <Link href={"login"} className="font-[650] underline">login</Link> to use the wishlist.</p>
                 </div>
@@ -43,9 +43,12 @@ export default function page() {
                 }
               </> 
           }
-          <div className="mb-[60px] flex justify-center">
-            <ShopNowButton />
-          </div>
+          {
+            token != null &&
+            <div className="mb-[60px] flex justify-center">
+              <ShopNowButton />
+            </div>
+          }
         </section>
         
         {/* Always render FlashDeals, but control visibility with showComponent prop */}

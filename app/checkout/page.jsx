@@ -10,6 +10,8 @@ import { useState } from 'react'
 import ScreenLoader from '../components/loaders/ScreenLoader'
 import { useEffect, useState as useStateForShipping } from 'react'
 import ChoosePayment from '../components/checkout/ChoosePayment'
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from 'lucide-react'
 
 export default function page() {
     const { token, lang } = useAppContext();
@@ -60,12 +62,19 @@ export default function page() {
     
     if (isLoading) return <ScreenLoader/>;
     if (error) return <div>Error: {error.message}</div>;
+    const router = useRouter();
     
     return (
         <PrivateRoute>
             {/* <PageHeader title={"Checkout"} from={"Home"} to={"checkout"} /> */}
             <Container>
-                <div className={`my-[60px] flex flex-col ${lang === "en" ? "xl:flex-row" : "xl:flex-row-reverse"} gap-[24px]`}>
+                <button
+                onClick={() => router.back()}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg mb-5 mt-[40px] flex gap-[5px] cursor-pointer"
+                >
+                    <ChevronLeft /> Back
+                </button>
+                <div className={`mb-[40px] flex flex-col ${lang === "en" ? "xl:flex-row" : "xl:flex-row-reverse"} gap-[24px]`}>
                     {/* left side form  */}
                     <div className='xl:w-1/2'>
                         <BillForm 

@@ -4,7 +4,7 @@ import { useAppContext } from "@/app/context/AppContext";
 import PageHeader from "../components/shared/PageHeader";
 import Container from "../components/shared/Container";
 import { PiSmileySadLight } from "react-icons/pi";
-import ShopNowButton from "../components/shared/ShopNowButton";
+import ShopButton from "../components/shared/ShopButton";
 import CartCard from "../components/shared/cards/CartCard";
 import Link from "next/link";
 import CartTableRow from "../components/shared/cards/CartTableRow";
@@ -139,7 +139,9 @@ export default function CartPage() {
     if (couponData.discount_type === 'fixed') {
       return couponData.discount;
     } else {
-      return Math.round((currentTotal * couponData.discount) / 100);
+      const value = ((currentTotal * couponData.discount) / 100);
+      const toFixed = value.toFixed(2);
+      return toFixed;
     }
   };
 
@@ -147,7 +149,7 @@ export default function CartPage() {
   const getFinalTotal = () => {
     const currentTotal = getCurrentTotal();
     const discountAmount = getDiscountAmount();
-    return Math.max(0, currentTotal - discountAmount);
+    return Math.max(0, (currentTotal - discountAmount)).toFixed(2);
   };
 
   return (
@@ -159,7 +161,7 @@ export default function CartPage() {
           <div className="p-8 text-center text-xl min-h-[80vh] flex flex-col justify-center items-center">
             <PiSmileySadLight className="text-9xl text-secondary" />
             <p className="text-[24px] text-primaryblack mt-[48px] mb-[24px]">Your cart is empty 🛒</p>
-            <ShopNowButton />
+            <ShopButton />
           </div>
           :
           <Container>

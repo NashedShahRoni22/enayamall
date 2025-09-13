@@ -72,7 +72,6 @@ export default function ReviewForm({ variantId, token, productType }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(productType);
 
         if (!rating || !reviewText.trim() || !reviewTitleId.trim()) {
             toast.error("Please provide a rating, title and review.");
