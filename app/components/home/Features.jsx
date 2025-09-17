@@ -7,7 +7,7 @@ export default function Features() {
   const shippingAmount = data?.data;
   const features = [
     {
-      title: "FREE SHIPPING",
+      title: "Free Shipping",
     },
     {
       title: `On orders over $${shippingAmount}`,
@@ -22,7 +22,7 @@ export default function Features() {
       >
         {features.map((feature, index) => (
           <div key={index} className="flex gap-[10px] lg:gap-[20px] items-center">
-            <h5 className={`text-[14px] lg:text-[18px] ${index === 0 && "font-semibold"} text-center text-black`}>{feature.title}</h5>
+            <h5 className={`text-[14px] lg:text-[18px] ${index === 0 && "font-semibold uppercase"} text-center text-black`}>{feature.title}</h5>
             <div className="size-[3px] lg:size-[6px] bg-black rounded-full mx-[25px] lg:mx-[50px]"></div>
           </div>
         ))}

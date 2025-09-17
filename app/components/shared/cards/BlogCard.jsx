@@ -1,30 +1,31 @@
 import Image from 'next/image';
+import { Calendar } from 'lucide-react';
 
 export default function BlogCard({ blog }) {
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      {/* Banner Image */}
-      <div className="relative w-full h-60">
+    <div className="bg-white border border-gray-200 rounded-xl flex flex-col sm:flex-row overflow-hidden">
+      {/* Image Section */}
+      <div className="relative w-full sm:w-1/3 aspect-video sm:aspect-auto">
         <Image
           src={blog?.banner_image}
           alt={blog?.title}
           fill
-          className="object-cover"
+          className="object-cover sm:static sm:w-full sm:h-full"
         />
       </div>
 
-      {/* Content */}
-      <div className="p-4">
+      {/* Content Section */}
+      <div className="p-4 sm:p-5 flex flex-col justify-between sm:w-2/3 gap-2">
         {/* Title */}
-        <h3 className="text-lg font-semibold text-primaryblack mb-2 line-clamp-2">
+        <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">
           {blog?.title}
         </h3>
 
-        {/* Blog Excerpt or Content */}
-        {/* <div
-          className="text-sm text-gray-600 line-clamp-4"
-          dangerouslySetInnerHTML={{ __html: blog?.content }}
-        /> */}
+        {/* Created At */}
+        <div className="flex items-center text-xs text-gray-500 gap-1">
+          <Calendar className="w-4 h-4" />
+          <span>{new Date(blog?.created_at).toLocaleDateString()}</span>
+        </div>
       </div>
     </div>
   );

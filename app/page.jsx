@@ -12,6 +12,7 @@ import LatestProduct from './components/home/LatestProduct'
 import Features from './components/home/Features'
 import Brands from './components/home/Brands'
 import Reviews from './components/home/Reviews'
+import Blogs from './components/home/Blogs'
 
 export default function page() {
   return (
@@ -27,6 +28,7 @@ export default function page() {
       <Recommended/>
       {/* <BannerWidth2 /> */}
       <LatestProduct/>
+      <Blogs/>
       {/* <BannerWidth3 /> */}
       {/* <Recommended/> */}
       {/* <Clearance/> */}
