@@ -111,25 +111,7 @@ export default function VerticalProductCard({ p }) {
   const query = p?.variant ? `?variant=${p?.variant}` : `?variant=${p?.variant}`
   // Get localized product data
   const productName = getLocalizedField(p, "name");
-  const categoryName = getLocalizedField(p?.main_category, "name");
   const variantName = getLocalizedField(p, "variant");
-
-  const [freeShippingAmount, setFreeShippingAmount] = useState(null);
-
-  useEffect(() => {
-    async function fetchFreeShipping() {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/amount-to-reach-for-free-shipping`);
-        const json = await res.json();
-        if (json?.status === "success") {
-          setFreeShippingAmount(json.data); // 20 or null
-        }
-      } catch (error) {
-        console.error("Error fetching free shipping:", error);
-      }
-    }
-    fetchFreeShipping();
-  }, []);
 
   return (
     <div className={`group relative ${lang === "ar" ? "rtl" : "ltr"}`}>
@@ -169,15 +151,6 @@ export default function VerticalProductCard({ p }) {
                   {t.outOfStock}
                 </div>
               )}
-
-              {/* Free Shipping */}
-              {/* {p?.price > freeShippingAmount && (
-                <div className="relative inline-block">
-                  <div className="bg-primary text-white px-3 py-1 rounded text-xs font-medium">
-                    Free Shipping
-                  </div>
-                </div>
-              )} */}
             </div>
 
             {/* Wishlist Button */}
@@ -209,18 +182,6 @@ export default function VerticalProductCard({ p }) {
 
           {/* Product Information */}
           <div className="p-4 space-y-3">
-            {/* Category */}
-            {/* <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-500 uppercase tracking-wider line-through">
-                {categoryName}
-              </span>
-              {p?.total_sold > 0 && (
-                <span className="text-xs text-gray-500 bg-creamline px-2 py-1 rounded">
-                  {lang === 'ar' ? `${p?.total_sold} ${t.sold}` : `${p?.total_sold} ${t.sold}`}
-                </span>
-              )}
-            </div> */}
-
             {/* Product Name */}
             <span className={`text-primaryblack text-[14px] mb-0 leading-tight line-clamp-2 min-h-[36px] group-hover:text-primary transition-colors duration-200 ${lang === "ar" ? "text-right" : "text-left"}`}>
               {productName}
