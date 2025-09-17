@@ -1,4 +1,3 @@
-"use client"
 import Marquee from "react-fast-marquee";
 import { useGetData } from "../helpers/useGetData";
 

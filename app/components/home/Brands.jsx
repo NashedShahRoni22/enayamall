@@ -1,4 +1,3 @@
-"use client";
 import Container from "../shared/Container";
 import Image from "next/image";
 import { useGetData } from "../helpers/useGetData";

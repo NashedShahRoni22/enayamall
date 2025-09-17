@@ -1,8 +1,6 @@
-"use client"
 import Container from "../shared/Container";
 import ShopNowButton from "../shared/ShopNowButton";
 import VerticalProductCard from "../shared/cards/VerticalProductCard";
-// import FlashDealTimer from "./FlashDealTimer";
 import { useGetData } from "../helpers/useGetData";
 import VerticalCardLoadingScreen from "../loaders/VerticalCardLoadingScreen";
 import ProductsSlider from "../sliders/ProductsSlider";

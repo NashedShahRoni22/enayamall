@@ -1,7 +1,6 @@
-"use client"
 import Container from "../shared/Container";
 import ShopNowButton from "../shared/ShopNowButton";
-import VerticalProductCard from "../shared/cards/VerticalProductCard";
+// import VerticalProductCard from "../shared/cards/VerticalProductCard";
 // import FlashDealTimer from "./FlashDealTimer";
 import { useGetData } from "../helpers/useGetData";
 import VerticalCardLoadingScreen from "../loaders/VerticalCardLoadingScreen";
@@ -20,7 +19,7 @@ export default function FlashDeals() {
   const products = data?.data?.products;
 
   return (
-    <section className={`${location === "/" && "py-[10px]"}`}>
+    <section className={`${location === "/" && "py-6 lg:py-12"}`}>
       <Container>
         {/* starting section  */}
         {

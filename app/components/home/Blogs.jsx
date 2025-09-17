@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { useGetData } from "../helpers/useGetData";
 import ScreenLoader from "../loaders/ScreenLoader";

@@ -1,5 +1,4 @@
 "use client"
-import "swiper/swiper-bundle.css";
 import ShopNowButton from "../shared/ShopNowButton";
 import VerticalProductCard from "../shared/cards/VerticalProductCard";
 import ProductsSlider from "../sliders/ProductsSlider";

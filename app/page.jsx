@@ -1,3 +1,4 @@
+"use client";
 import Slider from './components/home/Slider'
 import Category from './components/home/Category'
 import Clearance from './components/home/Clearance'
@@ -13,23 +14,25 @@ import Features from './components/home/Features'
 import Brands from './components/home/Brands'
 import Reviews from './components/home/Reviews'
 import Blogs from './components/home/Blogs'
+import ProductOfTheDay from './components/home/ProductOfTheDay'
 
 export default function page() {
   return (
     <main>
       <Slider/>
-      {/* <Category/> */}
       <Features/>
-      {/* <TwoAdsBanner/> */}
+      <Category/>
+      <TwoAdsBanner/>
       <FlashDeals/>
       <Brands/>
       <Reviews/>
-      {/* <BannerWidth1/> */}
+      <ProductOfTheDay/>
+      <BannerWidth1/>
       <Recommended/>
-      {/* <BannerWidth2 /> */}
+      <BannerWidth2 />
       <LatestProduct/>
       <Blogs/>
-      {/* <BannerWidth3 /> */}
+      <BannerWidth3 />
       {/* <Recommended/> */}
       {/* <Clearance/> */}
       {/* <Newarrival/> */}

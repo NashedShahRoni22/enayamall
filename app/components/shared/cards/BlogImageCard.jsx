@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
+import Link from 'next/link';
 
 export default function BlogImageCard({ blog }) {
   return (
-    <div className="relative w-full h-full aspect-video rounded-xl overflow-hidden">
+    <Link href={`/blog/${blog?.slug}`} className="relative w-full h-full aspect-video rounded-xl overflow-hidden inline-block">
       {/* Background Image */}
       <Image
         src={blog?.banner_image}
@@ -23,9 +24,9 @@ export default function BlogImageCard({ blog }) {
 
         <div className="flex items-center text-sm mt-2 gap-1 text-gray-300">
           <Calendar className="w-4 h-4" />
-          <span>{new Date(blog?.created_at).toLocaleDateString()}</span>
+          <span>{blog?.created_at}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

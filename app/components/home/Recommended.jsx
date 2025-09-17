@@ -1,5 +1,3 @@
-"use client";
-import "swiper/swiper-bundle.css";
 import Container from "../shared/Container";
 import ShopNowButton from "../shared/ShopNowButton";
 import { useGetData } from "../helpers/useGetData";

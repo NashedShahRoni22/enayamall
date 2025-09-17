@@ -1,4 +1,3 @@
-"use client";
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import Container from '../shared/Container';
@@ -66,12 +65,12 @@ export default function ClientReviewSwiper() {
       </div>
 
       {/* Swiper Container */}
-      <div className="relative bg-white rounded-xl border border-creamline overflow-hidden min-h-[300px]">
+      <div className="relative bg-creamline rounded-xl border border-creamline overflow-hidden min-h-[300px]">
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
           disabled={isTransitioning}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:bg-blue-50 hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
+          className="cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
         >
           <ChevronLeft className="w-6 h-6 transform group-hover:scale-110 transition-transform" />
         </button>
@@ -79,7 +78,7 @@ export default function ClientReviewSwiper() {
         <button
           onClick={nextSlide}
           disabled={isTransitioning}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:bg-blue-50 hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
+          className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
         >
           <ChevronRight className="w-6 h-6 transform group-hover:scale-110 transition-transform" />
         </button>
