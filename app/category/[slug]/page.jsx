@@ -24,7 +24,7 @@ export default function page() {
   const params = useParams();
   const searchParams = useSearchParams();
   const slug = params?.slug ?? null;
-  const childreen = searchParams?.get("childreen");
+  const sub = searchParams?.get("sub");
 
   const [brandIds, setBrandIds] = useState([]);
   const [parentCategorytIds, setParentCategorytIds] = useState([]);
@@ -62,13 +62,13 @@ export default function page() {
 
   setParentCategorytIds([matchedParentCategory.id]);
 
-  if (childreen && Array.isArray(matchedParentCategory.child)) {
+  if (sub && Array.isArray(matchedParentCategory.child)) {
     const matchedChild = matchedParentCategory.child.find(
-      (child) => child.slug === childreen
+      (child) => child.slug === sub
     );
     if (matchedChild) setChildCategoryId(matchedChild.id);
   }
-}, [categories, slug, childreen]);
+}, [categories, slug, sub]);
 
 
   
