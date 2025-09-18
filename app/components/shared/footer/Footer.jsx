@@ -49,7 +49,6 @@ export default function Footer() {
             faqs: "FAQs",
             trackOrder: "Track Order",
             myAccount: "My Account",
-            productSupport: "Product Support",
 
             // Partner links
             // becomeSeller: "Become Seller",
@@ -144,7 +143,6 @@ export default function Footer() {
         { en: t.faqs, ar: t.faqs, href: "/faqs" },
         { en: t.trackOrder, ar: t.trackOrder, href: "/track-order" },
         { en: t.myAccount, ar: t.myAccount, href: "/account" },
-        { en: t.productSupport, ar: t.productSupport, href: "/support" }
     ];
 
   const partnerLinks = [

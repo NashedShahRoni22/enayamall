@@ -315,7 +315,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                         }
                     </span>
                     <p className='text-left'>
-                        {t.byContinuing} <Link href={"/terms-and-conditions"} className='hover:text-primary hover:underline'>{t.termsConditions}</Link>, <Link href={"/privacy-policy"} className='hover:text-primary hover:underline'>{t.privacyPolicy}</Link>, <Link href={"/return-and-refund-policy"} className='hover:text-primary hover:underline'>{t.refundReturn}</Link>
+                        {t.byContinuing} <Link href={"/terms-and-conditions"} className='hover:text-primary hover:underline'>{t.termsConditions}</Link>, <Link href={"/privacy-policy"} className='hover:text-primary hover:underline'>{t.privacyPolicy}</Link>, <Link href={"/return-refund"} className='hover:text-primary hover:underline'>{t.refundReturn}</Link>
                     </p>
                 </button>
 

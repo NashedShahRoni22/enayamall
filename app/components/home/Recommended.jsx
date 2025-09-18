@@ -8,9 +8,6 @@ import VerticalProductCard from "../shared/cards/VerticalProductCard";
 
 export default function Recommended() {
   const location = usePathname();
-  console.log('====================================');
-  console.log(location);
-  console.log('====================================');
   // fetch products
   const { data, isLoading, error } = useGetData(`popular-choices`);
   if (isLoading) return <VerticalCardLoadingScreen value={5} lgColumns={5} />;

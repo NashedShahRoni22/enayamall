@@ -37,8 +37,8 @@ export default function Blogs() {
 
           {/* Right side - Next 4 Blogs */}
           <div className="md:w-1/2 lg:w-2/3 grid grid-cols-2 lg:grid-cols-2 gap-6">
-            {blogList.map((blog) => (
-              <BlogCard key={blog.id} blog={blog} />
+            {blogList?.map((blog,index) => (
+              <BlogCard key={index} blog={blog} />
             ))}
           </div>
         </div>
