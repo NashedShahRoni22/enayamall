@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 export default function SearchProductCard({ p, setShowSearch, lang }) {
   return (
-    <Link onClick={() => setShowSearch(false)} href={`/shop/${p?.slug}?variant=${p?.variant}`} className="group flex items-center gap-[20px] bg-white rounded-[10px] py-[8px] pl-[16px] pr-[32px] text-primaryblack border border-creamline">
+    <Link onClick={() => setShowSearch(false)} href={`/shop/${p?.slug}`} className="group flex items-center gap-[20px] bg-white rounded-[10px] py-[8px] pl-[16px] pr-[32px] text-primaryblack border border-creamline">
 
       <div className="flex justify-center rounded-[10px] relative w-1/4 h-[60px]  lg:h-[100px] overflow-hidden">
         <Image

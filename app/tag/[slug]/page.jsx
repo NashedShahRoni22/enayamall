@@ -161,7 +161,9 @@ export default function page() {
       </div> */}
       {/* filters & products here  */}
       <Container>
-        <h3 className="text-[28px] mt-5 font-semibold text-primary">Tags: {slug.charAt(0).toUpperCase() + slug.slice(1)}</h3>
+        {slug && (
+          <h3 className="text-[20px] mt-[30px] font-semibold text-primaryblack">Tags: {slug.charAt(0).toUpperCase() + slug.slice(1)}</h3>
+        )}
         <div className='pb-[20px]'>
           {/* filetrs actions  */}
           <div className="sticky top-18 lg:static lg:flex lg:gap-[24px] bg-white z-10">

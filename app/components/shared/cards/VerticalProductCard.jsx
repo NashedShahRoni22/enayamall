@@ -137,7 +137,7 @@ export default function VerticalProductCard({ p }) {
             >
               {/* Discount Badge */}
               {p?.discount && (
-                <div className="bg-primary text-white px-3 py-1 rounded text-xs font-semibold shadow-lg animate-pulse">
+                <div className="bg-brand-pink text-white px-3 py-1 rounded text-xs font-semibold shadow-lg animate-pulse">
                   {lang === "ar"
                     ? `${discountPercentage}% ${t.off}`
                     : `${discountPercentage}% ${t.off}`}

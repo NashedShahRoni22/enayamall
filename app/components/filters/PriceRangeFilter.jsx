@@ -70,7 +70,7 @@ export default function PriceRangeFilter({
     return (
         <div className="border-b border-gray-300 pb-5">
             {/* Header */}
-            <div className="flex justify-between items-center cursor-pointer" onClick={() => setShow(!show)}>
+            <div className="flex justify-between items-center pb-2 pt-2 cursor-pointer" onClick={() => setShow(!show)}>
                 <h3 className="text-md font-[500] text-primaryblack">Price Range</h3>
                 <button className="cursor-pointer">
                     {show ? (

@@ -131,7 +131,7 @@ export default function page() {
     error,
   } = useGetData("products", queryParams);
   const products = productData?.data;
-  const name = productData?.meta?.name || (categories?.find(cat => cat.id === parentCategorytIds[0])?.name) || 'Category';
+  const name = productData?.meta?.name || (categories?.find(cat => cat.id === parentCategorytIds[0])?.name) || '';
 
   // Track filter changes and reset when needed
   const currentFilters = JSON.stringify({
@@ -195,11 +195,13 @@ export default function page() {
     <section className="relative">
       {/* filters & products here  */}
       <Container>
-        <h3 className="text-[28px] mt-5 font-semibold text-primary">Category: {name}</h3>
+        {name && (
+          <h3 className="text-[20px] mt-[30px] font-semibold text-primaryblack">Category: {name}</h3>
+        )}
         <div className="pb-[20px]">
           <div className={`lg:flex lg:gap-[24px] mt-[30px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
             {/* filters options here for large device  */}
-            <div className="hidden lg:block lg:w-22/100 border border-gray-100 p-[20px] rounded-[10px] h-fit sticky top-[100px] self-start">
+            <div className="hidden lg:block lg:w-22/100 border border-gray-100 p-[20px] rounded-[10px] h-fit self-start">
               {/* filetrs actions  */}
               {/* for large device  */}
               <div className="flex gap-1 items-center font-semibold text-primary border-b border-gray-300 pb-4 mb-4">

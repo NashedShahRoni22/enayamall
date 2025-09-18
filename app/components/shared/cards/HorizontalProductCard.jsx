@@ -77,7 +77,7 @@ export default function HorizontalProductCard({ p }) {
   return (
     <div className={lang === 'ar' ? 'rtl' : 'ltr'}>
       <Link
-        href={`/shop/${p?.slug}?variant=${p?.variant}`}
+        href={`/shop/${p?.slug}`}
         className={`group flex items-center gap-[16px] bg-white rounded-[10px] py-[16px] text-primaryblack border border-creamline ${lang === 'ar' ? 'px-[16px] flex-row-reverse' : 'px-[16px] flex-row'
           }`}
       >
