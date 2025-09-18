@@ -167,7 +167,7 @@ export default function CategoryDropdown({
                   {category.child.map((subcategory) => (
                     <Link
                       key={subcategory.id}
-                      href={`/category/${subcategory.slug}`}
+                      href={`/category/${category.slug}?childreen=${subcategory.slug}`}
                       className={`block py-2 text-sm text-gray-600 hover:bg-gray-100 transition-colors border-b border-gray-200 last:border-b-0 ${
                         isRTL ? "px-8 pr-8 text-right" : "px-8 pl-8 text-left"
                       }`}
@@ -188,12 +188,12 @@ export default function CategoryDropdown({
                   onMouseEnter={() => setHoveredCategory(category.id)}
                   onMouseLeave={handleCategoryLeave}
                   dir={isRTL ? "rtl" : "ltr"}
-                  style={{ gridTemplateColumns: "repeat(4, min-content)" }} // ensures columns fit content
+                  style={{ gridTemplateColumns: "repeat(4, min-content)" }}
                 >
                   {category.child.map((subcategory) => (
                     <Link
                       key={subcategory.id}
-                      href={`/category/${subcategory.slug}`}
+                      href={`/category/${category.slug}?childreen=${subcategory.slug}`}
                       className={`block whitespace-nowrap px-4 py-2 text-sm text-gray-600 ${
                         isRTL ? "text-right" : "text-left"
                       }`}
