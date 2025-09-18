@@ -159,22 +159,18 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                 {/* Account Popover */}
                                 {isLoggedIn && showAccountPopover && (
                                     <div className={`absolute top-9 ${lang === 'ar' ? '-left-9' : '-right-9'} mt-2 bg-white rounded-lg shadow-lg border border-gray-200 py-2 min-w-[180px] z-50`}>
-                                        <Link href="/account">
-                                            <button className={`w-full px-4 py-3 text-sm transition-colors flex items-center gap-3 text-gray-700 cursor-pointer ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
-                                                <UserCircle className="size-4" />
-                                                <span>{t.myProfile}</span>
-                                            </button>
+                                        <Link href="/account" className={`w-full px-4 py-3 text-sm transition-colors flex items-center gap-3 text-gray-700 cursor-pointer ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
+                                            <UserCircle className="size-4" />
+                                            <span>{t.myProfile}</span>
                                         </Link>
-                                        <Link href="/orders">
-                                            <button className={`w-full px-4 py-3 text-sm transition-colors flex items-center gap-3 text-gray-700 ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
-                                                <Package className="size-4" />
-                                                <span>{t.myOrders}</span>
-                                            </button>
+                                        <Link href="/orders" className={`w-full px-4 py-3 text-sm transition-colors flex items-center gap-3 text-gray-700 ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}>
+                                            <Package className="size-4" />
+                                            <span>{t.myOrders}</span>
                                         </Link>
                                         <hr className="my-2 border-gray-200" />
                                         <button
                                             onClick={handleLogout}
-                                            className={`w-full px-4 py-3 text-sm transition-colors flex items-center gap-3 text-red-600 ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}
+                                            className={`cursor-pointer w-full px-4 py-3 text-sm transition-colors flex items-center gap-3 text-red-600 ${lang === 'ar' ? 'flex-row-reverse text-right' : 'text-left'}`}
                                         >
                                             <LogOut className="size-4" />
                                             <span>{t.logout}</span>

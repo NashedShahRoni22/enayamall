@@ -3,30 +3,17 @@ import { GoPlus } from "react-icons/go";
 import { AiOutlineMinus } from "react-icons/ai";
 import { TiStarFullOutline } from "react-icons/ti";
 import {
-  Facebook,
   Heart,
-  Instagram,
-  MessageCircle,
   MessageCircleQuestion,
-  Phone,
-  Share2,
-  Twitter,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAppContext } from "@/app/context/AppContext";
-import policyIco from "../../resources/icons/trust.svg";
-import moneyIco from "../../resources/icons/pricing_icon.svg";
-import supportIco from "../../resources/icons/support.svg";
-import shippingIco from "../../resources/icons/deliverycar.svg";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { handleShare } from "./handleShare";
 import {
   BsFacebook,
-  BsInstagram,
   BsMessenger,
-  BsTwitch,
   BsTwitter,
   BsWhatsapp,
 } from "react-icons/bs";
@@ -35,21 +22,15 @@ import { useGetDataWithToken } from "../helpers/useGetDataWithToken";
 export default function ProductDetails({
   token,
   slug,
-  variant,
   product,
   setReviewable,
-  setVariantId,
   setIsWishlisted,
   isWishlisted,
-  tracking,
 }) {
   const { addToWishlist, addToCartDB, addToCartDBGuest, lang } =
     useAppContext();
   const router = useRouter();
-  const [defaultVarient, setDefaultVarient] = useState(variant);
   const [defaultQuantity, setDefaultQuantity] = useState(1);
-  const [stock, setStock] = useState(0);
-
   const { affiliateData } = useGetDataWithToken("get-affiliate-info", token);
   const affiliatedUserDetails = affiliateData?.data;
 
@@ -95,16 +76,12 @@ export default function ProductDetails({
   };
 
   // share product
-  const query = variant ? `?variant=${variant}` : `?variant=${variant}`;
-  const productUrl = `${process.env.NEXT_PUBLIC_WEB_SHOP_BASE_URL}${slug}${query}`;
-  const affProductUrl = `${process.env.NEXT_PUBLIC_WEB_SHOP_BASE_URL}${slug}${query}?tracking=${affiliatedUserDetails?.affiliate_code}`;
+  const productUrl = `${process.env.NEXT_PUBLIC_WEB_SHOP_BASE_URL}${slug}`;
+  const affProductUrl = `${process.env.NEXT_PUBLIC_WEB_SHOP_BASE_URL}${slug}?tracking=${affiliatedUserDetails?.affiliate_code}`;
 
   const shareUrl = affiliatedUserDetails?.affiliate_code
     ? affProductUrl
     : productUrl;
-  // const shareCurrentProduct = () => {
-  //     handleShare(productUrl, getText('checkOutThisProduct'));
-  // };
 
   // Function to calculate filled stars based on rating
   const getFilledStars = (rating) => {
@@ -145,59 +122,29 @@ export default function ProductDetails({
     return stars;
   };
 
-  // Update reviewable state when component mounts or variant changes
+  // Update reviewable state when component mounts
   useEffect(() => {
-    if (product?.variants && defaultVarient) {
-      const selectedVariant = product.variants.find(
-        (v) => v?.variant === defaultVarient
-      );
-      if (selectedVariant) {
-        setReviewable(selectedVariant.is_reviewable);
-        setVariantId(selectedVariant.product_variant_id);
-        setIsWishlisted(selectedVariant.is_wishlisted);
-        setStock(selectedVariant.stock);
-      }
+    if (product?.variant) {
+      setReviewable(product.variant.is_reviewable);
+      setIsWishlisted(product.variant.is_wishlisted);
     }
-  }, [product, defaultVarient]);
-
-  // Handle variant change
-  const handleVariantChange = (newVariant) => {
-    setDefaultVarient(newVariant);
-    // The useEffect above will handle updating the reviewable state
-  };
+  }, [product]);
 
   // manage add to cart
   const handleAddToCart = (p, type) => {
-    const selectedVariant = p?.variants?.find(
-      (v) => v?.variant === defaultVarient
-    );
-
-    let price;
-    if (selectedVariant) {
-      price = selectedVariant?.discount?.discount_price
-        ? selectedVariant?.discount?.discount_price
-        : selectedVariant?.price;
-    } else {
-      price = p?.discount?.discount_price
-        ? p?.discount?.discount_price
-        : p?.price;
-    }
+    let price = p?.variant?.discount?.discount_price
+      ? p?.variant?.discount?.discount_price
+      : p?.variant?.price;
 
     if (token === null) {
       addToCartDBGuest(
-        selectedVariant?.product_variant_id,
-        defaultQuantity,
-        defaultVarient,
-        // "regular",
-        // tracking
+        p?.variant?.product_variant_id,
+        defaultQuantity
       );
     } else {
       addToCartDB(
-        selectedVariant?.product_variant_id,
-        defaultQuantity,
-        defaultVarient,
-        // "regular",
-        // tracking
+        p?.variant?.product_variant_id,
+        defaultQuantity
       );
     }
     if (type === "now") {
@@ -207,38 +154,17 @@ export default function ProductDetails({
 
   // manage add to wishlist
   const handleAddToWishlist = (p) => {
-    const selectedVariant = p?.variants?.find(
-      (v) => v?.variant === defaultVarient
-    );
     if (token === null) {
       toast.error(getText("pleaseLoginToUseWishlist"));
       router.push("/login");
     } else {
-      addToWishlist(selectedVariant?.product_variant_id);
+      addToWishlist(p?.variant?.product_variant_id);
       setIsWishlisted(true);
     }
   };
 
-  // product features
-  const features = [
-    {
-      title: getText("authenticProduct"),
-      icon: policyIco,
-    },
-    {
-      title: getText("competitivePricing"),
-      icon: moneyIco,
-    },
-    {
-      title: getText("skincareGuidance"),
-      icon: supportIco,
-    },
-    {
-      title: getText("fastDelivery"),
-      icon: shippingIco,
-    },
-  ];
 
+  // get free shipping info 
   const [freeShippingAmount, setFreeShippingAmount] = useState(null);
 
   useEffect(() => {
@@ -249,7 +175,7 @@ export default function ProductDetails({
         );
         const json = await res.json();
         if (json?.status === "success") {
-            setFreeShippingAmount(json.data); // 20 or null
+          setFreeShippingAmount(json.data);
         }
       } catch (error) {
         console.error("Error fetching free shipping:", error);
@@ -263,9 +189,8 @@ export default function ProductDetails({
       {/* brand logo here  */}
       <Link
         href={`/brand/${product?.brand?.slug}`}
-        className={`flex ${
-          lang === "ar" ? "flex-row-reverse" : ""
-        } gap-4 items-center`}
+        className={`flex ${lang === "ar" ? "flex-row-reverse" : ""
+          } gap-4 items-center`}
       >
         <Image
           src={product?.brand?.image}
@@ -283,13 +208,6 @@ export default function ProductDetails({
       <h1 className="text-primaryblack text-[20px] 2xl:text-[24px] font-[500]">
         {lang === "en" ? product?.name : product?.ar_name || product?.name}
       </h1>
-
-      {/* <div className="text-[16px] 2xl:text-[18px] my-[20px] 2xl:my-[30px]">
-                <p className="font-[550] text-primaryblack">{getText('aboutThisItem')}</p> <br />
-                <p className="text-ash 2xl:w-[70%]" dangerouslySetInnerHTML={{ 
-                    __html: lang === 'en' ? product?.short_description : product?.ar_short_description || product?.short_description 
-                }} />
-            </div> */}
 
       {/* ratings */}
       {ratingCount > 0 && (
@@ -312,15 +230,13 @@ export default function ProductDetails({
       <div className="flex justify-between">
         {product?.is_express && (
           <div
-            className={`relative flex mb-[20px] ${
-              lang === "ar" ? "flex-row-reverse" : "flex-row"
-            }`}
+            className={`relative flex mb-[20px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"
+              }`}
           >
             <img src="/express.png" alt="Express" className="peer" width={80} />
             <span
-              className={`absolute bottom-full mb-2 ${
-                lang === "ar" ? "right-0" : "left-0"
-              }
+              className={`absolute bottom-full mb-2 ${lang === "ar" ? "right-0" : "left-0"
+                }
                    hidden peer-hover:block bg-white border border-primary text-primary text-xs 
                    px-2 py-1 rounded whitespace-nowrap pointer-events-none`}
             >
@@ -333,35 +249,22 @@ export default function ProductDetails({
 
         {/* Free Shipping */}
         {(() => {
-          const selectedVariant = product?.variants?.find(
-            (v) => v?.variant === defaultVarient
-          );
+          if (!product?.variant) return null;
 
-          if (!selectedVariant) return null;
+          const hasDiscount = product?.variant?.discount;
+          const price = hasDiscount
+            ? product?.variant?.discount?.discount_price
+            : product?.variant?.price;
 
-          const hasDiscount = selectedVariant?.discount;
-
-          if (hasDiscount) {
-            {
-                freeShippingAmount != null &&
-                selectedVariant?.discount?.discount_price > freeShippingAmount && (
-                    <div className="relative inline-block">
-                    <div className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20 mb-3">
-                        This product offer free shipping
-                    </div>
-                    </div>
-                )
-            }
-          }
           return (
-                freeShippingAmount != null &&
-              selectedVariant?.price > freeShippingAmount && (
-                <div className="relative inline-block">
-                  <div className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20 mb-3">
-                    This product offer free shipping
-                  </div>
+            freeShippingAmount != null &&
+            price > freeShippingAmount && (
+              <div className="relative inline-block">
+                <div className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20 mb-3">
+                  This product offer free shipping
                 </div>
-              )
+              </div>
+            )
           );
         })()}
       </div>
@@ -369,13 +272,9 @@ export default function ProductDetails({
       {/* pricing */}
       <div className="text-[20px] 2xl:text-[26px] text-secondary flex items-center gap-[10px] mb-[20px]">
         {(() => {
-          const selectedVariant = product?.variants?.find(
-            (v) => v?.variant === defaultVarient
-          );
+          if (!product?.variant) return null;
 
-          if (!selectedVariant) return null;
-
-          const hasDiscount = selectedVariant?.discount;
+          const hasDiscount = product?.variant?.discount;
 
           if (hasDiscount) {
             return (
@@ -383,15 +282,12 @@ export default function ProductDetails({
                 <div className="flex gap-[10px] items-center font-semibold">
                   <p className="flex items-center">
                     <span className="dirham-symbol mr-1">ê</span>{" "}
-                    {selectedVariant?.discount?.discount_price}
+                    {product?.variant?.discount?.discount_price}
                   </p>
                   <p className="flex items-center text-ash line-through font-[300]">
-                    {selectedVariant?.price}
+                    {product?.variant?.price}
                   </p>
                 </div>
-                {/* <p className="text-[12px] 2xl:text-[18px] text-customgreen">
-                                        {getText('save')} {selectedVariant?.price - selectedVariant?.discount?.discount_price}
-                                    </p> */}
               </div>
             );
           }
@@ -399,30 +295,11 @@ export default function ProductDetails({
           return (
             <div className="font-semibold flex align-center">
               <span className="dirham-symbol mr-1">ê</span>{" "}
-              {selectedVariant?.price}
+              {product?.variant?.price}
             </div>
           );
         })()}
       </div>
-
-      {/* variants */}
-      {product?.variants[0]?.variant !== "null" && (
-        <div className="mb-[20px] flex gap-[20px]">
-          {product?.variants?.map((pv) => (
-            <button
-              key={pv?.product_variant_id}
-              className={`border cursor-pointer ${
-                pv?.variant === defaultVarient
-                  ? "bg-primary text-white border-primary"
-                  : "bg-white text-primaryblack border-creamline"
-              } w-[100px] 2xl:w-[130px] h-[50px] 2xl:h-[60px] rounded-[10px]`}
-              onClick={() => handleVariantChange(pv?.variant)}
-            >
-              {lang === "en" ? pv?.variant : pv?.ar_variant || pv?.variant}
-            </button>
-          ))}
-        </div>
-      )}
 
       {/* user actions */}
       <div className="flex gap-[10px] 2xl:gap-[20px] items-center">
@@ -451,27 +328,19 @@ export default function ProductDetails({
 
         {/* add to cart */}
         <button
-          disabled={stock === 0}
+          disabled={product?.variant?.stock === 0}
           onClick={() => handleAddToCart(product)}
           className={`cursor-pointer disabled:cursor-not-allowed flex-1 h-[50px] rounded-[10px] bg-primary  text-white disabled:text-white hover:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}
         >
-          {stock > 0 ? getText("addToCart") : getText("outOfStock")}
+          {product?.variant?.stock > 0 ? getText("addToCart") : getText("outOfStock")}
         </button>
-
-        {/* <button
-                        disabled={stock === 0}
-                        onClick={() => handleAddToCart(product, "now")}
-                        className={`cursor-pointer disabled:cursor-not-allowed flex-1 w-full h-[50px] 2xl:h-[60px] rounded-[10px] bg-primary disabled:bg-button  text-white disabled:text-white ease-linear duration-300 text-[14px] 2xl:text-[18px] flex items-center justify-center`}>
-                        {stock > 0 ? getText('buyItNow') : getText('outOfStock')}
-                    </button> */}
 
         {/* add to wishlist  */}
         <button
           disabled={isWishlisted}
           onClick={() => handleAddToWishlist(product)}
-          className={`cursor-pointer w-[50px] h-[50px] rounded-full border border-creamline flex justify-center items-center text-[#D0D0D0] hover:bg-primary hover:text-white ease-linear duration-300 text-[24px] ${
-            isWishlisted && " bg-secondary text-white"
-          }`}
+          className={`cursor-pointer w-[50px] h-[50px] rounded-full border border-creamline flex justify-center items-center text-[#D0D0D0] hover:bg-primary hover:text-white ease-linear duration-300 text-[24px] ${isWishlisted && " bg-secondary text-white"
+            }`}
         >
           <Heart />
         </button>
@@ -546,42 +415,7 @@ export default function ProductDetails({
             <span className="text-ash">{product?.sku}</span>{" "}
           </p>
         )}
-
-        {/* {
-                    stock > 0 && <p className="mt-[20px]"><span className="text-primaryblack font-[550]">{getText('availableStock')}</span> <span className="text-ash">{stock} {getText('items')}</span> </p>
-                } */}
-
-        {/* <p className="mt-[20px]">
-                    <span className="text-primaryblack font-[550]">{getText('categories')}</span>{" "}
-                    {product?.other_categories?.map((pc, index, array) => (
-                        <Link href={`/category/${pc?.slug}`} className="text-ash hover:text-secondary" key={index}>
-                            {lang === 'en' ? pc?.name : pc?.ar_name || pc?.name}
-                            {index === array.length - 1 ? "." : ","}
-                            {" "}
-                        </Link>
-                    ))}
-                </p> */}
       </div>
-
-      
-
-      {/* benefit card  */}
-      {/* <div className="text-primaryblack border border-creamline p-[20px] mt-[56px] relative rounded-[5px]">
-                <p className="absolute -top-[14px] left-1/2 -translate-x-1/2 bg-white px-[16px] text-[16px] 2xl:text-[18px] text-center">
-                    {getText('benefitsTitle')}
-                </p>
-
-                <div className="flex gap-[20px] justify-center mt-[40px]">
-                    {
-                        features?.map((feature, index) => (
-                            <div key={index} className="flex flex-col gap-[16px] items-center">
-                                <Image src={feature?.icon} alt="benefits icon" className="size-[30px] 2xl:size-[40px]" />
-                                <h5 className="text-[14px] 2xl:text-[18px] text-center">{feature?.title}</h5>
-                            </div>
-                        ))
-                    }
-                </div>
-            </div> */}
     </div>
   );
 }

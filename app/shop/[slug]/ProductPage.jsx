@@ -18,12 +18,10 @@ export default function ProductPage() {
     const params = useParams();
     const slug = params?.slug;
     const searchParams = useSearchParams();
-    const variant = searchParams?.get('variant');
     const tracking = searchParams?.get('tracking');
     const [defaultImage, setDefaultImage] = useState(null);
     const [reviewable, setReviewable] = useState(false);
     const [isWishlisted, setIsWishlisted] = useState(false);
-    const [variantId, setVariantId] = useState(null);
 
     // Modal state for image gallery
     const [imageModal, setImageModal] = useState({
@@ -33,11 +31,10 @@ export default function ProductPage() {
         productName: ''
     });
 
-    const query = variant ? `?variant=${variant}` : `?variant=${variant}`
     // Simple conditional at the top level
     const { data, isLoading, error } = token
-        ? useGetDataWithToken(`product/${slug}${query}`, token)
-        : useGetData(`product/${slug}${query}`);
+        ? useGetDataWithToken(`product/${slug}`, token)
+        : useGetData(`product/${slug}`);
 
     const product = data?.data;
 
@@ -71,7 +68,6 @@ export default function ProductPage() {
     if (isLoading) return <ScreenLoader />;
     if (error) return <div>Error: {error.message}</div>;
 
-
     return (
         <>
             <Container>
@@ -94,11 +90,9 @@ export default function ProductPage() {
                             <ProductDetails
                                 token={token}
                                 slug={slug}
-                                variant={variant}
                                 tracking={tracking}
                                 product={product}
                                 setReviewable={setReviewable}
-                                setVariantId={setVariantId}
                                 isWishlisted={isWishlisted}
                                 setIsWishlisted={setIsWishlisted}
                             />
@@ -110,7 +104,7 @@ export default function ProductPage() {
                         <ProductUseReviews
                             product={product}
                             reviewable={reviewable}
-                            variantId={variantId}
+                            productId={product?.id}
                             token={token}
                             productType={"regular"}
                         />
@@ -118,7 +112,6 @@ export default function ProductPage() {
 
                     {/* customers reviews here  */}
                     <div className="mt-[50px]">
-                        {/* <p className='text-primaryblack text-[18px] 2xl:text-[20px] font-[650]'>Trusted by Skincare Lovers</p> */}
                         <div className="mt-[50px] ">
                             {
                                 product?.reviews?.length > 0 ?

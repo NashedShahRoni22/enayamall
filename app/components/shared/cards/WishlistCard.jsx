@@ -43,7 +43,7 @@ export default function WishlistCard({ w, removeFromWishlistDB, addToCartDB, lan
                             w?.items?.length > 0 ?
                                 <Link href={`/combo/${w?.slug}`} className="text-[16px] font-medium line-clamp-3 hover:text-primaryblack">{`${lang == 'en' ? w.name : w.ar_name}`} {w?.items?.length > 0 && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>Combo</span>}</Link>
                                 :
-                                <Link href={`/shop/${w?.slug}?variant=${w?.variant}`} className="text-[16px] font-medium line-clamp-3 hover:text-primaryblack">{`${lang == 'en' ? w.name : w.ar_name}`} {w.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{w.variant}</span>} </Link>
+                                <Link href={`/shop/${w?.slug}`} className="text-[16px] font-medium line-clamp-3 hover:text-primaryblack">{`${lang == 'en' ? w.name : w.ar_name}`} {w.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{w.variant}</span>} </Link>
                         }
                         {/* Pricing */}
                         <div className={`my-2 text-[12px] sm:text-[14px] md:text-[16px] ${lang === 'en' ? '' : 'text-right'}`}>

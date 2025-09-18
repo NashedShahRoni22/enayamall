@@ -54,7 +54,7 @@ export default function CartTableRow({
                   {item?.items?.map((product, index) => (
                     <li key={index}>
                       <Link
-                        href={`/shop/${product?.slug}?variant=${product?.variant}`}
+                        href={`/shop/${product?.slug}`}
                         className="text-[14px] hover:text-secondary line-clamp-1"
                       >
                         {" "}
@@ -68,7 +68,7 @@ export default function CartTableRow({
             ) : (
               <div>
                 <Link
-                  href={`/shop/${item?.slug}?variant=${item?.variant}`}
+                  href={`/shop/${item?.slug}`}
                   className="text-[14px] lg:text-[16px] font-medium flex-1 hover:text-secondary line-clamp-3"
                 >
                   {lang === 'en' ? item.name : item.ar_name}{" "}

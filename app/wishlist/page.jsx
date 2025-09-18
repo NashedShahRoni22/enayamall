@@ -29,7 +29,7 @@ export default function page() {
               :
               <>
                 {
-                  wishlist?.length < 0 ?
+                  wishlist?.length === 0 ?
                     <div className="mt-[10px] h-[60px] py-[20px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
                       <Image alt="Error Icon" src={errorIcon} />
                       <p className="text-[18px] text-button">There are no products on the Wishlist!</p>
@@ -45,7 +45,7 @@ export default function page() {
           }
           {
             token != null &&
-            <div className="mb-[60px] flex justify-center">
+            <div className="my-[60px] flex justify-center">
               <ShopNowButton />
             </div>
           }

@@ -114,7 +114,7 @@ export default function CartCard({
                       />
                     </div>
                     <div>
-                      <Link href={`/shop/${product?.slug}?variant=${product?.variant}`} className='text-[14px] hover:text-natural'>{product?.name} {product.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{product.variant}</span>}</Link>
+                      <Link href={`/shop/${product?.slug}`} className='text-[14px] hover:text-natural'>{product?.name} {product.variant && <span className='px-4 py-0.5 bg-primarycream text-button rounded-[10px]'>{product.variant}</span>}</Link>
                     </div>
                   </div>)
               }
