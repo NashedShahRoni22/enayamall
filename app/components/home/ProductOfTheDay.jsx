@@ -18,18 +18,9 @@ export default function ProductOfTheDay() {
   return (
     <section className="py-[30px]">
       <Container>
-        {/* starting section  */}
-        <div className="flex flex-row justify-between">
-          <div>
-            <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-              <span className="font-bold text-sectionTitle">Product Of The Day</span>
-            </h5>
-          </div>
-
-          <div>
-            <ShopNowButton />
-          </div>
-        </div>
+        <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
+          <span className="font-bold text-sectionTitle">Product Of The Day</span>
+        </h5>
 
         {/* banner and products here  */}
         <div className="flex flex-col md:flex-row gap-4 mt-10">

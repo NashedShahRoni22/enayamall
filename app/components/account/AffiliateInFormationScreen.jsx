@@ -214,7 +214,6 @@ export default function AffiliateInFormationScreen({ affiliatedUserData, affilia
                                                 maximumFractionDigits: 2
                                             })}
                                         </span>
-                                        <p className="text-xs text-blue-600">Available Balance</p>
                                     </div>
                                 </div>
                                 <div className="text-right">

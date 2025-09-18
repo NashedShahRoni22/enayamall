@@ -41,23 +41,22 @@ export default function TrackingIdScreen({ affiliateCode }) {
   })
 
   const searchProducts = searchData?.data || []
-  const query = variant ? `?variant=${variant}` : `?variant=${variant}`
+  // const query = variant ? `?variant=${variant}` : `?variant=${variant}`
 
   // Generate tracking URL
-  const generateTrackingUrl = (productSlug, variant) => {
+  const generateTrackingUrl = (productSlug) => {
     if (!affiliateCode || !productSlug) return ''
     // return `${process.env.NEXT_PUBLIC_WEB_SHOP_BASE_URL}${productSlug}?tracking=${affiliateCode}`
-    return `http://localhost:3000/shop/${productSlug}${query}?tracking=${affiliateCode}`
+    return `http://localhost:3000/shop/${productSlug}?tracking=${affiliateCode}`
   }
 
   // Add single product to tracked list
   const addSingleProductToTracking = (product) => {
-    const trackingUrl = generateTrackingUrl(product.slug, product.variant)
+    const trackingUrl = generateTrackingUrl(product.slug)
     const newTrackedProduct = {
       id: product.id,
       name: product.name,
       slug: product.slug,
-      variant: product.variant,
       image: product.thumbnail_image,
       price: product.price,
       trackingUrl: trackingUrl

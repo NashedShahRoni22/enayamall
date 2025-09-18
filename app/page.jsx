@@ -23,14 +23,14 @@ export default function page() {
       <Features/>
       <Category/>
       <TwoAdsBanner/>
-      <FlashDeals/>
+      {/* <FlashDeals/> */}
+      <ProductOfTheDay/>
+      <Recommended/>
       <Brands/>
       <Reviews/>
-      <ProductOfTheDay/>
-      <BannerWidth1/>
-      <Recommended/>
-      <BannerWidth2 />
-      <LatestProduct/>
+      {/* <BannerWidth1/> */}
+      {/* <BannerWidth2 /> */}
+      {/* <LatestProduct/> */}
       <Blogs/>
       <BannerWidth3 />
       {/* <Recommended/> */}
