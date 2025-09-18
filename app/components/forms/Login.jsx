@@ -13,7 +13,7 @@ import LoadingSvg from '../shared/LoadingSvg';
 import translations from "@/app/locales/translations.json";
 
 export default function Login() {
-    const [option, setOption] = useState(1);
+    const [option, setOption] = useState(2);
     const router = useRouter();
     const searchParams = useSearchParams();
     const { setUser, setToken, lang } = useAppContext();
@@ -143,7 +143,7 @@ export default function Login() {
             <div className='mt-[50px]'>
                 {/* tab buttons  */}
                 <div className={`flex gap-[30px] pb-[10px] ${lang === "en" ? "flex-row" : "flex-row-reverse" }`}>
-                    <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primaryblack"}`}>{t("sign_in_otp")}</button>
+                    {/* <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primaryblack"}`}>{t("sign_in_otp")}</button> */}
                     <button onClick={() => setOption(2)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 2 ? "text-primary border-b-2 border-primary font-[650]" : "text-primaryblack"}`}>{t("sign_in_password")}</button>
                 </div>
                 {/* tab forms */}

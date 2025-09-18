@@ -139,7 +139,7 @@ export default function Footer() {
     const helpCenterLinks = [
         { en: t.customerService, ar: t.customerService, href: "/delivery-information" },
         { en: t.policy, ar: t.policy, href: "/privacy-policy" },
-        { en: t.termsConditions, ar: t.termsConditions, href: "/terms-conditions" },
+        { en: t.termsConditions, ar: t.termsConditions, href: "/terms-and-conditions" },
         { en: t.returnRefund, ar: t.returnRefund, href: "/return-refund" },
         { en: t.faqs, ar: t.faqs, href: "/faqs" },
         { en: t.trackOrder, ar: t.trackOrder, href: "/track-order" },

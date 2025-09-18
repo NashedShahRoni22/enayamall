@@ -4,6 +4,7 @@ import ScreenLoader from "../loaders/ScreenLoader";
 import BlogCard from "../shared/cards/BlogCard";
 import BlogImageCard from "../shared/cards/BlogImageCard";
 import Container from "../shared/Container";
+import ShopNowButton from "../shared/ShopNowButton";
 
 export default function Blogs() {
   const { data, isLoading } = useGetData("blogs");
@@ -23,7 +24,8 @@ export default function Blogs() {
       <Container>
         <div className="flex justify-between items-center">
             <h2 className="text-3xl font-bold text-primary mb-2">What's new Today</h2>
-            <Link href={"/blog"} className="text-sm">See more options</Link>
+            {/* <Link href={"/blog"} className="text-sm">See more options</Link>  */}
+            <ShopNowButton route={"/blog"}/>
         </div>
 
         {/* Blogs Split Layout */}

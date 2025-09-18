@@ -21,7 +21,7 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
     const [editableAddress, setEditableAddress] = useState(null);
     const [loading, setLoading] = useState(false);
     const [selectedCountryId, setSelectedCountryId] = useState(null);
-    
+
 
     // Fetch countries & districts (cities)
     const { data: countriesData, isLoading: isCountriesLoading } = useGetDataWithToken('countries', token);
@@ -186,9 +186,9 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
         form.append('company', formData.company.trim());
         form.append('address_1', formData.address1.trim());
         form.append('address_2', formData.address2.trim());
-        form.append('city', selectedDistrictId.toString()); // district ID goes to city field
-        form.append('country_id', selectedCountryId.toString()); // country ID
-        form.append('district_id', selectedDistrictId.toString()); // district ID
+        form.append('city', selectedDistrictId.toString());
+        form.append('country_id', selectedCountryId.toString());
+        form.append('district_id', selectedDistrictId.toString());
         form.append('post_code', formData.postCode.trim());
         form.append('additional_info', formData.additionalInfo.trim());
         form.append('is_default', formData.isDefault ? '1' : '0');
@@ -225,9 +225,9 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
             updateData.append('company', formData.company.trim());
             updateData.append('address_1', formData.address1.trim());
             updateData.append('address_2', formData.address2.trim());
-            updateData.append('city', selectedDistrictId.toString()); // district ID goes to city field
-            updateData.append('country_id', selectedCountryId.toString()); // country ID
-            updateData.append('district_id', selectedDistrictId.toString()); // district ID
+            updateData.append('city', selectedDistrictId.toString());
+            updateData.append('country_id', selectedCountryId.toString());
+            updateData.append('district_id', selectedDistrictId.toString());
             updateData.append('post_code', formData.postCode.trim());
             updateData.append('additional_info', formData.additionalInfo.trim());
             updateData.append('is_default', formData.isDefault ? '1' : '0');
@@ -290,11 +290,11 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
         if (address?.data?.length > 0) {
             const defaultAddress = address.data.find(a => Number(a?.is_default) === 1);
             if (defaultAddress) {
-            setAddressId(defaultAddress.id);
+                setAddressId(defaultAddress.id);
             }
         }
     }, [address]);
-    
+
 
     return (
         <section>
@@ -569,13 +569,17 @@ const BillForm = ({ address, addressId, setAddressId, selectedDistrictId, setSel
                                                 onClick={() => setAddressId(a.id)}
                                                 className="flex gap-[18px] w-4/6 cursor-pointer items-center"
                                             >
-                                                <span>
-                                                    {isSelected ? (
-                                                        <MdCheckCircle className="text-[20px] sm:text-[24px] text-primary" />
-                                                    ) : (
-                                                        <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
-                                                    )}
-                                                </span>
+                                                {
+                                                    location !== "/account" &&
+                                                    <span>
+                                                        {isSelected ? (
+                                                            <MdCheckCircle className="text-[20px] sm:text-[24px] text-primary" />
+                                                        ) : (
+                                                            <MdOutlineRadioButtonUnchecked className="text-[20px] sm:text-[24px] text-primaryblack" />
+                                                        )}
+                                                    </span>
+                                                }
+
                                                 <p className="text-[16px] text-ash text-left">
                                                     {[
                                                         a.first_name + ' ' + a.last_name,

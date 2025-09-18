@@ -12,7 +12,7 @@ import WishlistCard from "../components/shared/cards/WishlistCard";
 
 export default function page() {
   const { token, wishlist, removeFromWishlistDB, addToCartDB, lang } = useAppContext();
-  
+
   return (
     <section>
       {/* <PageHeader title={"Wishlist"} from={"Home"} to={"wishlist"} /> */}
@@ -20,37 +20,30 @@ export default function page() {
         <section className="lg:max-w-6xl lg:mx-auto">
           {
             token == null ?
-              <div>
-                <div className="my-[150px] h-[60px] py-[20px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
-                  <Image alt="Error Icon" src={errorIcon} />
-                  <p className="text-[18px] text-button">Please <Link href={"login"} className="font-[650] underline">login</Link> to use the wishlist.</p>
-                </div>
+
+              <div className="h-[40px] lg:h-[80px] my-[30px] lg:my-[60px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
+                <Image alt="Error Icon" src={errorIcon} />
+                <p className="text-[18px] text-button">Please <Link href={"login"} className="font-[650] underline">login</Link> to use the wishlist.</p>
               </div>
               :
               <>
                 {
                   wishlist?.length === 0 ?
-                    <div className="mt-[10px] h-[60px] py-[20px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
+                    <div className="h-[40px] lg:h-[80px] my-[30px] lg:my-[60px] bg-errorbg rounded-[5px] flex justify-center items-center gap-[10px]">
                       <Image alt="Error Icon" src={errorIcon} />
                       <p className="text-[18px] text-button">There are no products on the Wishlist!</p>
                     </div>
                     :
-                    <div className="pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[60px] grid grid-cols-1 lg:grid-cols-2 gap-[10px] md:gap-[20px]">
+                    <div className="pt-[30px] lg:pt-[60px] pb-[60px] lg:pb-[120px] grid grid-cols-1 lg:grid-cols-2 gap-[10px] md:gap-[20px]">
                       {
                         wishlist?.map((w, index) => <WishlistCard key={index} w={w} token={token} removeFromWishlistDB={removeFromWishlistDB} addToCartDB={addToCartDB} lang={lang} />)
                       }
                     </div>
                 }
-              </> 
-          }
-          {
-            token != null &&
-            <div className="my-[60px] flex justify-center">
-              <ShopNowButton />
-            </div>
+              </>
           }
         </section>
-        
+
         {/* Always render FlashDeals, but control visibility with showComponent prop */}
         {/* <FlashDeals showComponent={token === null} /> */}
       </Container>

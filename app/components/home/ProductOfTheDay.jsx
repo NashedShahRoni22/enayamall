@@ -19,7 +19,7 @@ export default function ProductOfTheDay() {
     <section className="py-[30px]">
       <Container>
         <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-          <span className="font-bold text-sectionTitle">Product Of The Day</span>
+          <span className="font-bold text-sectionTitle">Product Of The Week</span>
         </h5>
 
         {/* banner and products here  */}

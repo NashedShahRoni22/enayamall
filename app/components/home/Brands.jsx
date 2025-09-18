@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useGetData } from "../helpers/useGetData";
 import Link from "next/link";
 import { useAppContext } from "@/app/context/AppContext";
+import ShopNowButton from "../shared/ShopNowButton";
 
 export default function Brands() {
   const { lang } = useAppContext();
@@ -12,9 +13,13 @@ export default function Brands() {
   return (
     <section className="py-[30px]">
       <Container>
-        <h2 className="text-3xl font-bold text-primary mb-2">
-          {lang === 'en' ? 'Shop by brand' : 'سوق حسب الماركة'}
-        </h2>
+        {/* top section  */}
+        <div className="flex justify-between items-center">
+          <h2 className="text-3xl font-bold text-primary mb-2">
+            {lang === 'en' ? 'Shop by brand' : 'سوق حسب الماركة'}
+          </h2>
+          <ShopNowButton route={"/brand"} />
+        </div>
         {/* Brands Grid */}
         {brands?.length > 0 ? (
           <section className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 my-[10px] lg:my-[20px]">

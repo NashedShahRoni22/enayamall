@@ -19,7 +19,7 @@ export default function ChoosePayment({method, setMethod}) {
                         <span className={`text-[16px] sm:text-[18px] ${method === "cod" ? "text-primary font-[650]" : "text-ash"}`}>Cash On Delivery</span>
                     </button>
 
-                    <button onClick={() => setMethod("online")} className="flex items-center gap-[6px] sm:gap-[12px] cursor-pointer">
+                    {/* <button onClick={() => setMethod("online")} className="flex items-center gap-[6px] sm:gap-[12px] cursor-pointer">
                         <span>
                             {
                                 method === "online" ?
@@ -29,7 +29,7 @@ export default function ChoosePayment({method, setMethod}) {
                             }
                         </span>
                         <span className={`text-[16px] sm:text-[18px] ${method === "online" ? "text-primary font-[650]" : "text-ash"}`}>Pay Online</span>
-                    </button>
+                    </button> */}
                 </div>
             </div> 
   )
