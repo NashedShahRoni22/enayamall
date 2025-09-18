@@ -68,7 +68,7 @@ export default function PriceRangeFilter({
     }, [isDragging, minPrice, maxPrice]);
 
     return (
-        <div className="border-b border-gray-300 pb-4 px-2">
+        <div className="border-b border-gray-300 pb-5">
             {/* Header */}
             <div className="flex justify-between items-center cursor-pointer" onClick={() => setShow(!show)}>
                 <h3 className="text-md font-[500] text-primaryblack">Price Range</h3>

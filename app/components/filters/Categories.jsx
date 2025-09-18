@@ -60,7 +60,7 @@ export default function Categories({
         className="flex justify-between items-center cursor-pointer"
         onClick={() => setShow(!show)}
       >
-        <h3 className="text-md font-[500] text-primaryblack">Category</h3>
+        <h3 className="text-md font-[500] text-primaryblack">{lang === "en" ? activeParent.name : activeParent.ar_name}</h3>
         <button className="cursor-pointer">
           {show ? (
             <ChevronUp
@@ -80,19 +80,19 @@ export default function Categories({
       {show && (
         <>
           {/* Parent */}
-          <div className="border rounded-md bg-gray-50">
+          {/* <div className="border rounded-md bg-gray-50">
             <span className="font-medium text-gray-900">
               {lang === "en" ? activeParent.name : activeParent.ar_name}
             </span>
-          </div>
+          </div> */}
 
           {/* Children */}
           {activeParent.child && activeParent.child.length > 0 && (
-            <div className="space-y-2">
+            <div>
               {activeParent.child.map((child) => (
                 <label
                   key={child.id}
-                  className={`flex items-center gap-2 cursor-pointer p-2 rounded-md hover:bg-gray-50 ${
+                  className={`flex items-center gap-2 cursor-pointer p-2 ${
                     childCategoryId === child.id ? "bg-primary/10" : ""
                   }`}
                 >
@@ -107,8 +107,8 @@ export default function Categories({
                   <span
                     className={
                       childCategoryId === child.id
-                        ? "text-primary font-medium"
-                        : "text-gray-800"
+                        ? "text-primary text-[12px] md:text-[14px]"
+                        : "text-gray-800 text-[12px] md:text-[14px]"
                     }
                   >
                     {lang === "en" ? child.name : child.ar_name}
