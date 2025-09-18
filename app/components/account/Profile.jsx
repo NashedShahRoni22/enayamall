@@ -5,110 +5,69 @@ import toast from "react-hot-toast";
 import UserProfilePhoto from "./UserProfilePhoto";
 import LoadingSvg from "../shared/LoadingSvg";
 import { usePostDataWithToken } from "../helpers/usePostDataWithToken";
-import { useGetData } from "../helpers/useGetData";
-import { BiChevronDown } from "react-icons/bi";
+import { useGetDataWithToken } from "../helpers/useGetDataWithToken";
+import { BiEdit, BiCheck, BiX, BiChevronDown } from "react-icons/bi";
 
-const Profile = ({ address }) => {
-    const { user, token } = useAppContext();
+const Profile = ({ profile }) => {
+    const { token } = useAppContext();
     const queryClient = useQueryClient();
     const [userPhoto, setUserPhoto] = useState(null);
-    const [previewPhoto, setPreviewPhoto] = useState(address?.photo);
+    const [previewPhoto, setPreviewPhoto] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [selectedDistrictId, setSelectedDistrictId] = useState(null);
-    const [selectedCityId, setSelectedCityId] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [selectedCountryId, setSelectedCountryId] = useState(null);
 
-    // update address 
-    const postAddress = usePostDataWithToken('update-address');
-
-    // Fetch districts & cities
-    const { data: districtsData, isLoading: isDistrictsLoading } = useGetData('get-districts');
-    const { data: citiesData, isLoading: isCitiesLoading } = useGetData(`get-cities/${selectedDistrictId}`);
+    // Update profile mutation
+    const updateProfile = usePostDataWithToken('profile');
+    
+    // Fetch countries data
+    const { data: countriesData, isLoading: isCountriesLoading } = useGetDataWithToken('countries', token);
 
     const [formData, setFormData] = useState({
-        fullName: "",
-        dob: "",
-        mobileNumber: "",
-        flatNumber: "",
-        houseNumber: "",
-        roadNumber: "",
-        block: "",
-        area: "",
-        city: "",
-        district: "",
-        postCode: "",
-        additionalAddress: "",
+        name: "",
+        email: "",
+        phone: "",
+        gender: "",
+        dateOfBirth: "",
+        country: ""
     });
 
     // Handle form errors
     const [errors, setErrors] = useState({});
 
-    // Helper function to get district name by ID
-    const getDistrictNameById = (districtId) => {
-        if (!districtsData?.data || !districtId) return '';
-        const district = districtsData.data.find(d => d.id.toString() === districtId.toString());
-        return district?.name || '';
+    // Helper function to get country name by ID
+    const getCountryNameById = (countryId) => {
+        if (!countriesData?.data || !countryId) return '';
+        const country = countriesData.data.find(c => c.id.toString() === countryId.toString());
+        return country?.country_name || '';
     };
 
-    // Helper function to get city name by ID
-    const getCityNameById = (cityId) => {
-        if (!citiesData?.data || !cityId) return '';
-        const city = citiesData.data.find(c => c.id.toString() === cityId.toString());
-        return city?.name || '';
-    };
-
+    // Initialize form data when profile loads
     useEffect(() => {
-        if (address) {
-            // Extract district and city IDs from the address data
-            const districtId = address?.district ? Number(address.district) : null;
-            const cityId = address?.city ? Number(address.city) : null;
-
-            setSelectedDistrictId(districtId);
-            setSelectedCityId(cityId);
+        if (profile) {
+            // Extract country ID from nested country object
+            const countryId = profile.country?.id ? Number(profile.country.id) : null;
+            setSelectedCountryId(countryId);
 
             setFormData({
-                fullName: address.name || "",
-                dob: address.date_of_birth || "",
-                mobileNumber: address.phone || "",
-                flatNumber: address.house_name_or_flat_number || "",
-                houseNumber: address.house_number || "",
-                roadNumber: address.road_number || "",
-                block: address.block || "",
-                area: address.area || "",
-                // Use the name fields from response for display
-                city: address.city_name || "",
-                district: address.district_name || "",
-                postCode: address.post_code || "",
-                additionalAddress: address.additional_info || "",
+                name: profile.name || "",
+                email: profile.email || "",
+                phone: profile.phone || "",
+                gender: profile.gender || "",
+                dateOfBirth: profile.date_of_birth || "",
+                country: profile.country?.country_name || ""
             });
-            // Set preview photo from existing address
-            setPreviewPhoto(address.photo);
+            setPreviewPhoto(profile.photo);
         }
-    }, [address]);
+    }, [profile]);
 
-    // Reset city when district changes
+    // Update country name when countries data loads or country selection changes
     useEffect(() => {
-        if (selectedDistrictId && address) {
-            // Only reset city if we're changing district for existing address
-            const currentDistrictId = address?.district ? Number(address.district) : null;
-            if (selectedDistrictId !== currentDistrictId) {
-                setSelectedCityId(null);
-                setFormData(prev => ({ ...prev, city: "" }));
-            }
+        if (selectedCountryId && countriesData?.data) {
+            const countryName = getCountryNameById(selectedCountryId);
+            setFormData(prev => ({ ...prev, country: countryName }));
         }
-    }, [selectedDistrictId, address]);
-
-    // Update form names when user selects new district/city
-    useEffect(() => {
-        if (selectedDistrictId && districtsData?.data) {
-            const districtName = getDistrictNameById(selectedDistrictId);
-            setFormData(prev => ({ ...prev, district: districtName }));
-        }
-
-        if (selectedCityId && citiesData?.data) {
-            const cityName = getCityNameById(selectedCityId);
-            setFormData(prev => ({ ...prev, city: cityName }));
-        }
-    }, [selectedDistrictId, selectedCityId, districtsData, citiesData]);
+    }, [selectedCountryId, countriesData]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -116,49 +75,58 @@ const Profile = ({ address }) => {
         setErrors(prev => ({ ...prev, [name]: "" }));
     };
 
-    // Handle district change
-    const handleDistrictChange = (e) => {
-        const districtId = e.target.value;
-        const selectedDistrict = districtsData?.data?.find(d => d.id.toString() === districtId);
+    // Handle country change
+    const handleCountryChange = (e) => {
+        const countryId = e.target.value;
+        const selectedCountry = countriesData?.data?.find(c => c.id.toString() === countryId);
 
-        setSelectedDistrictId(districtId ? Number(districtId) : null);
-        setSelectedCityId(null); // Reset city when district changes
+        setSelectedCountryId(countryId ? Number(countryId) : null);
         setFormData(prev => ({
             ...prev,
-            district: selectedDistrict?.name || "",
-            city: "" // Reset city name
+            country: selectedCountry?.country_name || ""
         }));
-        setErrors(prev => ({ ...prev, district: "", city: "" }));
+        setErrors(prev => ({ ...prev, country: "" }));
     };
 
-    // Handle city change
-    const handleCityChange = (e) => {
-        const cityId = e.target.value;
-        const selectedCity = citiesData?.data?.find(c => c.id.toString() === cityId);
-
-        setSelectedCityId(cityId ? Number(cityId) : null);
-        setFormData(prev => ({
-            ...prev,
-            city: selectedCity?.name || ""
-        }));
-        setErrors(prev => ({ ...prev, city: "" }));
+    const handleEditToggle = () => {
+        if (isEditing) {
+            // Cancel editing - reset form data
+            if (profile) {
+                const countryId = profile.country?.id ? Number(profile.country.id) : null;
+                setSelectedCountryId(countryId);
+                
+                setFormData({
+                    name: profile.name || "",
+                    email: profile.email || "",
+                    phone: profile.phone || "",
+                    gender: profile.gender || "",
+                    dateOfBirth: profile.date_of_birth || "",
+                    country: profile.country?.country_name || ""
+                });
+                setPreviewPhoto(profile.photo);
+                setUserPhoto(null);
+                setErrors({});
+            }
+        }
+        setIsEditing(!isEditing);
     };
 
     const validate = () => {
         const newErrors = {};
 
-        if (!formData.fullName.trim()) newErrors.fullName = "Name is required";
-        if (!formData.mobileNumber.trim()) newErrors.mobileNumber = "Mobile number is required";
-        if (!formData.flatNumber.trim()) newErrors.flatNumber = "Flat number is required";
-        if (!formData.houseNumber.trim()) newErrors.houseNumber = "House number is required";
-        if (!formData.area.trim()) newErrors.area = "Area is required";
-        if (!selectedDistrictId) newErrors.district = "District is required";
-        if (!selectedCityId) newErrors.city = "City is required";
+        if (!formData.name.trim()) newErrors.name = "Name is required";
+        if (!formData.email.trim()) newErrors.email = "Email is required";
+        if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+
+        // Email validation
+        if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = "Please enter a valid email address";
+        }
 
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length > 0) {
-            toast.error("Please fill all required fields");
+            toast.error("Please fill all required fields correctly");
             return false;
         }
         return true;
@@ -175,44 +143,34 @@ const Profile = ({ address }) => {
             const updateData = new FormData();
 
             // Add all form fields
-            updateData.append('house_name_or_flat_number', formData.flatNumber.trim());
-            updateData.append('date_of_birth', formData.dob.trim());
-            updateData.append('house_number', formData.houseNumber.trim());
-            updateData.append('road_number', formData.roadNumber.trim() || '');
-            updateData.append('block', formData.block.trim() || '');
-            updateData.append('area', formData.area.trim());
-            updateData.append('city', selectedCityId.toString());
-            updateData.append('district', selectedDistrictId.toString());
-            updateData.append('post_code', formData.postCode.trim());
-            updateData.append('additional_info', formData.additionalAddress.trim() || '');
-            updateData.append('name', formData.fullName.trim());
-            updateData.append('phone', formData.mobileNumber.trim());
-            updateData.append('address_id', address.id.toString());
+            updateData.append('name', formData.name.trim());
+            updateData.append('email', formData.email.trim());
+            updateData.append('phone', formData.phone.trim());
+            updateData.append('gender', formData.gender.trim() || '');
+            updateData.append('date_of_birth', formData.dateOfBirth.trim() || '');
+            updateData.append('country_id', selectedCountryId ? selectedCountryId.toString() : '');
 
             // Handle photo upload
             if (userPhoto && userPhoto instanceof File) {
-                // New photo file selected
                 updateData.append('photo', userPhoto);
-            } else if (previewPhoto && typeof previewPhoto === 'string' && !previewPhoto.startsWith('data:')) {
-                // Existing photo URL (not a data URL)
-                updateData.append('photo', previewPhoto);
             }
-            // If no photo or it's a data URL, don't append photo field
 
             await toast.promise(
-                postAddress.mutateAsync({
-                    endpoint: 'update-address',
+                updateProfile.mutateAsync({
+                    endpoint: 'profile',
                     token,
                     formData: updateData,
                 }),
                 {
-                    loading: 'Updating address...',
-                    success: 'Address updated successfully!',
-                    error: (err) => err.message || 'Failed to update address',
+                    loading: 'Updating profile...',
+                    success: 'Profile updated successfully!',
+                    error: (err) => err.message || 'Failed to update profile',
                 }
             );
 
-            queryClient.invalidateQueries({ queryKey: ['profile-address'] });
+            // Invalidate queries to refresh data
+            queryClient.invalidateQueries({ queryKey: ['profile'] });
+            setIsEditing(false);
 
         } catch (err) {
             console.error("Update error:", err);
@@ -221,192 +179,227 @@ const Profile = ({ address }) => {
         }
     };
 
+    if (!profile) {
+        return (
+            <div className="bg-white rounded-lg p-[10px] lg:p-[40px] flex justify-center items-center h-64">
+                <p className="text-gray-500">Loading profile...</p>
+            </div>
+        );
+    }
+
+    const DisplayField = ({ label, value, required = false }) => (
+        <div className="py-[15px] border-b border-gray-100">
+            <div className="flex justify-between items-center">
+                <span className="font-medium text-gray-700 text-[14px] lg:text-[16px]">
+                    {label} {required && <span className="text-red-500">*</span>}
+                </span>
+                <span className="text-primaryblack text-[14px] lg:text-[16px]">
+                    {value || <span className="text-gray-400">Not set</span>}
+                </span>
+            </div>
+        </div>
+    );
+
+    const EditField = ({ label, name, type = "text", required = false, options = null, isCountry = false }) => (
+        <div>
+            <label className="flex justify-between font-medium text-gray-700">
+                <p className="text-[14px] lg:text-[16px]">
+                    {label} {required && <span className="text-red-500">*</span>}
+                </p>
+                {errors[name] && (
+                    <span className="text-red-500 text-sm">{errors[name]}</span>
+                )}
+            </label>
+            {isCountry ? (
+                <div className="relative">
+                    <select
+                        value={selectedCountryId || ""}
+                        onChange={handleCountryChange}
+                        disabled={isCountriesLoading}
+                        className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[16px] border ${
+                            errors[name] ? "border-red-500" : "border-gray-300"
+                        } rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20 mt-[8px] text-[14px] lg:text-[16px] text-primaryblack bg-white`}
+                    >
+                        <option value="">
+                            {isCountriesLoading ? "Loading countries..." : "Select Country"}
+                        </option>
+                        {countriesData?.data?.map((country) => (
+                            <option key={country.id} value={country.id}>
+                                {country.country_name}
+                            </option>
+                        ))}
+                    </select>
+                    <BiChevronDown className="absolute top-1/2 right-3 text-xl text-gray-300 pointer-events-none" />
+                </div>
+            ) : options ? (
+                <select
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[16px] border ${
+                        errors[name] ? "border-red-500" : "border-gray-300"
+                    } rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20 mt-[8px] text-[14px] lg:text-[16px] text-primaryblack bg-white`}
+                >
+                    <option value="">{`Select ${label}`}</option>
+                    {options.map(option => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+            ) : (
+                <input
+                    type={type}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[16px] border ${
+                        errors[name] ? "border-red-500" : "border-gray-300"
+                    } rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20 mt-[8px] text-[14px] lg:text-[16px] text-primaryblack`}
+                    placeholder={`Enter your ${label.toLowerCase()}`}
+                />
+            )}
+        </div>
+    );
+
     return (
-        <form
-            className="bg-white rounded-lg p-[10px] lg:p-[40px]"
-            onSubmit={handleSubmit}
-        >
-            <UserProfilePhoto
-                userPhoto={userPhoto}
-                setUserPhoto={setUserPhoto}
-                previewPhoto={previewPhoto}
-                setPreviewPhoto={setPreviewPhoto}
-            />
-
-            {/* Basic Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
-                <div>
-                    <label className="flex justify-between font-medium text-gray-700">
-                        <p>Full name <span className="text-red-500">*</span></p>
-                        {errors.fullName && (
-                            <span className="text-red-500 ml-2">{errors.fullName}</span>
-                        )}
-                    </label>
-                    <input
-                        type="text"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={handleChange}
-                        className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.fullName ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack`}
-                    />
-                </div>
-
-                <div>
-                    <label className="block font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                        Email address <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        type="email"
-                        value={user?.email}
-                        readOnly
-                        className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack bg-gray-50"
-                    />
-                </div>
+        <div className="bg-white rounded-lg p-[10px] lg:p-[40px]">
+            {/* Header with Edit Button */}
+            <div className="flex justify-between items-center mb-[30px]">
+                <h2 className="text-[20px] lg:text-[24px] font-bold text-primaryblack">
+                    Profile Information
+                </h2>
+                {!isEditing ? (
+                    <button
+                        onClick={handleEditToggle}
+                        className="flex items-center gap-2 px-[16px] py-[8px] bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                    >
+                        <BiEdit className="text-[18px]" />
+                        <span className="text-[14px] lg:text-[16px]">Edit Profile</span>
+                    </button>
+                ) : (
+                    <div className="flex gap-2">
+                        <button
+                            onClick={handleEditToggle}
+                            className="flex items-center gap-2 px-[16px] py-[8px] bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
+                        >
+                            <BiX className="text-[18px]" />
+                            <span className="text-[14px] lg:text-[16px]">Cancel</span>
+                        </button>
+                    </div>
+                )}
             </div>
 
-            {/* Contact */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
+            {!isEditing ? (
+                /* VIEW MODE */
                 <div>
-                    <label className="block font-medium text-gray-700 mt-[15px] sm:mt-[30px]">Date of birth</label>
-                    <input
-                        type="date"
-                        name="dob"
-                        value={formData.dob}
-                        onChange={handleChange}
-                        className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack"
-                    />
-                </div>
-                <div>
-                    <label className="flex justify-between font-medium text-gray-700">
-                        <p>Mobile number <span className="text-red-500">*</span></p>
-                        {errors.mobileNumber && (
-                            <span className="text-red-500 ml-2">{errors.mobileNumber}</span>
-                        )}
-                    </label>
-                    <input
-                        type="tel"
-                        name="mobileNumber"
-                        value={formData.mobileNumber}
-                        onChange={handleChange}
-                        className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.mobileNumber ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack`}
-                    />
-                </div>
-            </div>
+                    {/* Profile Photo Display */}
+                    <div className="flex justify-center mb-[30px]">
+                        <div className="relative">
+                            <div className="w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] rounded-full overflow-hidden border-4 border-gray-200">
+                                {profile.photo ? (
+                                    <img
+                                        src={profile.photo}
+                                        alt="Profile"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                                        <span className="text-gray-500 text-[24px] lg:text-[36px] font-bold">
+                                            {profile.name ? profile.name.charAt(0).toUpperCase() : 'U'}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
 
-            {/* Address */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px] sm:gap-[20px]">
-                {[
-                    { label: "Flat number", name: "flatNumber", required: true },
-                    { label: "House Number", name: "houseNumber", required: true },
-                    { label: "Road number", name: "roadNumber" },
-                    { label: "Block", name: "block" },
-                    { label: "Area", name: "area", required: true },
-                    { label: "Post code", name: "postCode" },
-                ].map(({ label, name, required }) => (
-                    <div key={name}>
-                        <label className="flex justify-between font-medium text-gray-700">
-                            <p>{label} {required && <span className="text-red-500">*</span>}</p>
-                            {errors[name] && (
-                                <span className="text-red-500 ml-2">{errors[name]}</span>
-                            )}
-                        </label>
-                        <input
-                            type="text"
-                            name={name}
-                            value={formData[name]}
-                            onChange={handleChange}
-                            className={`w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors[name] ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack`}
+                    {/* Profile Information Display */}
+                    <div className="space-y-2">
+                        <DisplayField label="Full Name" value={profile.name} required />
+                        <DisplayField label="Email Address" value={profile.email} required />
+                        <DisplayField label="Phone Number" value={profile.phone} required />
+                        <DisplayField label="Gender" value={profile.gender} />
+                        <DisplayField label="Date of Birth" value={profile.date_of_birth} />
+                        <DisplayField label="Country" value={profile.country?.country_name} />
+                        <DisplayField label="Profile ID" value={profile.id} />
+                    </div>
+                </div>
+            ) : (
+                /* EDIT MODE */
+                <form onSubmit={handleSubmit}>
+                    {/* Profile Photo Edit */}
+                    <UserProfilePhoto
+                        userPhoto={userPhoto}
+                        setUserPhoto={setUserPhoto}
+                        previewPhoto={previewPhoto}
+                        setPreviewPhoto={setPreviewPhoto}
+                    />
+
+                    {/* Edit Form Fields */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-[15px] lg:gap-[20px] mt-[30px]">
+                        <EditField
+                            label="Full Name"
+                            name="name"
+                            required
+                        />
+                        <EditField
+                            label="Email Address"
+                            name="email"
+                            type="email"
+                            required
+                        />
+                        <EditField
+                            label="Phone Number"
+                            name="phone"
+                            type="tel"
+                            required
+                        />
+                        <EditField
+                            label="Gender"
+                            name="gender"
+                            options={[
+                                { value: "male", label: "Male" },
+                                { value: "female", label: "Female" },
+                                { value: "other", label: "Other" }
+                            ]}
+                        />
+                        <EditField
+                            label="Date of Birth"
+                            name="dateOfBirth"
+                            type="date"
+                        />
+                        <EditField
+                            label="Country"
+                            name="country"
+                            isCountry={true}
                         />
                     </div>
-                ))}
 
-                {/* District Select */}
-                <div>
-                    <label className="flex justify-between font-medium text-gray-700">
-                        <p>District <span className="text-red-500">*</span></p>
-                        {errors.district && (
-                            <span className="text-red-500 ml-2">{errors.district}</span>
-                        )}
-                    </label>
-                    <div className="relative">
-                        <select
-                            value={selectedDistrictId || ""}
-                            onChange={handleDistrictChange}
-                            disabled={isDistrictsLoading}
-                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.district ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack bg-white`}
+                    {/* Save Button */}
+                    <div className="mt-[30px] lg:mt-[40px]">
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className={`flex items-center justify-center gap-2 py-[12px] md:py-[18px] text-[16px] lg:text-[18px] ease-linear duration-300 w-full font-medium rounded-md ${
+                                loading 
+                                    ? 'bg-creamline cursor-not-allowed text-gray-400' 
+                                    : 'bg-customgreen hover:bg-customgreen/90 text-white cursor-pointer'
+                            }`}
                         >
-                            <option value="">
-                                {isDistrictsLoading ? "Loading districts..." : "Select District"}
-                            </option>
-                            {districtsData?.data?.map((district) => (
-                                <option key={district.id} value={district.id}>
-                                    {district.name}
-                                </option>
-                            ))}
-                        </select>
-                        <BiChevronDown className="absolute top-1/2 right-5 text-xl text-natural" />
+                            {loading ? (
+                                <LoadingSvg label="Updating profile" color='text-primaryblack' />
+                            ) : (
+                                <>
+                                    <BiCheck className="text-[20px]" />
+                                    <span>Save Changes</span>
+                                </>
+                            )}
+                        </button>
                     </div>
-                </div>
-
-                {/* City Select */}
-                <div>
-                    <label className="flex justify-between font-medium text-gray-700">
-                        <p>City <span className="text-red-500">*</span></p>
-                        {errors.city && (
-                            <span className="text-red-500 ml-2">{errors.city}</span>
-                        )}
-                    </label>
-                    <div className="relative">
-                        <select
-                            value={selectedCityId || ""}
-                            onChange={handleCityChange}
-                            disabled={!selectedDistrictId || isCitiesLoading}
-                            className={`cursor-pointer appearance-none w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border ${errors.city ? "border-red-500" : "border-gray-300"} rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack bg-white`}
-                        >
-                            <option value="">
-                                {!selectedDistrictId
-                                    ? "Select district first"
-                                    : isCitiesLoading
-                                        ? "Loading cities..."
-                                        : "Select City"
-                                }
-                            </option>
-                            {citiesData?.data?.map((city) => (
-                                <option key={city.id} value={city.id}>
-                                    {city.name}
-                                </option>
-                            ))}
-                        </select>
-                        <BiChevronDown className="absolute top-1/2 right-5 text-xl text-natural" />                                   
-                    </div>
-                </div>
-            </div>
-
-            {/* Additional Address */}
-            <div>
-                <label className="block font-medium text-gray-700 mt-[15px] sm:mt-[30px]">
-                    Additional Address for better finding
-                </label>
-                <textarea
-                    name="additionalAddress"
-                    value={formData.additionalAddress}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full px-[10px] sm:px-[20px] py-[12px] sm:py-[24px] border border-gray-300 rounded-md focus:outline-none mt-[10px] sm:mt-[20px] text-[16px] text-primaryblack"
-                />
-            </div>
-
-            {/* Submit */}
-            <div className="mt-[20px] md:mt-[40px]">
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className={`py-[12px] md:py-[24px] text-[18px] ease-linear duration-300 w-full font-medium rounded-md ${loading ? 'bg-creamline cursor-not-allowed' : 'bg-natural hover:bg-creamline hover:text-primaryblack text-white cursor-pointer'}`}
-                >
-                    {loading ? <LoadingSvg label="Updating profile" color='text-primaryblack' /> : "Update profile"}
-                </button>
-            </div>
-        </form>
+                </form>
+            )}
+        </div>
     );
 };
 

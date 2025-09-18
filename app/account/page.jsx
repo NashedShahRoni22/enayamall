@@ -26,23 +26,29 @@ export default function Page() {
     const [addressId, setAddressId] = useState(null);
     const [method, setMethod] = useState(null);
     const [selectedDistrictId, setSelectedDistrictId] = useState(null);
+
+    // get profile
+    const { data: profileData, isLoading, error } = useGetDataWithToken(`profile`, token);
+    const profile = profileData?.data;
     // get address 
     const { data: address } = useGetDataWithToken(`address`, token);
 
     // get orders
-    const { data: ordersData, isLoading, error } = useGetDataWithToken(`orders`, token);
+    const { data: ordersData } = useGetDataWithToken(`orders`, token);
     const orders = ordersData?.data;
 
     //   managed tab here 
-    const [activeTab, setActiveTab] = useState("Orders");
+    const [activeTab, setActiveTab] = useState("Profile");
 
     const mobileTabButtons = [
+        { icon: User2, title: "Profile" },
         { icon: Map, title: "Address" },
         { icon: FiShoppingBag, title: "Orders" },
         { icon: HandshakeIcon, title: "Affiliate" },
     ];
 
     const tabButtons = [
+        { icon: User2, title: "Profile" },
         { icon: FiShoppingBag, title: "Orders" },
         { icon: Map, title: "Address" },
         { icon: FiHeart, title: "Wishlist" },
@@ -51,7 +57,7 @@ export default function Page() {
     ];
 
 
-    const profileTab = useMemo(() =>
+    const addressTab = useMemo(() =>
         <BillForm
             address={address}
             addressId={addressId}
@@ -62,21 +68,24 @@ export default function Page() {
             setSelectedDistrictId={setSelectedDistrictId}
         />
     );
+    const profileTab = useMemo(() => <Profile profile={profile} />,);
     const ordersTab = useMemo(() => <Orders orders={orders} />,);
     const affiliateTab = useMemo(() => <Affiliate />,);
 
     const renderActiveTab = () => {
         switch (activeTab) {
-            case "Address":
+            case "Profile":
                 return profileTab;
+            case "Address":
+                return addressTab;
             case "Orders":
+                return ordersTab;
             case "Wishlist":
             case "Cart":
-                return ordersTab;
             case "Affiliate":
                 return affiliateTab;
             default:
-                return profileTab;
+                return addressTab;
         }
     };
 
