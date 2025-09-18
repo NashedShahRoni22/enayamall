@@ -2,8 +2,13 @@ import imageLeft from "@/public/image1.png";
 import imageRight from "@/public/image2.png";
 import Image from "next/image";
 import Container from "../shared/Container";
+import { useGetData } from "../helpers/useGetData";
 
 export default function TwoAdsBanner() {
+    const { data: imageData } = useGetData("banners?slug=1")
+    console.log('====================================');
+    console.log(imageData);
+    console.log('====================================');
     return (
         <Container>
             <div className='flex flex-col lg:flex-row justify-center items-center gap-5 my-5'>

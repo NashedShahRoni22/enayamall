@@ -1,51 +1,26 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import Container from '../shared/Container';
-
-// Mock data for client reviews
-const reviewsData = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    review: "Absolutely exceptional service! The team went above and beyond to deliver exactly what we needed. Their attention to detail and professionalism made the entire process seamless."
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    review: "Outstanding quality and incredible support. I couldn't be happier with the results. They truly understand their clients' needs and deliver beyond expectations."
-  },
-  {
-    id: 3,
-    name: "Emily Rodriguez",
-    review: "Professional, reliable, and innovative. Working with this team has been a game-changer for our business. Highly recommend their services to anyone looking for excellence."
-  },
-  {
-    id: 4,
-    name: "David Thompson",
-    review: "From start to finish, the experience was flawless. Great communication, timely delivery, and results that exceeded our expectations. Will definitely work with them again."
-  },
-  {
-    id: 5,
-    name: "Lisa Park",
-    review: "Incredible attention to detail and creative solutions. They took our vision and made it even better than we imagined. Truly talented and professional team."
-  }
-];
+import { useGetData } from '../helpers/useGetData';
 
 export default function ClientReviewSwiper() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  // get reviews 
+  const {data:reviewsData} = useGetData("testimonials?featured=1");
+  const reviews = reviewsData?.data;
 
   const nextSlide = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setCurrentSlide((prev) => (prev + 1) % reviewsData.length);
+    setCurrentSlide((prev) => (prev + 1) % reviews.length);
     setTimeout(() => setIsTransitioning(false), 300);
   };
 
   const prevSlide = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setCurrentSlide((prev) => (prev - 1 + reviewsData.length) % reviewsData.length);
+    setCurrentSlide((prev) => (prev - 1 + reviews.length) % reviews.length);
     setTimeout(() => setIsTransitioning(false), 300);
   };
 
@@ -89,9 +64,9 @@ export default function ClientReviewSwiper() {
             className="flex transition-transform duration-300 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
-            {reviewsData.map((review, index) => (
+            {reviews?.map((review, index) => (
               <div
-                key={review.id}
+                key={index}
                 className="w-full flex-shrink-0 px-16 py-12"
               >
                 <div className="text-center max-w-2xl mx-auto">
@@ -108,7 +83,7 @@ export default function ClientReviewSwiper() {
                   {/* Client Name */}
                   <div>
                     <h4 className="text-xl font-semibold text-slate-800 mb-1">
-                      {review.name}
+                      {review.customer_name}
                     </h4>
                   </div>
                 </div>
@@ -120,7 +95,7 @@ export default function ClientReviewSwiper() {
 
       {/* Pagination Dots */}
       <div className="flex justify-center mt-8 space-x-2">
-        {reviewsData.map((_, index) => (
+        {reviews?.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
