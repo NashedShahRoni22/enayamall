@@ -113,7 +113,7 @@ export default function ReviewForm({ variantId, token, productType }) {
     };
 
     return (
-        <section className='border-t border-[#D0D0D0] pt-[50px] flex flex-col gap-[30px] lg:gap-[40px]'>
+        <section className='border-t border-[#D0D0D0] pt-[50px] flex flex-col gap-[30px] lg:gap-[40px] mt-[50px]'>
             <p className='text-primaryblack text-[18px] lg:text-[20px] font-[650]'>Share the Vibe!</p>
             <p className='text-natural text-[20px] lg:text-[26px] font-[650]'>Loved your experience? Tell us how it made you feel!</p>
             <p className='text-ash text-[14px]'>
@@ -159,7 +159,8 @@ export default function ReviewForm({ variantId, token, productType }) {
                 {/* Review Text */}
                 <div className='flex flex-col gap-[10px] md:gap-[20px]'>
                     <p className='text-primaryblack text-[18px] lg:text-[20px] font-[650]'>Your review<span className='text-button'>*</span></p>
-                    <input
+                    <textarea
+                        rows={5}
                         value={reviewText}
                         onChange={e => setReviewText(e.target.value)}
                         className='p-2.5 sm:p-5 focus:outline-none border border-creamline rounded-[5px]'

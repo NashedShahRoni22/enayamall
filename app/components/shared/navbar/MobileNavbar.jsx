@@ -79,7 +79,7 @@ export default function MobileNavbar({ logo, menuItems = [], categories = [], co
 
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (
-                    <div className="absolute top-full left-0 right-0 bg-white shadow-lg border-t z-40">
+                    <div className="left-0 right-0 bg-white shadow-lg border-t z-40">
                         <Container>
                             <div className="py-4 space-y-4">
                                 {/* Mobile Menu Items */}

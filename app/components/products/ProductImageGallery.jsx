@@ -119,33 +119,35 @@ export default function ProductImageGallery({
                                 watchSlidesProgress={true}
                                 className="thumbs-swiper h-full"
                             >
-                                {product?.main_image?.map((image, index) => (
-                                    <SwiperSlide key={index} className="!h-auto">
-                                        <button
-                                            onClick={() => handleImageSelect(image, index)}
-                                            className={`w-full aspect-square border-2 rounded-[5px] cursor-pointer transition-all duration-300 overflow-hidden hover:border-primary/60 flex items-center justify-center ${activeIndex === index
-                                                    ? "border-primary"
-                                                    : "border-creamline"
-                                                }`}
-                                        >
-                                            <Image
-                                                src={image}
-                                                alt={`${product?.name || 'Product'} - Thumbnail ${index + 1}`}
-                                                width={120}
-                                                height={120}
-                                                sizes="120px"
-                                                className="h-full w-full object-contain p-2"
-                                                style={{
-                                                    maxWidth: '100%',
-                                                    maxHeight: '100%',
-                                                }}
-                                                onError={(e) => {
-                                                    console.log('Thumbnail failed to load:', image);
-                                                }}
-                                            />
-                                        </button>
-                                    </SwiperSlide>
-                                ))}
+                                {product?.main_image &&
+                                    product?.main_image?.map((image, index) => (
+                                        <SwiperSlide key={index} className="!h-auto">
+                                            <button
+                                                onClick={() => handleImageSelect(image, index)}
+                                                className={`w-full aspect-square border-2 rounded-[5px] cursor-pointer transition-all duration-300 overflow-hidden hover:border-primary/60 flex items-center justify-center ${activeIndex === index
+                                                        ? "border-primary"
+                                                        : "border-creamline"
+                                                    }`}
+                                            >
+                                                <Image
+                                                    src={image}
+                                                    alt={`${product?.name || 'Product'} - Thumbnail ${index + 1}`}
+                                                    width={120}
+                                                    height={120}
+                                                    sizes="120px"
+                                                    className="h-full w-full object-contain p-2"
+                                                    style={{
+                                                        maxWidth: '100%',
+                                                        maxHeight: '100%',
+                                                    }}
+                                                    onError={(e) => {
+                                                        console.log('Thumbnail failed to load:', image);
+                                                    }}
+                                                />
+                                            </button>
+                                        </SwiperSlide>
+                                    ))
+                                }
                             </Swiper>
                         </div>
                         
@@ -168,67 +170,71 @@ export default function ProductImageGallery({
                                     onSlideChange={handleSlideChange}
                                     className="h-full"
                                 >
-                                    {product?.main_image?.map((image, index) => (
-                                        <SwiperSlide key={index} className="flex justify-center items-center">
-                                            <div
-                                                className="relative h-full w-full cursor-zoom-in overflow-hidden group"
-                                                onClick={handleMainImageClick}
-                                            >
-                                                <Image
-                                                    src={image || defaultImage}
-                                                    alt={`${product?.name || 'Product'} - Image ${index + 1}`}
-                                                    width={800}
-                                                    height={600}
-                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                    className="h-full w-full object-contain p-6"
-                                                    style={{
-                                                        maxWidth: '100%',
-                                                        maxHeight: '100%',
-                                                    }}
-                                                    onError={(e) => {
-                                                        console.log('Image failed to load:', image);
-                                                    }}
-                                                />
-                                                {/* Zoom indicator */}
-                                                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                    <svg
-                                                        className="w-4 h-4 text-white"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                                                        />
-                                                    </svg>
+                                    {product?.main_image &&
+                                        product?.main_image?.map((image, index) => (
+                                            <SwiperSlide key={index} className="flex justify-center items-center">
+                                                <div
+                                                    className="relative h-full w-full cursor-zoom-in overflow-hidden group"
+                                                    onClick={handleMainImageClick}
+                                                >
+                                                    <Image
+                                                        src={image || defaultImage}
+                                                        alt={`${product?.name || 'Product'} - Image ${index + 1}`}
+                                                        width={800}
+                                                        height={600}
+                                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                        className="h-full w-full object-contain p-6"
+                                                        style={{
+                                                            maxWidth: '100%',
+                                                            maxHeight: '100%',
+                                                        }}
+                                                        onError={(e) => {
+                                                            console.log('Image failed to load:', image);
+                                                        }}
+                                                    />
+                                                    {/* Zoom indicator */}
+                                                    <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                        <svg
+                                                            className="w-4 h-4 text-white"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={2}
+                                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                                                            />
+                                                        </svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </SwiperSlide>
-                                    ))}
+                                            </SwiperSlide>
+                                        ))
+                                    }
                                 </Swiper>
                             </div>
                         </div>
                     </>
                     :
                     <div className="w-full border border-creamline rounded-[10px] overflow-hidden h-[400px] md:h-[500px] lg:h-[500px] relative">
-                        <Image
-                            src={defaultImage}
-                            alt={`${product?.name || 'Product Image'}`}
-                            width={120}
-                            height={120}
-                            sizes="120px"
-                            className="h-full w-full object-contain p-4"
-                            style={{
-                                maxWidth: '100%',
-                                maxHeight: '100%',
-                            }}
-                            onError={(e) => {
-                                console.log('Thumbnail failed to load:', defaultImage);
-                            }}
-                        />
+                        {defaultImage && (
+                            <Image
+                                src={defaultImage}
+                                alt={`${product?.name || 'Product Image'}`}
+                                width={120}
+                                height={120}
+                                sizes="120px"
+                                className="h-full w-full object-contain p-4"
+                                style={{
+                                    maxWidth: '100%',
+                                    maxHeight: '100%',
+                                }}
+                                onError={(e) => {
+                                    console.log('Thumbnail failed to load:', defaultImage);
+                                }}
+                            />
+                        )}
                     </div>
             }
         </section>

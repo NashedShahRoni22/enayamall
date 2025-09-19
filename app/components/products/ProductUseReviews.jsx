@@ -220,7 +220,7 @@ export default function ProductUseReviews({
             productType={productType}
           />
         ) : (
-          <p className="text-red-500 py-8">
+          <p className="text-red-500 pt-8">
             {lang === "en"
               ? "No reviews found for this product."
               : "لم يتم العثور على مراجعات لهذا المنتج"
@@ -228,8 +228,6 @@ export default function ProductUseReviews({
           </p>
         )}
       </div>
-
-      
     </section>
   );
 }

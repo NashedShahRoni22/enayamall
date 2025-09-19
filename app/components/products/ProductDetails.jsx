@@ -203,20 +203,22 @@ export default function ProductDetails({
             </div>
           )}
         </div>
-        <Link href={`/brand/${product?.brand?.slug}`}>
-          <Image
-            src={product?.brand?.image}
-            alt={
-              lang === "en"
-                ? product?.brand?.name
-                : product?.brand?.ar_name || product?.brand?.name
-            }
-            height={100}
-            width={100}
-            className="min-w-[100px] min-h-[100px] max-w-[100px] max-h-[100px] border border-creamline p-2 rounded-[10px] object-contain"
-          />
-        <p className="text-center text-gray-600">Brand</p>
-        </Link>
+        {product?.brand && (
+          <Link href={`/brand/${product?.brand?.slug}`}>
+            <Image
+              src={product?.brand?.image}
+              alt={
+                lang === "en"
+                  ? product?.brand?.name
+                  : product?.brand?.ar_name || product?.brand?.name
+              }
+              height={100}
+              width={100}
+              className="min-w-[100px] min-h-[100px] max-w-[100px] max-h-[100px] border border-creamline p-2 rounded-[10px] object-contain"
+            />
+            <p className="text-center text-gray-600">Brand</p>
+          </Link>
+        )}
       </div>
 
       <div className="my-[15px] h-[.5px] bg-creamline w-full"></div>

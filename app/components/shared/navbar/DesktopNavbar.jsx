@@ -103,7 +103,8 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                     <div className={`flex justify-between items-center py-5 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                         {/* Logo */}
                         <Link href="/">
-                            <Image src={logo} height={50} width={200} alt="Logo" />
+                            <Image src={logo} width={200} height={undefined} alt="Logo" style={{ height: 'auto' }} />
+                            {/* <Image src={logo} height={50} width={200} alt="Logo" /> */}
                         </Link>
 
                         {/* Search */}
