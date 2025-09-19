@@ -53,7 +53,7 @@ export default function Category() {
               <SwiperSlide key={index}>
                 <Link href={`/category/${category?.slug}`}>
                   <div className="flex flex-col justify-center items-center">
-                    <div className="p-4 flex items-center justify-center bg-[#FDDDEB] rounded-full overflow-hidden">
+                    <div className="p-4 flex items-center justify-center bg-[#52a5dd26] rounded-full overflow-hidden">
                       <Image
                         src={category?.icon}
                         alt={category?.name}
