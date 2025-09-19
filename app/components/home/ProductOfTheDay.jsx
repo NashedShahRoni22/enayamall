@@ -5,6 +5,7 @@ import VerticalCardLoadingScreen from "../loaders/VerticalCardLoadingScreen";
 import ProductsSlider from "../sliders/ProductsSlider";
 import Image from "next/image";
 import TwoProductSlider from "../sliders/TwoProductSlider";
+import Link from "next/link";
 
 export default function ProductOfTheDay() {
   //fetch banner
@@ -26,7 +27,13 @@ export default function ProductOfTheDay() {
         <div className="flex flex-col md:flex-row gap-4 mt-10">
           {/* banner image section*/}
           <div className="md:w-1/2">
-            <Image src={bannerImage?.image} height={500} width={500} alt={bannerImage?.title} className="h-full w-full rounded-xl" />
+            <Link
+              href={bannerImage?.link || "#"}
+              target={bannerImage?.link ? "_blank" : "_self"}
+              rel="noopener noreferrer"
+            >
+              <Image src={bannerImage?.image} height={500} width={500} alt={bannerImage?.title} className="h-full w-full rounded-xl" />
+            </Link>
           </div>
           {/* products section*/}
           <div className="md:w-1/2">

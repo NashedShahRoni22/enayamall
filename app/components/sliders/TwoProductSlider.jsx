@@ -33,7 +33,7 @@ export default function TwoProductSlider({ products }) {
 
       {/* Custom Pagination Dots */}
       <div className="flex justify-center gap-2 mt-4">
-        {products?.map((_, index) => (
+        {Array.from({ length: Math.ceil(products.length / 2) }).map((_, index) => (
           <button
             key={index}
             onClick={() => swiperRef.current?.swiper?.slideTo(index)}

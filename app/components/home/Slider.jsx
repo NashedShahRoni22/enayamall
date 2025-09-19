@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import { useGetData } from "../helpers/useGetData";
 import ScreenLoader from "../loaders/ScreenLoader";
 import { useAppContext } from "@/app/context/AppContext";
+import Link from "next/link";
 
 // Custom styles for Swiper
 const swiperStyles = `
@@ -80,15 +81,22 @@ export default function Slider() {
         >
         {banners?.map((banner, index) => (
           <SwiperSlide key={banner.id}>
-            <Image
-              src={ lang === "en" ? banner?.image : banner?.ar_image }
-              height={450}
-              width={1920}
-              alt={banner?.alt || "Banner Image" }
-              className="object-cover"
-              priority={index === 0}
-              loading={index === 0 ? 'eager' : 'lazy'}
-            />
+            <Link
+              href={ lang === "en" ? banner?.link : banner?.ar_link }
+              target={banner?.link ? "_blank" : "_self"}
+              rel="noopener noreferrer"
+              // className="block w-full h-[250px] lg:h-[450px] relative"
+            >
+              <Image
+                src={ lang === "en" ? banner?.image : banner?.ar_image }
+                height={450}
+                width={1920}
+                alt={banner?.alt || "Banner Image" }
+                className="object-cover"
+                priority={index === 0}
+                loading={index === 0 ? 'eager' : 'lazy'}
+              />
+            </Link>
           </SwiperSlide>
         ))}
         </Swiper>

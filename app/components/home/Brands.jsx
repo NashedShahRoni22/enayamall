@@ -16,7 +16,7 @@ export default function Brands() {
         {/* top section  */}
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold text-primary mb-2">
-            {lang === 'en' ? 'Shop by brand' : 'سوق حسب الماركة'}
+            {lang === 'en' ? 'FEATURED BRANDS' : 'ماركات مميزة'}
           </h2>
           <ShopNowButton route={"/brand"} />
         </div>

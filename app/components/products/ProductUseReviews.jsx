@@ -118,14 +118,14 @@ export default function ProductUseReviews({
         }`}
       >
         <div
-          className={`flex gap-5 2xl:justify-center 2xl:gap-[80px] text-[18px] 2xl:text-[26px] font-[550] ${
+          className={`flex gap-2 2xl:gap-5 text-[18px] 2xl:text-[26px] font-[550] ${
             lang === "ar" ? "flex-row-reverse" : ""
           }`}
         >
           <button
             className={`transition-colors ${
-              activeTab === "description" ? "text-primary" : "text-primaryblack"
-            } hover:text-primary cursor-pointer`}
+              activeTab === "description" ? "text-white bg-primary" : "text-primaryblack"
+            } hover:text-white cursor-pointer  border border-primary rounded-md px-5 py-1`}
             onClick={() => scrollToSection(descriptionRef, "description")}
           >
             {getText("description")}
@@ -147,7 +147,7 @@ export default function ProductUseReviews({
           <button
             className={`transition-colors ${
               activeTab === "reviews" ? "text-primary" : "text-primaryblack"
-            } hover:text-primary cursor-pointer`}
+            } hover:text-primary cursor-pointer border border-primary rounded-md px-5 py-1`}
             onClick={() => scrollToSection(reviewsRef, "reviews")}
           >
             {getText("reviews")}
@@ -200,17 +200,6 @@ export default function ProductUseReviews({
                 </div> */}
       </div>
 
-      {/* Review section for regular product */}
-      <div ref={reviewsRef}>
-        {reviewable && (
-          <ReviewForm
-            variantId={variantId}
-            token={token}
-            productType={productType}
-          />
-        )}
-      </div>
-
       <p className="mt-[40px]">
           <span className="text-primaryblack font-[550]">{lang === 'en' ? 'Tags:' : 'العلامات:'}</span>{" "}
           {product?.tags?.map((pt, index, array) => (
@@ -221,6 +210,26 @@ export default function ProductUseReviews({
               </Link>
           ))}
       </p>
+
+      {/* Review section for regular product */}
+      <div ref={reviewsRef}>
+        {reviewable ? (
+          <ReviewForm
+            variantId={variantId}
+            token={token}
+            productType={productType}
+          />
+        ) : (
+          <p className="text-red-500 py-8">
+            {lang === "en"
+              ? "No reviews found for this product."
+              : "لم يتم العثور على مراجعات لهذا المنتج"
+            }
+          </p>
+        )}
+      </div>
+
+      
     </section>
   );
 }

@@ -8,6 +8,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    domains: ["enayamall.fahimsultan.com"], // allow your image host
   },
 };
 

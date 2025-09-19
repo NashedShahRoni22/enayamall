@@ -1,25 +1,28 @@
 import Image from "next/image";
 import Container from "../shared/Container";
+import Link from "next/link";
+import { useGetData } from "../helpers/useGetData";
 
 export default function BannerWidth1() {
+  const { data: bannerImageData } = useGetData(`banners?slug=3`);
+  const bannerImage = (bannerImageData?.data[0])
   return (
-    <Container>
-      <div>
-        <Image
-          src={`data:image/svg+xml;base64,${Buffer.from(
-                        `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="160">
-                        <rect width="1200" height="160" fill="#e5e7eb"/>
-                        </svg>`
-                    ).toString("base64")}`}
-          // src="https://enayamall.fahimsultan.com/storage/uploads/maxi-cosi-brand-banner.webp"
-          alt="Banner"
-          loading="eager"
-          priority
-          height={160}
-          width={1200}
-          className="rounded-md"
-        />
-      </div>
-    </Container>
+     <Container>
+            <Link 
+              href={bannerImage?.link || "#"}
+              target={bannerImage?.link ? "_blank" : "_self"}
+              rel="noopener noreferrer"
+            >
+            <Image
+                src={bannerImage?.image}
+                alt={bannerImage?.title || "Banner Image"}
+                loading="eager"
+                priority
+                height={328}
+                width={1920}
+                className="rounded-md"
+              />
+            </Link>
+        </Container>
   )
 }

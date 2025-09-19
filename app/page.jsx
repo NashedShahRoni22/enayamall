@@ -6,6 +6,7 @@ import Newarrival from './components/home/Newarrival'
 import BannerWidth1 from './components/home/BannerWidth1'
 import BannerWidth2 from './components/home/BannerWidth2'
 import BannerWidth3 from './components/home/BannerWidth3'
+import BannerWidth4 from './components/home/BannerWidth4'
 import TwoAdsBanner from './components/home/TwoAdsBanner'
 import Recommended from './components/home/Recommended'
 import FlashDeals from './components/home/FlashDeals'
@@ -27,20 +28,24 @@ export default function page() {
       <Category />
       <TwoAdsBanner />
       {/* <FlashDeals/> */}
-      <ProductOfTheDay />
       <Recommended />
+      <BannerWidth1/>
+      <ProductOfTheDay />
+      <BannerWidth2 />
       {/* category components here  */}
-      {
+      {/* {
         categories?.map((category, index) => <CategoryProducts key={index} category={category} />)
-      }
-      <CategoryProducts />
+      } */}
+      <CategoryProducts categoryName="Body Care" rows={8} />
+      <CategoryProducts categoryName="Baby Care" rows={8} />
+      <BannerWidth3 />
+      <CategoryProducts categoryName="Hair Care" rows={8} />
+      <CategoryProducts categoryName="Oral Care" rows={8} />
+      <BannerWidth4 />
       <Brands />
       <Reviews />
-      {/* <BannerWidth1/> */}
-      {/* <BannerWidth2 /> */}
       {/* <LatestProduct/> */}
       <Blogs />
-      <BannerWidth3 />
       {/* <Recommended/> */}
       {/* <Clearance/> */}
       {/* <Newarrival/> */}

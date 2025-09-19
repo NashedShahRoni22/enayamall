@@ -29,7 +29,7 @@ export default function Blogs() {
         </div>
 
         {/* Blogs Split Layout */}
-        <div className="my-[20px] lg:my-[40px] flex flex-col gap-6 md:flex-row">
+        <div className="mt-[20px] flex flex-col gap-6 md:flex-row">
           {/* Left side - Featured Blog */}
           <div className="md:w-1/2 lg:w-1/3">
             <BlogImageCard blog={blogs[0]} />

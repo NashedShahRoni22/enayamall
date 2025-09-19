@@ -162,7 +162,10 @@ export default function page() {
       {/* filters & products here  */}
       <Container>
         {slug && (
-          <h3 className="text-[20px] mt-[30px] font-semibold text-primaryblack">Tags: {slug.charAt(0).toUpperCase() + slug.slice(1)}</h3>
+          <div className={`flex gap-2 items-center ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
+            <h3 className="text-[20px] mt-[30px] font-semibold text-primaryblack">{lang === "en" ? "Tags:" : "الكلمات الدليليلة:"}</h3>
+            <h3 className="text-[20px] mt-[30px] font-semibold text-primaryblack">{slug.charAt(0).toUpperCase() + slug.slice(1)}</h3>
+          </div>
         )}
         <div className='pb-[20px]'>
           {/* filetrs actions  */}

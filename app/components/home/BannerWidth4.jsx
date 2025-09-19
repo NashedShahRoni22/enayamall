@@ -3,9 +3,8 @@ import Container from "../shared/Container";
 import Link from "next/link";
 import { useGetData } from "../helpers/useGetData";
 
-
-export default function BannerWidth2() {
-  const { data: bannerImageData } = useGetData(`banners?slug=5`);
+export default function BannerWidth4() {
+  const { data: bannerImageData } = useGetData(`banners?slug=6`);
     const bannerImage = (bannerImageData?.data[0])
     return (
        <Container>
