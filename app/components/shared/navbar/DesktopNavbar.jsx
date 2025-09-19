@@ -124,9 +124,13 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                 <button className="cursor-pointer bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative">
                                     <Heart className="size-5" />
                                     {wishlistCount > 0 && (
-                                        <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full size-5 flex items-center justify-center">
+                                        <>
+                                        <span className="absolute -top-2 -right-2 bg-brand-pink animate-ping text-white text-xs rounded-full size-5 flex items-center justify-center">
+                                        </span>
+                                        <span className="absolute -top-2 -right-2 bg-brand-pink text-white text-xs rounded-full size-5 flex items-center justify-center">
                                             {wishlistCount}
                                         </span>
+                                        </>
                                     )}
                                 </button>
                             </Link>
@@ -184,9 +188,13 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                 <button className="bg-primary text-white size-10 rounded-full flex justify-center items-center hover:bg-primary/90 transition-colors relative cursor-pointer">
                                     <ShoppingBag className="size-5" />
                                     {cartInfo?.itemCount > 0 && (
-                                        <span className="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full size-5 flex items-center justify-center">
+                                        <>
+                                        <span className="absolute -top-2 -right-2 bg-brand-pink animate-ping text-white text-xs rounded-full size-5 flex items-center justify-center">
+                                        </span>
+                                        <span className="absolute -top-2 -right-2 bg-brand-pink text-white text-xs rounded-full size-5 flex items-center justify-center">
                                             {cartInfo.itemCount}
                                         </span>
+                                        </>
                                     )}
                                 </button>
                                 <div className="text-gray-600 hidden xl:block">
@@ -201,7 +209,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                 </Container>
 
                 {/* Menu Section */}
-                <div className="bg-creamline text-primary font-semibold py-4">
+                <div className="bg-creamline text-primaryblack font-semibold py-4">
                     <Container>
                         <div className={`flex justify-between items-center ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
                             {/* Left/Right side based on language */}
