@@ -51,7 +51,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
             termsConditions: "Terms & Conditions",
             privacyPolicy: "Privacy Policy",
             refundReturn: "Refund & Return Policy",
-            placeOrder: "Place order",
+            placeOrder: "Place Order",
             placingOrder: "Placing order",
             selectShippingAddress: "Select shipping address!",
             selectPaymentMethod: "Select payment method!",
@@ -330,7 +330,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                     {loading ? (
                         <LoadingSvg label={t.placingOrder} color="text-primaryblack" />
                     ) : (
-                        t.placeOrder
+                        <p className='text-[14px] lg:text-[18px] font-semibold'>{t.placeOrder}</p>
                     )}
                 </button>
             </div>
