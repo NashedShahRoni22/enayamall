@@ -262,7 +262,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                         className={`flex gap-2 items-center cursor-pointer hover:opacity-80 transition-opacity ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
                                         onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
                                     >
-                                        <p className="text-sm">{currentLanguage.label}</p>
+                                        <p className="text-sm text-[16px]">{currentLanguage.label}</p>
                                         <ChevronDown className={`size-4 transition-transform ${showLanguageDropdown ? 'rotate-180' : ''}`} />
                                     </div>
 

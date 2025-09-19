@@ -35,8 +35,7 @@
 }
 
 .dirham-symbol {
-  font-family: UAESymbol;
-  font-weight: 400;
+  font-family: UAESymbol, Inter, sans-serif;
 }
 
 .longDescription ul {
