@@ -77,19 +77,23 @@ export default function CategoryProducts({ categoryName, rows = 10 }) {
       {products?.length > 0 && (
         <Container>
           {location === "/" && (
-            <section className="flex flex-row justify-between items-center mb-6">
-              <div>
+            <section className="flex flex-row justify-between items-center border-b border-[#008add]">
+              {/* caption here  */}
+              <div className="border-b-4 border-[#008add]">
                 <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-                  <span className="font-bold text-sectionTitle">
+                  <span className="font-bold text-primaryblack">
                     {category?.name ||
-                      (lang === "en" ? "Products" : "المنتجات")}
+                      (lang === "en" ? "Products" : "المنتجات")
+                    }
                   </span>
                 </h5>
               </div>
-
-              <div>
-                <ShopNowButton route={`category/${category?.slug}`} />
-              </div>
+              {
+                location !== '/recommended-product' &&
+                <div>
+                  <ShopNowButton route={`category/${category?.slug}`} />
+                </div>
+              }
             </section>
           )}
 

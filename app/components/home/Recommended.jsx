@@ -18,11 +18,11 @@ export default function Recommended() {
     <section className="py-[30px]">
       <Container>
         {/* starting section  */}
-        <section className="flex flex-row justify-between">
+        <section className="flex flex-row justify-between items-center border-b border-[#008add]">
           {/* caption here  */}
-          <div>
+          <div className="border-b-4 border-[#008add]">
             <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-              <span className="font-bold text-sectionTitle">Recommended</span>
+              <span className="font-bold text-primaryblack">Recommended</span>
             </h5>
           </div>
           {
@@ -31,7 +31,6 @@ export default function Recommended() {
               <ShopNowButton route={"recommended-product"} />
             </div>
           }
-
         </section>
 
         {/* products section*/}

@@ -8,7 +8,7 @@ export default function TwoAdsBanner() {
     const { data: imageDataRight } = useGetData("banners?slug=2")
     return (
         <Container>
-            <div className='flex flex-col lg:flex-row justify-center items-center gap-5 my-5'>
+            <div className='flex flex-col lg:flex-row justify-center items-center gap-5 py-5'>
                 {imageDataLeft?.data?.[0]?.image && (
                     <Link
                         href={imageDataLeft?.data?.[0]?.link || "#"}

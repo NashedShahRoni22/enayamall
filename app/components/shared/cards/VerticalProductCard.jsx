@@ -115,7 +115,7 @@ export default function VerticalProductCard({ p }) {
   return (
     <div className={`group relative ${lang === "ar" ? "rtl" : "ltr"}`}>
       <Link href={`/shop/${p?.slug}`} className="block">
-        <div className="bg-white rounded-xl overflow-hidden border border-creamline group-hover:border-gray-200">
+        <div className="bg-white rounded-xl overflow-hidden border border-[#ddd] group-hover:border-gray-200">
           {/* Product Image Container with Enhanced Hover Effects */}
           <div className="relative overflow-hidden aspect-square">
             <Image
@@ -137,7 +137,7 @@ export default function VerticalProductCard({ p }) {
             >
               {/* Discount Badge */}
               {p?.discount && (
-                <div className="bg-brand-pink text-white px-3 py-1 rounded text-xs font-semibold shadow-lg animate-pulse">
+                <div className="bg-brand-pink text-white px-3 py-1 rounded-lg text-xs font-semibold">
                   {lang === "ar"
                     ? `${discountPercentage}% ${t.off}`
                     : `${discountPercentage}% ${t.off}`}
@@ -228,7 +228,7 @@ export default function VerticalProductCard({ p }) {
                       {p?.discount?.discount_price ?? "0.00"}
                     </span>
                     <span
-                      className={`text-sm text-gray-500 line-through flex items-center ${
+                      className={`flex items-center text-ash line-through font-[300] decoration-red-500 ${
                         lang === "ar" ? "justify-end" : "justify-start"
                       }`}
                     >

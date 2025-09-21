@@ -20,11 +20,11 @@ export default function ProductOfTheDay() {
     <section className="py-[30px]">
       <Container>
         <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-          <span className="font-bold text-sectionTitle">Product Of The Week</span>
+          <span className="font-bold text-sectionTitle">Products Of The Week</span>
         </h5>
 
         {/* banner and products here  */}
-        <div className="flex flex-col md:flex-row gap-4 mt-10">
+        <div className="flex flex-col md:flex-row gap-4 mt-5">
           {/* banner image section*/}
           <div className="md:w-1/2">
             <Link

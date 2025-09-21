@@ -24,7 +24,7 @@ export default function page() {
   return (
     <main>
       <Slider />
-      <Features />
+      {/* <Features /> */}
       <Category />
       <TwoAdsBanner />
       {/* <FlashDeals/> */}

@@ -22,12 +22,12 @@ export default function Category() {
   return (
     <Container>
       <div className="pt-8 pb-1">
-        <h5 className="text-[22px] 2xl:text-[30px] text-center mb-4">
+        {/* <h5 className="text-[22px] 2xl:text-[30px] text-center mb-4 text-[#38444f]">
           <span className="font-bold text-sectionTitle">
             {lang === 'en' ? 'Most Popular' : 'الأكثر شهرة'}
           </span>{' '}
           {lang === 'en' ? 'Categories' : 'التصنيفات'}
-        </h5>
+        </h5> */}
 
         {/* Swiper for categories */}
 
