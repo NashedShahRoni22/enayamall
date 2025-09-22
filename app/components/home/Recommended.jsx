@@ -5,9 +5,11 @@ import VerticalCardLoadingScreen from "../loaders/VerticalCardLoadingScreen";
 import ProductsSlider from "../sliders/ProductsSlider";
 import { usePathname } from "next/navigation";
 import VerticalProductCard from "../shared/cards/VerticalProductCard";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function Recommended() {
   const location = usePathname();
+  const { lang } = useAppContext();
   // fetch products
   const { data, isLoading, error } = useGetData(`popular-choices`);
   if (isLoading) return <VerticalCardLoadingScreen value={5} lgColumns={5} />;
@@ -18,11 +20,11 @@ export default function Recommended() {
     <section className="py-[30px]">
       <Container>
         {/* starting section  */}
-        <section className="flex flex-row justify-between items-center border-b border-[#008add]">
+        <section className={`flex justify-between items-center border-b border-[#008add] ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
           {/* caption here  */}
           <div className="border-b-4 border-[#008add]">
             <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-              <span className="font-bold text-primaryblack">Recommended</span>
+              <span className="font-bold text-primaryblack">{lang === 'en' ? 'Recommended' : 'مُستَحسَن'}</span>
             </h5>
           </div>
           {

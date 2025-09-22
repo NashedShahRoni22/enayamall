@@ -6,8 +6,10 @@ import ProductsSlider from "../sliders/ProductsSlider";
 import Image from "next/image";
 import TwoProductSlider from "../sliders/TwoProductSlider";
 import Link from "next/link";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function ProductOfTheDay() {
+  const { lang } = useAppContext();
   //fetch banner
   const { data: bannerImageData } = useGetData(`banners?slug=product-of-the-day`);
   const bannerImage = (bannerImageData?.data[0]);
@@ -19,12 +21,12 @@ export default function ProductOfTheDay() {
   return (
     <section className="py-[30px]">
       <Container>
-        <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
-          <span className="font-bold text-sectionTitle">Products Of The Week</span>
+        <h5 className={`flex text-[22px] 2xl:text-[30px] text-primaryblack text-center ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
+          <span className="font-bold text-sectionTitle">{lang === 'ar' ? 'منتجات الاسبوع' : 'Products Of The Week'}</span>
         </h5>
 
         {/* banner and products here  */}
-        <div className="flex flex-col md:flex-row gap-4 mt-5">
+        <div className={`flex flex-col gap-4 mt-5 ${lang === 'ar' ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
           {/* banner image section*/}
           <div className="md:w-1/2">
             <Link

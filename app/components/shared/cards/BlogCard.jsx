@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
 import Link from 'next/link';
+import { useAppContext } from '@/app/context/AppContext';
 
 export default function BlogCard({ blog }) {
+  const { lang } = useAppContext();
   return (
-    <Link href={`/blog/${blog?.slug}`} className="bg-white border border-gray-200 rounded-xl flex flex-col sm:flex-row overflow-hidden">
+    <Link href={`/blog/${blog?.slug}`} className={`flex flex-col border border-gray-200 rounded-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ${lang === 'ar' ? 'sm:flex-row-reverse' : 'sm:flex-row'}`}>
       {/* Image Section */}
       <div className="relative w-full sm:w-1/3 aspect-video sm:aspect-auto">
         <Image

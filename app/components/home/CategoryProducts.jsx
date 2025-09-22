@@ -77,12 +77,12 @@ export default function CategoryProducts({ categoryName, rows = 10 }) {
       {products?.length > 0 && (
         <Container>
           {location === "/" && (
-            <section className="flex flex-row justify-between items-center border-b border-[#008add]">
+            <section className={`flex justify-between items-center border-b border-[#008add] ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
               {/* caption here  */}
               <div className="border-b-4 border-[#008add]">
                 <h5 className="text-[22px] 2xl:text-[30px] text-primaryblack text-center lg:text-left">
                   <span className="font-bold text-primaryblack">
-                    {category?.name ||
+                    {(lang === 'en' ? category?.name : category?.ar_name) ||
                       (lang === "en" ? "Products" : "المنتجات")
                     }
                   </span>

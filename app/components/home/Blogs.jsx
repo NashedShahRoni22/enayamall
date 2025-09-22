@@ -5,9 +5,11 @@ import BlogCard from "../shared/cards/BlogCard";
 import BlogImageCard from "../shared/cards/BlogImageCard";
 import Container from "../shared/Container";
 import ShopNowButton from "../shared/ShopNowButton";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function Blogs() {
   const { data, isLoading } = useGetData("blogs");
+  const { lang } = useAppContext();
 
   if (isLoading) return <ScreenLoader />;
 
@@ -22,14 +24,13 @@ export default function Blogs() {
   return (
     <section className="py-[20px] lg:py-[40px]">
       <Container>
-        <div className="flex justify-between items-center">
-            <h2 className="text-3xl font-bold text-primary mb-2">What's new Today</h2>
-            {/* <Link href={"/blog"} className="text-sm">See more options</Link>  */}
+        <div className={`flex justify-between items-center ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
+            <h2 className="text-3xl font-bold text-primary mb-2">{lang === 'ar' ? 'مدونات' : 'Blogs'}</h2>            {/* <Link href={"/blog"} className="text-sm">See more options</Link>  */}
             <ShopNowButton route={"/blog"}/>
         </div>
 
         {/* Blogs Split Layout */}
-        <div className="mt-[20px] flex flex-col gap-6 md:flex-row">
+        <div className={`flex flex-col gap-6 mt-6 ${lang === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
           {/* Left side - Featured Blog */}
           <div className="md:w-1/2 lg:w-1/3">
             <BlogImageCard blog={blogs[0]} />
