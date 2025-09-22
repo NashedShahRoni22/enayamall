@@ -26,7 +26,7 @@ export default function ComboProductDetails({ token, slug, product, setReviewabl
 
     // share product 
     const shareCurrentProduct = () => {
-        const productUrl = `https://laminax.com.bd/combo/${slug}`;
+        const productUrl = `https://enayamall.com/combo/${slug}`;
         handleShare(productUrl, 'Check out this product');
     };
 

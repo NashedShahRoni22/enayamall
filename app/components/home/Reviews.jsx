@@ -32,7 +32,7 @@ export default function ClientReviewSwiper() {
   };
 
   return (
-    <section className="py-10 bg-brand-pink/20">
+    <section className="py-10 bg-[#efefef] mt-10">
       <Container>
             {/* Header */}
             {/* <div className="text-center mb-12">

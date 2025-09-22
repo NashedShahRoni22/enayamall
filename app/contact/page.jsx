@@ -7,10 +7,10 @@ import Link from "next/link";
 export default function Page() {
   const socialLinks = [
     { name: "Facebook", icon: <FaFacebookF />, link: "https://www.facebook.com/enayamall" },
-    // { name: "Tiktok ", icon: <FaTiktok />, link: "https://www.tiktok.com/@laminaxofficial" },
+    // { name: "Tiktok ", icon: <FaTiktok />, link: "https://www.tiktok.com/@enayamallofficial" },
     { name: "Instagram", icon: <FaInstagram />, link: "https://www.instagram.com/enayamall" },
-    // { name: "LinkedIn", icon: <FaLinkedinIn />, link: "https://www.linkedin.com/company/laminaxlimited" },
-    // { name: "YouTube", icon: <FaYoutube />, link: "https://www.youtube.com/@laminaxofficial" },
+    // { name: "LinkedIn", icon: <FaLinkedinIn />, link: "https://www.linkedin.com/company/enayamalllimited" },
+    // { name: "YouTube", icon: <FaYoutube />, link: "https://www.youtube.com/@enayamallofficial" },
     { name: "Twitter", icon: <FaTwitter />, link: "https://twitter.com/enayamall" },
   ];
 
@@ -32,12 +32,12 @@ export default function Page() {
             </div>
 
             <div className='mt-[20px] sm:mt-[40px]'>
-              <h5 className='text-[20px] lg:text-[26px] text-primaryblack'>Email</h5>
+              {/* <h5 className='text-[20px] lg:text-[26px] text-primaryblack'>Email</h5>
               <p className='mt-[8px] sm:mt-[16px] text-ash text-[14px] lg:text-[18px]'>
                 <Link className="hover:text-primary" href="mailto:info@enayamall.com">info@enayamall.com</Link>
-              </p>
+              </p> */}
               {/* <p className='mt-[8px] sm:mt-[16px] text-ash text-[14px] lg:text-[18px]'>
-                <span className='text-primaryblack'>Office:</span> <Link className="hover:text-primary" href="mailto:hello@laminax.com.bd">hello@laminax.com.bd</Link>
+                <span className='text-primaryblack'>Office:</span> <Link className="hover:text-primary" href="mailto:hello@enayamall.com">hello@enayamall.com</Link>
               </p> */}
             </div>
 

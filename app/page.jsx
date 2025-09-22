@@ -27,22 +27,22 @@ export default function page() {
       {/* <Features /> */}
       <Category />
       <TwoAdsBanner />
-      {/* <FlashDeals/> */}
-      <Recommended />
-      <BannerWidth1/>
       <ProductOfTheDay />
+      {/* <FlashDeals/> */}
+      {/* <Recommended /> */}
+      <CategoryProducts categoryName="Body Care" rows={8} />
+      <CategoryProducts categoryName="Hair Care" rows={8} />
       <BannerWidth2 />
+      <CategoryProducts categoryName="Baby Care" rows={8} />
+      <CategoryProducts categoryName="Oral Care" rows={8} />
       {/* category components here  */}
       {/* {
         categories?.map((category, index) => <CategoryProducts key={index} category={category} />)
-      } */}
-      <CategoryProducts categoryName="Body Care" rows={8} />
-      <CategoryProducts categoryName="Baby Care" rows={8} />
+        } */}
       <BannerWidth3 />
-      <CategoryProducts categoryName="Hair Care" rows={8} />
-      <CategoryProducts categoryName="Oral Care" rows={8} />
-      <BannerWidth4 />
       <Brands />
+      <BannerWidth1/>
+      {/* <BannerWidth4 /> */}
       <Reviews />
       {/* <LatestProduct/> */}
       <Blogs />

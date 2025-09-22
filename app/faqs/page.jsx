@@ -35,7 +35,7 @@ export default function page() {
             <section className="mx-5 lg:max-w-4xl lg:mx-auto">
                 <div className="pt-[30px] lg:pt-[60px] pb-[50px] lg:pb-[120px]">
                     <p className="text-[16px] text-ash">
-                        Welcome to Laminax! We know that shopping for skincare—especially international brands—can bring up a lot of questions. Whether you're wondering about product authenticity, delivery times, payment options, or which product suits your skin type best, we're here to help. Below, you’ll find answers to the most common questions our Bangladeshi customers ask. We've included both English and Bengali to make it easier for everyone.
+                        Welcome to Enayamall! We know that shopping for skincare—especially international brands—can bring up a lot of questions. Whether you're wondering about product authenticity, delivery times, payment options, or which product suits your skin type best, we're here to help. Below, you’ll find answers to the most common questions our Bangladeshi customers ask. We've included both English and Bengali to make it easier for everyone.
                     </p>
                     <div className="mt-[50px]">
                         {faqs?.map((faq, i) => (

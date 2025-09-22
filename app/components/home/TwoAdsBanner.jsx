@@ -20,8 +20,8 @@ export default function TwoAdsBanner() {
                         <Image
                             src={lang === "en" ? imageDataLeft.data[0].image : imageDataLeft.data[0].ar_image}
                             alt="Banner"
-                            width={600}
-                            height={200}
+                            width={1200}
+                            height={400}
                             className="rounded-md"
                         />
                     </Link>
@@ -37,9 +37,10 @@ export default function TwoAdsBanner() {
                         <Image
                             src={lang === "en" ? imageDataRight.data[0].image : imageDataRight.data[0].ar_image}
                             alt="Banner"
-                            width={600}
-                            height={200}
+                            width={1200}
+                            height={400}
                             className="rounded-md"
+                            quality={100}
                         />
                     </Link>
                     </>

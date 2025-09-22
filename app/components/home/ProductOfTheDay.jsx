@@ -22,23 +22,23 @@ export default function ProductOfTheDay() {
     <section className="py-[30px]">
       <Container>
         <h5 className={`flex text-[22px] 2xl:text-[30px] text-primaryblack text-center ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
-          <span className="font-bold text-sectionTitle">{lang === 'ar' ? 'منتجات الاسبوع' : 'Products Of The Week'}</span>
+          <span className="font-bold text-sectionTitle">{lang === 'ar' ? '' : 'Special Deals'}</span>
         </h5>
 
         {/* banner and products here  */}
         <div className={`flex flex-col gap-4 mt-5 ${lang === 'ar' ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
           {/* banner image section*/}
-          <div className="md:w-1/2">
+          <div className="md:w-1/3">
             <Link
               href={bannerImage?.link || "#"}
               target={bannerImage?.link ? "_blank" : "_self"}
               rel="noopener noreferrer"
             >
-              <Image src={bannerImage?.image} height={500} width={500} alt={bannerImage?.title} className="h-full w-full rounded-xl" />
+              <Image src={bannerImage?.image} height={397} width={409} alt={bannerImage?.title} className="h-full w-full rounded-xl" />
             </Link>
           </div>
           {/* products section*/}
-          <div className="md:w-1/2">
+          <div className="md:w-2/3">
             <TwoProductSlider products={products} />
           </div>
         </div>

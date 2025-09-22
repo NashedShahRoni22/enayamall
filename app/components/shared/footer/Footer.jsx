@@ -13,10 +13,15 @@ import {
 import Container from "../Container";
 import Link from "next/link";
 import { useAppContext } from "@/app/context/AppContext";
+import { useState } from "react";
 
 export default function Footer() {
   // Get language and categories from context
   const { lang, categories = [] } = useAppContext();
+
+  // const [showEmail, setShowEmail] = useState(false);
+
+  // const email = "info@enayamall.com";
 
   // Translation object
   const translations = {
@@ -290,15 +295,21 @@ export default function Footer() {
                     P.O.Box 27042, Dubai United Arab Emirates
                   </span>
                 </p>
-                <p className="text-sm text-gray-600">
+                {/* <p className="text-sm text-gray-600">
                   <strong>{t.mail}</strong>{" "}
-                  <Link
-                    href="mailto:info@enayamall.com"
-                    className="text-primary"
-                  >
-                    info@enayamall.com
-                  </Link>
-                </p>
+                  {showEmail ? (
+                    <Link href={`mailto:${email}`} className="text-primary">
+                      {email}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => setShowEmail(true)}
+                      className="text-primary underline"
+                    >
+                      View Email
+                    </button>
+                  )}
+                </p> */}
               </div>
 
               {/* Social Media */}
