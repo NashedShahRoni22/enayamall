@@ -4,23 +4,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import VerticalProductCard from "../shared/cards/VerticalProductCard";
 import { Autoplay } from "swiper/modules";
 
-export default function TwoProductSlider({ products }) {
+export default function TwoProductSlider({ products = [] }) {
   const swiperRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
   return (
     <section className="relative">
       <Swiper
         ref={swiperRef}
         spaceBetween={16}
         slidesPerView={2}
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: false,
-        }}
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
         modules={[Autoplay]}
         onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex)}
       >
-        {products?.map((p, index) => (
+        {products.map((p, index) => (
           <SwiperSlide
             key={index}
             onMouseEnter={() => swiperRef.current?.swiper?.autoplay?.stop()}
@@ -31,7 +29,6 @@ export default function TwoProductSlider({ products }) {
         ))}
       </Swiper>
 
-      {/* Custom Pagination Dots */}
       <div className="flex justify-center gap-2 mt-4">
         {Array.from({ length: Math.ceil(products.length / 2) }).map((_, index) => (
           <button
@@ -46,3 +43,4 @@ export default function TwoProductSlider({ products }) {
     </section>
   );
 }
+

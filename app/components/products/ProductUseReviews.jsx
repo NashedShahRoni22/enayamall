@@ -200,8 +200,8 @@ export default function ProductUseReviews({
                 </div> */}
       </div>
 
-      <p className="mt-[40px]">
-          <span className="text-primaryblack font-[550]">{lang === 'en' ? 'Tags:' : 'العلامات:'}</span>{" "}
+      <p className={`mt-[40px] flex ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
+          <span className="text-primaryblack font-[550]">{lang === 'en' ? 'Tags:' : ':العلامات'}</span>{" "}
           {product?.tags?.map((pt, index, array) => (
               <Link href={`/tag/${pt}`} className="capitalize hover:text-white mr-1 last:mr-0 hover:bg-primary inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-primary inset-ring inset-ring-primary" key={index}>
                   {lang === 'en' ? pt : (product?.ar_tags && product?.ar_tags[index]) || pt}

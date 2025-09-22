@@ -21,12 +21,14 @@ export default function TwoAdsBanner() {
                             src={lang === "en" ? imageDataLeft.data[0].image : imageDataLeft.data[0].ar_image}
                             alt="Banner"
                             width={600}
-                            height={150}
+                            height={200}
                             className="rounded-md"
                         />
                     </Link>
                     )}
                 {imageDataRight?.data?.[0]?.image && (
+                    <>
+                    {console.log(imageDataRight.data[0])}
                     <Link
                         href={lang === "ar" ? ` - ${imageDataRight?.data?.[0]?.link}` : ` - ${imageDataRight?.data?.[0]?.ar_link}`}
                         target={imageDataLeft?.data?.[0]?.link ? "_blank" : "_self"}
@@ -36,10 +38,11 @@ export default function TwoAdsBanner() {
                             src={lang === "en" ? imageDataRight.data[0].image : imageDataRight.data[0].ar_image}
                             alt="Banner"
                             width={600}
-                            height={150}
+                            height={200}
                             className="rounded-md"
                         />
                     </Link>
+                    </>
                     )}
             </div>
         </Container>

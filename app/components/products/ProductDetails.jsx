@@ -43,7 +43,7 @@ export default function ProductDetails({
       outOfStock: lang === "en" ? "Out of Stock" : "نفد المخزون",
       buyItNow: lang === "en" ? "Buy it Now" : "اشتري الآن",
       askAQuestion: lang === "en" ? "Ask a Question" : "اطرح سؤالاً",
-      socialShare: lang === "en" ? "Social Share" : "مشاركة اجتماعية",
+      socialShare: lang === "en" ? "Social Share:" : ":مشاركة اجتماعية",
       callForOrder: lang === "en" ? "Call for Order" : "اتصل للطلب",
       productCode: lang === "en" ? "SKU:" : "رمز المنتج:",
       availableStock: lang === "en" ? "Available Stock:" : "المخزون المتاح:",
@@ -188,9 +188,17 @@ export default function ProductDetails({
             {lang === "en" ? product?.name : product?.ar_name || product?.name}
           </h1>
           {/* ratings */}
-          {ratingCount > 0 && (
-            <div className="flex gap-[20px] align-center mt-2">
-              <div className="flex gap-[4px] items-center">
+          {ratingCount == 0 && (
+            <div
+              className={`flex gap-[20px] align-center mt-2 flex-row ${
+                lang === "ar" ? "flex-row-reverse" : ""
+              }`}
+            >
+              <div
+                className={`flex gap-[4px] items-center ${
+                  lang === "ar" ? "flex-row-reverse" : "flex-row"
+                }`}
+              >
                 {renderStars()}
                 <p className="text-[14px] 2xl:text-[16px] font-[550] text-primaryblack ml-2">
                   ( {product?.ratings?.rating || 0} )
@@ -228,7 +236,7 @@ export default function ProductDetails({
           freeShippingAmount != null &&
           (product.variant.discount?.discount_price || product.variant.price) >
             freeShippingAmount)) && (
-        <div className="flex justify-between items-center bg-[#f7f9ff] p-4 rounded-[10px] mb-5">
+        <div className={`flex justify-between items-center bg-[#f7f9ff] p-4 rounded-[10px] mb-5 ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
           {/* Express Delivery */}
           {product?.is_express && (
             <div
@@ -271,7 +279,7 @@ export default function ProductDetails({
       )}
 
       {/* pricing */}
-      <div className="text-[20px] 2xl:text-[26px] text-secondary flex items-center gap-[10px] mb-[20px]">
+      <div className={`text-[20px] 2xl:text-[26px] text-secondary flex items-center gap-[10px] mb-[20px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
         {(() => {
           if (!product?.variant) return null;
 
@@ -285,7 +293,7 @@ export default function ProductDetails({
                     <span className="dirham-symbol mr-1">ê</span>{" "}
                     {product?.variant?.discount?.discount_price}
                   </p>
-                  <p className="flex items-center text-ash line-through font-[300] decoration-red-500">
+                  <p className={`flex items-center text-ash line-through font-[300] decoration-red-500 ${lang === "ar" ? "justify-end" : "justify-start"}`}>
                     {product?.variant?.price}
                   </p>
                 </div>
@@ -303,7 +311,7 @@ export default function ProductDetails({
       </div>
 
       {/* user actions */}
-      <div className="flex gap-[10px] 2xl:gap-[20px] items-center">
+      <div className={`flex gap-[10px] 2xl:gap-[20px] items-center ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
         {/* quantity selector */}
         <div className="flex items-center gap-[10px] rounded-[10px] text-[18px] 2xl:text-[22px] justify-center bg-white border border-creamline h-[50px]">
           <button
@@ -351,12 +359,12 @@ export default function ProductDetails({
       </div>
 
       {/* ask que, share or call from here  */}
-      <div className="mt-[30px] flex flex-col 2xl:flex-row gap-[20px] 2xl:gap-[40px]">
+      <div className={`mt-[30px] flex flex-col gap-[20px] 2xl:gap-[40px] justify-between items-center ${lang === "ar" ? "2xl:flex-row-reverse" : "2xl:flex-row"}`}>
         <Link
           href="https://wa.me/+971506065857"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex gap-[12px] items-center text-white bg-brand-pink px-4 py-2 rounded-[10px] w-fit animate-pulse"
+          className={`flex gap-[12px] items-center text-white bg-brand-pink px-4 py-2 rounded-[10px] w-fit animate-pulse ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}
         >
           <MessageCircleQuestion className="text-[24px]" />
           <p className="text-[16px] 2xl:text-[18px]">
@@ -364,11 +372,11 @@ export default function ProductDetails({
           </p>
         </Link>
 
-        <div className="flex gap-[12px] items-center text-ash">
+        <div className={`flex gap-[12px] items-center text-ash ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
           <p className="text-[16px] 2xl:text-[18px]">
-            {getText("socialShare")}:
+            {getText("socialShare")}
           </p>
-          <div className="flex gap-3 items-center">
+          <div className={`flex gap-3 items-center ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
             <Link
               href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                 shareUrl
@@ -429,7 +437,7 @@ export default function ProductDetails({
       </div>
 
       {/* product other informations  */}
-      <div className="mt-[30px] text-[16px] 2xl:text-[18px]">
+      <div className={`mt-[30px] text-[16px] 2xl:text-[18px] flex ${lang === "ar" ? "justify-end" : "justify-start"}`}>
         {product?.sku && (
           <p>
             <span className="text-primaryblack font-[550]">
