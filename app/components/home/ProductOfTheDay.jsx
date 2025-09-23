@@ -14,7 +14,7 @@ export default function ProductOfTheDay() {
   const { data: bannerImageData } = useGetData(`banners?slug=product-of-the-day`);
   const bannerImage = (bannerImageData?.data[0]);
   // fetch products
-  const { data: productData, isLoading, error } = useGetData(`product-of-the-day`);
+  const { data: productData, isLoading, error } = useGetData(`products?is_discounted=1&limit=10`);
   if (isLoading) return <VerticalCardLoadingScreen value={5} lgColumns={5} />;
   if (error) return <div>Error: {error.message}</div>;
   const products = productData?.data;
