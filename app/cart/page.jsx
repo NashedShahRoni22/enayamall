@@ -27,8 +27,8 @@ export default function CartPage() {
   const removeCoupon = useRemoveCoupon();
 
   // Helper function to safely get total as number
+  const total = token ? totalDB : totalDBGuest;
   const getCurrentTotal = () => {
-    const total = token ? totalDB : totalDBGuest;
     if (!total) return 0;
     return Number(total.toString().replace(/,/g, ""));
   };
@@ -79,26 +79,60 @@ export default function CartPage() {
     }
 
     toast.promise(
-      applyCoupon.mutateAsync({
-        couponCode: couponInput,
-        token: token,
-        guestToken: guestToken
-      }),
+      applyCoupon
+        .mutateAsync({
+          couponCode: couponInput,
+          token: token,
+          guestToken: guestToken,
+        })
+        .then((data) => {
+          // Only check if API call succeeded
+          if (data?.status === "success") {
+            const discountAmount = data?.data?.discount_amount || 0;
+            const couponTypeId = data?.data?.coupon_type_id;
+
+            if (discountAmount === 0) {
+              // Call remove coupon automatically
+              handleRemoveCoupon?.();
+
+              // Show specific message based on coupon type
+              if (couponTypeId === 2) {
+                throw new Error(
+                  "Coupon valid product is not available in cart. Try a new coupon or add selected product."
+                );
+              }
+              if (couponTypeId === 3) {
+                throw new Error(
+                  "Coupon valid brand is not available in cart. Try a new coupon or add selected brand product."
+                );
+              }
+              if (couponTypeId === 4) {
+                throw new Error(
+                  "Coupon valid category is not available in cart. Try a new coupon or add selected category product."
+                );
+              }
+            }
+
+            // Valid coupon with discount
+            setAppliedCoupon(true);
+            setCouponData(data?.data);
+            setCouponInput("");
+            return data;
+          } else {
+            // API returned failure
+            throw new Error(data?.message || "Failed to apply coupon");
+          }
+        }),
       {
-        loading: 'Applying coupon...',
-        success: (data) => {
-          setAppliedCoupon(true);
-          setCouponData(data?.data);
-          setCouponInput('');
-          return 'Coupon applied successfully!';
-        },
-        error: (err) => {
-          console.error('Coupon application failed:', err);
-          return err.message || 'Failed to apply coupon';
-        }
+        loading: "Applying coupon...",
+        success: () => "Coupon applied successfully!",
+        error: (err) => err.message || "Failed to apply coupon",
       }
     );
   };
+
+
+
 
   // Function to remove coupon application
   const handleRemoveCoupon = async (couponInput) => {
@@ -129,7 +163,7 @@ export default function CartPage() {
     if (guestToken) {
       checkCouponApplied(guestToken);
     }
-  }, [guestToken]);
+  }, [guestToken, addToCartDB, addToCartDBGuest, removeFromCartDB, removeFromCartDBGuest]);
 
   // Calculate discount amount
   const getDiscountAmount = () => {
@@ -151,6 +185,14 @@ export default function CartPage() {
     const discountAmount = getDiscountAmount();
     return Math.max(0, (currentTotal - discountAmount)).toFixed(2);
   };
+
+
+  useEffect(() => {
+    if (couponData?.discount_amount === 0) {
+      handleRemoveCoupon?.(couponData.coupon_code);
+    }
+  }, [couponData]);
+
 
   return (
     <section>
@@ -210,40 +252,56 @@ export default function CartPage() {
                     <span className="font-[400]">
                       {lang === 'en' ? 'Item subtotal' : 'المجموع الفرعي'}
                     </span>
-                    <span><span className="dirham-symbol text-[12px] md:text-[16px]">ê</span> {getFormattedTotal()}</span>
+                    <span><span className="dirham-symbol text-[12px] md:text-[16px]">ê</span> {couponData !== null ? couponData?.sub_total : total}</span>
                   </p>
 
                   {appliedCoupon && couponData && (
                     <div className="text-[12px] md:text-[16px] text-primaryblack flex justify-between">
                       <div className="flex flex-col gap-1 items-start">
-                        <div className={`flex flex-col 2xl:flex-row 2xl:items-center gap-2 ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
+                        <div
+                          className={`flex flex-col 2xl:flex-row 2xl:items-center gap-2 ${
+                            lang === "en" ? "" : "flex-row-reverse"
+                          }`}
+                        >
                           <p className="font-[400]">
-                            {lang === 'en' ? 'Discount' : 'الخصم'}
+                            {lang === "en" ? "Discount" : "الخصم"}
                           </p>
                           <p className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20">
-                            {couponData.coupon_code}
-                            {" "}
-                            {couponData.discount_type === 'fixed' ? (
-                              <>( <span className="dirham-symbol mr-[2px]">ê</span> {couponData.discount})</>
+                            {couponData.coupon_code}{" "}
+                            {couponData.discount_type === "fixed" ? (
+                              <>
+                                ( <span className="dirham-symbol mr-[2px]">ê</span>{" "}
+                                {couponData?.discount})
+                              </>
                             ) : (
-                              <>( {couponData.discount} %)</>
+                              <>({couponData.discount} %)</>
                             )}
                           </p>
                         </div>
-                        <button onClick={()=>handleRemoveCoupon(couponData.coupon_code)} className="text-[12px] text-secondary cursor-pointer">Remove coupon</button>
+
+                        <button
+                          onClick={() => handleRemoveCoupon(couponData.coupon_code)}
+                          className="text-[12px] text-secondary cursor-pointer"
+                        >
+                          Remove coupon
+                        </button>
                       </div>
 
                       <div className="flex flex-col gap-[24px]">
-                        <p><span className="dirham-symbol">ê</span> {getDiscountAmount()}</p>
+                        <p>
+                          <span className="dirham-symbol">ê</span>{" "}
+                          {couponData?.discount_amount}
+                        </p>
                       </div>
                     </div>
                   )}
+
 
                   <p className={`text-[16px] md:text-[18px] py-[10px] font-[550] text-primaryblack flex justify-between items-center ${lang === 'en' ? '' : 'flex-row-reverse'}`}>
                     <span>{lang === 'en' ? 'Total' : 'الإجمالي'}</span>
                     <span className="flex items-center gap-1">
                       <span className="dirham-symbol">ê</span>
-                      {couponData ? getFinalTotal() : getCurrentTotal()}
+                      {couponData != null ? couponData?.total : total}
                     </span>
                   </p>
 

@@ -131,7 +131,13 @@ export default function page() {
     error,
   } = useGetData("products", queryParams);
   const products = productData?.data;
-  const name = productData?.meta?.name || (categories?.find(cat => cat.id === parentCategorytIds[0])?.name) || '';
+  const name = lang === 'en' 
+  ? (productData?.meta?.name 
+      || categories?.find(cat => cat.id === parentCategorytIds[0])?.name 
+      || '')
+  : (productData?.meta?.ar_name 
+      || categories?.find(cat => cat.id === parentCategorytIds[0])?.ar_name 
+      || '');
 
   // Track filter changes and reset when needed
   const currentFilters = JSON.stringify({
@@ -196,7 +202,14 @@ export default function page() {
       {/* filters & products here  */}
       <Container>
         {name && (
-          <h3 className="text-[20px] mt-[30px] font-semibold text-primaryblack">Category: {name}</h3>
+          <div className={`mt-[30px] flex items-center gap-2 ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
+            <span className="text-[20px] font-semibold text-primaryblack">
+            {lang === "en" ? "Category:" : ":الفئة"}
+            </span>
+            <span className="text-[20px] font-semibold text-primaryblack">
+              {" "}{name}
+            </span>
+          </div>
         )}
         <div className="pb-[20px]">
           <div className={`lg:flex lg:gap-[24px] mt-[30px] ${lang === "ar" ? "flex-row-reverse" : "flex-row"}`}>
@@ -370,10 +383,10 @@ export default function page() {
                     {isLoadingMore ? (
                       <div className="flex items-center gap-2">
                         <FaSpinner className="animate-spin" />
-                        <span>Loading more...</span>
+                        <span>{lang === 'en' ? 'Loading ...' : 'تحميل ...'}</span>
                       </div>
                     ) : (
-                      "Load more items"
+                      <span>{lang === 'en' ? 'Load More' : 'تحميل المزيد'}</span>
                     )}
                   </button>
                 </div>

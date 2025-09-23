@@ -3,12 +3,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'enayamall.fahimsultan.com',
+        hostname: 'admin.enayamall.com',
         port: '',
         pathname: '/**',
       },
     ],
-    domains: ["enayamall.fahimsultan.com"], // allow your image host
+    domains: ["admin.enayamall.com"], // allow your image host
   },
 };
 

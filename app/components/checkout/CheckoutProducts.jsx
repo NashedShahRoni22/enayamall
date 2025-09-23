@@ -240,7 +240,7 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
 
                 <div className='flex justify-between items-center'>
                     <p className='text-[14px] sm:text-[16px] font-semibold w-[70%]'>{t.subtotal}</p>
-                    <p className='text-[14px] sm:text-[16px] font-semibold w-[30%] text-right'><span className="dirham-symbol">ê</span> {(token ? totalDB : total)}</p>
+                    <p className='text-[14px] sm:text-[16px] font-semibold w-[30%] text-right'><span className="dirham-symbol">ê</span> {couponData != null ? couponData?.total : totalDB}</p>
                 </div>
             </div>
 
@@ -291,14 +291,15 @@ export default function CheckoutProducts({ addressId, method, shippingCost, acce
                 <div className='flex justify-between'>
                     <p className='text-[18px] sm:text-[20px] font-[650]'>{t.amountPayable}</p>
                     <p className='text-[18px] sm:text-[20px] font-[650]'>
-                        <span className="dirham-symbol">ê</span> {Math.max(
+                        <span className="dirham-symbol">ê</span>{" "}
+                            {Math.max(
                             0,
-                            (token ? totalDB : total) - discountAmount + (
-                                freeShippingAmount != null && (token ? totalDB : total) > freeShippingAmount
-                                    ? 0
-                                    : (shippingCost || 0)
-                            )
-                        )}
+                            (couponData != null ? couponData.total : totalDB) +
+                                (freeShippingAmount != null &&
+                                (token ? totalDB : total) > freeShippingAmount
+                                ? 0
+                                : (shippingCost || 0))
+                            )}
                     </p>
                 </div>
 

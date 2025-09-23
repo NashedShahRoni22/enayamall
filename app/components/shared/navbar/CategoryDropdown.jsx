@@ -43,6 +43,25 @@ export default function CategoryDropdown({
     };
   }, [onClose]);
 
+  // Get category name based on language
+  const getCategoryName = (category) => {
+    if (isRTL) {
+      return category.ar_name || category.name || "";
+    }
+    return category.name || "";
+  };
+
+  // Sort categories alphabetically
+  const sortCategories = (cats) => {
+    return [...cats].sort((a, b) =>
+      getCategoryName(a).localeCompare(
+        getCategoryName(b),
+        lang === "ar" ? "ar" : "en",
+        { sensitivity: "base" }
+      )
+    );
+  };
+
   if (!categories || categories.length === 0) {
     return (
       <div
@@ -80,14 +99,6 @@ export default function CategoryDropdown({
     }
   };
 
-  // Get category name based on language
-  const getCategoryName = (category) => {
-    if (isRTL) {
-      return category.ar_name || category.name || "";
-    }
-    return category.name || "";
-  };
-
   return (
     <div
       className={`bg-white shadow-lg rounded-lg ${
@@ -97,10 +108,8 @@ export default function CategoryDropdown({
       dir={isRTL ? "rtl" : "ltr"}
     >
       {/* Main category list */}
-      <div
-        className={`${isMobile ? "py-2 max-h-[400px] overflow-y-auto" : ""}`}
-      >
-        {categories.map((category) => {
+      <div className={`${isMobile ? "py-2 max-h-[400px] overflow-y-auto" : ""}`}>
+        {sortCategories(categories).map((category) => {
           const hasChildren = category.child && category.child.length > 0;
           const isExpanded = expandedCategory === category.id;
           const isHovered = hoveredCategory === category.id;
@@ -108,7 +117,7 @@ export default function CategoryDropdown({
           return (
             <div key={category.id} className="relative last:pb-4">
               <div
-                className={`w-full min-w-[250px] rounded-lg flex items-center justify-between px-4 pt-4  cursor-pointer ${
+                className={`w-full min-w-[250px] rounded-lg flex items-center justify-between px-4 pt-4 cursor-pointer ${
                   isMobile ? "border-b border-gray-100 last:border-b-0" : ""
                 }`}
                 onClick={() => handleCategoryClick(category.id, hasChildren)}
@@ -143,13 +152,9 @@ export default function CategoryDropdown({
                     ) : (
                       <>
                         {isRTL ? (
-                          <ChevronLeft
-                            className={`w-4 h-4 text-gray-400 mr-2`}
-                          />
+                          <ChevronLeft className="w-4 h-4 text-gray-400 mr-2" />
                         ) : (
-                          <ChevronRight
-                            className={`w-4 h-4 text-gray-400 ml-2`}
-                          />
+                          <ChevronRight className="w-4 h-4 text-gray-400 ml-2" />
                         )}
                       </>
                     )}
@@ -164,7 +169,7 @@ export default function CategoryDropdown({
                     isRTL ? "rtl" : "ltr"
                   }`}
                 >
-                  {category.child.map((subcategory) => (
+                  {sortCategories(category.child).map((subcategory) => (
                     <Link
                       key={subcategory.id}
                       href={`/category/${category.slug}?sub=${subcategory.slug}`}
@@ -179,7 +184,7 @@ export default function CategoryDropdown({
                 </div>
               )}
 
-              {/* Desktop: Hover subcategories on the appropriate side */}
+              {/* Desktop: Hover subcategories */}
               {!isMobile && isHovered && hasChildren && (
                 <div
                   className={`absolute top-0 bg-blue-50 rounded-lg py-2 grid grid-cols-3 gap-x-4 z-60 ${
@@ -190,7 +195,7 @@ export default function CategoryDropdown({
                   dir={isRTL ? "rtl" : "ltr"}
                   style={{ gridTemplateColumns: "repeat(4, min-content)" }}
                 >
-                  {category.child.map((subcategory) => (
+                  {sortCategories(category.child).map((subcategory) => (
                     <Link
                       key={subcategory.id}
                       href={`/category/${category.slug}?sub=${subcategory.slug}`}

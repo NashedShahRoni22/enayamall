@@ -232,6 +232,7 @@ export const AppProvider = ({ children }) => {
         deleteItem.mutateAsync({
           endpoint: `cart/${cartId}`,
           token,
+          guestToken
         }),
         {
           loading: 'Removing item from cart...',

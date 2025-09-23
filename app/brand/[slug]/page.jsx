@@ -219,10 +219,10 @@ export default function Page() {
                   {isLoadingMore ? (
                     <div className="flex items-center gap-2">
                       <FaSpinner className="animate-spin" />
-                      <span>Loading more...</span>
+                      <span>{lang === 'en' ? 'Loading ...' : 'تحميل ...'}</span>
                     </div>
                   ) : (
-                    "Load more items"
+                    <span>{lang === 'en' ? 'Load More' : 'تحميل المزيد'}</span>
                   )}
                 </button>
               </div>
