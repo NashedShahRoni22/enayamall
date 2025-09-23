@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useMemo, useState } from "react";
 import { FaChevronDown, FaChevronUp, FaList, FaSpinner } from "react-icons/fa";
 import { IoGridOutline } from "react-icons/io5";
@@ -20,12 +20,18 @@ export default function Page() {
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [previousFilters, setPreviousFilters] = useState(null);
+
+  // Price filters
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5000);
   const [debouncedMinPrice, setDebouncedMinPrice] = useState(minPrice);
   const [debouncedMaxPrice, setDebouncedMaxPrice] = useState(maxPrice);
+
+  // Cursor for pagination
   const [nextCursor, setNextCursor] = useState(null);
+
+  // Trigger fetch when clicking "Load More"
+  const [pageLoadTrigger, setPageLoadTrigger] = useState(0);
 
   // Debounce price changes
   useEffect(() => {
@@ -46,13 +52,12 @@ export default function Page() {
     if (debouncedMaxPrice !== undefined) params.highest_price = debouncedMaxPrice;
     if (nextCursor) params.cursor = nextCursor;
     return params;
-  }, [parentCategorytIds, childCategoryId, sortOption, debouncedMinPrice, debouncedMaxPrice, nextCursor]);
+  }, [parentCategorytIds, childCategoryId, sortOption, debouncedMinPrice, debouncedMaxPrice, pageLoadTrigger]);
 
-  // Fetch products with filters
   const endpoint = slug ? `products/tags/${encodeURIComponent(slug)}` : "products";
   const { data: productData, isLoading, error } = useGetData(endpoint, queryParams);
 
-  // Reset products if filters change
+  // Reset products if filters change (price, category, sort)
   const currentFilters = JSON.stringify({
     parentCategorytIds,
     childCategoryId,
@@ -63,14 +68,11 @@ export default function Page() {
   });
 
   useEffect(() => {
-    if (previousFilters && previousFilters !== currentFilters) {
-      setAllProducts([]);
-      setNextCursor(null);
-    }
-    setPreviousFilters(currentFilters);
-  }, [currentFilters, previousFilters]);
+    setAllProducts([]);
+    setNextCursor(null);
+  }, [currentFilters]);
 
-  // Handle product data and cursor
+  // Append new product data safely
   useEffect(() => {
     if (productData?.data && productData.data.length > 0 && !isLoading) {
       setAllProducts((prev) => {
@@ -83,11 +85,11 @@ export default function Page() {
     setIsLoadingMore(false);
   }, [productData, isLoading]);
 
-  // Load more products
+  // Load more button click
   const handleLoadMore = () => {
     if (!nextCursor || isLoadingMore) return;
     setIsLoadingMore(true);
-    // No need to set nextCursor here; useEffect will handle new data
+    setPageLoadTrigger((prev) => prev + 1); // triggers queryParams -> fetch next page
   };
 
   const sortOptions = ["Recommended", "Price low to high", "Price high to low"];
@@ -128,6 +130,7 @@ export default function Page() {
                     <FaList className="text-[20px]" />
                   </button>
                 </div>
+
                 {productData?.meta?.total > 0 && (
                   <p className="hidden lg:block text-primaryblack text-[16px]">
                     Showing {allProducts.length} of {productData.meta.total} results
