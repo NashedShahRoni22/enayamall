@@ -92,7 +92,7 @@ export default function ProductUseReviews({
 
             {/* Tags */}
             <p
-              className={`mt-[40px] flex ${
+              className={`mt-[40px] flex flex-wrap w-full gap-1 ${
                 lang === "ar" ? "flex-row-reverse" : "flex-row"
               }`}
             >
@@ -103,7 +103,7 @@ export default function ProductUseReviews({
                 <Link
                   href={`/tag/${pt}`}
                   key={index}
-                  className="capitalize hover:text-primary mr-1 last:mr-0 hover:bg-primary inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-primary inset-ring inset-ring-primary"
+                  className="capitalize hover:text-white mr-1 last:mr-0 hover:bg-primary inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-primary inset-ring inset-ring-primary"
                 >
                   {lang === "en"
                     ? pt
