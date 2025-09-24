@@ -244,20 +244,20 @@ export default function Footer() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:text-left"
           >
             <div className="flex flex-row items-center gap-2">
-              <Truck size={20} />
-              <span className="text-sm">{t.freeShipping}</span>
+              <Truck className="h-10 w-auto" />
+              <span className="text-md leading-[1.5]">{t.freeShipping}</span>
             </div>
             <div className="flex flex-row items-center gap-2">
-              <RotateCcw size={20} />
-              <span className="text-sm">{t.freeReturns}</span>
+              <RotateCcw className="h-7 w-auto" />
+              <span className="text-md leading-[1.5]">{t.freeReturns}</span>
             </div>
             <div className="flex flex-row items-center gap-2">
-              <CreditCard size={20} />
-              <span className="text-sm">{t.paymentOptions}</span>
+              <CreditCard className="h-10 w-auto" />
+              <span className="text-md leading-[1.5]">{t.paymentOptions}</span>
             </div>
             <div className="flex flex-row items-center gap-2">
-              <Shield size={20} />
-              <span className="text-sm">{t.authenticity}</span>
+              <Shield className="h-10 w-auto" />
+              <span className="text-md leading-[1.5]">{t.authenticity}</span>
             </div>
           </div>
         </Container>
