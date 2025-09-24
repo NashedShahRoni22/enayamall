@@ -188,7 +188,7 @@ export default function ProductDetails({
             {lang === "en" ? product?.name : product?.ar_name || product?.name}
           </h1>
           {/* ratings */}
-          {ratingCount == 0 && (
+          {ratingCount > 0 && (
             <div
               className={`flex gap-[20px] align-center mt-2 flex-row ${
                 lang === "ar" ? "flex-row-reverse" : ""
