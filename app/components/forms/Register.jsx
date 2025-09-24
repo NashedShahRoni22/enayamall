@@ -94,8 +94,8 @@ export default function Register() {
     } else if (signUpForm.phone.length !== 9) {
       newErrors.phone =
         lang === "ar"
-          ? "يرجى إدخال رقم هاتف مكون من 9 أرقام"
-          : "Please enter a valid 9-digit phone number";
+          ? "الرجاء إدخال رقم هاتف صالح"
+          : "Please enter a valid phone number";
     }
 
     if (!signUpForm.password.trim()) {
@@ -349,7 +349,7 @@ export default function Register() {
                 placeholder={
                   lang === "ar"
                     ? "أدخل رقم الهاتف المكون من 9 أرقام"
-                    : "Enter 9-digit phone number"
+                    : "Enter a valid phone number"
                 }
                 value={signUpForm.phone}
                 onChange={handlePhoneChange}

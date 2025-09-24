@@ -21,7 +21,7 @@ export default function BlogCard({ blog }) {
       <div className="p-4 sm:p-5 flex flex-col justify-between sm:w-2/3 gap-2">
         {/* Title */}
         <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">
-          {blog?.title}
+          {lang == 'en' ? blog?.title : blog?.ar_title || blog?.title}
         </h3>
 
         {/* Created At */}

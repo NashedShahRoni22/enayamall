@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
 import Link from 'next/link';
+import { useAppContext } from '@/app/context/AppContext';
 
 export default function BlogImageCard({ blog }) {
+  const { lang } = useAppContext();
   return (
     <Link href={`/blog/${blog?.slug}`} className="relative w-full h-full aspect-video rounded-xl overflow-hidden inline-block">
       {/* Background Image */}
@@ -19,7 +21,7 @@ export default function BlogImageCard({ blog }) {
       {/* Content overlaid at the bottom */}
       <div className="absolute bottom-0 left-0 w-full p-4 text-white">
         <h3 className="text-base font-semibold line-clamp-2">
-          {blog?.title}
+          {lang == 'en' ? blog?.title : blog?.ar_title || blog?.title}
         </h3>
 
         <div className="flex items-center text-sm mt-2 gap-1 text-gray-300">
