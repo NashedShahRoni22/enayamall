@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import Container from '../shared/Container';
 import { useGetData } from '../helpers/useGetData';
+import { useAppContext } from '@/app/context/AppContext';
 
 export default function ClientReviewSwiper() {
+  const { lang } = useAppContext();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   // get reviews 
-  const {data:reviewsData} = useGetData("testimonials?featured=1");
+  const {data:reviewsData} = useGetData("main-testimonials");
   const reviews = reviewsData?.data;
 
   const nextSlide = () => {
@@ -30,6 +32,9 @@ export default function ClientReviewSwiper() {
     setCurrentSlide(index);
     setTimeout(() => setIsTransitioning(false), 300);
   };
+
+  console.log(reviews);
+  console.log(lang);
 
   return (
     <section className="py-10 bg-[#efefef] mt-10">
@@ -78,13 +83,16 @@ export default function ClientReviewSwiper() {
                         
                         {/* Review Text */}
                         <p className="text-lg text-slate-700 leading-relaxed mb-8 italic">
-                          "{review.review}"
+                          "{lang === 'en' ? review.description : review.ar_description}"
                         </p>
                         
                         {/* Client Name */}
                         <div>
                           <h4 className="text-xl font-semibold text-slate-800 mb-1">
-                            {review.customer_name}
+                            {lang === 'en' ? review.name : review.ar_name}
+                          </h4>
+                          <h4 className="text-xl font-semibold text-slate-800 mb-1">
+                            {lang === 'en' ? review.designation : review.ar_designation}
                           </h4>
                         </div>
                       </div>
