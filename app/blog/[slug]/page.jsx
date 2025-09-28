@@ -25,10 +25,10 @@ export default function BlogDetailPage() {
       <div className="mx-[10px] lg:mx-[40px]">
       {/* Header */}
       <div className="my-8">
-        <h1 className="text-3xl font-bold text-primary mb-2">
+        <h1 className={`text-3xl lg:text-4xl text-primary font-bold mb-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
           {lang === "en" ? blog.title : blog.ar_title}
         </h1>
-        <div className="flex items-center text-sm text-gray-500 gap-2">
+        <div className={`flex items-center text-sm mt-2 gap-1 text-gray-500 ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
           <Calendar className="w-4 h-4" />
           <span>{blog.created_at}</span>
         </div>

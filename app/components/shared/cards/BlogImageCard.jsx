@@ -20,11 +20,11 @@ export default function BlogImageCard({ blog }) {
 
       {/* Content overlaid at the bottom */}
       <div className="absolute bottom-0 left-0 w-full p-4 text-white">
-        <h3 className="text-base font-semibold line-clamp-2">
+        <h3 className={`text-base font-semibold line-clamp-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
           {lang == 'en' ? blog?.title : blog?.ar_title || blog?.title}
         </h3>
 
-        <div className="flex items-center text-sm mt-2 gap-1 text-gray-300">
+        <div className={`flex items-center text-sm mt-2 gap-1 text-gray-300 ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
           <Calendar className="w-4 h-4" />
           <span>{blog?.created_at}</span>
         </div>

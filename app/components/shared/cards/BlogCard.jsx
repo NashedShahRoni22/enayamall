@@ -20,12 +20,12 @@ export default function BlogCard({ blog }) {
       {/* Content Section */}
       <div className="p-4 sm:p-5 flex flex-col justify-between sm:w-2/3 gap-2">
         {/* Title */}
-        <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">
+        <h3 className={`text-sm font-semibold text-gray-900 line-clamp-2 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
           {lang == 'en' ? blog?.title : blog?.ar_title || blog?.title}
         </h3>
 
         {/* Created At */}
-        <div className="flex items-center text-xs text-gray-500 gap-1">
+        <div className={`flex items-center text-xs gap-1 text-gray-400 ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
           <Calendar className="w-4 h-4" />
           <span>{blog?.created_at}</span>
         </div>
