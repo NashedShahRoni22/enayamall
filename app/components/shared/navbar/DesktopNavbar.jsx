@@ -274,7 +274,7 @@ export default function DesktopNavbar({ logo, menuItems = [], categories = [], c
                                                 <button
                                                     key={language.code}
                                                     onClick={() => handleLanguageChange(language.code)}
-                                                    className={`w-full px-4 py-2 text-sm transition-colors flex items-center gap-2 ${lang === language.code
+                                                    className={`w-full px-4 py-2 text-sm transition-colors cursor-pointer flex items-center gap-2 ${lang === language.code
                                                         ? 'text-primary font-medium bg-gray-50'
                                                         : 'text-gray-700'
                                                         } ${lang === 'ar' ? 'text-right flex-row-reverse' : 'text-left'}`}

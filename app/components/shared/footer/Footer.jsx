@@ -69,6 +69,7 @@ export default function Footer() {
 
       // Contact info
       hotline: "Hotline 24/7:",
+      address: "Address:",
       workHours: "Work Hours:",
       workHoursText: "Monday-Saturday: 9.00am - 5.00pm",
       mail: "Mail:",
@@ -120,6 +121,7 @@ export default function Footer() {
 
       // Contact info
       hotline: "الخط الساخن 24/7:",
+      address: "العنوان:",
       workHours: "ساعات العمل:",
       workHoursText: "الاثنين-السبت: 9.00ص - 5.00م",
       mail: "البريد الإلكتروني:",
@@ -264,77 +266,79 @@ export default function Footer() {
       </div>
 
       {/* Main footer content */}
-      <div className="bg-gray-50 py-12">
-        <Container>
-          <div
-            dir={lang === "ar" ? "rtl" : "ltr"}
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 ${
-              lang === "ar" ? "lg:grid-flow-col-reverse" : ""
-            }`}
-          >
-            <CategoriesSection />
-            <MenuSection title={t.company} links={companyLinks} />
-            <MenuSection title={t.helpCenter} links={helpCenterLinks} />
-            <MenuSection title={t.partner} links={partnerLinks} />
+<div className="bg-gray-50 py-12">
+  <Container>
+    <div
+      dir={lang === "ar" ? "rtl" : "ltr"}
+      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 ${
+        lang === "ar" ? "lg:grid-flow-col-reverse" : ""
+      }`}
+    >
+      <CategoriesSection />
+      <MenuSection title={t.company} links={companyLinks} />
+      <MenuSection title={t.helpCenter} links={helpCenterLinks} />
+      <MenuSection title={t.partner} links={partnerLinks} />
 
-            {/* Subscribe & Contact */}
-            <div>
-              {/* Contact Info */}
-              <div
-                className={`mb-4 ${lang === "ar" ? "text-right" : "text-left"}`}
-              >
-                <p className="text-sm text-gray-600 mb-1">
-                  <strong>{t.hotline}</strong>{" "}
-                  <Link href="tel:+971506065857" className="text-primary">
-                    +971506065857
-                  </Link>
-                </p>
-                <p className="text-sm text-gray-600 mb-1">
-                  <strong>Address: </strong>
-                  <span className="text-primary">
-                    P.O.Box 27042, Dubai United Arab Emirates
-                  </span>
-                </p>
-                {/* <p className="text-sm text-gray-600">
-                  <strong>{t.mail}</strong>{" "}
-                  {showEmail ? (
-                    <Link href={`mailto:${email}`} className="text-primary">
-                      {email}
-                    </Link>
-                  ) : (
-                    <button
-                      onClick={() => setShowEmail(true)}
-                      className="text-primary underline"
-                    >
-                      View Email
-                    </button>
-                  )}
-                </p> */}
-              </div>
+      {/* Subscribe & Contact */}
+      <div>
+        {/* Contact Info */}
+        <div className="mb-4">
+          <p className="text-sm text-gray-600 mb-1">
+            <strong>{t.hotline} </strong>
+            <Link href="tel:+971506065857" className="text-primary">
+              +971506065857
+            </Link>
+          </p>
 
-              {/* Social Media */}
-              <div
-                className={`flex gap-3 ${
-                  lang === "ar" ? "justify-end" : "justify-start"
-                }`}
+          <p className="text-sm text-gray-600 mb-1">
+            <strong>{t.address} </strong>
+            <span className="text-primary">
+              P.O.Box 27042, Dubai United Arab Emirates
+            </span>
+          </p>
+
+          {/* Uncomment if you want email */}
+          {/* <p className="text-sm text-gray-600">
+            <strong>{t.mail}</strong>{" "}
+            {showEmail ? (
+              <Link href={`mailto:${email}`} className="text-primary">
+                {email}
+              </Link>
+            ) : (
+              <button
+                onClick={() => setShowEmail(true)}
+                className="text-primary underline"
               >
-                {socialLinks.map((social, index) => {
-                  const IconComponent = social.icon;
-                  return (
-                    <Link
-                      key={index}
-                      href={social.href}
-                      className="text-black bg-white shadow p-2.5 rounded-full"
-                    >
-                      <IconComponent size={16} />
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </Container>
+                View Email
+              </button>
+            )}
+          </p> */}
+        </div>
+
+        {/* Social Media */}
+        <div
+          className={`flex gap-3 ${
+            lang === "ar" ? "justify-end" : "justify-start"
+          }`}
+        >
+          {socialLinks.map((social, index) => {
+            const IconComponent = social.icon;
+            return (
+              <Link
+                key={index}
+                href={social.href}
+                className="text-black bg-white shadow p-2.5 rounded-full"
+              >
+                <IconComponent size={16} />
+              </Link>
+            );
+          })}
+        </div>
       </div>
+    </div>
+  </Container>
+</div>
+
 
       {/* Bottom footer */}
       <div className="bg-white py-6 border-t border-gray-200">
