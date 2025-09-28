@@ -10,25 +10,19 @@ import { usePostDataWithToken } from "../helpers/usePostDataWithToken";
 import Link from "next/link";
 import SignInWithPhone from "./SignInWithPhone";
 import LoadingSvg from "../shared/LoadingSvg";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 export default function Register() {
   const location = usePathname();
   const [option, setOption] = useState(2);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setUser, setToken, lang } = useAppContext();
+  const { setUser, setToken, lang, guestToken } = useAppContext();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { guestToken } = useAppContext();
 
-  // Error state for form validation
   const [errors, setErrors] = useState({});
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  //managed signup with password
   const [signUpForm, setSignUpForm] = useState({
     name: "",
     email: "",
@@ -42,26 +36,11 @@ export default function Register() {
   const postCartSync = usePostDataWithToken("add-to-cart-from-guest");
   const queryClient = useQueryClient();
 
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSignUpForm((prev) => ({ ...prev, [name]: value }));
-
-    // Clear error when user starts typing
-    setErrors((prev) => ({ ...prev, [name]: "" }));
-  };
-
-  // Format phone number - only allow 9 digits
-  const formatPhoneNumber = (value) => {
-    const numbers = value.replace(/\D/g, "");
-    return numbers.slice(0, 9);
-  };
-
-  const handlePhoneChange = (e) => {
-    const { name, value } = e.target;
-    const formatted = formatPhoneNumber(value);
-    setSignUpForm((prev) => ({ ...prev, [name]: formatted }));
-
-    // Clear error when user starts typing
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
@@ -69,6 +48,7 @@ export default function Register() {
   const validateForm = () => {
     const newErrors = {};
 
+    // Name validation
     if (!signUpForm.name.trim()) {
       newErrors.name = lang === "ar" ? "الاسم مطلوب" : "Name is required";
     } else if (signUpForm.name.trim().length < 2) {
@@ -78,6 +58,7 @@ export default function Register() {
           : "Name must be at least 2 characters long";
     }
 
+    // Email validation
     if (!signUpForm.email.trim()) {
       newErrors.email =
         lang === "ar" ? "البريد الإلكتروني مطلوب" : "Email is required";
@@ -88,16 +69,19 @@ export default function Register() {
           : "Please enter a valid email address";
     }
 
-    if (!signUpForm.phone.trim()) {
+    // Phone validation (country code fixed, validate local number only)
+    const localPhone = signUpForm.phone.replace(/^\+\d{1,3}/, "");
+    if (!localPhone.trim()) {
       newErrors.phone =
         lang === "ar" ? "رقم الهاتف مطلوب" : "Phone number is required";
-    } else if (signUpForm.phone.length !== 9) {
+    } else if (!/^\d{7,12}$/.test(localPhone)) {
       newErrors.phone =
         lang === "ar"
           ? "الرجاء إدخال رقم هاتف صالح"
-          : "Please enter a valid phone number";
+          : "Please enter a valid local phone number";
     }
 
+    // Password validation
     if (!signUpForm.password.trim()) {
       newErrors.password =
         lang === "ar" ? "كلمة المرور مطلوبة" : "Password is required";
@@ -108,6 +92,7 @@ export default function Register() {
           : "Password must be at least 6 characters long";
     }
 
+    // Retype password
     if (!signUpForm.retype_password.trim()) {
       newErrors.retype_password =
         lang === "ar"
@@ -124,7 +109,6 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!validateForm()) return;
 
     setLoading(true);
@@ -132,15 +116,12 @@ export default function Register() {
     const formData = new FormData();
     formData.append("name", signUpForm.name);
     formData.append("email", signUpForm.email);
-    formData.append("phone", signUpForm.phone);
+    formData.append("phone", signUpForm.phone); // full international number
     formData.append("password", signUpForm.password);
     formData.append("retype_password", signUpForm.retype_password);
-    {
-      location === "/affiliate" &&
-        formData.append("referral_code", signUpForm.code);
-    }
-    {
-      location === "/affiliate" && formData.append("affiliated", 1);
+    if (location === "/affiliate") {
+      formData.append("referral_code", signUpForm.code);
+      formData.append("affiliated", 1);
     }
 
     toast.promise(
@@ -148,60 +129,42 @@ export default function Register() {
         const jsonData = data?.data;
         const authToken = jsonData.token;
 
-        // ✅ Save to localStorage
         localStorage.setItem("EnayamallUser", JSON.stringify(jsonData.details));
         localStorage.setItem("EnayamallAuthToken", authToken);
 
-        // ✅ Set global user state
         setUser(jsonData.details);
         setToken(authToken);
-
         setLoading(false);
 
-        // ✅ Reset form
         setSignUpForm({
           name: "",
           email: "",
           phone: "",
           password: "",
           retype_password: "",
+          code: "",
         });
 
-        // ✅ Sync cart using guestToken if it exists
         if (guestToken) {
           const cartFormData = new FormData();
           cartFormData.append("guest_token", guestToken);
-
           try {
-            // Pass formData with guest_token and auth token to the mutation
-            await postCartSync.mutateAsync({
-              formData: cartFormData,
-              token: authToken,
-            });
-
-            // ✅ Invalidate and refetch cart data
+            await postCartSync.mutateAsync({ formData: cartFormData, token: authToken });
             await queryClient.invalidateQueries({ queryKey: ["cart"] });
           } catch (error) {
             console.error("Cart sync failed:", error);
           }
         }
 
-        // ✅ Redirect to previous or default page
         const redirectTo = searchParams.get("redirect") || "/";
         router.push(redirectTo);
       }),
       {
         loading: lang === "ar" ? "جاري إنشاء الحساب..." : "Creating account...",
-        success:
-          lang === "ar"
-            ? "تم إنشاء الحساب بنجاح!"
-            : "Account created successfully!",
+        success: lang === "ar" ? "تم إنشاء الحساب بنجاح!" : "Account created successfully!",
         error: (err) => {
           setLoading(false);
-          return (
-            err.message ||
-            (lang === "ar" ? "فشل في إنشاء الحساب" : "Failed to sign up")
-          );
+          return err.message || (lang === "ar" ? "فشل في إنشاء الحساب" : "Failed to sign up");
         },
       }
     );
@@ -220,24 +183,13 @@ export default function Register() {
       </h5>
 
       <p className={`text-[16px] sm:text-[18px] text-ash mt-[30px] ${lang==='ar'&&'text-right'}`}>
-        {lang === "ar" ? (
-          <>
-            أنشئ حسابك. افتح التجربة. <br />
-            خطوة واحدة أقرب إلى شيء أفضل.
-          </>
-        ) : (
-          <>
-            Create your account. Unlock the experience. <br />
-            One step closer to something better.
-          </>
-        )}
+        {lang === "ar"
+          ? <>أنشئ حسابك. افتح التجربة. <br /> خطوة واحدة أقرب إلى شيء أفضل.</>
+          : <>Create your account. Unlock the experience. <br /> One step closer to something better.</>}
       </p>
 
-      {/* tabs here  */}
       <div className="mt-[50px]">
-        {/* tab buttons  */}
         <div className={`flex gap-[50px] ${lang==='ar'&&'flex-row-reverse'}`}>
-          {/* <button onClick={() => setOption(1)} className={`text-[16px] sm:text-[18px] cursor-pointer ${option === 1 ? "text-primary border-b-2 border-primary font-[650]" : "text-primaryblack"}`}>Sign up with OTP</button> */}
           <button
             onClick={() => setOption(2)}
             className={`text-[16px] sm:text-[18px] cursor-pointer ${
@@ -246,252 +198,136 @@ export default function Register() {
                 : "text-primaryblack"
             }`}
           >
-            {lang === "ar"
-              ? "سجّل باستخدام كلمة المرور"
-              : "Sign up with Password"}
+            {lang === "ar" ? "سجّل باستخدام كلمة المرور" : "Sign up with Password"}
           </button>
         </div>
-        {/* tab forms */}
+
         <div className="mt-[25px] sm:mt-[50px]">
           {option === 1 ? (
             <SignInWithPhone option={option} />
           ) : (
             <form onSubmit={handleSubmit}>
               {/* Name */}
-              <label
-                className={`flex font-medium text-gray-700 mt-[20px] justify-between ${
-                  lang === "en" ? "flex-row" : "flex-row-reverse"
-                }`}
-              >
-                <p
-                  className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${
-                    lang === "en" ? "flex-row" : "flex-row-reverse text-right"
-                  }`}
-                >
-                  <span>{lang === "en" ? "Name" : "الاسم"}</span>
-                  <span className="text-button">*</span>
+              <label className={`flex font-medium text-gray-700 mt-[20px] justify-between ${lang === "en" ? "flex-row" : "flex-row-reverse"}`}>
+                <p className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${lang === "en" ? "flex-row" : "flex-row-reverse text-right"}`}>
+                  <span>{lang === "en" ? "Name" : "الاسم"}</span><span className="text-button">*</span>
                 </p>
-                {errors.name && (
-                  <span className="text-button ml-2">{errors.name}</span>
-                )}
+                {errors.name && <span className="text-button ml-2">{errors.name}</span>}
               </label>
-
               <input
                 type="text"
                 name="name"
-                dir={lang === "ar" && "rtl"}
+                dir={lang === "ar" ? "rtl" : "ltr"}
                 placeholder={lang === "ar" ? "أدخل الاسم" : "Enter name"}
                 value={signUpForm.name}
                 onChange={handleChange}
-                className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${
-                  errors.name ? "border-button" : "border-creamline"
-                } rounded-[5px] mt-[20px] w-full`}
+                className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.name ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
               />
 
               {/* Email */}
-              <label
-                className={`flex font-medium text-gray-700 mt-[20px] justify-between ${
-                  lang === "en" ? "flex-row" : "flex-row-reverse"
-                }`}
-              >
-                <p
-                  className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${
-                    lang === "en" ? "flex-row" : "flex-row-reverse text-right"
-                  }`}
-                >
-                  <span>
-                    {lang === "en" ? "Email Address" : "البريد الإلكتروني"}
-                  </span>
-                  <span className="text-button">*</span>
+              <label className={`flex font-medium text-gray-700 mt-[20px] justify-between ${lang === "en" ? "flex-row" : "flex-row-reverse"}`}>
+                <p className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${lang === "en" ? "flex-row" : "flex-row-reverse text-right"}`}>
+                  <span>{lang === "en" ? "Email Address" : "البريد الإلكتروني"}</span><span className="text-button">*</span>
                 </p>
-                {errors.email && (
-                  <span className="text-button ml-2">{errors.email}</span>
-                )}
+                {errors.email && <span className="text-button ml-2">{errors.email}</span>}
               </label>
               <input
                 type="email"
                 name="email"
                 dir={lang === "ar" ? "rtl" : "ltr"}
-                placeholder={
-                  lang === "ar"
-                    ? "أدخل البريد الإلكتروني"
-                    : "Enter email address"
-                }
+                placeholder={lang === "ar" ? "أدخل البريد الإلكتروني" : "Enter email address"}
                 value={signUpForm.email}
                 onChange={handleChange}
-                className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${
-                  errors.email ? "border-button" : "border-creamline"
-                } rounded-[5px] mt-[20px] w-full`}
+                className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.email ? "border-button" : "border-creamline"} rounded-[5px] mt-[20px] w-full`}
               />
 
               {/* Phone */}
-              <label
-                className={`flex font-medium text-gray-700 mt-[20px] justify-between ${
-                  lang === "en" ? "flex-row" : "flex-row-reverse"
-                }`}
-              >
-                <p
-                  className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${
-                    lang === "en" ? "flex-row" : "flex-row-reverse text-right"
-                  }`}
-                >
-                  <span>{lang === "en" ? "Phone Number" : "رقم الهاتف"}</span>
-                  <span className="text-button">*</span>
+              <label className={`flex font-medium text-gray-700 mt-[20px] justify-between ${lang === "en" ? "flex-row" : "flex-row-reverse"}`}>
+                <p className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${lang === "en" ? "flex-row" : "flex-row-reverse text-right"}`}>
+                  <span>{lang === "en" ? "Phone Number" : "رقم الهاتف"}</span><span className="text-button">*</span>
                 </p>
-                {errors.phone && (
-                  <span className="text-button ml-2">{errors.phone}</span>
-                )}
+                {errors.phone && <span className="text-button ml-2">{errors.phone}</span>}
               </label>
-              <input
-                type="tel"
-                name="phone"
-                dir={lang === "ar" ? "rtl" : "ltr"}
-                placeholder={
-                  lang === "ar"
-                    ? "أدخل رقم الهاتف المكون من 9 أرقام"
-                    : "Enter a valid phone number"
-                }
-                value={signUpForm.phone}
-                onChange={handlePhoneChange}
-                maxLength="9"
-                className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${
-                  errors.phone ? "border-button" : "border-creamline"
-                } rounded-[5px] mt-[20px] w-full`}
-              />
+              <div className={`mt-[20px] ${errors.phone ? "border-button rounded-[5px]" : "border-creamline rounded-[5px]"}`}>
+                <PhoneInput
+                  country={"us"} // default country
+                  value={signUpForm.phone}
+                  onChange={(value) => {
+                    const fullNumber = value.startsWith("+") ? value : `+${value}`;
+                    setSignUpForm((prev) => ({ ...prev, phone: fullNumber }));
+                    setErrors((prev) => ({ ...prev, phone: "" }));
+                  }}
+                  inputProps={{
+                    name: "phone",
+                    required: true,
+                    dir: lang === "ar" ? "rtl" : "ltr",
+                  }}
+                  disableCountryCode={false}
+                  countryCodeEditable={false}
+                  containerClass="w-full"
+                  inputClass="w-full text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none"
+                  buttonClass="rounded-l-xl"
+                  dropdownClass="rounded-xl"
+                />
+              </div>
 
               {/* Password */}
-              <label
-                className={`flex font-medium text-gray-700 mt-[20px] justify-between ${
-                  lang === "en" ? "flex-row" : "flex-row-reverse"
-                }`}
-              >
-                <p
-                  className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${
-                    lang === "en" ? "flex-row" : "flex-row-reverse text-right"
-                  }`}
-                >
-                  <span>{lang === "en" ? "Password" : "كلمة المرور"}</span>
-                  <span className="text-button">*</span>
+              <label className={`flex font-medium text-gray-700 mt-[20px] justify-between ${lang === "en" ? "flex-row" : "flex-row-reverse"}`}>
+                <p className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${lang === "en" ? "flex-row" : "flex-row-reverse text-right"}`}>
+                  <span>{lang === "en" ? "Password" : "كلمة المرور"}</span><span className="text-button">*</span>
                 </p>
-                {errors.password && (
-                  <span className="text-button ml-2">{errors.password}</span>
-                )}
+                {errors.password && <span className="text-button ml-2">{errors.password}</span>}
               </label>
               <div className="relative mt-[20px]">
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
                   dir={lang === "ar" ? "rtl" : "ltr"}
-                  placeholder={
-                    lang === "ar" ? "أدخل كلمة المرور" : "Enter your password"
-                  }
+                  placeholder={lang === "ar" ? "أدخل كلمة المرور" : "Enter your password"}
                   value={signUpForm.password}
                   onChange={handleChange}
-                  className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${
-                    errors.password ? "border-button" : "border-creamline"
-                  } rounded-[5px] w-full pr-[40px]`}
+                  className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                 />
-                <div
-                  onClick={togglePasswordVisibility}
-                  className={
-                    lang === "ar"
-                      ? "absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                      : "absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                  }
-                >
-                  {showPassword ? (
-                    <FiEyeOff size={24} color="#ccc" />
-                  ) : (
-                    <FiEye size={24} color="#ccc" />
-                  )}
+                <div onClick={togglePasswordVisibility} className={lang === "ar" ? "absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer" : "absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"}>
+                  {showPassword ? <FiEyeOff size={24} color="#ccc" /> : <FiEye size={24} color="#ccc" />}
                 </div>
               </div>
 
               {/* Retype Password */}
-              <label
-                className={`flex font-medium text-gray-700 mt-[20px] justify-between ${
-                  lang === "en" ? "flex-row" : "flex-row-reverse"
-                }`}
-              >
-                <p
-                  className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${
-                    lang === "en" ? "flex-row" : "flex-row-reverse text-right"
-                  }`}
-                >
-                  <span>
-                    {lang === "en"
-                      ? "Retype Password"
-                      : "إعادة إدخال كلمة المرور"}
-                  </span>
-                  <span className="text-button">*</span>
+              <label className={`flex font-medium text-gray-700 mt-[20px] justify-between ${lang === "en" ? "flex-row" : "flex-row-reverse"}`}>
+                <p className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${lang === "en" ? "flex-row" : "flex-row-reverse text-right"}`}>
+                  <span>{lang === "en" ? "Retype Password" : "إعادة إدخال كلمة المرور"}</span><span className="text-button">*</span>
                 </p>
-                {errors.retype_password && (
-                  <span className="text-button ml-2">
-                    {errors.retype_password}
-                  </span>
-                )}
+                {errors.retype_password && <span className="text-button ml-2">{errors.retype_password}</span>}
               </label>
               <div className="relative mt-[20px]">
                 <input
                   type={showPassword ? "text" : "password"}
                   name="retype_password"
                   dir={lang === "ar" ? "rtl" : "ltr"}
-                  placeholder={
-                    lang === "ar"
-                      ? "أعد إدخال كلمة المرور"
-                      : "Retype your password"
-                  }
+                  placeholder={lang === "ar" ? "أعد إدخال كلمة المرور" : "Retype your password"}
                   value={signUpForm.retype_password}
                   onChange={handleChange}
-                  className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${
-                    errors.retype_password
-                      ? "border-button"
-                      : "border-creamline"
-                  } rounded-[5px] w-full pr-[40px]`}
+                  className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border ${errors.retype_password ? "border-button" : "border-creamline"} rounded-[5px] w-full pr-[40px]`}
                 />
-                <div
-                  onClick={togglePasswordVisibility}
-                  className={
-                    lang === "ar"
-                      ? "absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                      : "absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                  }
-                >
-                  {showPassword ? (
-                    <FiEyeOff size={24} color="#ccc" />
-                  ) : (
-                    <FiEye size={24} color="#ccc" />
-                  )}
+                <div onClick={togglePasswordVisibility} className={lang === "ar" ? "absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer" : "absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"}>
+                  {showPassword ? <FiEyeOff size={24} color="#ccc" /> : <FiEye size={24} color="#ccc" />}
                 </div>
               </div>
 
               {/* Affiliate Code */}
               {location === "/affiliate" && (
                 <div className="relative mt-[20px]">
-                  <label
-                    className={`flex font-medium text-gray-700 justify-between ${
-                      lang === "en" ? "flex-row" : "flex-row-reverse"
-                    }`}
-                  >
-                    <p
-                      className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${
-                        lang === "en"
-                          ? "flex-row"
-                          : "flex-row-reverse text-right"
-                      }`}
-                    >
-                      <span>
-                        {lang === "en" ? "Referral Code" : "كود الإحالة"}
-                      </span>
+                  <label className={`flex font-medium text-gray-700 justify-between ${lang === "en" ? "flex-row" : "flex-row-reverse"}`}>
+                    <p className={`text-[16px] sm:text-[18px] gap-2 text-ash flex ${lang === "en" ? "flex-row" : "flex-row-reverse text-right"}`}>
+                      <span>{lang === "en" ? "Referral Code" : "كود الإحالة"}</span>
                     </p>
                   </label>
                   <input
                     type="text"
                     name="code"
                     dir={lang === "ar" ? "rtl" : "ltr"}
-                    placeholder={
-                      lang === "ar" ? "كود الإحالة" : "Referral code"
-                    }
+                    placeholder={lang === "ar" ? "كود الإحالة" : "Referral code"}
                     value={signUpForm.code}
                     onChange={handleChange}
                     className={`text-[14px] sm:text-[16px] rounded-xl text-primaryblack py-[12px] px-[10px] sm:px-[20px] focus:outline-none border border-creamline mt-[20px] w-full`}
@@ -501,52 +337,27 @@ export default function Register() {
 
               <button
                 type="submit"
-                className={`py-[12px] text-[14px] rounded-xl sm:text-[16px] ${
-                  option === 2 ? "bg-primary text-white" : "bg-creamline"
-                } mt-[40px] w-full ${
-                  loading ? "cursor-not-allowed bg-creamline" : "cursor-pointer"
-                }`}
+                className={`py-[12px] text-[14px] rounded-xl sm:text-[16px] bg-primary text-white mt-[40px] w-full ${loading ? "cursor-not-allowed bg-creamline" : "cursor-pointer"}`}
                 disabled={postUser.isLoading || loading}
               >
                 {!loading ? (lang === "ar" ? "تسجيل" : "Sign up") : null}
-
-                {loading && (
-                  <LoadingSvg
-                    label={
-                      lang === "ar" ? "جاري إنشاء الحساب" : "Creating account"
-                    }
-                    color="text-white"
-                  />
-                )}
+                {loading && <LoadingSvg label={lang === "ar" ? "جاري إنشاء الحساب" : "Creating account"} color="text-white" />}
               </button>
             </form>
           )}
 
-          <p
-  className={`text-primaryblack mt-[20px] sm:mt-[40px] ${
-    lang === "ar" ? "text-right" : "text-left"
-  }`}
-  dir={lang === "ar" ? "rtl" : "ltr"}
->
-  {lang === "ar"
-    ? "هل لديك حساب بالفعل؟"
-    : "Already have an account?"}
-  <Link
-    href="/login"
-    className={`text-primary hover:underline ml-2 ${
-      lang === "ar" ? "mr-2 ml-0" : "ml-2"
-    }`}
-  >
-    {lang === "ar"
-      ? location === "/affiliate"
-        ? "تسجيل الدخول إلى حساب الشريك"
-        : "تسجيل الدخول"
-      : location === "/affiliate"
-      ? "Login your affiliate account"
-      : "Login"}
-  </Link>
-</p>
-
+          <p className={`text-primaryblack mt-[20px] sm:mt-[40px] ${lang === "ar" ? "text-right" : "text-left"}`} dir={lang === "ar" ? "rtl" : "ltr"}>
+            {lang === "ar" ? "هل لديك حساب بالفعل؟" : "Already have an account?"}
+            <Link href="/login" className={`text-primary hover:underline ml-2 ${lang === "ar" ? "mr-2 ml-0" : "ml-2"}`}>
+              {lang === "ar"
+                ? location === "/affiliate"
+                  ? "تسجيل الدخول إلى حساب الشريك"
+                  : "تسجيل الدخول"
+                : location === "/affiliate"
+                ? "Login your affiliate account"
+                : "Login"}
+            </Link>
+          </p>
         </div>
       </div>
     </div>

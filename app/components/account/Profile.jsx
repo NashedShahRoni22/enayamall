@@ -322,7 +322,7 @@ const Profile = ({ profile }) => {
                         <DisplayField label="Gender" value={profile.gender} />
                         <DisplayField label="Date of Birth" value={profile.date_of_birth} />
                         <DisplayField label="Country" value={profile.country?.country_name} />
-                        <DisplayField label="Profile ID" value={profile.id} />
+                        {/* <DisplayField label="Profile ID" value={profile.id} /> */}
                     </div>
                 </div>
             ) : (
