@@ -5,8 +5,12 @@ import ScreenLoader from "@/app/components/loaders/ScreenLoader";
 import { Calendar } from "lucide-react";
 import Image from "next/image";
 import { useGetData } from "@/app/components/helpers/useGetData";
+import { useAppContext } from "@/app/context/AppContext";
+import he from "he";
+
 
 export default function BlogDetailPage() {
+  const { lang } = useAppContext();
   const { slug } = useParams();
   const { data, isLoading } = useGetData(`blog/${slug}`);
 
@@ -18,10 +22,11 @@ export default function BlogDetailPage() {
 
   return (
     <Container>
+      <div className="mx-[10px] lg:mx-[40px]">
       {/* Header */}
       <div className="my-8">
         <h1 className="text-3xl font-bold text-primary mb-2">
-          {blog.title}
+          {lang === "en" ? blog.title : blog.ar_title}
         </h1>
         <div className="flex items-center text-sm text-gray-500 gap-2">
           <Calendar className="w-4 h-4" />
@@ -33,7 +38,7 @@ export default function BlogDetailPage() {
       <div className="relative w-full h-[300px] rounded-xl overflow-hidden mb-8">
         <Image
           src={blog.banner_image}
-          alt={blog.title}
+          alt={lang === "en" ? blog.title : blog.ar_title}
           fill
           className="object-cover"
         />
@@ -41,9 +46,17 @@ export default function BlogDetailPage() {
 
       {/* Blog Content */}
       <div
-        className="prose prose-base max-w-none"
-        dangerouslySetInnerHTML={{ __html: blog.content }}
+        id="preview"
+        className="text-[16px] 2xl:text-[18px] text-[#38444f] longDescription"
+        dir={lang === "ar" ? "rtl" : "ltr"}
+        dangerouslySetInnerHTML={{
+          __html:
+            lang === "en"
+              ? he.decode(blog.content)
+              : he.decode(blog.ar_content),
+        }}
       />
+      </div>
     </Container>
   );
 }
