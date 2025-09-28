@@ -250,7 +250,7 @@ export default function Register() {
               </label>
               <div className={`mt-[20px] ${errors.phone ? "border-button rounded-[5px]" : "border-creamline rounded-[5px]"}`}>
                 <PhoneInput
-                  country={"uae"}
+                  country={"ae"}
                   value={signUpForm.phone}
                   onChange={(value) => {
                     const fullNumber = value.startsWith("+") ? value : `+${value}`;
