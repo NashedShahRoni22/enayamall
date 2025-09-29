@@ -13,7 +13,11 @@ export default function TwoProductSlider({ products = [] }) {
       <Swiper
         ref={swiperRef}
         spaceBetween={16}
-        slidesPerView={3}
+        slidesPerView={2}
+        breakpoints={{
+            768: { slidesPerView: 2, spaceBetween: 16 },
+            1024: { slidesPerView: 3, spaceBetween: 16 },
+          }}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
         modules={[Autoplay]}
         onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex)}
