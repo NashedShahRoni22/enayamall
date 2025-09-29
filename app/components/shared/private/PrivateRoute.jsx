@@ -22,11 +22,11 @@ const PrivateRoute = ({ children }) => {
   }, [token, loading, router]);
 
   // Show loading while context is initializing or checking auth
-  // if (loading || checkingAuth) {
-  //   return (
-  //     <ScreenLoader />
-  //   );
-  // }
+  if (loading || checkingAuth) {
+    return (
+      <ScreenLoader />
+    );
+  }
 
   return children;
 };
