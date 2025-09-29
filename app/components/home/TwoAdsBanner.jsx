@@ -13,7 +13,7 @@ export default function TwoAdsBanner() {
             <div className={`flex flex-col justify-center items-center gap-5 py-5 ${lang === 'en' ? 'flex-row' : 'flex-row-reverse'}`}>
                 {imageDataLeft?.data?.[0]?.image && (
                     <Link
-                        href={lang === "ar" ? ` - ${imageDataLeft?.data?.[0]?.link}` : ` - ${imageDataLeft?.data?.[0]?.ar_link}`}
+                        href={lang === "ar" ? `${imageDataLeft?.data?.[0]?.link}` : `${imageDataLeft?.data?.[0]?.ar_link}`}
                         target={imageDataLeft?.data?.[0]?.link ? "_blank" : "_self"}
                         rel="noopener noreferrer"
                     >
@@ -30,7 +30,7 @@ export default function TwoAdsBanner() {
                     <>
                     {console.log(imageDataRight.data[0])}
                     <Link
-                        href={lang === "ar" ? ` - ${imageDataRight?.data?.[0]?.link}` : ` - ${imageDataRight?.data?.[0]?.ar_link}`}
+                        href={lang === "ar" ? `${imageDataRight?.data?.[0]?.link}` : `${imageDataRight?.data?.[0]?.ar_link}`}
                         target={imageDataLeft?.data?.[0]?.link ? "_blank" : "_self"}
                         rel="noopener noreferrer"
                     >
