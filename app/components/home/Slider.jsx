@@ -53,7 +53,7 @@ export default function Slider() {
   const {lang} = useAppContext();
   const { data, isLoading, error } = useGetData("banners");
   const banners = data?.data;
-  if (isLoading) return <ScreenLoader />;
+  // if (isLoading) return <ScreenLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -66,7 +66,11 @@ export default function Slider() {
           loop={true}
           effect="fade"
           fadeEffect={{ crossFade: true }}
-          speed={1500}
+          speed={800}
+          initialSlide={0}
+          preloadImages={true}
+          lazy={false}
+          // watchSlidesProgress={true}
           // pagination={{ 
           //   clickable: true,
           //   dynamicBullets: false 
@@ -84,7 +88,7 @@ export default function Slider() {
             <Link
               href={ lang === "en" ? banner?.link : banner?.ar_link }
               target={banner?.link ? "_blank" : "_self"}
-              rel="noopener noreferrer"
+              rel="preload noopener noreferrer"
               // className="block w-full h-[250px] lg:h-[450px] relative"
             >
               <Image

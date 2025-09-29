@@ -1,5 +1,4 @@
 'use client';
-
 import toast from 'react-hot-toast';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { usePostDataWithToken } from '../components/helpers/usePostDataWithToken';
@@ -297,8 +296,8 @@ export const AppProvider = ({ children }) => {
   const brands = brandsData?.data;
 
   // get skin types
-  const { data: skinTypesData } = useGetData(`skin-types`);
-  const skinTypes = skinTypesData?.data;
+  // const { data: skinTypesData } = useGetData(`skin-types`);
+  // const skinTypes = skinTypesData?.data;
 
   return (
     <AppContext.Provider
@@ -325,7 +324,7 @@ export const AppProvider = ({ children }) => {
         removeFromWishlistDB,
         categories,
         brands,
-        skinTypes,
+        // skinTypes,
         addToCartDBGuest,
         removeFromCartDBGuest,
         cartDBGuest,

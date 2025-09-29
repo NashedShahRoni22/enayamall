@@ -19,8 +19,7 @@ export default function BannerWidth2() {
           <Image
             src={lang === "en" ? bannerImage?.image : bannerImage?.ar_image}
             alt={lang === "en" ? bannerImage?.title : bannerImage?.ar_title || "Banner Image"}
-            loading="eager"
-            priority
+            loading="lazy"
             height={328}
             width={1920}
             className="rounded-md"

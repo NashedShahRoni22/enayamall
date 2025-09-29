@@ -7,7 +7,7 @@ import Container from "../components/shared/Container";
 import Brands from "../components/filters/Brands";
 import Categories from "../components/filters/Categories";
 import ProductsPage from "../components/products/ProductsPage";
-import SkinTypes from "../components/filters/SkinTypes";
+// import SkinTypes from "../components/filters/SkinTypes";
 import ShopHeader from "../components/shared/ShopHeader";
 import { IoCloseOutline, IoGridOutline } from "react-icons/io5";
 import ShopCategorySlider from "../components/sliders/ShopCategorySlider";

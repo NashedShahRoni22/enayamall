@@ -18,11 +18,11 @@ const PublicRoute = ({ children }) => {
     }, [token, loading, router]);
 
     // Show loading while context is initializing
-    if (loading) {
-        return (
-            <ScreenLoader/>
-        );
-    }
+    // if (loading) {
+    //     return (
+    //         <ScreenLoader/>
+    //     );
+    // }
 
     if (token) {
         return null;

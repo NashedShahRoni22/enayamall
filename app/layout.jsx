@@ -9,6 +9,7 @@ import BottomBar from "./components/shared/bottombar/BottomBar";
 
 const inter = Inter({
   subsets: ["latin"],
+  display: 'swap',
 });
 
 export const metadata = {

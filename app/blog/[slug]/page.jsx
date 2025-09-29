@@ -35,12 +35,13 @@ export default function BlogDetailPage() {
       </div>
 
       {/* Banner Image */}
-      <div className="relative w-full h-[300px] rounded-xl overflow-hidden mb-8">
+      <div className="relative w-full rounded-xl overflow-hidden mb-8">
         <Image
           src={blog.banner_image}
           alt={lang === "en" ? blog.title : blog.ar_title}
-          fill
-          className="object-cover"
+          height={500}
+          width={1000}
+          className="object-contain rounded-xl mx-auto"
         />
       </div>
 

@@ -7,7 +7,7 @@ import filterIcon from "../../resources/icons/filter.svg";
 import { IoCloseOutline, IoGridOutline } from "react-icons/io5";
 import Categories from "@/app/components/filters/Categories";
 import Brands from "@/app/components/filters/Brands";
-import SkinTypes from "@/app/components/filters/SkinTypes";
+// import SkinTypes from "@/app/components/filters/SkinTypes";
 import Products from "@/app/components/products/Products";
 import Container from "@/app/components/shared/Container";
 import PageHeader from "@/app/components/shared/PageHeader";

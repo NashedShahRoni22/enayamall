@@ -11,7 +11,7 @@ export default function Blogs() {
   const { data, isLoading } = useGetData("blogs");
   const { lang } = useAppContext();
 
-  if (isLoading) return <ScreenLoader />;
+  // if (isLoading) return <ScreenLoader />;
 
   const blogs = data?.data || [];
 

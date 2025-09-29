@@ -6,12 +6,13 @@ import { useAppContext } from '@/app/context/AppContext';
 export default function BlogImageCard({ blog }) {
   const { lang } = useAppContext();
   return (
-    <Link href={`/blog/${blog?.slug}`} className="relative w-full h-full aspect-video rounded-xl overflow-hidden inline-block">
+    <Link href={`/blog/${blog?.slug}`} className="relative w-full h-[250px] rounded-xl overflow-hidden inline-block">
       {/* Background Image */}
       <Image
         src={blog?.banner_image}
         alt={blog?.title}
-        fill
+        height={250}
+        width={500}
         className="object-cover"
       />
 

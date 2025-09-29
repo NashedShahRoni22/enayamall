@@ -6,14 +6,15 @@ import { useAppContext } from '@/app/context/AppContext';
 export default function BlogCard({ blog }) {
   const { lang } = useAppContext();
   return (
-    <Link href={`/blog/${blog?.slug}`} className={`flex flex-col border border-gray-200 rounded-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ${lang === 'ar' ? 'sm:flex-row-reverse' : 'sm:flex-row'}`}>
+    <Link href={`/blog/${blog?.slug}`} className={`flex flex-col overflow-hidden transition-shadow duration-300 ${lang === 'ar' ? 'sm:flex-row-reverse' : 'sm:flex-row'}`}>
       {/* Image Section */}
-      <div className="relative w-full sm:w-1/3 aspect-video sm:aspect-auto">
+      <div className="relative w-[150px] flex-shrink-0">
         <Image
           src={blog?.banner_image}
           alt={blog?.title}
-          fill
-          className="object-cover sm:static sm:w-full sm:h-full"
+          width={500}
+          height={250}
+          className="object-contain sm:static sm:w-full sm:h-full"
         />
       </div>
 
