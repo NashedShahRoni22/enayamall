@@ -41,11 +41,10 @@ export default function ProductOfTheDay() {
           {/* banner image section*/}
           <div className="md:w-1/3">
             <Link
-              href={bannerImage?.link || "#"}
-              target={bannerImage?.link ? "_blank" : "_self"}
+              href={lang === 'en' ? bannerImage?.link : bannerImage?.ar_link}
               rel="noopener noreferrer"
             >
-              <Image src={bannerImage?.image} height={397} width={409} alt={bannerImage?.title} className="h-full w-full rounded-xl" />
+              <Image src={lang === 'en' ? bannerImage?.image : bannerImage?.ar_image} height={397} width={409} alt={lang === 'en' ? bannerImage?.title : bannerImage?.ar_title} className="h-full w-full rounded-xl" />
             </Link>
           </div>
           {/* products section*/}
