@@ -29,7 +29,7 @@ export default function ProductDetails({
     useAppContext();
   const router = useRouter();
   const [defaultQuantity, setDefaultQuantity] = useState(1);
-  const { affiliateData } = useGetDataWithToken("get-affiliate-info", token);
+  const { data: affiliateData } = useGetDataWithToken("get-affiliate-info", token);
   const affiliatedUserDetails = affiliateData?.data;
 
   // Localization helper function
