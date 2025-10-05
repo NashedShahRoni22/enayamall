@@ -25,7 +25,7 @@ export default function Blogs() {
     <section className="py-[20px] lg:py-[40px]">
       <Container>
         <div className={`flex justify-between items-center ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
-            <h2 className="text-3xl font-bold text-primary mb-2">{lang === 'ar' ? 'مدونات' : 'Blogs'}</h2>            {/* <Link href={"/blog"} className="text-sm">See more options</Link>  */}
+            <h2 className="text-3xl font-bold text-primary mb-2">{lang === 'ar' ? 'نبض عناية' : 'Enaya Beat'}</h2>            {/* <Link href={"/blog"} className="text-sm">See more options</Link>  */}
             <ShopNowButton route={"/blog"}/>
         </div>
 
