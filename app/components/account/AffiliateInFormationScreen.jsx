@@ -360,7 +360,7 @@ export default function AffiliateInFormationScreen({ affiliatedUserData, affilia
                         />
                         <ReadOnlyField
                             label="Affiliated Commission Percentage"
-                            value={`${affiliatedUserDetails?.affiliated_commission_percentage || '0.00'}%`}
+                            value={`${affiliatedUserDetails?.commission_percentage || '0.00'}%`}
                             bgColor="bg-amber-50"
                         />
                     </div>
